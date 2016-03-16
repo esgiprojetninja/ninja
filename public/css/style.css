@@ -96,7 +96,8 @@ form .accept{
 	color: #62c462;
 	transition: 0.5s ease;
 }
-pannelError{
+
+#pannelError{
 	border: 1px solid #62c462;
 	visibility: hidden;
 	width: 500px;
