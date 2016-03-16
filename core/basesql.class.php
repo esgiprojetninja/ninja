@@ -7,7 +7,7 @@ class basesql extends PDO
 	private $columns = [];
 	private $pdo;
 
-	function __construct()
+	public function __construct()
 	{		
 		$dsn = "mysql:host=".DBHOST.";dbname=".DBNAME;
 		try{
@@ -88,21 +88,20 @@ class basesql extends PDO
 				$whereDetails .= " AND $key = :$key";
 			}
 			
-		$i++;}
+			$i++;
+		}
 		$whereDetails = ltrim($whereDetails, ' AND ');
 
-		$stmt = $this->prepare("UPDATE $table SET $fieldDetails WHERE $whereDetails");
-
+		$stmt = $this->pdo->prepare("UPDATE $table SET $fieldDetails WHERE $whereDetails");
 		foreach($data as $key => $value){
 			$stmt->bindValue(":$key", $value);
 		}
 
 		foreach($where as $key => $value){
-			$stmt->bindValue(":$key", $value);
+			$stmt->bindValue(":$key", $value[0]);
 		}
 
 		$stmt->execute();
-
 	}
 
 	public function delete($table, $where, $limit = 1){
@@ -121,10 +120,10 @@ class basesql extends PDO
 		$i++;}
 		$whereDetails = ltrim($whereDetails, ' AND ');
 
-		$stmt = $this->prepare("DELETE FROM $table WHERE $whereDetails LIMIT $limit");
+		$stmt = $this->pdo->prepare("DELETE FROM $table WHERE $whereDetails LIMIT $limit");
 
 		foreach($where as $key => $value){
-			$stmt->bindValue(":$key", $value);
+			$stmt->bindValue(":$key", $value[0]);
 		}
 
 		$stmt->execute();
