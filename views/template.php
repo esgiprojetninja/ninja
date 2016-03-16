@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Test </title>
-
-
-	 <title>PLAY NOW</title>
+	<title>SPORT NATION | WORLD WIDE</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/public/css/grid.css">
     <link rel="stylesheet" type="text/css" href="/public/css/global.css">
@@ -91,6 +88,9 @@
         </aside>
     </div> <!-- END GRID CONTAINER -->
 </div>
+
 </body>
+<script type="text/javascript" src="/public/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/all.js"></script>
 
 </html>
