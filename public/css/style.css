@@ -98,6 +98,7 @@ form .accept{
 }
 pannelError{
 	border: 1px solid #62c462;
+	visibility: hidden;
 	width: 500px;
 	height: 200px;
 	padding: 0;
