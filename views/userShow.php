@@ -7,7 +7,7 @@
 <body>
     <?php 
   if($users == false){
-echo "<h3>User inexistant</h3>";
+echo "<h3>User not found</h3>";
   }else{?>
  <h1>Liste des Users</h1>
  <table>
@@ -17,10 +17,9 @@ echo "<h3>User inexistant</h3>";
   </tr>
   <?php 
   foreach($users as $user){ ?>
-
    <tr>
-    <td><?php echo $user['login'] ?></td>
-    <td><?php echo $user['password'] ?></td>
+    <td><?php echo $user->email ?></td>
+    <td><?php echo $user->password ?></td>
    </tr>
   <?php }}?>
  </table>

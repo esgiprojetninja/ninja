@@ -50,35 +50,11 @@ class basesql extends PDO
 		}
 	}
 
-	public function get_users(){
-		echo "test : get users <br>";
-		$sql = "SELECT * FROM user";
-		$query = $this->pdo->prepare($sql);
-		$query->execute();
-		$result = $query->fetchAll();
-		return $result;
-	}
-
-	public function get_user($id){
-		echo "test : get user by id <br>";
-		$sql = "SELECT * FROM user WHERE idUser = :id";
-		$query = $this->pdo->prepare($sql);
-		$query->execute([":id"=>$id]);
-		$result = $query->fetchAll();
-		if($result == false){
-			return false;
-		}else{
-			return $result;
-		}
-	}
-
-		public function select($sql,$array = array(), $fetchMode = PDO::FETCH_OBJ){
-
-		$stmt = $this->prepare($sql);
+	public function find($sql,$array = [], $fetchMode = PDO::FETCH_OBJ){
+		$stmt = $this->pdo->prepare($sql);
 		foreach($array as $key => $value){
-			$stmt->bindValue("$key", $value);
+			$stmt->bindValue($key, $value[0]);
 		}
-
 		$stmt->execute();
 		return $stmt->fetchAll($fetchMode);
 	}

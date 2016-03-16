@@ -26,7 +26,6 @@ class articles extends basesql
 		$this->content = $content;
 	}
 
-
 	public function getId()
 	{
 		return $this->id;
