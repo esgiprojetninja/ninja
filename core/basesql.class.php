@@ -59,15 +59,13 @@ class basesql extends PDO
 		return $stmt->fetchAll($fetchMode);
 	}
 
-	public function insert($table, $data){
+	public function add($table, $data){
 
 		ksort($data);
 
 		$fieldNames = implode(',', array_keys($data));
 		$fieldValues = ':'.implode(', :', array_keys($data));
-
-		$stmt = $this->prepare("INSERT INTO $table ($fieldNames) VALUES ($fieldValues)");
-
+		$stmt = $this->pdo->prepare("INSERT INTO $table ($fieldNames) VALUES ($fieldValues)");
 		foreach($data as $key => $value){
 			$stmt->bindValue(":$key", $value);
 		}
