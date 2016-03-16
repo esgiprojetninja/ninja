@@ -36,4 +36,5 @@ class view
 		extract($this->data);
 		include $this->template;
 	}
+
 }

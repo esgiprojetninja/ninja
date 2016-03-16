@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 require_once "conf.inc.php";
 function autoloader($class) {
     // verifier s'il existe dans le dossier core s'il existe un fichier
