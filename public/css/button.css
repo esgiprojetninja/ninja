@@ -1,0 +1,128 @@
+.btn {
+    border: none;
+    font-size: 1.5em;
+    padding: 10px;
+    border-bottom: 3px solid #182115;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn-darkgreen {
+    color: #FFFFFF;
+    background-color: #093500;
+}
+
+.btn-darkgreen:focus {
+    background-color: #3AFA06;
+}
+
+/*@mixin btn-colors($color, $background) {
+  background-color: $background;
+  border-color: $background;
+  color: $color;
+  &:hover,
+  &:active,
+  &:active:hover,
+  &:active:focus,
+  &:focus {
+    background-color: scale-color($background, $lightness: -10%);
+    border-color: scale-color($background, $lightness: -10%);
+  }
+}*/
+
+.btn-dark-blue {
+    color: #FFFFFF;
+    background-color: #1A1C40;
+    border-color: #D9D9D9;
+}
+.btn-dark-blue:hover,
+.btn-dark-blue:focus,
+.btn-dark-blue:active,
+.btn-dark-blue:active:hover,
+.btn-dark-blue:active:focus {
+    background-color: #2B2E5C;
+}
+
+.btn-primary {
+    color: #FFFFFF;
+    background-color: #6683D9;
+    border-color: #D9D9D9;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:active:hover,
+.btn-primary:active:focus {
+    background-color: #789AFF;
+}
+
+.btn-primary2 {
+    color: #FFFFFF;
+    background-color: #293540;
+    border-color: #D9D9D9;
+}
+.btn-primary2:hover,
+.btn-primary2:focus,
+.btn-primary2:active,
+.btn-primary2:active:hover,
+.btn-primary2:active:focus {
+    background-color: #445669;
+}
+
+.btn-info {
+    color: #FFFFFF;
+    background-color: #5C8EF2;
+    border-color: #D9D9D9;
+}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info:active:hover,
+.btn-info:active:focus {
+    background-color: #61A2FF;
+}
+
+.btn-success {
+    color: #FFFFFF;
+    background-color: #3BD97F;
+    border-color: #D9D9D9;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success:active:hover,
+.btn-success:active:focus {
+    background-color: #45FF95;
+}
+
+.btn-warning {
+    color: #FFFFFF;
+    background-color: #F2A03D;
+    border-color: #D9D9D9;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning:active:hover,
+.btn-warning:active:focus {
+    background-color: #F2C33D;
+}
+
+.btn-warning {
+    color: #FFFFFF;
+    background-color: #731018;
+    border-color: #D9D9D9;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning:active:hover,
+.btn-warning:active:focus {
+    background-color: #9C1620;
+}
