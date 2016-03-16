@@ -26,19 +26,6 @@ class userController
 		header("Location: ".URLAPP."/user/edit");
 	}
 
-	public function editAction($request){
-
-			if( isset($request["action"]) && $request["action"]=="edit"){
-				//update en SQL
-			}
-			
-			$v = new view();
-			$v->setView("userEdit");
-			$v->assign("name","skrzypczyk");
-			$v->assign("surname","yves");
-	}
-
-
 	public function showAction($id)
 	{	
 		if(isset($id)){
@@ -51,9 +38,17 @@ class userController
 		}
 	}
 
-	public function deleteAction()
+	public function deleteAction($id)
 	{
-		echo "User -> delete";
+		//TODO : vérifier isAdmin();
+		if(isset($id)){
+			$users = new users();
+			$v = new view();
+			$v->setView("userDelete");
+			$v->assign("users",$users->delete("users",['idUser'=>$id]));
+		}else{
+			echo "Id pas défini";
+		}
 	}
 
 	public function addAction()
@@ -78,8 +73,42 @@ class userController
 		$v->setView("userAdd");
 	}
 
-	public function updateAction()
+	public function editAction($id)
 	{
-		echo "User -> update";
+		$users = new users();
+		$v = new view();
+		$data = [];
+		$where = ['idUser' => $id];
+
+		if(isset($_POST['submit'])){
+			
+			if(!empty($_POST['email'])){
+				$email = $_POST['email'];
+				$data['email'] = $email;
+			} 
+			if(!empty($_POST['phone_number'])){
+				$phone_number = $_POST['phone_number'];
+				$data['phone_number'] = $phone_number;
+			} 
+			if(!empty($_POST['favorite_sports'])){
+				$favorite_sports = $_POST['favorite_sports'];
+				$data['favorite_sports'] = $favorite_sports;
+			} 
+			if(!empty($_POST['last_name'])){
+				$last_name = $_POST['last_name'];
+				$data['last_name'] = $last_name;
+			}
+			if(!empty($_POST['first_name'])){
+				$first_name = $_POST['first_name'];
+				$data['first_name'] = $first_name;
+			}
+			if(!empty($_POST['password'])){
+				$password = $_POST['password'];
+				$data['password'] = $password;
+			}
+		}
+		$v->setView("userEdit");
+		$v->assign("idUser",$id);
+		$v->assign("users",$users->update("users",$data,$where));
 	}
 }
