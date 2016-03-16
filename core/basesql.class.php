@@ -33,9 +33,7 @@ class basesql extends PDO
 					VALUES (:".implode(",:",$this->columns).")";
 					
 			//$sql = "INSERT INTO articles (id,title,content) VALUES (:id,:title,:content)";
-					
-			echo $sql;
-			
+								
 			$query = $this->pdo->prepare($sql);
 			foreach ($this->columns as $column) {
 				$data[$column] = $this->$column;
@@ -44,9 +42,6 @@ class basesql extends PDO
 			//$data["id"] = 1;
 			
 			$query->execute($data);
-			echo "<pre>";		
-				print_r($data);
-			echo "</pre>";
 		}
 	}
 

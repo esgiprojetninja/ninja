@@ -1,0 +1,79 @@
+/********* !!!!!!! IMPORTANT !!!!!!!! **************
+
+Panel' structure goes like that:;
+
+div.panel panel-primary/success/warning...(optional)
+    div.panel-heading
+        h3.panel-title
+    div.panel-body
+    div.panel-footer(optional)
+
+*/
+
+.panel {
+    width: 100%;
+    background-color: #FFFFFF;
+    color: #8E8D8F;
+    box-shadow: 2px 2px 2px #D2D2D2;
+}
+.panel .panel-heading {
+    padding: 5px;
+    border-bottom: 2px solid #182115;
+    background-color: #D2D2D2;
+}
+.panel .panel-heading .panel-title {
+    font-weight: 600;
+    font-size: 120%;
+    margin: 5px 0;
+}
+.panel .panel-body {
+    padding: 5px;
+}
+.panel .panel-footer {
+    padding: 5px;
+}
+
+/*********************
+    -- COLORS --
+*********************/
+.panel-primary .panel-heading {
+    background-color: #5C8EF2;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
+
+.panel-primary2 .panel-heading {
+    background-color: #293540;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
+
+.panel-dark-blue .panel-heading {
+    background-color: #1A1C40;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
+
+.panel-info .panel-heading {
+    background-color: #5C8EF2;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
+
+.panel-success .panel-heading {
+    background-color: #3BD97F;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
+
+.panel-warning .panel-heading {
+    background-color: #F2A03D;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
+
+.panel-warning .panel-heading {
+    background-color: #731018;
+    color: #FFFFFF;
+    border-color: #D9D9D9;
+}
