@@ -1,6 +1,6 @@
 <?php 
 define("DBHOST","localhost");
 define("DBUSER","root");
-define("DBPWD","");
-define("DBNAME","projet_annuel");
+define("DBPWD","root");
+define("DBNAME","ninja_db");
 
