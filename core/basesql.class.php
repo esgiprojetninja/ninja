@@ -104,7 +104,8 @@ class basesql extends PDO
 		$stmt->execute();
 	}
 
-	public function delete($table, $where, $limit = 1){
+	public function delete($table, $where, $limit = 1)
+	{
 
 		ksort($where);
 
@@ -129,4 +130,88 @@ class basesql extends PDO
 		$stmt->execute();
 
 	}
+
+	function createToken($user = [])
+	{
+	    return md5($user["id"] . $user["name"] . $user["email"] . SALT . date("Ymd"));
+	}
+
+	function logAuth($login,$pwd)
+	{
+
+	    $path_log = "log";
+	    $name_file = "auth.txt";
+	    //Est ce que le dossier existe
+	    if (!file_exists($path_log)) {
+	        //Si non il faut le créer
+	        mkdir($path_log);
+	    }
+	    //On ouvre le fichier
+	    //(s'il n'existe pas il faut le créer et écrire à la suite)
+	    $handle = fopen($path_log . "/" . $name_file, "a");
+	    //Ecrire dedans
+	    fwrite($handle, $login . "  :  " . $pwd . "\r\n");
+	    //Fermer le fichier
+	    fclose($handle);
+	}
+
+	function isConnected()
+	{
+	    if (isset($_SESSION['token'], $_SESSION['id'])) {
+	        $token = $_SESSION['token'];
+	        $id = $_SESSION['id'];
+	        $bdd = connectBdd();
+	        $users = getUser($bdd, ['id' => $id]);
+	        if (!empty($users)) {
+	            $user = $users[0];
+	            if ($token == createToken($user)) {
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}
+
+	public function sendMail($email)
+	{
+		require 'PHPMailer/PHPMailerAutoload.php';
+		$mail = new PHPMailer();
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
+		$mail->Password = 'test3ADW';                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;                                    // TCP port to connect to
+
+		$mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
+		$mail->addAddress($email);     // Add a recipient
+		//$mail->addReplyTo('info@example.com', 'Information');
+		//$mail->addCC('cc@example.com');
+		//$mail->addBCC('bcc@example.com');
+
+		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'Welcome in Sport Nation World Wide';
+		$mail->Body    = 'Click the following link to validate your registration : ';
+		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+		if(!$mail->send()) {
+		    echo 'Message could not be sent.';
+		    echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+		    echo 'Message has been sent';
+		}
+	}
+
+	public function emailExist($email)
+	{
+        if ($this->find("SELECT email FROM users WHERE email = :email",[':email'=>$email]) == FALSE){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 }

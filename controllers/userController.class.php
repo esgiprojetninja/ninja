@@ -51,23 +51,50 @@ class userController
 		}
 	}
 
+	
 	public function addAction()
 	{
 		$users = new users();
 		$v = new view();
+		$error = FALSE;
+		$msg_error = "";
 		if(isset($_POST['submit'])){
-			if(isset($_POST['email']) && isset($_POST['phone_number']) && isset($_POST['favorite_sports']) && isset($_POST['last_name']) && isset($_POST['first_name']) && isset($_POST['password'])){
-				$email = $_POST['email'];
-				$phone_number = $_POST['phone_number'];
-				$favorite_sports = $_POST['favorite_sports'];
-				$last_name = $_POST['last_name'];
-				$first_name = $_POST['first_name'];
+			if(!empty($_POST['email']) && !empty($_POST['conf_email']) && !empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['password']) && !empty($_POST['conf_password']) && !empty($_POST['city'])){
+				$email = strtolower(trim($_POST['email']));
+				$conf_email = strtolower(trim($_POST['conf_email']));
+				$first_name = strtolower(trim($_POST['first_name']));
+				$last_name = strtolower(trim($_POST['last_name']));
+				$city = $_POST['city'];
 				$password = $_POST['password'];
+				$conf_password = $_POST['conf_password'];                
+                // Vérifications des informations
+				if($first_name === $last_name){
+					$error = TRUE;
+					$msg_error .= "<li>Le prénom doit être différent du nom";
+				}
 
-		//	$users->setEmail=$_POST['email'];
-				$data = ['email' => $email,'phone_number'=>$phone_number,'favorite_sports'=>$favorite_sports,
-				'last_name'=>$last_name,'first_name'=>$first_name,'password'=>$password];
-				$v->assign("users",$users->add("users",$data));
+				if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+					$error = TRUE;
+					$msg_error .= "<li>Email invalide";
+				}
+				if($password != $conf_password){
+					$error = TRUE;
+					$msg_error .= "<li>Le mot de passe de confirmation ne correspond pas";
+				}
+
+				if ($users->emailExist($email) == TRUE){
+					$error = TRUE;
+					$msg_error .= "<li>Un compte existe déjà avec cette adresse email";
+				}
+
+				if ($error == FALSE){
+	                    //    $users->setEmail=$_POST['email'];
+					$data = ['last_name'=>$last_name,'first_name'=>$first_name, 'city'=>$city,'email' => $email, 'password'=>$password,'is_active'=>0,'admin'=>0];
+					$v->assign("users",$users->add("users",$data));
+					$users->sendMail($email);
+				}else{
+	                   echo $msg_error;
+				}
 			}
 		}
 		$v->setView("userAdd");
@@ -81,7 +108,7 @@ class userController
 		$where = ['idUser' => $id];
 
 		if(isset($_POST['submit'])){
-			
+
 			if(!empty($_POST['email'])){
 				$email = $_POST['email'];
 				$data['email'] = $email;
