@@ -27,6 +27,7 @@ class userController
 			if($users->find('SELECT * FROM users WHERE email = :email AND access_token = :access_token' ,[':email'=>$email,':access_token'=>$access_token])){ 
 					$where = ['email' => $email];
 					$data['is_active'] = 1;
+					$users->update("users",$data,$where);
 			//Regenerer l'accesstoken et le stocker en session avec l'email
 					$new_access_token = $users->regenerateToken($users->find("SELECT id_user,first_name,email FROM users WHERE email = :email AND access_token = :access_token",[':email'=>$email,':access_token'=>$access_token]));
 					$_SESSION["access_token"] = $new_access_token;
