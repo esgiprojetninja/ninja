@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class basesql extends PDO
 {
@@ -8,14 +8,14 @@ class basesql extends PDO
 	private $pdo;
 
 	public function __construct()
-	{		
+	{
 		$dsn = "mysql:host=".DBHOST.";dbname=".DBNAME;
 		try{
 			$this->pdo = new PDO($dsn,DBUSER,DBPWD);
 		}catch(Exception $e){
 			die("Erreur SQL:".$e->getMessage());
 		}
-		
+
 		$this->table = get_called_class();
 		$all_vars = get_object_vars($this);
 		$class_vars = get_class_vars(get_class());
@@ -51,7 +51,7 @@ class basesql extends PDO
 			}
 		}
 
-		$stmt->execute();		
+		$stmt->execute();
 
 	}
 
@@ -72,7 +72,7 @@ class basesql extends PDO
 			} else {
 				$whereDetails .= " AND $key = :$key";
 			}
-			
+
 			$i++;
 		}
 		$whereDetails = ltrim($whereDetails, ' AND ');
@@ -166,7 +166,7 @@ class basesql extends PDO
 
 	public function sendMail($email,$access_token)
 	{
-		require 'PHPMailer/PHPMailerAutoload.php';
+		require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 		$mail = new PHPMailer();
 
 		$mail->isSMTP();                                      // Set mailer to use SMTP
