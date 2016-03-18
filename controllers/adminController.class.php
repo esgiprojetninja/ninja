@@ -18,9 +18,9 @@ class adminController
     # Create database
     public function createdbAction($args) {
        $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
-       
+
        try {
-            $pdo->exec("CREATE DATABASE IF NOT EXISTS `".DBNAME."`;"); 
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS `".DBNAME."`;");
        }catch(Execption $e) {
             die("Error while creating database : ".$e->getMessage());
        }
@@ -28,7 +28,7 @@ class adminController
        header("location: /admin/initdb");
     }
 
-    # Create tables 
+    # Create tables
     public function initdbAction($args) {
 
         $pdo = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME,DBUSER,DBPWD);
@@ -37,11 +37,14 @@ class adminController
             $pdo->exec("CREATE TABLE IF NOT EXISTS users(
                     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
                     email VARCHAR(50),
+					conf_email VARCHAR(50),
                     password VARCHAR(100),
                     username VARCHAR(50),
                     first_name VARCHAR(50),
                     last_name VARCHAR(50),
                     phone_number int(20),
+					city VARCHAR(50),
+					access_toen VAARCHAR(50),
                     favorite_sports LONGTEXT
                 );"
             );
