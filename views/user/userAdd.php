@@ -1,4 +1,10 @@
-
+<?php
+  if(isset($errors)){
+    echo $errors;
+  }else if(isset($validate)){
+    echo $validate;
+  }
+?>
 <!-- formulaire d'inscription -->
 <div id="wrap">
   <form method="POST" action="add">

@@ -7,47 +7,62 @@ class userController
 	{
 		$users = new users();
 		$v = new view();
-		$v->setView("userShow");
+
+		$v->setView("user/userShow");
 		$v->assign("users",$users->find("SELECT email,password FROM users"));
 	}
 
 
 	public function validationAction($request){
+		$msg_error = "";
+		$v = new view();
+		$users = new users();
+		$v->setView("user/userValidation");
+		$data=[];
 		//Est ce qu'il existe en bdd un user avec cet email et cet accesstoken
-
+		if(isset($request['email']) && isset($request['access_token'])){
+			$email = $request['email'];
+			$access_token = $request['access_token'];
 		//Si oui Activer le flag a 1
-
-		//Regenerer l'accesstoken et le stocker en session avec l'email
-		$accesstoken = regenerateToken($request['email']);
-		$_SESSION["accesstoken"] = $accesstoken;
-		$_SESSION["email"] = $request['email'];
-
+			if($users->find('SELECT * FROM users WHERE email = :email AND access_token = :access_token' ,[':email'=>$email,':access_token'=>$access_token])){ 
+					$where = ['email' => $email];
+					$data['is_active'] = 1;
+			//Regenerer l'accesstoken et le stocker en session avec l'email
+					$new_access_token = $users->regenerateToken($users->find("SELECT id_user,first_name,email FROM users WHERE email = :email AND access_token = :access_token",[':email'=>$email,':access_token'=>$access_token]));
+					$_SESSION["access_token"] = $new_access_token;
+					$_SESSION["email"] = $email;
+					$v->assign("validate","Validation confirmed");
+			}else{
+				$msg_error .= "<li>Email ou Token incorrect";
+			}
+			$v->assign("errors",$msg_error);
+		}
 		//Rediriger sur l'edition du profil
-		header("Location: ".URLAPP."/user/edit");
+		//header("Location: ".URLAPP."/user/edit");
 	}
 
 	public function showAction($id)
 	{	
-		if(isset($id)){
+		if(!empty($id)){
 			$users = new users();
 			$v = new view();
-			$v->setView("userShow");
-			$v->assign("users",$users->find("SELECT email,password FROM users WHERE idUser = :id",[':id'=>$id]));
+			$v->setView("user/userShow");
+			$v->assign("users",$users->find("SELECT email,password FROM users WHERE id_user = :id",[':id'=>$id]));
 		}else{
-			echo "Id pas défini";
+			header('Location: /user/');
 		}
 	}
 
 	public function deleteAction($id)
 	{
 		//TODO : vérifier isAdmin();
-		if(isset($id)){
+		if(!empty($id)){
 			$users = new users();
 			$v = new view();
-			$v->setView("userDelete");
-			$v->assign("users",$users->delete("users",['idUser'=>$id]));
+			$v->setView("user/userDelete");
+			$v->assign("users",$users->delete("users",['id_user'=>$id]));
 		}else{
-			echo "Id pas défini";
+			header('Location: /user/');
 		}
 	}
 
@@ -58,6 +73,8 @@ class userController
 		$v = new view();
 		$error = FALSE;
 		$msg_error = "";
+		$v->setView("user/userAdd");
+
 		if(isset($_POST['submit'])){
 			if(!empty($_POST['email']) && !empty($_POST['conf_email']) && !empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['password']) && !empty($_POST['conf_password']) && !empty($_POST['city'])){
 				$email = strtolower(trim($_POST['email']));
@@ -66,7 +83,8 @@ class userController
 				$last_name = strtolower(trim($_POST['last_name']));
 				$city = $_POST['city'];
 				$password = $_POST['password'];
-				$conf_password = $_POST['conf_password'];                
+				$conf_password = $_POST['conf_password'];
+				$access_token = $users->createToken($email); 
                 // Vérifications des informations
 				if($first_name === $last_name){
 					$error = TRUE;
@@ -89,53 +107,59 @@ class userController
 
 				if ($error == FALSE){
 	                    //    $users->setEmail=$_POST['email'];
-					$data = ['last_name'=>$last_name,'first_name'=>$first_name, 'city'=>$city,'email' => $email, 'password'=>$password,'is_active'=>0,'admin'=>0];
+					$data = ['last_name'=>$last_name,'first_name'=>$first_name, 'city'=>$city,'email' => $email, 'password'=>$password,'access_token'=>$access_token,'is_active'=>0,'admin'=>0];
 					$v->assign("users",$users->add("users",$data));
-					$users->sendMail($email);
+					$users->sendMail($email,$access_token);
+					$v->assign("validate","Registration confirmed, go validate your account on your mail box");
 				}else{
-	                   echo $msg_error;
+	                $v->assign("errors",$msg_error);
 				}
 			}
 		}
-		$v->setView("userAdd");
 	}
 
 	public function editAction($id)
 	{
-		$users = new users();
-		$v = new view();
-		$data = [];
-		$where = ['idUser' => $id];
-
-		if(isset($_POST['submit'])){
-
-			if(!empty($_POST['email'])){
-				$email = $_POST['email'];
-				$data['email'] = $email;
-			} 
-			if(!empty($_POST['phone_number'])){
-				$phone_number = $_POST['phone_number'];
-				$data['phone_number'] = $phone_number;
-			} 
-			if(!empty($_POST['favorite_sports'])){
-				$favorite_sports = $_POST['favorite_sports'];
-				$data['favorite_sports'] = $favorite_sports;
-			} 
-			if(!empty($_POST['last_name'])){
-				$last_name = $_POST['last_name'];
-				$data['last_name'] = $last_name;
+		if(!empty($id)){
+			$users = new users();
+			$v = new view();
+			$data = [];
+			$where = ['id_user' => $id];
+			if(isset($_POST['submit'])){
+				if(!empty($_POST['last_name'])){
+					$last_name = $_POST['last_name'];
+					$data['last_name'] = $last_name;
+				}
+				if(!empty($_POST['first_name'])){
+					$first_name = $_POST['first_name'];
+					$data['first_name'] = $first_name;
+				} 
+				if(!empty($_POST['city'])){
+					$city = $_POST['city'];
+					$data['city'] = $city;
+				} 
+				if(!empty($_POST['birthday'])){
+					$birthday = $_POST['birthday'];
+					$data['birthday'] = $birthday;
+				} 
+				if(!empty($_POST['email'])){
+					$email = $_POST['email'];
+					$data['email'] = $email;
+				} 
+				if(!empty($_POST['password'])){
+					$password = $_POST['password'];
+					$data['password'] = $password;
+				}
+				if(!empty($_POST['favorite_sports'])){
+					$favorite_sports = $_POST['favorite_sports'];
+					$data['favorite_sports'] = $favorite_sports;
+				} 
 			}
-			if(!empty($_POST['first_name'])){
-				$first_name = $_POST['first_name'];
-				$data['first_name'] = $first_name;
-			}
-			if(!empty($_POST['password'])){
-				$password = $_POST['password'];
-				$data['password'] = $password;
-			}
+			$v->setView("user/userEdit");
+			$v->assign("idUser",$id);
+			$v->assign("users",$users->update("users",$data,$where));
+		}else{
+			header('Location: /user/');
 		}
-		$v->setView("userEdit");
-		$v->assign("idUser",$id);
-		$v->assign("users",$users->update("users",$data,$where));
 	}
 }

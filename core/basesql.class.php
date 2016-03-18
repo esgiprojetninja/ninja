@@ -22,33 +22,15 @@ class basesql extends PDO
 		$this->columns = array_keys(array_diff_key($all_vars, $class_vars));
 	}
 
-	public function save()
-	{
-		if (is_numeric($this->id)) {
-			# code...
-		}
-		else
-		{
-			$sql = "INSERT INTO ".$this->table." (".implode(",",$this->columns).")
-					VALUES (:".implode(",:",$this->columns).")";
-					
-			//$sql = "INSERT INTO articles (id,title,content) VALUES (:id,:title,:content)";
-								
-			$query = $this->pdo->prepare($sql);
-			foreach ($this->columns as $column) {
-				$data[$column] = $this->$column;
-			}
-			
-			//$data["id"] = 1;
-			
-			$query->execute($data);
-		}
-	}
-
 	public function find($sql,$array = [], $fetchMode = PDO::FETCH_OBJ){
 		$stmt = $this->pdo->prepare($sql);
-		foreach($array as $key => $value){
-			$stmt->bindValue($key, $value[0]);
+
+		foreach($array as $key => &$value){
+			if(gettype($value) == "array"){
+				$stmt->bindValue($key, $value[0]);
+			}else{
+				$stmt->bindValue($key, $value);
+			}
 		}
 		$stmt->execute();
 		return $stmt->fetchAll($fetchMode);
@@ -62,7 +44,11 @@ class basesql extends PDO
 		$fieldValues = ':'.implode(', :', array_keys($data));
 		$stmt = $this->pdo->prepare("INSERT INTO $table ($fieldNames) VALUES ($fieldValues)");
 		foreach($data as $key => $value){
-			$stmt->bindValue(":$key", $value);
+			if(gettype($value) == "array"){
+				$stmt->bindValue($key, $value[0]);
+			}else{
+				$stmt->bindValue($key, $value);
+			}
 		}
 
 		$stmt->execute();		
@@ -70,7 +56,6 @@ class basesql extends PDO
 	}
 
 	public function update($table, $data, $where){
-		
 		ksort($data);
 
 		$fieldDetails = NULL;
@@ -93,14 +78,22 @@ class basesql extends PDO
 		$whereDetails = ltrim($whereDetails, ' AND ');
 
 		$stmt = $this->pdo->prepare("UPDATE $table SET $fieldDetails WHERE $whereDetails");
+
 		foreach($data as $key => $value){
-			$stmt->bindValue(":$key", $value);
+			if(gettype($value) == "array"){
+				$stmt->bindValue($key, $value[0]);
+			}else{
+				$stmt->bindValue($key, $value);
+			}
 		}
 
 		foreach($where as $key => $value){
-			$stmt->bindValue(":$key", $value[0]);
+			if(gettype($value) == "array"){
+				$stmt->bindValue($key, $value[0]);
+			}else{
+				$stmt->bindValue($key, $value);
+			}
 		}
-
 		$stmt->execute();
 	}
 
@@ -111,48 +104,47 @@ class basesql extends PDO
 
 		$whereDetails = NULL;
 		$i = 0;
-		foreach($where as $key => $value){
+		foreach($where as $key => &$value){
 			if($i == 0){
 				$whereDetails .= "$key = :$key";
 			} else {
 				$whereDetails .= " AND $key = :$key";
 			}
-			
-		$i++;}
+			$i++;
+		}
 		$whereDetails = ltrim($whereDetails, ' AND ');
 
 		$stmt = $this->pdo->prepare("DELETE FROM $table WHERE $whereDetails LIMIT $limit");
 
 		foreach($where as $key => $value){
-			$stmt->bindValue(":$key", $value[0]);
+			if(gettype($value) == "array"){
+				$stmt->bindValue($key, $value[0]);
+			}else{
+				$stmt->bindValue($key, $value);
+			}
 		}
 
 		$stmt->execute();
 
 	}
 
-	function createToken($user = [])
+	function createToken($email)
 	{
-	    return md5($user["id"] . $user["name"] . $user["email"] . SALT . date("Ymd"));
+		if(isset($email)){
+		    $token = md5($email . SALT . date("YmdHis"));
+		    return $token;
+		}
 	}
 
-	function logAuth($login,$pwd)
+	function regenerateToken($user = [])
 	{
-
-	    $path_log = "log";
-	    $name_file = "auth.txt";
-	    //Est ce que le dossier existe
-	    if (!file_exists($path_log)) {
-	        //Si non il faut le créer
-	        mkdir($path_log);
-	    }
-	    //On ouvre le fichier
-	    //(s'il n'existe pas il faut le créer et écrire à la suite)
-	    $handle = fopen($path_log . "/" . $name_file, "a");
-	    //Ecrire dedans
-	    fwrite($handle, $login . "  :  " . $pwd . "\r\n");
-	    //Fermer le fichier
-	    fclose($handle);
+		if(isset($user[0]->first_name) && isset($user[0]->email)){
+			$data=[];
+		    $token = md5($user[0]->first_name . $user[0]->email . SALT . date("YmdHis"));
+		    $where = ['email' => $user[0]->email];
+			$data['access_token'] = $token;
+		    return $token;
+		}
 	}
 
 	function isConnected()
@@ -172,7 +164,7 @@ class basesql extends PDO
 	    return false;
 	}
 
-	public function sendMail($email)
+	public function sendMail($email,$access_token)
 	{
 		require 'PHPMailer/PHPMailerAutoload.php';
 		$mail = new PHPMailer();
@@ -195,23 +187,25 @@ class basesql extends PDO
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
-		$mail->Body    = 'Click the following link to validate your registration : ';
+		$link = "http://ninja.dev:8888/user/validation?email=".$email."&access_token=".$access_token."";
+		$mail->Body    = 'Click the following link to validate your registration : '. $link;
 		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-		if(!$mail->send()) {
+		$mail->send();
+		/*if(!$mail->send()) {
 		    echo 'Message could not be sent.';
 		    echo 'Mailer Error: ' . $mail->ErrorInfo;
 		} else {
 		    echo 'Message has been sent';
-		}
+		}*/
 	}
 
 	public function emailExist($email)
 	{
         if ($this->find("SELECT email FROM users WHERE email = :email",[':email'=>$email]) == FALSE){
-            return TRUE;
+            return false;
         } else {
-            return FALSE;
+            return true;
         }
     }
 }
