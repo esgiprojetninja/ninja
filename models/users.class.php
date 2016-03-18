@@ -2,8 +2,10 @@
 class users extends basesql
 {
 
+	protected $id;
 	protected $email;
 	protected $password;
+	protected $username;
 	protected $first_name;
 	protected $last_name;
 	protected $phone_number;
@@ -11,6 +13,10 @@ class users extends basesql
 
 	public function __construct(){
 		parent::__construct();
+	}
+
+	public function getUsername(){
+		return $this->username;
 	}	
 
 	public function getEmail(){
@@ -35,6 +41,10 @@ class users extends basesql
 
 	public function getFavoriteSports(){
 		return $this->favorite_sports;
+	}
+
+	public function setUsername($username){
+		$this->username = $username;
 	}
 
 	public function setEmail($email){
