@@ -4,13 +4,10 @@ class indexController
 {
 	public function indexAction($args)
 	{
-		$v = new view();
-		$v->setView("indexIndex");
-		$v->assign("pseudo","mec");
-	}
-
-	public function testAction($args)
-	{
-
+		if ($_SESSION["user"]) {
+			echo "coucou";
+		} else {
+			header("location: /user/preSub");
+		}
 	}
 }

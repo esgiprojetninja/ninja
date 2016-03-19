@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class userController
 {
@@ -24,7 +24,7 @@ class userController
 			$email = $request['email'];
 			$access_token = $request['access_token'];
 		//Si oui Activer le flag a 1
-			if($users->find('SELECT * FROM users WHERE email = :email AND access_token = :access_token' ,[':email'=>$email,':access_token'=>$access_token])){ 
+			if($users->find('SELECT * FROM users WHERE email = :email AND access_token = :access_token' ,[':email'=>$email,':access_token'=>$access_token])){
 					$where = ['email' => $email];
 					$data['is_active'] = 1;
 					$users->update("users",$data,$where);
@@ -43,7 +43,7 @@ class userController
 	}
 
 	public function showAction($id)
-	{	
+	{
 		if(!empty($id)){
 			$users = new users();
 			$v = new view();
@@ -67,7 +67,65 @@ class userController
 		}
 	}
 
-	
+	/**
+	*
+	*/
+	public function preSubAction($args) {
+		$view = new view();
+
+		$errors = [];
+		$validForm = TRUE;
+		$formData = [];
+
+		// Basic security
+		if(isset($_POST["preSubForm"])) {
+			if(!isset($_POST["email"]) && !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+				$errors[] = "Please enter a valid email";
+				$validForm = FALSE;
+			} else {
+				$userEmail = strtolower(trim($_POST["email"]));
+			}
+			if(!isset($_POST["username"]) || strlen($_POST["username"]) < 3) {
+				$validForm =  FALSE;
+				$errors[] = "Username must be at least 4 char long.";
+			} else {
+				$username = strtolower(trim($_POST["usename"]));
+			}
+		} else {
+			$validForm = FALSE;
+			$errors[] = "Invalid form.";
+		}
+
+		if(!$validForm) {
+			$view->assign("errors", $errors);
+		} else {
+			$user = new User();
+			$user->setEmail($userEmail);
+			$user->setUsername($username);
+			$user->save();
+			// if($user->sendConfirmationEmail()) {
+			// 	$view->assign(
+			// 		"mailerMessage",
+			// 		"An email has just been sent to ".$user->getEmail()
+			// 	);
+			// } else {
+			// 	$view->assign(
+			// 		"mailerMessage",
+			// 		"Something went when trying to send email."
+			// 	);
+			// }
+		}
+		$view->setView("user/pre-subscription.tpl");
+	}
+
+	public function activateAction($args) {
+		$view = new view();
+		$data = explode("=", $args);
+		$view->assign("cleaned_data", $args);
+		$view->setView("user/activation.tpl");
+	}
+
+
 	public function addAction()
 	{
 		$users = new users();
@@ -85,7 +143,7 @@ class userController
 				$city = $_POST['city'];
 				$password = $_POST['password'];
 				$conf_password = $_POST['conf_password'];
-				$access_token = $users->createToken($email); 
+				$access_token = $users->createToken($email);
                 // Vérifications des informations
 				if($first_name === $last_name){
 					$error = TRUE;
@@ -134,19 +192,19 @@ class userController
 				if(!empty($_POST['first_name'])){
 					$first_name = $_POST['first_name'];
 					$data['first_name'] = $first_name;
-				} 
+				}
 				if(!empty($_POST['city'])){
 					$city = $_POST['city'];
 					$data['city'] = $city;
-				} 
+				}
 				if(!empty($_POST['birthday'])){
 					$birthday = $_POST['birthday'];
 					$data['birthday'] = $birthday;
-				} 
+				}
 				if(!empty($_POST['email'])){
 					$email = $_POST['email'];
 					$data['email'] = $email;
-				} 
+				}
 				if(!empty($_POST['password'])){
 					$password = $_POST['password'];
 					$data['password'] = $password;
@@ -154,7 +212,7 @@ class userController
 				if(!empty($_POST['favorite_sports'])){
 					$favorite_sports = $_POST['favorite_sports'];
 					$data['favorite_sports'] = $favorite_sports;
-				} 
+				}
 			}
 			$v->setView("user/userEdit");
 			$v->assign("idUser",$id);
