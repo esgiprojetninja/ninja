@@ -3,45 +3,6 @@
 class userController
 {
 
-	public function indexAction()
-	{
-		$users = new users();
-		$v = new view();
-
-		$v->setView("user/userShow");
-		$v->assign("users",$users->find("SELECT email,password FROM users"));
-	}
-
-
-	public function validationAction($request){
-		$msg_error = "";
-		$v = new view();
-		$users = new users();
-		$v->setView("user/userValidation");
-		$data=[];
-		//Est ce qu'il existe en bdd un user avec cet email et cet accesstoken
-		if(isset($request['email']) && isset($request['access_token'])){
-			$email = $request['email'];
-			$access_token = $request['access_token'];
-		//Si oui Activer le flag a 1
-			if($users->find('SELECT * FROM users WHERE email = :email AND access_token = :access_token' ,[':email'=>$email,':access_token'=>$access_token])){
-					$where = ['email' => $email];
-					$data['is_active'] = 1;
-					$users->update("users",$data,$where);
-			//Regenerer l'accesstoken et le stocker en session avec l'email
-					$new_access_token = $users->regenerateToken($users->find("SELECT id_user,first_name,email FROM users WHERE email = :email AND access_token = :access_token",[':email'=>$email,':access_token'=>$access_token]));
-					$_SESSION["access_token"] = $new_access_token;
-					$_SESSION["email"] = $email;
-					$v->assign("validate","Validation confirmed");
-			}else{
-				$msg_error .= "<li>Email ou Token incorrect";
-			}
-			$v->assign("errors",$msg_error);
-		}
-		//Rediriger sur l'edition du profil
-		//header("Location: ".URLAPP."/user/edit");
-	}
-
 	public function showAction($id)
 	{
 		if(!empty($id)){
@@ -50,20 +11,7 @@ class userController
 			$v->setView("user/userShow");
 			$v->assign("users",$users->find("SELECT email,password FROM users WHERE id_user = :id",[':id'=>$id]));
 		}else{
-			header('Location: /user/');
-		}
-	}
-
-	public function deleteAction($id)
-	{
-		//TODO : vérifier isAdmin();
-		if(!empty($id)){
-			$users = new users();
-			$v = new view();
-			$v->setView("user/userDelete");
-			$v->assign("users",$users->delete("users",['id_user'=>$id]));
-		}else{
-			header('Location: /user/');
+			header('Location: /user');
 		}
 	}
 
@@ -103,25 +51,28 @@ class userController
 			$user->setEmail($userEmail);
 			$user->setUsername($username);
 			$user->save();
-			// if($user->sendConfirmationEmail()) {
-			// 	$view->assign(
-			// 		"mailerMessage",
-			// 		"An email has just been sent to ".$user->getEmail()
-			// 	);
-			// } else {
-			// 	$view->assign(
-			// 		"mailerMessage",
-			// 		"Something went when trying to send email."
-			// 	);
-			// }
+			if($user->sendConfirmationEmail()) {
+				$view->assign(
+					"mailerMessage",
+					"An email has just been sent to ".$user->getEmail()
+				);
+			} else {
+				$view->assign(
+					"mailerMessage",
+					"Something went when trying to send email."
+				);
+			}
 		}
 		$view->setView("user/pre-subscription.tpl");
 	}
 
 	public function activateAction($args) {
 		$view = new view();
-		$data = explode("=", $args);
-		$view->assign("cleaned_data", $args);
+		$user = User::find(2);
+		if($user["is_active" == 1]) {
+			$user->update();
+		}
+		$view->assign("user", $user);
 		$view->setView("user/activation.tpl");
 	}
 

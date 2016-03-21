@@ -20,7 +20,7 @@ class User extends basesql
 	*/
 	public function __construct(){
 		parent::__construct();
-		parent::setTable("users");
+		$this->setTable("users");
 		$this->setToken();
 	}
 
@@ -96,6 +96,16 @@ class User extends basesql
 			);
 	}
 
+	public static function toto($toto) {
+		$this->username = $toto;
+	}
+
+	public static function find($id) {
+			$self = new static();
+			$user = $self->findById($id);
+			return $user;
+	}
+
 	/**
 	* Send confirmation email using users's email
 	* @return boolean
@@ -126,7 +136,7 @@ class User extends basesql
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
-		$link = "http://ninja.dev/user/validation?email="
+		$link = "http://ninja.dev/user/activate?email="
 			.$this->email
 			."&token="
 			.$this->token."";
