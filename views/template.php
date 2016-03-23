@@ -16,10 +16,10 @@
     <header>
         <div class="grid-container">
             <div class="row">
-                <div class="col-xs-2 center">
+                <div class="col-sm-2 center">
                     <img src="/public/img/logo_SN_noback.png" alt="Play Now" class="app-logo" height="80px">
                 </div>
-                <div class="col-xs-9">
+                <div class="col-sm-9">
                     <a href="#" class="icon">
                         <span class="icon-location"></span>
                         <span class="text">My location</span>
@@ -33,7 +33,7 @@
                         <span class="text">My account</span>
                     </a>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-sm-1">
                     <div class="dropdown icon">
                         <span class="icon-menu dropdown-icon"></span>
                         <ul class="dropdown-menu right">

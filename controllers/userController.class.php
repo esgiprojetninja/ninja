@@ -27,21 +27,22 @@ class userController
 
 		// Basic security
 		if(isset($_POST["preSubForm"])) {
-			if(!isset($_POST["email"]) && !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-				$errors[] = "Please enter a valid email";
+			// verif mail
+			if(!isset($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
 				$validForm = FALSE;
+				$errors[] = "Please enter a valid email";
 			} else {
 				$userEmail = strtolower(trim($_POST["email"]));
 			}
+			// verif username
 			if(!isset($_POST["username"]) || strlen($_POST["username"]) < 3) {
 				$validForm =  FALSE;
 				$errors[] = "Username must be at least 4 char long.";
 			} else {
-				$username = strtolower(trim($_POST["usename"]));
+				$userName = strtolower(trim($_POST["usename"]));
 			}
 		} else {
 			$validForm = FALSE;
-			$errors[] = "Invalid form.";
 		}
 
 		if(!$validForm) {
@@ -49,18 +50,12 @@ class userController
 		} else {
 			$user = new User();
 			$user->setEmail($userEmail);
-			$user->setUsername($username);
+			$user->setUsername($userName);
 			$user->save();
 			if($user->sendConfirmationEmail()) {
-				$view->assign(
-					"mailerMessage",
-					"An email has just been sent to ".$user->getEmail()
-				);
+				$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
 			} else {
-				$view->assign(
-					"mailerMessage",
-					"Something went when trying to send email."
-				);
+				$view->assign( "mailerMessage", "Something went when trying to send email." );
 			}
 		}
 		$view->setView("user/pre-subscription.tpl");
@@ -83,7 +78,7 @@ class userController
 		$v = new view();
 		$error = FALSE;
 		$msg_error = "";
-		$v->setView("user/userAdd");
+		$v->setView("user/add.tpl");
 
 		if(isset($_POST['submit'])){
 			if(!empty($_POST['email']) && !empty($_POST['conf_email']) && !empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['password']) && !empty($_POST['conf_password']) && !empty($_POST['city'])){
