@@ -160,11 +160,8 @@ class userController
 					$data['favorite_sports'] = $favorite_sports;
 				}
 			}
-			$v->setView("user/userEdit");
+			$v->setView("user/profil-edit.tpl");
 			$v->assign("idUser",$id);
 			$v->assign("users",$users->update("users",$data,$where));
-		}else{
-			header('Location: /user/');
-		}
 	}
 }
