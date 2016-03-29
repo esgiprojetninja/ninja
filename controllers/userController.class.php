@@ -32,14 +32,14 @@ class userController
 				$validForm = FALSE;
 				$errors[] = "Please enter a valid email";
 			} else {
-				$userEmail = strtolower(trim($_POST["email"]));
+				$useremail = strtolower(trim($_POST["email"]));
 			}
 			// verif username
 			if(!isset($_POST["username"]) || strlen($_POST["username"]) < 3) {
 				$validForm =  FALSE;
 				$errors[] = "Username must be at least 4 char long.";
 			} else {
-				$userName = strtolower(trim($_POST["usename"]));
+				$username = strtolower(trim($_POST["usename"]));
 			}
 		} else {
 			$validForm = FALSE;
