@@ -49,8 +49,8 @@ class userController
 			$view->assign("errors", $errors);
 		} else {
 			$user = new User();
-			$user->setEmail($userEmail);
-			$user->setUsername($userName);
+			$user->setEmail($useremail);
+			$user->setUsername($username);
 			$user->save();
 			if($user->sendConfirmationEmail()) {
 				$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
