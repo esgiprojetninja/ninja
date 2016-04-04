@@ -33,7 +33,9 @@ class basesql extends PDO
 			$sql = $sql." WHERE id=".$id.";";
 			$query =  $this->pdo->prepare($sql);
 			$query->execute();
-			return $query->fetch();
+			foreach ($query->fetch(PDO::FETCH_ASSOC) as $column => $value) {
+				$this->$column = $value;
+			}
 		} else {
 			$sql = $sql.";";
 			return $query = $this->pdo->execute($sql);
@@ -66,16 +68,20 @@ class basesql extends PDO
 		}
 	}
 
-	public function findByEmail($email) {
+	/**
+	* @param array
+	* @return object if succes, NULL if error
+	* Look in the db according to param
+	*/
+	public function findBy($data) {
 		$sql = "SELECT * FROM ".$this->table;
-		if (isset($email)) {
-			$sql = $sql." WHERE email=".$email.";";
+		if (isset($data)) {
+			$sql = $sql." WHERE ".$data["column"]."=".$data["value"].";";
 			$query =  $this->pdo->prepare($sql);
 			$query->execute();
 			return $query->fetch();
 		} else {
-			$sql = $sql.";";
-			return $query = $this->pdo->execute($sql);
+			return NULL;
 		}
 	}
 }

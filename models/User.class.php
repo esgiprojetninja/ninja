@@ -3,6 +3,7 @@ class User extends basesql
 {
 
 	protected $id;
+	protected $table;
 	protected $email;
 	protected $token;
 	protected $is_active;

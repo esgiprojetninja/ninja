@@ -62,8 +62,10 @@ class userController
 	}
 
 	public function activateAction($args) {
-		$view = new view();
-		$user = User::find(2);
+		$view = new view;
+		$user = new User();
+		$user->findById(2);
+		print_r($user);
 		if($user["is_active" == 1]) {
 			$user->update();
 		}
@@ -163,5 +165,6 @@ class userController
 			$v->setView("user/profil-edit.tpl");
 			$v->assign("idUser",$id);
 			$v->assign("users",$users->update("users",$data,$where));
+		}
 	}
 }
