@@ -25,6 +25,10 @@ class User extends basesql
 		$this->setToken();
 	}
 
+	public function getId() {
+		return $this->id;
+	}
+
 	public function getUsername(){
 		return $this->username;
 	}
@@ -51,6 +55,14 @@ class User extends basesql
 
 	public function getFavoriteSports(){
 		return $this->favorite_sports;
+	}
+
+	public function getIsActive() {
+		return $this->is_active;
+	}
+
+	public function setIsActive($is_active) {
+		$this->is_active = $is_active;
 	}
 
 	public function setUsername($username){

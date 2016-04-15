@@ -9,4 +9,3 @@ class helpers {
   public function createToken($user) {
     return md5($user["id"].$user["email"].$user["username"].SALT.date("Ymd"));
   }
-}

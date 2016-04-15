@@ -39,7 +39,7 @@ class userController
 				$validForm =  FALSE;
 				$errors[] = "Username must be at least 4 char long.";
 			} else {
-				$username = strtolower(trim($_POST["usename"]));
+				$username = strtolower(trim($_POST["username"]));
 			}
 		} else {
 			$validForm = FALSE;
@@ -51,6 +51,7 @@ class userController
 			$user = new User();
 			$user->setEmail($useremail);
 			$user->setUsername($username);
+			$user->setIsActive(0);
 			$user->save();
 			if($user->sendConfirmationEmail()) {
 				$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
@@ -64,13 +65,21 @@ class userController
 	public function activateAction($args) {
 		$view = new view;
 		$user = new User();
-		$user->findById(2);
-		print_r($user);
-		if($user["is_active" == 1]) {
-			$user->update();
-		}
-		$view->assign("user", $user);
 		$view->setView("user/activation.tpl");
+		if (!$user->findBy("token", $args["token"], "string")) {
+			header("location:/");
+		} else {
+			if($user->getToken() == $args["token"] || $user->getEmail() == $args["email"]) {
+				if ($user->getIsActive() != 1) {
+					$user->setIsActive(1);
+					$user->save();
+					$view->assign("msg", "Your account is now activated");
+				}
+				else {
+					$view->assign("msg", "Looks like your account had already been activated");
+				}
+			}
+		}
 	}
 
 

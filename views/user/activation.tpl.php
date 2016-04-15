@@ -1,4 +1,6 @@
-<h3>Validation</h3>
-<?php
-  print_r($this->data["user"]);
- ?>
+<h3>
+    Welcome back !
+</h3>
+<h4>
+    <?php echo $this->data["msg"]; ?>
+</h4>

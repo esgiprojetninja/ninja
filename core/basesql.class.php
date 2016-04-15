@@ -33,7 +33,8 @@ class basesql extends PDO
 			$sql = $sql." WHERE id=".$id.";";
 			$query =  $this->pdo->prepare($sql);
 			$query->execute();
-			foreach ($query->fetch(PDO::FETCH_ASSOC) as $column => $value) {
+			$item = $query->fetch(PDO::FETCH_ASSOC);
+			foreach ($item as $column => $value) {
 				$this->$column = $value;
 			}
 		} else {
@@ -42,12 +43,57 @@ class basesql extends PDO
 		}
 	}
 
+	/**
+	* Assign data from db to current object
+	* @return bolean
+	* @param $column string
+	* @param $value string or numeric
+	* @param $valueType string
+	*/
+	public function findBy($column, $value, $valueType) {
+		$sql = "SELECT * FROM "
+			.$this->table." WHERE "
+			.$column;
+		if ($valueType == "string") {
+			$sql = $sql."='".$value."';";
+		}
+		else if ($valueType == "int") {
+			$sql = $sql."=".$value.";";
+		}
+		$query = $this->pdo->prepare($sql);
+		$query->execute();
+		$item = $query->fetch(PDO::FETCH_ASSOC);
+		if($item) {
+			foreach ($item as $column => $value) {
+				$this->$column = $value;
+			}
+			return True;
+		}
+		else {
+			return False;
+		}
+	}
+
 	public function save()
 	{
 		if (is_numeric($this->id)) {
-			$sql = "UPDATE ".$this->table." SET ".implode(
-				"=:".$this->columns.",", $this->columns
-			);
+			$sql = "UPDATE ".$this->table." SET ";
+			$len = count($this->columns);
+			$i = 0;
+			foreach ($this->columns as $colmun) {
+				if ($i == $len - 1) {
+					$sql = $sql.$colmun."=:".$colmun;
+				} else {
+					$sql = $sql.$colmun."=:".$colmun.",";
+				}
+				$i ++;
+			}
+			$sql = $sql." WHERE id=".$this->id;
+			$stmt = $this->pdo->prepare($sql);
+			foreach ($this->columns as $column) {
+				$stmt->bindValue(":".$column, $this->$column);
+			}
+			$stmt->execute();
 		}
 		else
 		{
@@ -65,23 +111,6 @@ class basesql extends PDO
 			} catch (Exception $e) {
 				die("Error while saving user: ".$e->getMessage());
 			}
-		}
-	}
-
-	/**
-	* @param array
-	* @return object if succes, NULL if error
-	* Look in the db according to param
-	*/
-	public function findBy($data) {
-		$sql = "SELECT * FROM ".$this->table;
-		if (isset($data)) {
-			$sql = $sql." WHERE ".$data["column"]."=".$data["value"].";";
-			$query =  $this->pdo->prepare($sql);
-			$query->execute();
-			return $query->fetch();
-		} else {
-			return NULL;
 		}
 	}
 }
