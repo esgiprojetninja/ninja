@@ -66,21 +66,46 @@ class userController
 		$view = new view;
 		$user = new User();
 		$view->setView("user/activation.tpl");
-		if (!$user->findBy("token", $args["token"], "string")) {
-			header("location:/");
-		} else {
-			if($user->getToken() == $args["token"] || $user->getEmail() == $args["email"]) {
-				if ($user->getIsActive() != 1) {
+		$view->assign("user_token", "");
+		if (isset($args["token"]) && !$user->findBy("token", $args["token"], "string")) {
+			$view->assign("msg", "Not the page you're looking for");
+		} 
+		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
+			var_dump("TA MERE");
+			if ($user->getIsActive() != 1) {
+				$view->assign("msg", "Please choose a password so we can activate your account.");
+				$view->assign("user_token", $args["token"]);
+			} 
+			else {
+				$view->assign("msg", "Looks like your account had already been activated");
+			}
+		}
+		else if (isset($_POST["pwd_form"])) {
+			if ($_POST["password"] === $_POST["pwd_verif"] && strlen($_POST["password"]) > 4) {
+				if (isset($_POST["user_token"]) && $user->findBy("token", $_POST["user_token"], "string")) {
+					$user->setPassword($_POST["password"]);
 					$user->setIsActive(1);
 					$user->save();
+					$view->assign("account_activated", "yeeha");
 					$view->assign("msg", "Your account is now activated");
-				}
+				} 
 				else {
-					$view->assign("msg", "Looks like your account had already been activated");
+					$view->assign("msg", "Wrong token");
 				}
+			}
+			else {
+				$view->assign("user_token", $_POST["user_token"]);
+				$view->assign("msg", "Password and confirm must be the same ans at least 4 char long");
 			}
 		}
 	}
+
+	// public function connectAction () {
+	// 	$view = new view();
+	// 	$user = new User();
+
+
+	// }
 
 
 	public function addAction()

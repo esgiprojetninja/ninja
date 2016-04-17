@@ -3,8 +3,6 @@
   <form method="POST" action="/user/preSub">
     <input type="email" placeholder="Email" name="email" class="ilarge" value="">
     <input type="text" placeholder="Username" name="username" class="ilarge" value="">
-    <input type="password" name="password1" placeholder="New password">
-    <input type="password" name="password2" placeholder="Confirm Password">
     <input type="hidden" name="preSubForm" value="true">
     <input type="submit" value="S'inscrire" name="submit" class="accept">
   </form>
