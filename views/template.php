@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/global.css">
     <link rel="stylesheet" type="text/css" href="/public/css/panel.css">
     <link rel="stylesheet" type="text/css" href="/public/css/button.css">
-    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
 	<!-- scripts -->
 </head>
@@ -16,10 +16,10 @@
     <header>
         <div class="grid-container">
             <div class="row">
-                <div class="col-xs-2 center">
+                <div class="col-sm-2 center">
                     <img src="/public/img/logo_SN_noback.png" alt="Play Now" class="app-logo" height="80px">
                 </div>
-                <div class="col-xs-9">
+                <div class="col-sm-9">
                     <a href="#" class="icon">
                         <span class="icon-location"></span>
                         <span class="text">My location</span>
@@ -33,12 +33,14 @@
                         <span class="text">My account</span>
                     </a>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-sm-1">
                     <div class="dropdown icon">
                         <span class="icon-menu dropdown-icon"></span>
+                        <span class="text">$</span>
                         <ul class="dropdown-menu right">
                             <li><a href="#">Settings</a></li>
                             <li><a href="#">Help</a></li>
+                            <li><a href="/user/logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>
