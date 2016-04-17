@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/global.css">
     <link rel="stylesheet" type="text/css" href="/public/css/panel.css">
     <link rel="stylesheet" type="text/css" href="/public/css/button.css">
-    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
 	<!-- scripts -->
 </head>
@@ -36,9 +36,11 @@
                 <div class="col-sm-1">
                     <div class="dropdown icon">
                         <span class="icon-menu dropdown-icon"></span>
+                        <span class="text">$</span>
                         <ul class="dropdown-menu right">
                             <li><a href="#">Settings</a></li>
                             <li><a href="#">Help</a></li>
+                            <li><a href="/user/logout">Logout</a></li>
                         </ul>
                     </div>
                 </div>

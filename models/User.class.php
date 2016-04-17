@@ -1,18 +1,19 @@
 <?php
+require "core/basesql.class.php";
 class User extends basesql
 {
 
 	protected $id;
-	protected $table;
-	protected $email;
-	protected $token;
-	protected $is_active;
-	protected $password;
-	protected $username;
-	protected $first_name;
-	protected $last_name;
-	protected $phone_number;
-	protected $favorite_sports;
+	protected $table = "users";
+	protected $email = "";
+	protected $token = "";
+	protected $is_active = 0;
+	protected $password = "";
+	protected $username = "";
+	protected $first_name = "";
+	protected $last_name = "";
+	protected $phone_number = 0;
+	protected $favorite_sports = [];
 
 
 	/**
@@ -21,8 +22,6 @@ class User extends basesql
 	*/
 	public function __construct(){
 		parent::__construct();
-		$this->setTable("users");
-		$this->setToken();
 	}
 
 	public function getId() {
@@ -109,14 +108,25 @@ class User extends basesql
 			);
 	}
 
-	public static function toto($toto) {
-		$this->username = $toto;
-	}
-
-	public static function find($id) {
-			$self = new static();
-			$user = $self->findById($id);
-			return $user;
+	/**
+	* Check user token and assign user to session
+	* @return boolean
+	*/
+	public static function isConnected() {
+		if(!isset($_SESSION["user_id"])) {
+			return False;
+		}
+		$user = self::findById(intVal($_SESSION["user_id"]));
+		if ($_SESSION["user_token"] === $user->getToken()) {
+			$user->setToken();
+			$user->save();
+			$token = $user->getToken();
+			$_SESSION["user_token"] = $token;
+			return True;
+		}
+		else {
+			return False;
+		}
 	}
 
 	/**

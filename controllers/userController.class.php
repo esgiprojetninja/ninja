@@ -52,6 +52,7 @@ class userController
 			$user->setEmail($useremail);
 			$user->setUsername($username);
 			$user->setIsActive(0);
+			$user->setToken();
 			$user->save();
 			if($user->sendConfirmationEmail()) {
 				$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
@@ -100,12 +101,39 @@ class userController
 		}
 	}
 
-	// public function connectAction () {
-	// 	$view = new view();
-	// 	$user = new User();
+	public function loginAction () {
+		$view = new view();
+		$view->setView("user/login.tpl");
+		if(isset($_POST["login_form"])) {
+			if($user = User::findBy("email", $_POST["email"], "string")) {
+				if($user->getEmail() == trim($_POST["email"]) && $user->getPassword() == trim($_POST["password"])) {
+					$user->setToken();
+					print_r($user->getToken());
+					$user->save();
+					$token = $user->getToken();
+					$id = $user->getId();
+					$_SESSION["user_id"] = $id;
+					$_SESSION["user_token"] = $token;
+					header("location: /");
+				}
+				else {
+					$view->assign("error_message", "Couldn't find you :(");	
+				}
+			}
+			else {
+				$view->assign("error_message", "Couldn't find you :(");
+			}
+		}
+	}
 
-
-	// }
+	/**
+	* Logs out current user
+	* @return void
+	*/
+	public function logoutAction () {
+		session_destroy();
+		header("location: /user/preSub/");
+	}
 
 
 	public function addAction()

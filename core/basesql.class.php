@@ -3,7 +3,6 @@
 class basesql extends PDO
 {
 
-	private $table;
 	private $columns = [];
 	private $pdo;
 
@@ -12,6 +11,7 @@ class basesql extends PDO
 		$dsn = "mysql:host=".DBHOST.";dbname=".DBNAME;
 		try{
 			$this->pdo = new PDO($dsn,DBUSER,DBPWD);
+			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}catch(Exception $e){
 			die("Erreur SQL:".$e->getMessage());
 		}
@@ -20,26 +20,27 @@ class basesql extends PDO
 		$all_vars = get_object_vars($this);
 		$class_vars = get_class_vars(get_class());
 		$this->columns = array_keys(array_diff_key($all_vars, $class_vars));
+
+		// Unsetting "table" attribute
+		if(($key = array_search("table", $this->columns)) !== false) {
+		    unset($this->columns[$key]);
+		}
 	}
 
-
-	public function setTable($table) {
-		$this->table = $table;
-	}
-
-	public function findById($id) {
-		$sql = "SELECT * FROM ".$this->table;
+	public static function findById($id) {
+		$instance = new static;
+		$sql = "SELECT * FROM ".$instance->table;
 		if (is_numeric($id)) {
 			$sql = $sql." WHERE id=".$id.";";
-			$query =  $this->pdo->prepare($sql);
+			$query =  $instance->pdo->prepare($sql);
 			$query->execute();
 			$item = $query->fetch(PDO::FETCH_ASSOC);
 			foreach ($item as $column => $value) {
-				$this->$column = $value;
+				$instance->$column = $value;
 			}
+			return $instance;
 		} else {
-			$sql = $sql.";";
-			return $query = $this->pdo->execute($sql);
+			return False;
 		}
 	}
 
@@ -50,9 +51,10 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public function findBy($column, $value, $valueType) {
+	public static function findBy($column, $value, $valueType) {
+		$instance = new static;
 		$sql = "SELECT * FROM "
-			.$this->table." WHERE "
+			.$instance->table." WHERE "
 			.$column;
 		if ($valueType == "string") {
 			$sql = $sql."='".$value."';";
@@ -60,14 +62,14 @@ class basesql extends PDO
 		else if ($valueType == "int") {
 			$sql = $sql."=".$value.";";
 		}
-		$query = $this->pdo->prepare($sql);
+		$query = $instance->pdo->prepare($sql);
 		$query->execute();
 		$item = $query->fetch(PDO::FETCH_ASSOC);
 		if($item) {
 			foreach ($item as $column => $value) {
-				$this->$column = $value;
+				$instance->$column = $value;
 			}
-			return True;
+			return $instance;
 		}
 		else {
 			return False;
@@ -80,11 +82,11 @@ class basesql extends PDO
 			$sql = "UPDATE ".$this->table." SET ";
 			$len = count($this->columns);
 			$i = 0;
-			foreach ($this->columns as $colmun) {
+			foreach ($this->columns as $column) {
 				if ($i == $len - 1) {
-					$sql = $sql.$colmun."=:".$colmun;
+					$sql = $sql.$column."=:".$column;
 				} else {
-					$sql = $sql.$colmun."=:".$colmun.",";
+					$sql = $sql.$column."=:".$column." ,";
 				}
 				$i ++;
 			}
@@ -93,7 +95,11 @@ class basesql extends PDO
 			foreach ($this->columns as $column) {
 				$stmt->bindValue(":".$column, $this->$column);
 			}
-			$stmt->execute();
+			try {
+				$stmt->execute();
+			} catch (Exception $e) {
+				die("Eerror : ".$e->getMessage());
+			}
 		}
 		else
 		{

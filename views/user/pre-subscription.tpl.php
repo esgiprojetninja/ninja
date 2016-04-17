@@ -1,5 +1,5 @@
 <!-- formulaire d'inscription -->
-<div id="wrap">
+<div>
   <form method="POST" action="/user/preSub">
     <input type="email" placeholder="Email" name="email" class="ilarge" value="">
     <input type="text" placeholder="Username" name="username" class="ilarge" value="">
@@ -23,3 +23,5 @@
     </h3>
   </div>
 </div>
+
+<a href="/user/login">Login</a>
