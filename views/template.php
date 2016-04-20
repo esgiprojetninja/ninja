@@ -17,7 +17,7 @@
         <div class="grid-container">
             <div class="row">
                 <div class="col-sm-2 center">
-                    <img src="/public/img/logo_SN_noback.png" alt="Play Now" class="app-logo" height="80px">
+                    <img src="/public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
                 </div>
                 <div class="col-sm-9">
                     <a href="#" class="icon">
@@ -49,6 +49,7 @@
     </header>
     <div class="grid-container">
         <div class="app-content">
+            
             <?php include $this->view; ?>
         </div>
     </div> <!-- END GRID CONTAINER -->

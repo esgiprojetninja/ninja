@@ -1,6 +1,6 @@
 <?php
 
-include "models/users.class.php";
+require_once "models/User.class.php";
 
 
 class adminController
@@ -44,7 +44,7 @@ class adminController
                     last_name VARCHAR(50),
                     phone_number int(20),
 					city VARCHAR(50),
-					access_toen VAARCHAR(50),
+					access_token VAARCHAR(50),
                     favorite_sports LONGTEXT
                 );"
             );
@@ -52,7 +52,7 @@ class adminController
             die("Error while creating table user : ".$e->getMessage());
         }
 
-        $admin = new users();
+        $admin = new User();
         $admin->setUsername("Admin");
         $admin->setEmail("admin@admin.admin");
         $admin->save();
@@ -61,9 +61,16 @@ class adminController
 
     }
 
+
     # Delete db
     # Use with caution
     public function deletedbAction($args) {
         $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
+    }
+    
+
+    public function showUiKitAction () {
+        $view = new view;
+        $view->setView("admin/ui-collection.tpl");
     }
 }
