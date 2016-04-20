@@ -9,6 +9,7 @@ danger: #B84D61
 
 **************/
 
+@import "./font-awesome.css";
 @import "./form.css";
 
 @font-face {

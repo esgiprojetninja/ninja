@@ -35,8 +35,7 @@
                 </div>
                 <div class="col-sm-1">
                     <div class="dropdown icon">
-                        <span class="icon-menu dropdown-icon"></span>
-                        <span class="text">$</span>
+                        <span class="icon-menu fa fa-blind"></span>
                         <ul class="dropdown-menu right">
                             <li><a href="#">Settings</a></li>
                             <li><a href="#">Help</a></li>
