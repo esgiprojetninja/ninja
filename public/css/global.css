@@ -10,6 +10,7 @@ danger: #B84D61
 **************/
 
 @import "./font-awesome.css";
+@import "./sidebar.css";
 @import "./form.css";
 
 @font-face {
@@ -89,6 +90,9 @@ header {
     margin-bottom: 20px;
     height: 50px;
     box-shadow: 2px 2px 2px #8E8D8F;
+    width: 100%;
+    position: fixed;
+    top: 0px;
 }
 
 header .app-logo {
@@ -201,5 +205,5 @@ header .icon .text {
 ***********************/
 
 .app-content {
-    padding: 15px;
+    display: flex;
 }

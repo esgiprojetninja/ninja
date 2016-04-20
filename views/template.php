@@ -20,7 +20,7 @@
                     <img src="/public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
                 </div>
                 <div class="col-sm-9">
-                    <a href="#" class="icon">
+                    <!-- <a href="#" class="icon">
                         <span class="icon-location"></span>
                         <span class="text">My location</span>
                     </a>
@@ -31,11 +31,11 @@
                     <a class="icon" href="#">
                         <span class="icon-user"></span>
                         <span class="text">My account</span>
-                    </a>
+                    </a> -->
                 </div>
                 <div class="col-sm-1">
                     <div class="dropdown icon">
-                        <span class="icon-menu fa fa-blind"></span>
+                        <span class="icon-menu fa fa-bars"></span>
                         <ul class="dropdown-menu right">
                             <li><a href="#">Settings</a></li>
                             <li><a href="#">Help</a></li>
@@ -46,12 +46,29 @@
             </div>
         </div>
     </header>
-    <div class="grid-container">
-        <div class="app-content">
-            
-            <?php include $this->view; ?>
+    <div class="app-content">
+        <div class="sidebar">
+            <div class="items-up items">
+                <a href="#" class="item">
+                    <span class="fa fa-user"></span>
+                </a>
+                <a href="#" class="item">
+                    <span class="fa fa-map-marker"></span>
+                </a>
+                <a href="#" class="item">
+                    <span class="fa fa-futbol-o"></span>
+                </a>
+            </div>
+            <div class="items-down items">
+                
+            </div>
         </div>
-    </div> <!-- END GRID CONTAINER -->
+        <div class="grid-container">
+            <div class="grid-content">
+                <?php include $this->view; ?>
+            </div>
+        </div> <!-- END GRID CONTAINER -->
+    </div>
 </div>
 
 </body>
