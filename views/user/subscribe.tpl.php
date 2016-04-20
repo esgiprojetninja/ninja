@@ -9,7 +9,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-6">
-            <form method="POST" action="/user/preSub">
+            <form method="POST" action="/user/subscribe">
               <h3>Want to join the nation ?</h3>
               <div class="input-grp">
                 <input type="email" placeholder="Email" name="email" class="form-control" value="">
@@ -18,7 +18,7 @@
                 <input type="text" placeholder="Username" name="username" class="form-control" value="">
               </div>
               <div class="input-grp">
-                <input type="hidden" name="preSubForm" value="true">
+                <input type="hidden" name="subscribe_form" value="true">
                 <input type="submit" value="Sign In" name="submit" class="btn btn-primary">
               </div>
             </form>
