@@ -1,3 +1,16 @@
+/**************
+ -- Colors --
+
+primary: #6C6599
+primary2: #433A4B
+success: #328396
+warning: #EBAB51
+danger: #B84D61
+
+**************/
+
+@import "./form.css";
+
 @font-face {
     font-family: Lato;
     src: url("../fonts/lato/Lato-Regular.ttf");
@@ -12,6 +25,17 @@ body {
     font-size: 12px;
     color: #1A1C40;
     background-color: #f5f8fa;
+}
+
+h1 {
+    color: #a9a9a9;
+}
+
+.text-right {
+    text-align: right;
+}
+.text-center {
+    text-align: center;
 }
 
 /********************
@@ -67,6 +91,8 @@ header {
 }
 
 header .app-logo {
+    margin-top: 5px;
+    height: 40px;
 }
 
 header .header-separator {
@@ -172,3 +198,7 @@ header .icon .text {
 /***********************
     -- APP-CONTENT --
 ***********************/
+
+.app-content {
+    padding: 15px;
+}
