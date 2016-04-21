@@ -87,8 +87,8 @@
 </div>
 
 <div class="row">
-    <h1>Forms</h1>
     <div class="col-sm-6">
+        <h1>Forms</h1>
         <div class="panel">
             <div class="panel-body">
                 <form>
@@ -120,6 +120,14 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <h1>Icons</h1>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                We use Fontawesome, you can find the collection <a href="https://fortawesome.github.io/Font-Awesome/icons/" target="_blank">here</a> <span class="fa fa-hand-peace-o"></span>.
             </div>
         </div>
     </div>
