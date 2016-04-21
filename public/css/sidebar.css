@@ -1,0 +1,30 @@
+.app-content .sidebar {
+    background-color: #433A4B;
+    box-shadow: 2px 2px 2px #8E8D8F;
+    height: calc(100vh - 50px);
+    width: 50px;
+    position: fixed;
+    top: 50px;
+}
+
+.app-content .sidebar .items {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content .sidebar .items .item {
+    margin-top: 15px;
+    display: block;
+    width: 50px;
+    height: 50px;
+    color: #FFFFFF;
+    font-size: 40px;
+    text-align: center;
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.app-content .sidebar .items .item:hover {
+    color: #433A4B;
+    background-color: #FFFFFF;
+}

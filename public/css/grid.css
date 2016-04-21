@@ -9,12 +9,15 @@ body{
 }
 
 .grid-container{
-    width:100%;
+    width: calc(100% - 65px);
+    margin-left: 65px;
 }
 
 .grid-container *{
     box-sizing:border-box;
 }
+
+
 
 .row:before,
 .row:after{
