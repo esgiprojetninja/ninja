@@ -8,7 +8,7 @@ class userController
 		if(!empty($id)){
 			$users = new users();
 			$v = new view();
-			$v->setView("user/userShow");
+			$v->setView("user/show.tpl");
 			$v->assign("users",$users->find("SELECT email,password FROM users WHERE id_user = :id",[':id'=>$id]));
 		}else{
 			header('Location: /user');
@@ -18,7 +18,7 @@ class userController
 	/**
 	*
 	*/
-	public function preSubAction($args) {
+	public function subscribeAction($args) {
 		$view = new view();
 
 		$errors = [];
@@ -26,7 +26,7 @@ class userController
 		$formData = [];
 
 		// Basic security
-		if(isset($_POST["preSubForm"])) {
+		if(isset($_POST["subscribe_form"])) {
 			// verif mail
 			if(!isset($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
 				$validForm = FALSE;
@@ -60,7 +60,7 @@ class userController
 				$view->assign( "mailerMessage", "Something went when trying to send email." );
 			}
 		}
-		$view->setView("user/pre-subscription.tpl");
+		$view->setView("user/subscribe.tpl");
 	}
 
 	public function activateAction($args) {
@@ -132,7 +132,7 @@ class userController
 	*/
 	public function logoutAction () {
 		session_destroy();
-		header("location: /user/preSub/");
+		header("location: /user/subscribe");
 	}
 
 
