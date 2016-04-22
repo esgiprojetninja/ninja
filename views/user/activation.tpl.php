@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <h3>
     Welcome back !
 </h3>

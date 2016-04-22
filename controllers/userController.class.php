@@ -67,7 +67,7 @@ class userController
 		$view = new view;
 		$user = new User();
 		$view->setView("user/activation.tpl");
-		$view->assign("user_token", "");
+		$view->assign("user_token", $args["token"]);
 		if (isset($args["token"]) && !$user->findBy("token", $args["token"], "string")) {
 			$view->assign("msg", "Not the page you're looking for");
 		} 
@@ -91,6 +91,7 @@ class userController
 					$view->assign("msg", "Your account is now activated");
 				} 
 				else {
+					var_dump($_POST["user_token"]);
 					$view->assign("msg", "Wrong token");
 				}
 			}
