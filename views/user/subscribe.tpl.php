@@ -50,7 +50,7 @@
               }
             ?>
         </ul>
-        <?php echo isset($this->data["error_message"]) ? $this->data["error_message"] : "" ?>
+        <?php echo isset($this->data["mailerMessage"]) ? $this->data["mailerMessage"] : "" ?>
       </div>
     </div>
   </div>
