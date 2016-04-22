@@ -35,7 +35,6 @@ class basesql extends PDO
 			$query =  $instance->pdo->prepare($sql);
 			$query->execute();
 			$item = $query->fetch(PDO::FETCH_ASSOC);
-			print_r($sql);
 			foreach ($item as $column => $value) {
 				$instance->$column = $value;
 			}
