@@ -26,7 +26,7 @@
                     </li>
                 </ul>
                 <div class="text-right">
-                    <button class="btn btn-primary">Edit</button>
+                    <a href="/user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>
