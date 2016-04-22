@@ -21,10 +21,11 @@
     font-size: 40px;
     text-align: center;
     transition-property: all;
-    transition-duration: 0.3s;
+    transition-duration: 0.1s;
 }
 
 .app-content .sidebar .items .item:hover {
-    color: #433A4B;
-    background-color: #FFFFFF;
+    //color: #433A4B;
+    border-left: 4px solid #433A4B;
+    background-color: #6C6599;
 }

@@ -34,6 +34,16 @@ div.panel panel-primary/success/warning...(optional)
     padding: 5px;
 }
 
+.panel .panel-media {
+    max-height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.panel .panel-media img {
+    width: 100%;
+}
+
 /*********************
     -- COLORS --
 *********************/

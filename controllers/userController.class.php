@@ -3,17 +3,18 @@
 class userController
 {
 
-	public function showAction($id)
+	public function showAction($args)
 	{
-		if(!empty($id)){
-			$users = new users();
+		if(isset($args[0])){
+			$user = User::findById($args[0]);
 			$v = new view();
 			$v->setView("user/show.tpl");
-			$v->assign("users",$users->find("SELECT email,password FROM users WHERE id_user = :id",[':id'=>$id]));
+			$v->assign("user", $user);
 		}else{
-			header('Location: /user');
+			// TODO uer list
 		}
 	}
+
 
 	/**
 	*
