@@ -113,6 +113,7 @@ class basesql extends PDO
 
 
 			try {
+				$data['favorite_sports'] = '';
 				$query->execute($data);
 			} catch (Exception $e) {
 				die("Error while saving user: ".$e->getMessage());

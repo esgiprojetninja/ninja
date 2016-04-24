@@ -9,7 +9,7 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-6">
-            <form method="POST" action="/user/subscribe">
+            <form method="POST" action="<?= WEBROOT; ?>user/subscribe">
               <h3>Want to join the nation ?</h3>
               <div class="input-grp">
                 <input type="email" placeholder="Email" name="email" class="form-control" value="">
@@ -24,7 +24,7 @@
             </form>
           </div>
           <div class="col-sm-6">
-            <form action="/user/login" method="POST">
+            <form action=<?= WEBROOT; ?>"user/login" method="POST">
               <h3>Already a sport citizen ?</h3>
               <div class="input-grp">
                 <input type="text" name="email" placeholder="Email" class="form-control">

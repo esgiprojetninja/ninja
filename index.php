@@ -24,7 +24,7 @@ spl_autoload_register('autoloader');
 $route = routing::setRouting();
 
 if ($route["controller"] != "user" && !User::isConnected()) {
-    header("location: /user/subscribe");
+    header("Location: ".WEBROOT."user/subscribe");
 }
 
 $name_controller = $route['controller']."Controller";
