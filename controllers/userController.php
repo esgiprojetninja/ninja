@@ -86,7 +86,6 @@ class userController
         if (isset($args["token"]) && !$user->findBy("token", $args["token"], "string")) {
             $view->assign("msg", "Not the page you're looking for");
         } else if (isset($args["token"]) && $user->getToken() == $args["token"]) {
-            var_dump("TA MERE");
             if ($user->getIsActive() != 1) {
                 $view->assign("msg", "Please choose a password so we can activate your account.");
                 $view->assign("user_token", $args["token"]);
@@ -110,6 +109,7 @@ class userController
                 $view->assign("msg", "Password and confirm must be the same ans at least 4 char long");
             }
         }
+        $view->assign("msg", "TEST : " .$user->getToken());
         $view->setView("user/activation");
     }
 
@@ -163,6 +163,7 @@ class userController
     * @return boolean
     */
     public function sendConfirmationEmail($email,$token) {
+        /*
         try {
             require 'vendors/PHPMailer/PHPMailerAutoload.php';
         } catch(Execption $e) {
@@ -198,7 +199,7 @@ class userController
         } else {
                 return TRUE;
         }
-        
+        */
     }
 
 

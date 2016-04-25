@@ -2,7 +2,7 @@
     Welcome back !
 </h3>
 <h4>
-    <?php echo $this->data["msg"]; ?>
+    <?php if(isset($this->data["msg"] )){ echo $this->data["msg"]; } ?>
 </h4>
 <?php if (!isset($this->data["account_activated"])) { ?>
     <form action="<?= WEBROOT; ?>user/activate" method="post">
