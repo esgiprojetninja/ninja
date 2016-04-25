@@ -98,7 +98,7 @@ class basesql extends PDO
 			try {
 				$stmt->execute();
 			} catch (Exception $e) {
-				die("Eerror : ".$e->getMessage());
+				die("Error : ".$e->getMessage());
 			}
 		}
 		else
@@ -111,8 +111,8 @@ class basesql extends PDO
 				$data[$column] = $this->$column;
 			}
 
-
 			try {
+				$data['favorite_sports'] = '';
 				$query->execute($data);
 			} catch (Exception $e) {
 				die("Error while saving user: ".$e->getMessage());

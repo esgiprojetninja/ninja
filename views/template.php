@@ -3,10 +3,10 @@
 <head>
 	<title>SPORT NATION | WORLD WIDE</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/public/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/global.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/panel.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/button.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT; ?>public/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT; ?>public/css/global.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT; ?>public/css/panel.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT; ?>public/css/button.css">
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
 	<!-- scripts -->
@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <img src="/public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
+        <img src="<?= WEBROOT; ?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
             <ul class="dropdown-menu right">
@@ -27,7 +27,7 @@
     <div class="app-content">
         <div class="sidebar">
             <div class="items-up items">
-                <a href="<?php echo isset($_SESSION['user_id']) ? '/user/show/'.$_SESSION['user_id']: 'user/show/' ?>" class="item">
+                <a href="<?php echo isset($_SESSION['user_id']) ? WEBROOT.'user/show/'.$_SESSION['user_id']: 'user/show/' ?>" class="item">
                     <span class="fa fa-user"></span>
                 </a>
                 <a href="#" class="item">

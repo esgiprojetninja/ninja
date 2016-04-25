@@ -6,7 +6,7 @@
     <div class="col-sm-6">
         <div class="panel panel-primary">
             <div class="panel-media">
-                <img src="/public/img/monkey.jpg">
+                <img src="<?= WEBROOT; ?>public/img/monkey.jpg">
             </div>
             <div class="panel-heading"><h3><?php echo $user->getUsername(); ?></h3></div>
             <div class="panel-body">
@@ -26,7 +26,7 @@
                     </li>
                 </ul>
                 <div class="text-right">
-                    <a href="/user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
+                    <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>

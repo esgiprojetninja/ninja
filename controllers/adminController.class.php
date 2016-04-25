@@ -5,33 +5,35 @@ require_once "models/User.class.php";
 
 class adminController
 {
-	public function indexAction($args)
-	{
-		echo 'Admin';
-	}
+    public function indexAction($args)
+    {
+        echo 'Admin';
+    }
 
-	public function testAction($args)
-	{
-		echo 'lol';
-	}
+    public function testAction($args)
+    {
+        echo 'lol';
+    }
 
     # Create database
-    public function createdbAction($args) {
-       $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
+    public function createdbAction($args)
+    {
+        $pdo = new PDO("mysql:host=" . DBHOST, DBUSER, DBPWD);
 
-       try {
-            $pdo->exec("CREATE DATABASE IF NOT EXISTS `".DBNAME."`;");
-       }catch(Execption $e) {
-            die("Error while creating database : ".$e->getMessage());
-       }
+        try {
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS `" . DBNAME . "`;");
+        } catch (Exception $e) {
+            die("Error while creating database : " . $e->getMessage());
+        }
 
-       header("location: /admin/initdb");
+        header("location: /admin/initdb");
     }
 
     # Create tables
-    public function initdbAction($args) {
+    public function initdbAction($args)
+    {
 
-        $pdo = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME,DBUSER,DBPWD);
+        $pdo = new PDO("mysql:host=" . DBHOST . ";dbname=" . DBNAME, DBUSER, DBPWD);
 
         try {
             $pdo->exec("CREATE TABLE IF NOT EXISTS users(
@@ -49,7 +51,7 @@ class adminController
                 );"
             );
         } catch (Execption $e) {
-            die("Error while creating table user : ".$e->getMessage());
+            die("Error while creating table user : " . $e->getMessage());
         }
 
         $admin = new User();
@@ -64,12 +66,14 @@ class adminController
 
     # Delete db
     # Use with caution
-    public function deletedbAction($args) {
-        $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
+    public function deletedbAction($args)
+    {
+        $pdo = new PDO("mysql:host=" . DBHOST, DBUSER, DBPWD);
     }
-    
 
-    public function showUiKitAction () {
+
+    public function showUiKitAction()
+    {
         $view = new view;
         $view->setView("admin/ui-collection.tpl");
     }
