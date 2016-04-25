@@ -11,7 +11,7 @@ class Routing
         $uri = $_SERVER['REQUEST_URI'];
         $explode_uri = explode('?', $uri);
         $uri = $explode_uri[0];
-        $uri = trim(str_replace('esgi/ninja', '', $uri), '/');
+        $uri = trim(str_replace('ninja', '', $uri), '/');
         $explode_uri = explode('/', $uri);
         $controller = (!empty($explode_uri[0])) ? $explode_uri[0] : 'index';
         $action = (!empty($explode_uri[1])) ? $explode_uri[1] : 'index';

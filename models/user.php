@@ -4,6 +4,7 @@ class User extends Model
 {
     protected $table = "users";
 
+    protected $id;
     protected $email;
     protected $city;
     protected $token;
@@ -14,6 +15,7 @@ class User extends Model
     protected $last_name;
     protected $phone_number;
     protected $favorite_sports;
+    protected $birthday;
 
     public function __construct()
     {
@@ -41,15 +43,15 @@ class User extends Model
      */
     public function getCity()
     {
-        return $this->email;
+        return $this->city;
     }
 
     /**
      * @param mixed $email
      */
-    public function setCity($email)
+    public function setCity($city)
     {
-        $this->email = $email;
+        $this->city = $city;
     }
 
     /**
@@ -57,15 +59,15 @@ class User extends Model
      */
     public function getBirthday()
     {
-        return $this->email;
+        return $this->birthday;
     }
 
     /**
      * @param mixed $email
      */
-    public function setBirthday($email)
+    public function setBirthday($birthday)
     {
-        $this->email = $email;
+        $this->birthday = $birthday;
     }
 
     /**
@@ -196,6 +198,14 @@ class User extends Model
     public function setFavoriteSports($favorite_sports)
     {
         $this->favorite_sports = $favorite_sports;
+    }
+
+    /**
+    * @param mixed 
+    */
+    public function getId()
+    {
+        return $this->id;
     }
 
 

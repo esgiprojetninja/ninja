@@ -5,7 +5,7 @@
     <?php echo $this->data["msg"]; ?>
 </h4>
 <?php if (!isset($this->data["account_activated"])) { ?>
-    <form action="/user/activate" method="post">
+    <form action="<?= WEBROOT; ?>user/activate" method="post">
         <h3>Choose a password</h3>
         <input type="password" name="password" placeholder="Password">
         <input type="password" name="pwd_verif" placeholder="Coonfirm password">

@@ -1,5 +1,7 @@
 <?php
 
+require 'models/user.php';
+
 class userController
 {
 
@@ -18,7 +20,6 @@ class userController
             // TODO user list
         }
     }
-
 
     /**
      * Subscribe action
@@ -68,7 +69,7 @@ class userController
             $user->setIsActive(0);
             $user->setToken();
             $user->save();
-            if ($user->sendConfirmationEmail()) {
+            if ($this->sendConfirmationEmail($user->getEmail(),$user->getToken())) {
                 $view->assign("mailerMessage", "An email has just been sent to " . $user->getEmail());
             } else {
                 $view->assign("mailerMessage", "Something went when trying to send email.");
@@ -81,7 +82,6 @@ class userController
     {
         $view = new view;
         $user = new User();
-        $view->setView("user/activation.tpl");
         $view->assign("user_token", $args["token"]);
         if (isset($args["token"]) && !$user->findBy("token", $args["token"], "string")) {
             $view->assign("msg", "Not the page you're looking for");
@@ -110,6 +110,7 @@ class userController
                 $view->assign("msg", "Password and confirm must be the same ans at least 4 char long");
             }
         }
+        $view->setView("user/activation");
     }
 
     public function login()
@@ -155,6 +156,49 @@ class userController
         $view = new view();
         $view->setView("/user/toto.tpl");
         $view->assign("msg", "This is an example");
+    }
+
+    /**
+    * Send confirmation email using users's email
+    * @return boolean
+    */
+    public function sendConfirmationEmail($email,$token) {
+        try {
+            require 'vendors/PHPMailer/PHPMailerAutoload.php';
+        } catch(Execption $e) {
+            die("Unable to load phpmailer : ".$e->getMessage());
+        }
+        $mail = new PHPMailer();
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
+        $mail->Password = 'test3ADW';                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                    // TCP port to connect to
+        $mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
+        $mail->addAddress($email);     // Add a recipient
+        //$mail->addReplyTo('info@example.com', 'Information');
+        //$mail->addCC('cc@example.com');
+        //$mail->addBCC('bcc@example.com');
+        //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->Subject = 'Welcome in Sport Nation World Wide';
+        $link = "http://".WEBROOT."user/activate?email="
+            .$email
+            ."&token="
+            .$token."";
+        $mail->Body    = 'Click the following link to validate your registration : '. $link;
+        //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        //$mail->send();
+        if(!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+                return FALSE;
+        } else {
+                return TRUE;
+        }
+        
     }
 
 
