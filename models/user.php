@@ -5,6 +5,7 @@ class User extends Model
     protected $table = "users";
 
     protected $email;
+    protected $city;
     protected $token;
     protected $is_active;
     protected $password;
@@ -17,26 +18,6 @@ class User extends Model
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function create()
-    {
-
-    }
-
-    public function update()
-    {
-
-    }
-
-    public function findById()
-    {
-
-    }
-
-    public function delete()
-    {
-
     }
 
     /**
@@ -58,17 +39,51 @@ class User extends Model
     /**
      * @return mixed
      */
+    public function getCity()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setCity($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthday()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setBirthday($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getToken()
     {
         return $this->token;
     }
 
     /**
-     * @param mixed $token
+     * Generate a token
      */
-    public function setToken($token)
+    public function setToken()
     {
-        $this->token = $token;
+        $this->token = md5(
+            $this->email . $this->username . SALT . date("YmdHis")
+        );
     }
 
     /**

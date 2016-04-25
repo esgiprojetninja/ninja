@@ -12,10 +12,10 @@ class userController
         if (isset($args[0])) {
             $user = User::findById($args[0]);
             $v = new view();
-            $v->setView("user/show.tpl");
+            $v->setView("user/show");
             $v->assign("user", $user);
         } else {
-            // TODO uer list
+            // TODO user list
         }
     }
 
@@ -58,6 +58,13 @@ class userController
             $user = new User();
             $user->setEmail($useremail);
             $user->setUsername($username);
+            $user->setFirstName('');
+            $user->setLastName('');
+            $user->setPhoneNumber('');
+            $user->setCity('');
+            $user->setBirthday('');
+            $user->setPassword('');
+            $user->setFavoriteSports('');
             $user->setIsActive(0);
             $user->setToken();
             $user->save();
@@ -67,7 +74,7 @@ class userController
                 $view->assign("mailerMessage", "Something went when trying to send email.");
             }
         }
-        $view->setView("user/subscribe.tpl");
+        $view->setView("user/subscribe");
     }
 
     public function activate($args)
