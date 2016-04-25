@@ -1,11 +1,7 @@
 <?php
 
-class Views
+class indexController
 {
-    /**
-     * Show index view
-     * @param $args
-     */
     public function index($args)
     {
         $view = new view;

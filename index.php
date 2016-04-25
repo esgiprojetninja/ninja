@@ -8,7 +8,7 @@ require 'core/autoload.php';
 
 $route = routing::setRouting();
 
-$controllerName = "views";
+$controllerName = $route['controller'] . "Controller";
 $controllerPath = "controllers/" . $controllerName . ".php";
 if (file_exists($controllerPath)) {
     include $controllerPath;
