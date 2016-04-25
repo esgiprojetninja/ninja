@@ -1,12 +1,12 @@
 {
-    "name": "roland/ninja",
-    "require": {
-        "phpmailer/phpmailer": "^5.2"
-    },
-    "authors": [
-        {
-            "name": "Roland Kullet",
-            "email": "renaud.bellec.3@gmail.com"
-        }
-    ]
+  "name": "roland/ninja",
+  "require": {
+    "phpmailer/phpmailer": "^5.2"
+  },
+  "authors": [
+    {
+      "name": "Roland Kullet",
+      "email": "renaud.bellec.3@gmail.com"
+    }
+  ]
 }

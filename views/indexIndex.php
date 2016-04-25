@@ -1,1 +1,0 @@
-<h1>Bonjour <?php echo "uech" ?></h1>
