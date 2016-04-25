@@ -19,6 +19,108 @@ class userController
         }
     }
 
+    /**
+     * Edit user
+     * @param $args
+     */
+    public function editAction($args)
+    {
+        if (isset($args[0])) {
+            $user = User::findById($args[0]);
+            $view = new view();
+
+            $errors = [];
+            $validForm = TRUE;
+            $formData = [];
+
+            // Basic security
+            if (isset($_POST["edit_form"])) {
+                // verif mail
+                if(!empty($_POST["email"])){
+                    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+                        $validForm = FALSE;
+                        $errors[] = "Please enter a valid email";
+                    } else {
+                        $useremail = strtolower(trim($_POST["email"]));
+                    }
+                }
+
+                if(!empty($_POST["username"])){
+                    if (strlen($_POST["username"]) < 3) {
+                        $validForm = FALSE;
+                        $errors[] = "Username must be at least 4 char long.";
+                    } else {
+                        $username = strtolower(trim($_POST["username"]));
+                    }
+                }
+
+                if(!empty($_POST["last_name"])){
+                    if (strlen($_POST["last_name"]) < 3) {
+                        $validForm = FALSE;
+                        $errors[] = "Last name must be at least 4 char long.";
+                    } else {
+                        $lastname = strtolower(trim($_POST["last_name"]));
+                    }
+                }
+
+                if(!empty($_POST["first_name"])){
+                    if (strlen($_POST["first_name"]) < 3) {
+                        $validForm = FALSE;
+                        $errors[] = "First name must be at least 4 char long.";
+                    } else {
+                        $firstname = strtolower(trim($_POST["first_name"]));
+                    }
+                }
+
+                if(!empty($_POST["phone_number"])){
+                    if(preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/", $_POST['phone_number'])) {                    
+                        $validForm = FALSE;
+                        $errors[] = "Phone number is invalid.";
+                    } else {
+                        $phonenumber = strtolower(trim($_POST["phone_number"]));
+                    }
+                }
+
+                if(!empty($_POST["old_password"] && $_POST["new_password"] && $_POST["confirm_new_password"])){
+                    if ($_POST["new_password"] != $_POST["confirm_new_password"]) {
+                        $validForm = FALSE;
+                        $errors[] = "Password invalid";
+                    }else {
+                        $password = strtolower(trim($_POST["password"]));
+                    }
+                }
+
+            } else {
+                $validForm = FALSE;
+            }
+
+            if (!$validForm) {
+                $view->assign("errors", $errors);
+            } else {
+                if(isset($useremail)){
+                    $user->setEmail($useremail);
+                }
+                if(isset($username)){
+                    $user->setUsername($username);
+                }
+                if(isset($firstname)){
+                    $user->setFirstName($firstname);
+                }
+                if(isset($lastname)){
+                    $user->setLastName($lastname);
+                }
+                if(isset($phonenumber)){
+                    $user->setPhoneNumber($phonenumber);
+                }
+                $user->setToken();
+                $user->save();
+            }
+            $view->setView("user/edit.tpl");
+            $view->assign("user", $user);
+        } else {
+            // TODO user list
+        }
+    }
 
     /**
      * Subcribe form

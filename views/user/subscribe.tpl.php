@@ -24,7 +24,7 @@
             </form>
           </div>
           <div class="col-sm-6">
-            <form action=<?= WEBROOT; ?>"user/login" method="POST">
+            <form action="<?= WEBROOT; ?>user/login" method="POST">
               <h3>Already a sport citizen ?</h3>
               <div class="input-grp">
                 <input type="text" name="email" placeholder="Email" class="form-control">

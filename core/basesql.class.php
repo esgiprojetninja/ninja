@@ -98,7 +98,7 @@ class basesql extends PDO
 			try {
 				$stmt->execute();
 			} catch (Exception $e) {
-				die("Eerror : ".$e->getMessage());
+				die("Error : ".$e->getMessage());
 			}
 		}
 		else
@@ -110,7 +110,6 @@ class basesql extends PDO
 			foreach ($this->columns as $column) {
 				$data[$column] = $this->$column;
 			}
-
 
 			try {
 				$data['favorite_sports'] = '';

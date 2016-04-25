@@ -27,7 +27,7 @@
     <div class="app-content">
         <div class="sidebar">
             <div class="items-up items">
-                <a href="<?php echo isset($_SESSION['user_id']) ? '/user/show/'.$_SESSION['user_id']: 'user/show/' ?>" class="item">
+                <a href="<?php echo isset($_SESSION['user_id']) ? WEBROOT.'user/show/'.$_SESSION['user_id']: 'user/show/' ?>" class="item">
                     <span class="fa fa-user"></span>
                 </a>
                 <a href="#" class="item">
