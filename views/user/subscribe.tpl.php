@@ -9,7 +9,8 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-6">
-            <form method="POST" action="/user/subscribe">
+
+          <!--  <form method="POST" action="/user/subscribe">
               <h3>Want to join the nation ?</h3>
               <div class="input-grp">
                 <input type="email" placeholder="Email" name="email" class="form-control" value="">
@@ -21,7 +22,7 @@
                 <input type="hidden" name="subscribe_form" value="true">
                 <input type="submit" value="Sign In" name="submit" class="btn btn-primary">
               </div>
-            </form>
+            </form> -->
           </div>
           <div class="col-sm-6">
             <form action="/user/login" method="POST">

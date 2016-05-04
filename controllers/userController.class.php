@@ -72,7 +72,6 @@ class userController
 			$view->assign("msg", "Not the page you're looking for");
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			var_dump("TA MERE");
 			if ($user->getIsActive() != 1) {
 				$view->assign("msg", "Please choose a password so we can activate your account.");
 				$view->assign("user_token", $args["token"]);
@@ -86,8 +85,8 @@ class userController
 				if (isset($_POST["user_token"]) && $user->findBy("token", $_POST["user_token"], "string")) {
 					$user->setPassword($_POST["password"]);
 					$user->setIsActive(1);
+					$user->getId();
 					$user->save();
-					$view->assign("account_activated", "yeeha");
 					$view->assign("msg", "Your account is now activated");
 				} 
 				else {
