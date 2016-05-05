@@ -19,11 +19,19 @@ class userController
 	*
 	*/
 	public function subscribeAction($args) {
-		$view = new view();
 
+		$view = new view();
+		$view->setView("user/subscribe.tpl");
+
+		$user = new User();
+		$form = $user->getForm();
 		$errors = [];
+
+
+		$view->assign("form", $form);
+		$view->assign("errors", $errors);
+
 		$validForm = TRUE;
-		$formData = [];
 
 		// Basic security
 		if(isset($_POST["subscribe_form"])) {
@@ -48,7 +56,6 @@ class userController
 		if(!$validForm) {
 			$view->assign("errors", $errors);
 		} else {
-			$user = new User();
 			$user->setEmail($useremail);
 			$user->setUsername($username);
 			$user->setIsActive(0);
@@ -60,7 +67,6 @@ class userController
 				$view->assign( "mailerMessage", "Something went when trying to send email." );
 			}
 		}
-		$view->setView("user/subscribe.tpl");
 	}
 
 	public function activateAction($args) {

@@ -9,7 +9,9 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-6">
-
+          <?php
+            $this->createForm($form, $errors);
+          ?>
           <!--  <form method="POST" action="/user/subscribe">
               <h3>Want to join the nation ?</h3>
               <div class="input-grp">
@@ -42,15 +44,15 @@
         </div>
       </div>
       <div class="panel-footer">
-        <ul>
+        <!-- <ul>
             <?php
-              if (isset($this->data["errors"])) {
-                foreach ($this->data["errors"] as $value) {
-                  echo "<li>".$value."</li>";
-                }
-              }
+              // if (isset($this->data["errors"])) {
+              //  foreach ($this->data["errors"] as $value) {
+              //    echo "<li>".$value."</li>";
+              //  }
+              // }
             ?>
-        </ul>
+        </ul> -->
         <?php echo isset($this->data["mailerMessage"]) ? $this->data["mailerMessage"] : "" ?>
       </div>
     </div>

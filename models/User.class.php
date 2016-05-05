@@ -175,4 +175,21 @@ class User extends basesql
 				return TRUE;
 		}
 	}
+
+	/**
+	* Form subscribe
+	* @return boolean
+	*/
+	public function getForm(){
+
+		return [	
+					"options" => [ "method"=>"POST", "action"=>"", "submit"=>"Sign In" ],
+					"struct" => [
+						"email"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+
+						"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ]
+					]
+		];
+
+	}
 }

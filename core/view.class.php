@@ -28,7 +28,7 @@ class view
 
 	public function createForm($form, $errors){
 		global $errors_msg;
-		include "views/form.php";
+		include "views/user/subscribe.form.php";
 	}
 
 	public function assign($key, $value)
