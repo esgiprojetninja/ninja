@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-sm-6">
           <?php
-            $this->createForm($form, "sub", $errors, "/user/subscribe");
+            $this->createForm($form, "sub", $errors);
           ?>
           <!--  <form method="POST" action="/user/subscribe">
               <h3>Want to join the nation ?</h3>
@@ -28,7 +28,7 @@
           </div>
           <div class="col-sm-6">
           <?php
-            $this->createForm($form, "log", $errors, "/user/login");
+            $this->createForm($form, "act", $errors);
           ?>
           <!--  <form action="/user/login" method="POST">
               <h3>Already a sport citizen ?</h3>
