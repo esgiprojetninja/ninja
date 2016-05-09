@@ -20,16 +20,13 @@ class userController
 	*/
 	public function subscribeAction($args) {
 
-		$view = new view();
-		$view->setView("user/subscribe.tpl");
-
 		$user = new User();
 		$form = $user->getForm();
 		$errors = [];
 
-
+		$view = new view();
+		$view->setView("user/subscribe.tpl");
 		$view->assign("form", $form);
-		$view->assign("errors", $errors);
 
 		$validForm = TRUE;
 

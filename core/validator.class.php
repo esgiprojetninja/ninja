@@ -17,6 +17,9 @@ class validator{
 			elseif($options["type"]=="password" && !self::passwordCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
+			elseif($option["type"]=="email"){
+				$
+			}
 			
 		}
 
@@ -33,6 +36,10 @@ class validator{
 					!preg_match("/[0-9]/", $var) ||
 					!preg_match("/[a-z]/", $var) ||
 					!preg_match("/[A-Z]/", $var) );	
+	}
+
+	public static function emailCorrect($var){
+		
 	}
 
 }

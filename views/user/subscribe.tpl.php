@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-sm-6">
           <?php
-            $this->createForm($form, $errors);
+            $this->createForm($form, "sub", $errors);
           ?>
           <!--  <form method="POST" action="/user/subscribe">
               <h3>Want to join the nation ?</h3>
@@ -27,7 +27,10 @@
             </form> -->
           </div>
           <div class="col-sm-6">
-            <form action="/user/login" method="POST">
+          <?php
+            $this->createForm($form, "act", $errors);
+          ?>
+          <!--  <form action="/user/login" method="POST">
               <h3>Already a sport citizen ?</h3>
               <div class="input-grp">
                 <input type="text" name="email" placeholder="Email" class="form-control">
@@ -39,7 +42,7 @@
                 <input type="hidden" name="login_form" value="true">
                 <input type="submit" value="Log In" class="btn btn-primary">
               </div>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>

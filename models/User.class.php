@@ -185,9 +185,16 @@ class User extends basesql
 		return [	
 					"options" => [ "method"=>"POST", "action"=>"", "submit"=>"Sign In" ],
 					"struct" => [
-						"email"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+						"sub" =>[
+							"email"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
 
-						"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ]
+							"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
+						],
+						"act"=>[
+							"password"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
+
+							"confpassword"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ],
+						]
 					]
 		];
 
