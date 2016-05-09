@@ -186,14 +186,19 @@ class User extends basesql
 					"options" => [ "method"=>"POST", "action"=>"", "submit"=>"Sign In" ],
 					"struct" => [
 						"sub" =>[
-							"email"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+							"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
 
-							"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
+							"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ]
+						],
+						"log"=>[
+							"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+
+							"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ]
 						],
 						"act"=>[
-							"password"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
+							"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 
-							"confpassword"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ],
+							"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ]
 						]
 					]
 		];
