@@ -19,11 +19,16 @@ class userController
 	*
 	*/
 	public function subscribeAction($args) {
-		$view = new view();
 
+		$user = new User();
+		$form = $user->getForm();
 		$errors = [];
+
+		$view = new view();
+		$view->setView("user/subscribe.tpl");
+		$view->assign("form", $form);
+
 		$validForm = TRUE;
-		$formData = [];
 
 		// Basic security
 		if(isset($_POST["subscribe_form"])) {
@@ -48,7 +53,6 @@ class userController
 		if(!$validForm) {
 			$view->assign("errors", $errors);
 		} else {
-			$user = new User();
 			$user->setEmail($useremail);
 			$user->setUsername($username);
 			$user->setIsActive(0);
@@ -60,7 +64,6 @@ class userController
 				$view->assign( "mailerMessage", "Something went when trying to send email." );
 			}
 		}
-		$view->setView("user/subscribe.tpl");
 	}
 
 	public function activateAction($args) {
@@ -72,7 +75,6 @@ class userController
 			$view->assign("msg", "Not the page you're looking for");
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			var_dump("TA MERE");
 			if ($user->getIsActive() != 1) {
 				$view->assign("msg", "Please choose a password so we can activate your account.");
 				$view->assign("user_token", $args["token"]);
@@ -86,8 +88,8 @@ class userController
 				if (isset($_POST["user_token"]) && $user->findBy("token", $_POST["user_token"], "string")) {
 					$user->setPassword($_POST["password"]);
 					$user->setIsActive(1);
+					$user->getId();
 					$user->save();
-					$view->assign("account_activated", "yeeha");
 					$view->assign("msg", "Your account is now activated");
 				} 
 				else {

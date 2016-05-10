@@ -100,6 +100,7 @@ class basesql extends PDO
 			} catch (Exception $e) {
 				die("Eerror : ".$e->getMessage());
 			}
+			var_dump("ENJOY");
 		}
 		else
 		{

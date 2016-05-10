@@ -26,6 +26,11 @@ class view
 		}
 	}
 
+	public function createForm($form, $indice, $errors, $path){
+		global $errors_msg;
+		include "views/form.inc.php";
+	}
+
 	public function assign($key, $value)
 	{
 		$this->data[$key] = $value;

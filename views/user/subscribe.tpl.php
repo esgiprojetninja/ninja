@@ -9,7 +9,10 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-6">
-            <form method="POST" action="/user/subscribe">
+          <?php
+            $this->createForm($form, "sub", $errors, "/user/subscribe");
+          ?>
+          <!--  <form method="POST" action="/user/subscribe">
               <h3>Want to join the nation ?</h3>
               <div class="input-grp">
                 <input type="email" placeholder="Email" name="email" class="form-control" value="">
@@ -21,10 +24,13 @@
                 <input type="hidden" name="subscribe_form" value="true">
                 <input type="submit" value="Sign In" name="submit" class="btn btn-primary">
               </div>
-            </form>
+            </form> -->
           </div>
           <div class="col-sm-6">
-            <form action="/user/login" method="POST">
+          <?php
+            $this->createForm($form, "log", $errors, "/user/login");
+          ?>
+          <!--  <form action="/user/login" method="POST">
               <h3>Already a sport citizen ?</h3>
               <div class="input-grp">
                 <input type="text" name="email" placeholder="Email" class="form-control">
@@ -36,21 +42,21 @@
                 <input type="hidden" name="login_form" value="true">
                 <input type="submit" value="Log In" class="btn btn-primary">
               </div>
-            </form>
+            </form> -->
           </div>
         </div>
       </div>
       <div class="panel-footer">
-        <ul>
+        <!-- <ul>
             <?php
-              if (isset($this->data["errors"])) {
-                foreach ($this->data["errors"] as $value) {
-                  echo "<li>".$value."</li>";
-                }
-              }
+              // if (isset($this->data["errors"])) {
+              //  foreach ($this->data["errors"] as $value) {
+              //    echo "<li>".$value."</li>";
+              //  }
+              // }
             ?>
-        </ul>
-        <?php echo isset($this->data["error_message"]) ? $this->data["error_message"] : "" ?>
+        </ul> -->
+        <?php echo isset($this->data["mailerMessage"]) ? $this->data["mailerMessage"] : "" ?>
       </div>
     </div>
   </div>
