@@ -12,11 +12,12 @@ class userController
 		if(!empty($args[0])){
 			$user = User::findById($args[0]);
             $v = new view();
-            $v->setView("user/show");
+            $v->setView("user/show.tpl");
             $v->assign("user", $user);
             
 		}else{
 			header('Location:'.WEBROOT.'user');
+			// TOTO
 		}
 	}
 
@@ -27,7 +28,7 @@ class userController
     public function editAction($args)
     {
         $view = new view();
-        $view->setView("user/edit");
+        $view->setView("user/edit.tpl");
     }
 
 	/**
