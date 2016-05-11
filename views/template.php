@@ -3,10 +3,10 @@
 <head>
 	<title>SPORT NATION | WORLD WIDE</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/public/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/global.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/panel.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/button.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>/public/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>/public/css/global.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>/public/css/panel.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>/public/css/button.css">
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
 	<!-- scripts -->
@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <img src="/public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
+        <img src="<?= WEBROOT;?>/public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
             <ul class="dropdown-menu right">
@@ -50,7 +50,7 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/public/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="/public/js/all.js"></script>
+<script type="text/javascript" src="<?= WEBROOT;?>/public/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="<?= WEBROOT;?>/public/js/all.js"></script>
 
 </html>
