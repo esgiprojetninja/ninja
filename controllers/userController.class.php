@@ -12,11 +12,11 @@ class userController
 		if(!empty($args[0])){
 			$user = User::findById($args[0]);
             $v = new view();
-            $v->setView("user/show");
+            $v->setView("user/show.tpl");
             $v->assign("user", $user);
             
 		}else{
-			header('Location:'.WEBROOT.'user');
+			header('Location:'.WEBROOT.'user/login');
 		}
 	}
 
@@ -26,8 +26,15 @@ class userController
      */
     public function editAction($args)
     {
-        $view = new view();
-        $view->setView("user/edit");
+        if(!empty($args[0])){
+			$user = User::findById($args[0]);
+            $v = new view();
+            $v->setView("user/edit.tpl");
+            $v->assign("user", $user);
+            
+		}else{
+			header('Location:'.WEBROOT.'user/login');
+		}
     }
 
 	/**
@@ -130,7 +137,7 @@ class userController
 					$id = $user->getId();
 					$_SESSION["user_id"] = $id;
 					$_SESSION["user_token"] = $token;
-					header("location: /");
+					header("location: ".WEBROOT);
 				}
 				else {
 					$view->assign("error_message", "Couldn't find you :(");	
@@ -148,16 +155,16 @@ class userController
 	*/
 	public function logoutAction () {
 		session_destroy();
-		header("location: /user/subscribe");
+		header("location: ".WEBROOT."user/subscribe");
 	}
 
 
 	public function totoAction () {
 		if (!User::isConnected()) {
-			header("location: /"); // If the user is not connected we redirect him to /
+			header("location: ".WEBROOT); // If the user is not connected we redirect him to /
 		}
 		$view = new view();
-		$view->setView("/user/toto.tpl");
+		$view->setView(WEBROOT."user/toto.tpl");
 		$view->assign("msg", "This is an example");
 	}
 

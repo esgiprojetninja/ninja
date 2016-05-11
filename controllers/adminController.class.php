@@ -25,7 +25,7 @@ class adminController
             die("Error while creating database : ".$e->getMessage());
        }
 
-       header("location: /admin/initdb");
+       header("location: ".WEBROOT."admin/initdb");
     }
 
     # Create tables
