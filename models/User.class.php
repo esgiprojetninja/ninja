@@ -1,5 +1,5 @@
 <?php
-require "core/basesql.class.php";
+
 class User extends basesql
 {
 

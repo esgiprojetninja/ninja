@@ -300,6 +300,35 @@ CREATE TABLE IF NOT EXISTS `user_has_sport_fav` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `teams`
+--
+
+CREATE TABLE IF NOT EXISTS `teams` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `teamName` varchar(255) NOT NULL,
+  `dateCreated` date NOT NULL,
+  `sports` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `img` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `team_has_user`
+--
+
+CREATE TABLE IF NOT EXISTS `team_has_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idTeam` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user_info_sport`
 --
 
@@ -315,3 +344,5 @@ CREATE TABLE IF NOT EXISTS `user_info_sport` (
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
