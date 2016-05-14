@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        <img src="<?= WEBROOT;?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px">
+        <a href="<?= WEBROOT; ?>"><img src="<?= WEBROOT;?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px"></a>
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
             <ul class="dropdown-menu right">

@@ -30,14 +30,15 @@
                	<br><br>
 
                	<p>Members : </p>
-                <?php foreach($members as $member){ 
+                <?php 
+                    foreach($members as $member){ 
                     	$user = User::findById($member[2]);
-                        echo $user->getUsername();
-                       	if(!($user->getId() == $_SESSION["user_id"])){ ?>
-                       	<a href="#" >Send message</a>
-                       	<a href="#" >Kick</a><br>
-                       	<?php
-                        }
+                      echo "<br>".$user->getUsername();
+                      if(!($user->getId() == $_SESSION["user_id"])){ ?>
+                        <a href="#" >Send message</a>
+                        <a href="#" >Kick</a>
+                      <?php
+                      }
                     }
                 ?>
                 <br><br>

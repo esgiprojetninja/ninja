@@ -32,6 +32,17 @@
                         <span class="fa fa-phone"></span>
                         <?php echo $user->getPhoneNumber(); ?>
                     </li>
+                    <li>
+                        <span class="fa fa-team"></span>
+                        <?php 
+                            foreach($teams as $team){ 
+                                $Team = Team::findById($team[1]);
+                                echo '<a href='.WEBROOT.'team/show/'.$team[1].'>';
+                                echo $Team->getTeamName()."<br>";
+                                echo '</a>';
+                            }
+                        ?>
+                    </li>
                 </ul>
                 <div class="text-right">
                     <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
