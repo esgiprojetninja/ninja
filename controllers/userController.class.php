@@ -9,12 +9,13 @@ class userController
 
 	public function showAction($args)
 	{
-		if(!empty($args[0])){
+		if(User::isConnected() && !empty($args[0])){
 			$user = User::findById($args[0]);
             $v = new view();
+            $teams = TeamHasUser::findBy("idUser",$args[0],"int",false);
             $v->setView("user/show.tpl");
             $v->assign("user", $user);
-            
+            $v->assign("teams",$teams);	
 		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}
@@ -26,12 +27,11 @@ class userController
      */
     public function editAction($args)
     {
-        if(!empty($args[0])){
+    	if(User::isConnected() && !empty($args[0])){
 			$user = User::findById($args[0]);
             $v = new view();
             $v->setView("user/edit.tpl");
             $v->assign("user", $user);
-            
 		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}
@@ -161,19 +161,8 @@ class userController
 	*/
 	public function logoutAction () {
 		session_destroy();
-		header("location: ".WEBROOT."user/subscribe");
+		header("location: ".WEBROOT."user/login");
 	}
-
-
-	public function totoAction () {
-		if (!User::isConnected()) {
-			header("location: ".WEBROOT); // If the user is not connected we redirect him to /
-		}
-		$view = new view();
-		$view->setView(WEBROOT."user/toto.tpl");
-		$view->assign("msg", "This is an example");
-	}
-
 
 // This exist only for example -- TODO : REMOVE THIS
 
