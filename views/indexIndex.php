@@ -1,1 +1,1 @@
-<h1>Bonjour <?php echo "uech" ?></h1>
+<h1><?php echo "Bienvenue" ?></h1>
