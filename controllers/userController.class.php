@@ -41,48 +41,55 @@ class userController
 	*
 	*/
 	public function subscribeAction($args) {
+
+		$user = new User();
+		$formSubscribe = $user->getForm("subscription");
+		$formLogin = $user->getForm("login");
+		$subErrors = [];
+		$logErrors = [];
+
+		$validator = new Validator();
+		if(!empty($_POST)) {
+			if($_POST["form-type"] == "subscription") {
+				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
+				if(count($subErrors) == 0) {
+					$user->setEmail($useremail);
+					$user->setUsername($username);
+					$user->setIsActive(0);
+					$user->setToken();
+					$user->save();
+					if($user->sendConfirmationEmail()) {
+						$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
+					} else {
+						$view->assign( "mailerMessage", "Something went when trying to send email." );
+					}
+				}
+			}
+			else if ($_POST["form-type"] == "login") {
+				if($user = User::findBy("email", $_POST["email"], "string")) {
+					if($user->getEmail() == trim($_POST["email"]) && $user->getPassword() == trim($_POST["password"])) {
+						$user->setToken();
+						print_r($user->getToken());
+						$user->save();
+						$token = $user->getToken();
+						$id = $user->getId();
+						$_SESSION["user_id"] = $id;
+						$_SESSION["user_token"] = $token;
+						header("location: ".WEBROOT);
+					}
+					else {
+						$view->assign("error_message", "Couldn't find you :(");	
+					}
+				}
+			}
+		}
+
 		$view = new view();
-
-		$errors = [];
-		$validForm = TRUE;
-		$formData = [];
-
-		// Basic security
-		if(isset($_POST["subscribe_form"])) {
-			// verif mail
-			if(!isset($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-				$validForm = FALSE;
-				$errors[] = "Please enter a valid email";
-			} else {
-				$useremail = strtolower(trim($_POST["email"]));
-			}
-			// verif username
-			if(!isset($_POST["username"]) || strlen($_POST["username"]) < 3) {
-				$validForm =  FALSE;
-				$errors[] = "Username must be at least 4 char long.";
-			} else {
-				$username = strtolower(trim($_POST["username"]));
-			}
-		} else {
-			$validForm = FALSE;
-		}
-
-		if(!$validForm) {
-			$view->assign("errors", $errors);
-		} else {
-			$user = new User();
-			$user->setEmail($useremail);
-			$user->setUsername($username);
-			$user->setIsActive(0);
-			$user->setToken();
-			$user->save();
-			if($user->sendConfirmationEmail()) {
-				$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
-			} else {
-				$view->assign( "mailerMessage", "Something went when trying to send email." );
-			}
-		}
 		$view->setView("user/subscribe.tpl");
+		$view->assign("formSubscribe", $formSubscribe);
+		$view->assign("subErrors", $subErrors);
+		$view->assign("formLogin", $formLogin);
+		$view->assign("logErrors", $logErrors);
 	}
 
 	public function activateAction($args) {
@@ -94,7 +101,6 @@ class userController
 			$view->assign("msg", "Not the page you're looking for");
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			var_dump("TA MERE");
 			if ($user->getIsActive() != 1) {
 				$view->assign("msg", "Please choose a password so we can activate your account.");
 				$view->assign("user_token", $args["token"]);
@@ -108,8 +114,8 @@ class userController
 				if (isset($_POST["user_token"]) && $user->findBy("token", $_POST["user_token"], "string")) {
 					$user->setPassword($_POST["password"]);
 					$user->setIsActive(1);
+					$user->getId();
 					$user->save();
-					$view->assign("account_activated", "yeeha");
 					$view->assign("msg", "Your account is now activated");
 				} 
 				else {
