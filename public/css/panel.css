@@ -25,13 +25,13 @@ div.panel panel-primary/success/warning...(optional)
 .panel .panel-heading .panel-title {
     font-weight: 600;
     font-size: 120%;
-    margin: 5px 0;
+    margin: 15px 0;
 }
 .panel .panel-body {
-    padding: 5px;
+    padding: 15px;
 }
 .panel .panel-footer {
-    padding: 5px;
+    padding: 15px;
 }
 
 /*********************

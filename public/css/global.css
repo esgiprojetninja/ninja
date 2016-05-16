@@ -147,7 +147,7 @@ header .icon .text {
 
 .dropdown {
     position: relative;
-    height: 50px;
+    height: 30px;
 }
 
 .dropdown .dropdown-icon {
@@ -165,9 +165,8 @@ header .icon .text {
     margin: 0;
     padding: 0;
     text-align: center;
-    min-width: 200px;
-    box-shadow: 2px 2px 2px #2A2A2A;
-    border: 1px solid #2A2A2A;
+    min-width: 150px;
+    box-shadow: 2px 2px 2px #D2D2D2;
 
 }
 
@@ -192,8 +191,12 @@ header .icon .text {
 }
 
 .dropdown .dropdown-menu li:hover {
-    background-color: #2A2A2A;
+    background-color: #6C6599;
+}
+
+.dropdown .dropdown-menu li:hover a {
     color: #FFFFFF;
+    line-height: 30px;
 }
 
 .dropdown .dropdown-menu li a {
