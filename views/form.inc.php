@@ -12,21 +12,12 @@
 	}
 ?>
 
-<form action="<?php echo $path ?>" method="<?php echo $form["options"]["method"]?>">
-<?php if( !empty($indice) ): ?>
-	<?php switch($indice): 
-			  case "sub": ?>		
-			  	<h3> Want to join the nation ?</h3>
-		<?php break; 
-			  case "log": ?>
-    			<h3>Already a sport citizen ?</h3>
-    	<?php break; ?>
-    	<?php endswitch; ?>
-<?php endif; ?>
+<form action="<?php echo $form["options"]["action"] ?>" method="<?php echo $form["options"]["method"]?>">
 
-	<?php foreach ($form["struct"][$indice] as $name => $option ) :?>
+	<h3><?= $form["title"]; ?></h3>
 
-		<?php if($option["type"] == "text" || $option["type"] == "password" || $option["type"] == "email"):?>
+	<?php foreach ($form["struct"] as $name => $option ) :?>
+
 		
 			<div class="input-grp">
 				<input name="<?php echo $name ?>" 
@@ -34,10 +25,9 @@
 						class="<?php echo $option["class"] ;?>"
 						placeholder="<?php echo $option["placeholder"] ;?>"
 						<?php echo ($option["required"])?"required='required'":""?>
-						value= "<?php echo (isset($data[$name]) && $option["type"]!="password")?$data[$name]:""?>" > 
+						value= "<?php if((isset($data[$name]) && $option["type"]!="password" && $option["type"]!="hidden")){echo $data[$name];}else if(isset($option["value"])){echo $option["value"];}?>" > 
 			</div>
 		
-		<?php endif;?>
 
 	<?php endforeach;?>
 	

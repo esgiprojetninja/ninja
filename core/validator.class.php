@@ -1,5 +1,5 @@
 <?php
-class validator{
+class Validator{
 
 
 

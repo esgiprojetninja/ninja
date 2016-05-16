@@ -26,7 +26,7 @@ class view
 		}
 	}
 
-	public function createForm($form, $indice, $errors, $path){
+	public function createForm($form, $errors){
 		global $errors_msg;
 		include "views/form.inc.php";
 	}
