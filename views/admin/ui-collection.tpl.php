@@ -93,7 +93,8 @@
             <div class="panel-body">
                 <form>
                     <div class="input-grp">
-                        <input class="form-control" type="text" placeholder="text input">
+                        <label for="text-input" class="control-label">Label : </label>
+                        <input class="form-control" type="text" name="text-input" placeholder="text input">
                     </div>
                     <div class="input-grp">
                         <select class="form-control">
