@@ -21,7 +21,7 @@ class userController
 	public function subscribeAction($args) {
 
 		$user = new User();
-		$form = $user->getForm();
+		$form = $user->getForm("subscription");
 		$errors = [];
 
 		$view = new view();

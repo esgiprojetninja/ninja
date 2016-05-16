@@ -178,30 +178,44 @@ class User extends basesql
 
 	/**
 	* Form subscribe
-	* @return boolean
+	* @return array
 	*/
-	public function getForm(){
+	public function getForm($formType){
+		$form = [];
+		if ($formType == "subscription") {
+			$form = [
+				"title" => "Want to join the Nation ?",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
+				"struct" => [
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
 
-		return [	
-					"options" => [ "method"=>"POST", "action"=>"", "submit"=>"Sign In" ],
-					"struct" => [
-						"sub" =>[
-							"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ]
+				]
+			];
+		} 
+		else if ($formType == "activation") {
+			$form = [
+				"title" => "Welcome back ! Please choose a password to activate your account.",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate"],
+				"struct" => [
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 
-							"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ]
-						],
-						"log"=>[
-							"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ]
+				]
+			];
+		}
+		else if ($formType == "login") {
+			$form = [
+				"title" => "Already a sport citizen ?",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/login"],
+				"struct"=>[
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 
-							"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ]
-						],
-						"act"=>[
-							"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-
-							"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ]
-						]
-					]
-		];
-
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ]
+				]
+			];
+		}
+		
+		return $form;
 	}
 }

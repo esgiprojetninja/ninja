@@ -19,3 +19,8 @@ form .form-control:active {
 form .input-grp {
     margin: 15px;
 }
+
+form .input-grp .control-label {
+    font-weight: bold;
+    font-size: 1.1em;
+}
