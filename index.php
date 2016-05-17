@@ -1,8 +1,9 @@
 <?php 
+ini_set('display_errors', '1');
+
 session_start();
 
 require_once "conf.inc.php";
-require_once "models/User.class.php";
 
 function autoloader($class) {
     // verifier s'il existe dans le dossier core s'il existe un fichier

@@ -142,10 +142,10 @@ class User extends basesql
 		$mail = new PHPMailer();
 
 		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->Host = 'smtp.gmail.com';  					  // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true;                               // Enable SMTP authentication
-		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
-		$mail->Password = 'test3ADW';                           // SMTP password
+		$mail->Username = 'testmail3adw@gmail.com';           // SMTP username
+		$mail->Password = 'test3ADW';                         // SMTP password
 		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;                                    // TCP port to connect to
 
@@ -188,9 +188,9 @@ class User extends basesql
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
-
 					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
-					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"form-type"=> ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input" ],
+					"submit"=> ["type"=>"submit", "value"=>"Sign Up", "placeholder"=>"", "required"=> 0, "msgerror"=> "", "class"=>"btn btn-primary" ]
 				]
 			];
 		} 
@@ -200,9 +200,8 @@ class User extends basesql
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate"],
 				"struct" => [
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-
 					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ],
-					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class"=>""]
 				]
 			];
 		}
@@ -212,9 +211,9 @@ class User extends basesql
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct"=>[
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"password" ],
-
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"confirm password" ],
-					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""],
+					"submit"=> ["type"=>"submit", "value"=>"Sign In", "placeholder"=>"", "required"=> 0, "msgerror"=> "", "class"=>"btn btn-primary" ]
 				]
 			];
 		}

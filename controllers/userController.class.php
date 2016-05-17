@@ -48,7 +48,7 @@ class userController
 		$subErrors = [];
 		$logErrors = [];
 
-		$validator = new Validator();
+		$validator = new validator();
 		if(!empty($_POST)) {
 			if($_POST["form-type"] == "subscription") {
 				$subErrors = $validator->check($formSubscribe["struct"], $_POST);

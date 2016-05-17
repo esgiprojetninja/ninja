@@ -18,21 +18,36 @@
 
 	<?php foreach ($form["struct"] as $name => $option ) :?>
 
-		
+		<?php if($option["type"] == "text" or $option["type"] == "email" or $option["type"] == "password"):?>
+			
 			<div class="input-grp">
-				<input name="<?php echo $name ?>" 
-						type="<?php echo $option["type"] ;?>"
-						class="<?php echo $option["class"] ;?>"
-						placeholder="<?php echo $option["placeholder"] ;?>"
+				<input name="<?php echo $name; ?>" 
+						type="<?php echo $option["type"]; ?>"
+						class="<?php echo $option["class"]; ?>"
+						placeholder="<?php echo $option["placeholder"]; ?>"
 						<?php echo ($option["required"])?"required='required'":""?>
-						value= "<?php if((isset($data[$name]) && $option["type"]!="password" && $option["type"]!="hidden")){echo $data[$name];}else if(isset($option["value"])){echo $option["value"];}?>" > 
+						value= "<?php if((isset($data[$name]) && $option["type"]!="password" && $option["type"]!="hidden"))
+										{
+											echo $data[$name];
+										}else if(isset($option["value"])){
+											echo $option["value"];
+										} ?>" > 
 			</div>
-		
 
+		<?php elseif($option["type"] == "hidden"):?>
+
+			<div class="input-grp">
+        		<input type="<?php echo $option["type"]; ?>" name="<?php echo $name; ?>" value="<?php echo $option["value"]; ?>">
+        	</div>
+
+		<?php elseif($option["type"] == "submit"):?>
+
+			<div class="input-grp">
+        		<input type="<?php echo $option["type"]; ?>" value="<?php echo $option["value"]; ?>" name="<?php echo $name; ?>" class="<?php echo $option["class"]; ?>">
+    		</div>
+
+    	<?php endif; ?>
+	
 	<?php endforeach;?>
 	
-	<div class="input-grp">
-        <input type="hidden" name="subscribe_form" value="true">
-        <input type="submit" value="Sign In" name="submit" class="btn btn-primary">
-    </div>
 </form>
