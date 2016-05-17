@@ -100,7 +100,7 @@ class userController
 	}
 
 	public function activateAction($args) {
-		$view = new view;
+		$view = new View();
 		$user = new User();
 		$view->setView("user/activation.tpl");
 		$view->assign("user_token", $args["token"]);
