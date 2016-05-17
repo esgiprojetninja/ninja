@@ -185,7 +185,7 @@ class User extends basesql
 		if ($formType == "subscription") {
 			$form = [
 				"title" => "Want to join the Nation ?",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
+				"options" => ["method" => "POST", "action" => WEBROOT."user/sign"],
 				"struct" => [
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
 					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
@@ -197,18 +197,19 @@ class User extends basesql
 		else if ($formType == "activation") {
 			$form = [
 				"title" => "Welcome back ! Please choose a password to activate your account.",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate"],
+				"options" => ["method" => "POST", "action" => WEBROOT."user/activate"],
 				"struct" => [
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ],
-					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class"=>""]
+					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class"=>""],
+					"submit"=> ["type"=>"submit", "value"=>"Activation", "placeholder"=>"", "required"=> 0, "msgerror"=> "", "class"=>"btn btn-primary" ]
 				]
 			];
 		}
 		else if ($formType == "login") {
 			$form = [
 				"title" => "Already a sport citizen ?",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
+				"options" => ["method" => "POST", "action" => WEBROOT."user/sign"],
 				"struct"=>[
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"password" ],
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"confirm password" ],
