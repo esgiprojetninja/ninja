@@ -48,12 +48,12 @@ class userController
 		$subErrors = [];
 		$logErrors = [];
 
-		$validator = new validator();
+		$validsub = new validator();
 
 		if(!empty($_POST)) {
 
 			if($_POST["form-type"] == "subscription") {
-				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
+				$subErrors = $validsub->check($formSubscribe["struct"], $_POST);
 				if(count($subErrors) == 0) {
 					$user->setEmail($_POST['email']);
 					$user->setUsername($_POST['username']);
@@ -90,7 +90,7 @@ class userController
 
 		$view = new view();
 		$view->setView("user/sign.tpl");
-		
+
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
 
