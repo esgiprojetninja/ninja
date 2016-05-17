@@ -17,9 +17,9 @@ class Validator{
 			elseif($options["type"]=="password" && !self::passwordCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["type"]=="email" && !self::emailCorrect($data[$name])) {
+			/** elseif($options["type"]=="email" && !self::emailCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
-			}
+			} **/
 			
 		}
 

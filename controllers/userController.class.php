@@ -49,12 +49,14 @@ class userController
 		$logErrors = [];
 
 		$validator = new validator();
+
 		if(!empty($_POST)) {
+
 			if($_POST["form-type"] == "subscription") {
 				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 				if(count($subErrors) == 0) {
-					$user->setEmail($useremail);
-					$user->setUsername($username);
+					$user->setEmail($_POST['email']);
+					$user->setUsername($_POST['username']);
 					$user->setIsActive(0);
 					$user->setToken();
 					$user->save();
@@ -65,6 +67,7 @@ class userController
 					}
 				}
 			}
+
 			else if ($_POST["form-type"] == "login") {
 				if($user = User::findBy("email", $_POST["email"], "string")) {
 					if($user->getEmail() == trim($_POST["email"]) && $user->getPassword() == trim($_POST["password"])) {
@@ -82,12 +85,15 @@ class userController
 					}
 				}
 			}
+
 		}
 
 		$view = new view();
 		$view->setView("user/sign.tpl");
+		
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
+
 		$view->assign("formLogin", $formLogin);
 		$view->assign("logErrors", $logErrors);
 	}

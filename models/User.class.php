@@ -218,6 +218,20 @@ class User extends basesql
 				]
 			];
 		}
+		else if ($formType == "edit") {
+			$form = [
+				"title" => "You want edit your profil here !",
+				"options" => ["method" => "POST", "action" => WEBROOT."user/edit"],
+				"struct"=>[
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"password" ],
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"confirm password" ],
+					"sport"=>[],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
+					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""],
+					"submit"=> ["type"=>"submit", "value"=>"Sign In", "placeholder"=>"", "required"=> 0, "msgerror"=> "", "class"=>"btn btn-primary" ]
+				]
+			];
+		}
 		
 		return $form;
 	}
