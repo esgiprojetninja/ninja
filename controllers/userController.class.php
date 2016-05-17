@@ -40,7 +40,7 @@ class userController
 	/**
 	*
 	*/
-	public function subscribeAction($args) {
+	public function signAction($args) {
 
 		$user = new User();
 		$formSubscribe = $user->getForm("subscription");
@@ -85,7 +85,7 @@ class userController
 		}
 
 		$view = new view();
-		$view->setView("user/subscribe.tpl");
+		$view->setView("user/sign.tpl");
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
 		$view->assign("formLogin", $formLogin);
