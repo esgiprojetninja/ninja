@@ -43,6 +43,8 @@ class userController
 	public function signAction($args) {
 
 		$user = new User();
+		$view = new View();
+
 		$formSubscribe = $user->getForm("subscription");
 		$formLogin = $user->getForm("login");
 		$subErrors = [];
@@ -88,7 +90,6 @@ class userController
 
 		}
 
-		$view = new view();
 		$view->setView("user/sign.tpl");
 
 		$view->assign("formSubscribe", $formSubscribe);
