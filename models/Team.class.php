@@ -7,7 +7,7 @@ class Team extends basesql
 	protected $table = "teams";
 	protected $teamName;
 	protected $dateCreated;
-	protected $sports = [];
+	protected $sports = "";
 	protected $description = "";
 	protected $img = "";
 
@@ -61,6 +61,26 @@ class Team extends basesql
 
 	public function setImg($img){
 		$this->img = $img;
+	}
+
+	public function getForm($formType){
+		$form = [];
+		if ($formType == "create") {
+			$form = [
+				"title" => "Create your own team",
+				"options" => ["method" => "POST", "action" => WEBROOT . "team/create"],
+				"struct" => [
+					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team Name", "required"=>1, "msgerror"=>"teamName" ],
+					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>0, "msgerror"=>"description" ],
+					"form-type" => ["type" => "hidden", "value" => "createTeam", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+		} 
+		else if ($formType == "update") {
+
+		}
+		
+		return $form;
 	}
 
 }

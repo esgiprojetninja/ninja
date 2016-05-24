@@ -31,6 +31,11 @@ class view
 		$this->data[$key] = $value;
 	}
 
+	public function createForm($form, $errors){
+		global $errors_msg;
+		include "views/form.inc.php";
+	}
+
 	public function __destruct()
 	{
 		extract($this->data);

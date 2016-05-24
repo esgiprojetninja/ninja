@@ -32,7 +32,7 @@
                         <span class="fa fa-phone"></span>
                         <?php echo $user->getPhoneNumber(); ?>
                     </li>
-                    <li>
+                    <?php if(!empty($teams)){ ?><li>
                         <span class="fa fa-team"></span>
                         <?php 
                             foreach($teams as $team){ 
@@ -43,6 +43,7 @@
                             }
                         ?>
                     </li>
+                    <?php } ?>
                 </ul>
                 <div class="text-right">
                     <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>

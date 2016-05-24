@@ -13,7 +13,7 @@ class User extends basesql
 	protected $first_name = "";
 	protected $last_name = "";
 	protected $phone_number = 0;
-	protected $favorite_sports = [];
+	protected $favorite_sports = "";
 
 
 	/**
@@ -73,7 +73,7 @@ class User extends basesql
 	}
 
 	public function setPassword($password){
-		$this->password = $password;
+		$this->password = crypt($password);
 	}
 
 	public function setFirstName($first_name){
@@ -159,7 +159,7 @@ class User extends basesql
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
-		$link = "http://ninja.dev/user/activate?email="
+		$link = WEBROOT."user/activate?email="
 			.$this->email
 			."&token="
 			.$this->token."";
@@ -174,5 +174,44 @@ class User extends basesql
 		} else {
 				return TRUE;
 		}
+	}
+
+	public function getForm($formType){
+		$form = [];
+		if ($formType == "subscription") {
+			$form = [
+				"title" => "Want to join the Nation ?",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
+				"struct" => [
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
+					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+		} 
+		else if ($formType == "activation") {
+			$form = [
+				"title" => "Welcome back ! Please choose a password to activate your account.",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$_SESSION['emailActivate']."&token=".$_SESSION['tokenActivate']],
+				"struct" => [
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
+					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+		}
+		else if ($formType == "login") {
+			$form = [
+				"title" => "Already a sport citizen ?",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
+				"struct"=>[
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"password" ],
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"confirm password" ],
+					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+		}
+		
+		return $form;
 	}
 }
