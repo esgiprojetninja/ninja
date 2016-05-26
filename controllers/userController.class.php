@@ -41,7 +41,7 @@ class userController
 	*
 	*/
 	public function subscribeAction($args) {
-
+		$view = new view();
 		$user = new User();
 		$formSubscribe = $user->getForm("subscription");
 		$formLogin = $user->getForm("login");
@@ -53,8 +53,8 @@ class userController
 			if($_POST["form-type"] == "subscription") {
 				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 				if(count($subErrors) == 0) {
-					$user->setEmail($useremail);
-					$user->setUsername($username);
+					$user->setEmail($_POST['email']);
+					$user->setUsername($_POST['username']);
 					$user->setIsActive(0);
 					$user->setToken();
 					$user->save();
@@ -83,8 +83,6 @@ class userController
 				}
 			}
 		}
-
-		$view = new view();
 		$view->setView("user/subscribe.tpl");
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
@@ -93,39 +91,36 @@ class userController
 	}
 
 	public function activateAction($args) {
-		$view = new view;
-		$user = new User();
+		$view = new view();
+		$user = User::FindBy('email',$args['email'],'string');
 		$view->setView("user/activation.tpl");
 		$view->assign("user_token", $args["token"]);
+		$formActivation = $user->getForm("activation");
+		$actErrors = [];
+		$validator = new Validator();
+		$_SESSION['emailActivate']=$args["email"];
+		$_SESSION['tokenActivate']=$args["token"];		
 		if (isset($args["token"]) && !$user->findBy("token", $args["token"], "string")) {
 			$view->assign("msg", "Not the page you're looking for");
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
 			if ($user->getIsActive() != 1) {
-				$view->assign("msg", "Please choose a password so we can activate your account.");
-				$view->assign("user_token", $args["token"]);
-			} 
+				$view->assign("formActivation", $formActivation);
+				if(!empty($_POST)) {
+					$actErrors = $validator->check($formActivation["struct"], $_POST);
+					if(count($actErrors) == 0) {
+						$user->setPassword($_POST["password"]);
+						$user->setIsActive(1);
+						$user->save();
+						$view->assign("account_activated", "yeeha");
+						$view->assign("msg", "Your account is now activated");
+						session_destroy();
+					}
+				}
+				$view->assign("actErrors",$actErrors);	
+				} 
 			else {
 				$view->assign("msg", "Looks like your account had already been activated");
-			}
-		}
-		else if (isset($_POST["pwd_form"])) {
-			if ($_POST["password"] === $_POST["pwd_verif"] && strlen($_POST["password"]) > 4) {
-				if (isset($_POST["user_token"]) && $user->findBy("token", $_POST["user_token"], "string")) {
-					$user->setPassword($_POST["password"]);
-					$user->setIsActive(1);
-					$user->getId();
-					$user->save();
-					$view->assign("msg", "Your account is now activated");
-				} 
-				else {
-					var_dump($_POST["user_token"]);
-					$view->assign("msg", "Wrong token");
-				}
-			}
-			else {
-				$view->assign("user_token", $_POST["user_token"]);
-				$view->assign("msg", "Password and confirm must be the same ans at least 4 char long");
 			}
 		}
 	}
@@ -135,7 +130,7 @@ class userController
 		$view->setView("user/login.tpl");
 		if(isset($_POST["login_form"])) {
 			if($user = User::findBy("email", $_POST["email"], "string")) {
-				if($user->getEmail() == trim($_POST["email"]) && $user->getPassword() == trim($_POST["password"])) {
+				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
 					print_r($user->getToken());
 					$user->save();
