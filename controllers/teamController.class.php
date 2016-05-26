@@ -6,46 +6,35 @@ class teamController
 	public function createAction()
 	{
 		if(User::isConnected()){
-			$view = new View();
-			$errors = [];
 			$id_user_creator = $_SESSION['user_id'];
-			$validForm = TRUE;
-			//Verif du formulaire
-			if(isset($_POST["team_creation_form"])) {
-				if(!isset($_POST["teamName"]) || strlen($_POST["teamName"]) < 4 || strlen($_POST["teamName"]) > 20) {
-					$validForm = FALSE;
-					$errors[] = "Please enter a valid team name";
-				} else {
-					$teamName = strtolower(htmlspecialchars($_POST["teamName"]));
+			$view = new view();
+			$team = new Team();
+			$formCreateTeam = $team->getForm("create");
+			$creaErrors = [];
+			$validator = new Validator();
+			if(!empty($_POST)) {
+				$creaErrors = $validator->check($formCreateTeam["struct"], $_POST);
+				if(count($creaErrors) == 0) {
+					$teamHasUser = new TeamHasUser();
+					$team->setTeamName($_POST["teamName"]);
+					date_default_timezone_set('Europe/Paris');
+					$now = date("Y-m-d H:i");
+					$team->setDateCreated($now);
+					if(isset($description)){
+						$team->setDescription($description);
+					}
+					$team->save();
+					//On rajoute l'utilisateur qui crée la team dans sa team
+					$id_team = Team::findBy("teamName", $_POST["teamName"], "string");
+					$id_team = $id_team->getId();
+					$teamHasUser->setIdTeam($id_team);
+					$teamHasUser->setIdUser($id_user_creator);
+					$teamHasUser->save();
 				}
-				if(isset($_POST['description'])){
-					$description = htmlspecialchars($_POST['description']);
-				}
-			}else{
-				$validForm = FALSE;
-			}
-			if(!$validForm) {
-				$view->assign("errors", $errors);
-			} else {
-				//On crée la team en BDD
-				$team = new Team();
-				$teamHasUser = new TeamHasUser();
-				$team->setTeamName($teamName);
-				date_default_timezone_set('Europe/Paris');
-				$now = date("Y-m-d H:i");
-				$team->setDateCreated($now);
-				if(isset($description)){
-					$team->setDescription($description);
-				}
-				$team->save();
-				//On rajoute l'utilisateur qui crée la team dans sa team
-				$id_team = Team::findBy("teamName", $teamName, "string");
-				$id_team = $id_team->getId();
-				$teamHasUser->setIdTeam($id_team);
-				$teamHasUser->setIdUser($id_user_creator);
-				$teamHasUser->save();
 			}
 			$view->setView("team/create.tpl");
+			$view->assign("formCreateTeam",$formCreateTeam);
+			$view->assign("creaErrors",$creaErrors);
 		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}
