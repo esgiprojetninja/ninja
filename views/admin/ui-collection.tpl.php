@@ -133,3 +133,45 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h1>Ajax form</h1>
+        <div class="panel">
+            <div class="panel-body">
+                <form class="ajax-form" action="toto" method="POST" >
+                    <div class="input-grp">
+                        <label for="text-ajax" class="control-label">
+                            Some text
+                        </label>
+                        <input class="form-control" type="text" name="text-ajax" placeholder="test">
+                    </div>
+                    <div class="input-grp">
+                        <select class="form-control">
+                            <option></option>
+                            <option value="one">Select one</option>
+                            <option value="another">Or another</option>
+                        </select>
+                    </div>
+                    <div class="input-grp">
+                        <label for="radio1">Radio 1</label>
+                        <input type="radio" name="radio" id="radio1" value="1">
+                        <label for="radio2">Radio 2</label>
+                        <input type="radio" name="radio" id="radio2" value="2">
+                    </div>
+                    <div class="input-grp">
+                        <label for="check1">Checbox 1</label>
+                        <input type="checkbox" name="check" id="check1" value="1">
+                        <label for="check2">Checbox 2</label>
+                        <input type="checkbox" name="check" id="check2" value="2">
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit">
+                            OK
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
