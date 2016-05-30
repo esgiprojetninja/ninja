@@ -1,5 +1,3 @@
-<!-- TODO use ajax to merge this with login.tpl -->
-
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
     <div class="panel panel-primary logbox">

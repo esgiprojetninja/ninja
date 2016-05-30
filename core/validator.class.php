@@ -1,8 +1,5 @@
 <?php
-class Validator{
-
-
-
+class Validator extends basesql{
 	public function __construct(){
 
 	}
@@ -10,19 +7,22 @@ class Validator{
 	public static function check($struct, $data){
 		$listErrors = [];
 		foreach ($struct as $name => $options) {
-
 			if($options["required"] && self::isEmpty($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 			elseif($options["type"]=="password" && !self::passwordCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($option["type"]=="email" && !self::emailCorrect($data[$name])) {
+			elseif($options["type"]=="email" && !self::emailCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
-			
+			elseif($options["msgerror"]=="username" && !self::existUsername($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
+			elseif($options["msgerror"]=="teamName" && !self::verifTeamName($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
 		}
-
 		return $listErrors;
 	}
 
@@ -40,12 +40,17 @@ class Validator{
 	}
 
 	public static function emailCorrect($var){
-		// verif email
+		return !((filter_var($var,FILTER_VALIDATE_EMAIL)) && (User::findBy("email", $var, "string")) );	
 	}
 
+	public static function existUsername($var){
+		return !(User::findBy("username",$var,"string"));
+	}
+
+	public static function verifTeamName($var){
+		return !((Team::findBy("teamName",$var,"string")) && !(strlen($var)<4 || strlen($var)>30));
+	}
 }
-
-
 
 
 

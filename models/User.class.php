@@ -1,5 +1,5 @@
 <?php
-require "core/basesql.class.php";
+
 class User extends basesql
 {
 
@@ -13,7 +13,7 @@ class User extends basesql
 	protected $first_name = "";
 	protected $last_name = "";
 	protected $phone_number = 0;
-	protected $favorite_sports = [];
+	protected $favorite_sports = "";
 
 
 	/**
@@ -73,7 +73,7 @@ class User extends basesql
 	}
 
 	public function setPassword($password){
-		$this->password = $password;
+		$this->password = crypt($password);
 	}
 
 	public function setFirstName($first_name){
@@ -159,7 +159,7 @@ class User extends basesql
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
-		$link = "http://ninja.dev/user/activate?email="
+		$link = WEBROOT."user/activate?email="
 			.$this->email
 			."&token="
 			.$this->token."";

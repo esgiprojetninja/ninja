@@ -51,7 +51,7 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType) {
+	public static function findBy($column, $value, $valueType, $fetch=true) {
 		$instance = new static;
 		$sql = "SELECT * FROM "
 			.$instance->table." WHERE "
@@ -62,17 +62,34 @@ class basesql extends PDO
 		else if ($valueType == "int") {
 			$sql = $sql."=".$value.";";
 		}
+
 		$query = $instance->pdo->prepare($sql);
 		$query->execute();
-		$item = $query->fetch(PDO::FETCH_ASSOC);
-		if($item) {
-			foreach ($item as $column => $value) {
-				$instance->$column = $value;
+		
+		/*
+		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
+		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur. 
+		*/
+
+		if($fetch == true){
+			$item = $query->fetch(PDO::FETCH_ASSOC);
+			if($item) {
+				foreach ($item as $column => $value) {
+					$instance->$column = $value;
+				}
+				return $instance;
 			}
-			return $instance;
-		}
-		else {
-			return False;
+			else {
+				return False;
+			}
+		}else{
+			$item = $query->fetchAll();
+			if($item) {
+				return $item;
+			}
+			else {
+				return False;
+			}
 		}
 	}
 
