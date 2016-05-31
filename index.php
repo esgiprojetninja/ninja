@@ -41,9 +41,11 @@ if (file_exists($path_controller)) {
 	}
 	else
 	{
-		die("L'action n'existe pas");
+        http_response_code(404);
+        die("404 : L'action n'existe pas");
 	}
 }
 else{
-	die("404, le controller n'existe pas");
+    http_response_code(404);
+    die("404 : le controller n'existe pas");
 }

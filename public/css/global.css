@@ -221,3 +221,57 @@ header .icon .text {
 .logbox {
     margin-top: 150px;
 }
+
+/***********************
+    -- MSG-BOX --
+***********************/
+
+.msg-box {
+    //min-width: 200px;
+    //min-height: 40px;
+    position: fixed;
+    top: 55px;
+    right: 15px;
+    padding: 5px;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px #D2D2D2;
+    color: #6C6599;
+    z-index: 1;
+    display: none;
+}
+
+.msg-box::after {
+    border-radius: 2px;
+    content: "";
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.msg-box .text {
+    margin: 5px auto;
+}
+
+.msg-box .text .fa {
+    cursor: pointer;
+}
+
+.msg-box.success .text {
+    color: #FFFFFF;
+}
+
+.msg-box.success::after {
+    background-color: #328396;
+}
+
+.msg-box.danger .text {
+    color: #FFFFFF;
+}
+
+.msg-box.danger::after {
+    background-color: #B84D61;
+}

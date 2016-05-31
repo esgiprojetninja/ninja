@@ -42,6 +42,12 @@
             </div>
         </div>
         <div class="grid-container">
+            <div class="msg-box">
+                <p class="text">
+                    <span class="text-content"></span>
+                    <span class="fa fa-times js-close-msg-box"></span>
+                </p>
+            </div>
             <div class="grid-content">
                 <?php include $this->view; ?>
             </div>
