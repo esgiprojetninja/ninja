@@ -9,17 +9,17 @@ $(document).on("click", function (e) {
     }
 });
 
-// $(".popover-trigger").on("click", function (e) {
-//     $(this).children(".popover-top").toggleClass("active");
-// });
+/**************************
+    -- DOCUMENT EVENTS -- 
+**************************/
 
 $(function ($) {
-    $(".news-box .content").each(function() {
-        var text = $(this).text().substring(0, 200);
-        text += " ...";
-        $(this).text(text);
+    // msg-box
+    $(".js-close-msg-box").click(function (ev) {
+        $(this).parent().parent().fadeOut();
     });
-}, jQuery);
+});
+
 
 /**********************
     -- AJAX FORMS --
@@ -74,9 +74,3 @@ function showMessage(msg, code) {
         $box.fadeOut();
     }, 5000);
 }
-
-$(function ($) {
-    $(".js-close-msg-box").click(function (ev) {
-        $(this).parent().parent().fadeOut();
-    });
-});
