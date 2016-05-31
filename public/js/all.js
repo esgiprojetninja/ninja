@@ -53,9 +53,9 @@ $(function ($) {
                 url: action,
                 data: data
             }).success(function (msg) {
-                showMessage(success);
+                showMessage("Data was updated !", "success");
             }).fail(function (jqXHR, textStatus) {
-                console.warning("Request failed" + textStatus);
+                showMessage("Request failed :(", "danger");
             });
         }
     });
@@ -65,6 +65,18 @@ $(function ($) {
     -- Message box --
 ****************************/
 
-function showMessage(msg) {
-    console.debug(msg);
+function showMessage(msg, code) {
+    $box = $(".msg-box");
+    $box.find(".text .text-content").html(msg);
+    $box.addClass(code);
+    $box.fadeIn();
+    setTimeout(function () {
+        $box.fadeOut();
+    }, 5000);
 }
+
+$(function ($) {
+    $(".js-close-msg-box").click(function (ev) {
+        $(this).parent().parent().fadeOut();
+    });
+});

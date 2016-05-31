@@ -237,6 +237,7 @@ header .icon .text {
     box-shadow: 2px 2px 2px #D2D2D2;
     color: #6C6599;
     z-index: 1;
+    display: none;
 }
 
 .msg-box::after {
