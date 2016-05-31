@@ -42,6 +42,12 @@
             </div>
         </div>
         <div class="grid-container">
+            <div class="msg-box success">
+                <p class="text">
+                    prout
+                    <span class="fa fa-times"></span>
+                </p>
+            </div>
             <div class="grid-content">
                 <?php include $this->view; ?>
             </div>
