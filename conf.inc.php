@@ -21,5 +21,7 @@ $errors_msg = [
 	"username"=>"Username déja existant",
 	"password"=>"Mot de passe incorrect",
 	"confirm_password"=>"Mot de passe différend",
-	"teamName"=>"Nom d'équipe incorrect"
+	"teamName"=>"Nom d'équipe incorrect",
+	"new_email" => "Votre email n'est pas correct ou déjà existante",
+	"new_username" => "Username déja existant"
 ];
