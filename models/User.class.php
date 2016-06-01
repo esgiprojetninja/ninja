@@ -14,6 +14,8 @@ class User extends basesql
 	protected $last_name = "";
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
+	protected $city = "";
+	protected $birthday = "0000-00-00";
 
 
 	/**
@@ -60,12 +62,20 @@ class User extends basesql
 		return $this->is_active;
 	}
 
+	public function getCity(){
+		return $this->city;
+	}
+
+	public function getBirthday(){
+		return $this->birthday;
+	}
+
 	public function setIsActive($is_active) {
 		$this->is_active = $is_active;
 	}
 
 	public function setUsername($username){
-		$this->username = $username;
+		$this->username = htmlspecialchars($username);
 	}
 
 	public function setEmail($email){
@@ -77,11 +87,11 @@ class User extends basesql
 	}
 
 	public function setFirstName($first_name){
-		$this->first_name = $first_name;
+		$this->first_name = htmlspecialchars($first_name);
 	}
 
 	public function setLastName($last_name){
-		$this->last_name = $last_name;
+		$this->last_name = htmlspecialchars($last_name);
 	}
 
 	public function setPhoneNumber($phone_number){
@@ -92,6 +102,13 @@ class User extends basesql
 		$this->favorite_sports = $favorite_sports;
 	}
 
+	public function setCity($city){
+		$this->city = $city;
+	}
+
+	public function setBirthday($birthday){
+		$this->birthday = $birthday;
+	}
 	/**
 	* @return string
 	*/
@@ -181,6 +198,7 @@ class User extends basesql
 	* @return array
 	*/
 	public function getForm($formType){
+
 		$form = [];
 		if ($formType == "subscription") {
 			$form = [
@@ -189,7 +207,6 @@ class User extends basesql
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" ],
-
 					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" ],
 					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
@@ -199,11 +216,10 @@ class User extends basesql
 			$form = [
 				"title" => "Welcome back ! Please choose a password to activate your account.",
 				"buttonTxt" => "Activate",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$_SESSION['emailActivate']."&token=".$_SESSION['tokenActivate']],
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$this->getEmail()."&token=".$this->getToken()],
 				"struct" => [
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm password" ],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
 					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
@@ -212,11 +228,10 @@ class User extends basesql
 			$form = [
 				"title" => "Already a sport citizen ?",
 				"buttonTxt" => "Sign In",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/login"],
 				"struct"=>[
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
-
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"confirm password" ],
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];

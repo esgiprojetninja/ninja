@@ -13,6 +13,9 @@ class Validator extends basesql{
 			elseif($options["msgerror"]=="password" && !self::passwordCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
+			elseif($options["msgerror"]=="confirm_password" && !self::passwordCorrect($data[$name]) && self::passwordIdentical($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
 			elseif($options["msgerror"]=="new_email" && !self::newEmailCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
@@ -34,8 +37,14 @@ class Validator extends basesql{
 		return empty(trim($var));
 	}
 
+	public static function passwordIdentical($var){
+		return !(strcmp($var, $_SESSION['passwordValidator']));
+	}
 
 	public static function passwordCorrect($var){
+		$_SESSION['passwordValidator'] = $var; 
+// on stocke le mdp avant de vérifier qu'il soit identique au mot de passe de conf,
+// pas d'inquietude, la session est detruite a la fin du processus d'activation
 		return !( strlen($var)<8 || strlen($var)>12 ||
 					!preg_match("/[0-9]/", $var) ||
 					!preg_match("/[a-z]/", $var) ||
