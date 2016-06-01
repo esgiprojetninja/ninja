@@ -27,6 +27,14 @@ class basesql extends PDO
 		}
 	}
 
+	public static function findAll() {
+		$instance = new static;
+		$sql = "SELECT * FROM ".$instance->table;
+		$query =  $instance->pdo->prepare($sql);
+		$query->execute();
+		return $query;
+	}
+
 	public static function findById($id) {
 		$instance = new static;
 		$sql = "SELECT * FROM ".$instance->table;

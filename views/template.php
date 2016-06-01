@@ -30,7 +30,7 @@
                 <a href="<?= WEBROOT; ?>user/show/<?php if(isset($_SESSION["user_id"])){ echo $_SESSION["user_id"]; } ?>" class="item">
                     <span class="fa fa-user"></span>
                 </a>
-                <a href="#" class="item">
+                <a href="<?= WEBROOT; ?>team/list" class="item">
                     <span class="fa fa-users"></span>
                 </a>
                 <a href="#" class="item">
