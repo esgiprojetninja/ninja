@@ -1,3 +1,10 @@
+ <?php
+ //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
+    if(!($admin[0]['captain'] > 0)){
+      header('Location:'.WEBROOT.'user/login');
+    }
+?>
+
 Invite a new user
 
 <form action="<?= WEBROOT; ?>team/invite/<?= $id ?>" method="post">

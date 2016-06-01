@@ -118,6 +118,7 @@ class teamController
 			$id_user_creator = $_SESSION['user_id'];
 			$validForm = TRUE;
 			$view = new view();
+
 			if(isset($_POST["team_invite_form"]) ) {
 				if(!isset($_POST["usernameOrEmail"])||strlen($_POST["usernameOrEmail"])<3||strlen($_POST["usernameOrEmail"])>30) {
 					$validForm = FALSE;
@@ -153,7 +154,9 @@ class teamController
 				$admin->setAdmin(0);
 				$admin->save();
 			}
+			$admin = Admin::findBy("idUser",$_SESSION['user_id'],"int",false);
 			$view->assign("id",$args[0]);
+			$view->assign("admin",$admin);
             $view->setView("team/invite.tpl");
             }else{
 			header('Location:'.WEBROOT.'user/login');
