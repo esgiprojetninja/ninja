@@ -43,7 +43,7 @@ class Team extends basesql
 	}
 
 	public function setTeamName($teamName){
-		$this->teamName = $teamName;
+		$this->teamName = htmlspecialchars($teamName);
 	}
 
 	public function setDateCreated($dateCreated) {
@@ -55,7 +55,7 @@ class Team extends basesql
 	}
 
 	public function setDescription($description) {
-		$this->description = $description;
+		$this->description = htmlspecialchars($description);
 	}
 
 	public function setImg($img){
@@ -75,8 +75,15 @@ class Team extends basesql
 				]
 			];
 		} 
-		else if ($formType == "update") {
-
+		else if ($formType == "edit") {
+			$form = [
+				"title" => "Team params",
+				"buttonTxt" => "Confirm",
+				"options" => ["method" => "POST", "action" => WEBROOT . "team/edit/" . $this->id],
+				"struct"=>[
+					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team name", "required"=>1, "msgerror"=>"teamName", "value" => $this->getTeamName()],
+					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>1, "msgerror"=>"description", "value" => $this->getDescription()],]
+			];
 		}
 		
 		return $form;

@@ -62,71 +62,21 @@ class userController
 	/**
 	*
 	*/
-	public function subscribeAction($args) {
-		$view = new view();
-		$view->setView("user/subscribe.tpl");
-		$user = new User();
-		$formSubscribe = $user->getForm("subscription");
-		$formLogin = $user->getForm("login");
-		$subErrors = [];
-		$logErrors = [];
-
-		$validator = new validator();
-		if(!empty($_POST)) {
-			if($_POST["form-type"] == "subscription") {
-				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
-				if(count($subErrors) == 0) {
-					$user->setEmail($_POST['email']);
-					$user->setUsername($_POST['username']);
-					$user->setIsActive(0);
-					$user->setToken();
-					$user->save();
-					if($user->sendConfirmationEmail()) {
-						$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
-					} else {
-						$view->assign( "mailerMessage", "Something went when trying to send email." );
-					}
-				}
-			}
-			else if ($_POST["form-type"] == "login") {
-				if($user = User::findBy("email", $_POST["email"], "string")) {
-					if($user->getEmail() == trim($_POST["email"]) && $user->getPassword() == trim($_POST["password"])) {
-						$user->setToken();
-						$user->save();
-						$token = $user->getToken();
-						$id = $user->getId();
-						$_SESSION["user_id"] = $id;
-						$_SESSION["user_token"] = $token;
-						header("location: ".WEBROOT);
-					}
-					else {
-						$view->assign("error_message", "Couldn't find you :(");	
-					}
-				}
-			}
-		}
-		$view->assign("formSubscribe", $formSubscribe);
-		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
-		$view->assign("logErrors", $logErrors);
-	}
 
 	public function activateAction($args) {
 		$view = new view();
 		$user = User::FindBy('email',$args['email'],'string');
 		$view->setView("user/activation.tpl");
-		$view->assign("user_token", $args["token"]);
 		$formActivation = $user->getForm("activation");
 		$actErrors = [];
-		$validator = new Validator();
-		$_SESSION['emailActivate']=$args["email"];
-		$_SESSION['tokenActivate']=$args["token"];		
-		if (isset($args["token"]) && !$user->findBy("token", $args["token"], "string")) {
+		$validator = new Validator();	
+		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			$view->assign("msg", "Not the page you're looking for");
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
 			if ($user->getIsActive() != 1) {
 				$view->assign("formActivation", $formActivation);
+				$view->assign("user",$user);
 				if(!empty($_POST)) {
 					$actErrors = $validator->check($formActivation["struct"], $_POST);
 					if(count($actErrors) == 0) {
@@ -146,10 +96,52 @@ class userController
 		}
 	}
 
+	public function subscribeAction($args) {
+		$view = new view();
+		$view->setView("user/subscribe.tpl");
+		$user = new User();
+		$formSubscribe = $user->getForm("subscription");
+		$formLogin = $user->getForm("login");
+		$subErrors = [];
+		$logErrors = [];
+		if(isset($_POST['form-type'])){
+			$formType = $_POST['form-type'];
+		}else{
+			var_dump($_POST);
+		}
+
+		$validator = new validator();
+		if(!empty($_POST)) {
+			if($formType == "subscription") {
+				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
+				if(count($subErrors) == 0) {
+					$user->setEmail($_POST['email']);
+					$user->setUsername($_POST['username']);
+					$user->setIsActive(0);
+					$user->setToken();
+					$user->save();
+					if($user->sendConfirmationEmail()) {
+						$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
+					} else {
+						$view->assign( "mailerMessage", "Something went when trying to send email." );
+					}
+				}
+			}
+		}
+		$view->assign("formSubscribe", $formSubscribe);
+		$view->assign("subErrors", $subErrors);
+		$view->assign("formLogin", $formLogin);
+		$view->assign("logErrors", $logErrors);
+	}
+
 	public function loginAction () {
 		$view = new view();
 		$view->setView("user/login.tpl");
-		if(isset($_POST["login_form"])) {
+		$formSubscribe = User::getForm("subscription");
+		$formLogin = User::getForm("login");
+		$subErrors = [];
+		$logErrors = [];
+		if(isset($_POST["form-type"])) {
 			if($user = User::findBy("email", $_POST["email"], "string")) {
 				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
@@ -169,6 +161,10 @@ class userController
 				$view->assign("error_message", "Couldn't find you :(");
 			}
 		}
+		$view->assign("formSubscribe", $formSubscribe);
+		$view->assign("subErrors", $subErrors);
+		$view->assign("formLogin", $formLogin);
+		$view->assign("logErrors", $logErrors);
 	}
 
 	/**

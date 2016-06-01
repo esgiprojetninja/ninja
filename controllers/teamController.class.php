@@ -42,6 +42,38 @@ class teamController
 		}
 	}
 
+	/**
+    * Edit a team profile
+    * @param $args
+    */
+    public function editAction($args)
+    {
+    	if(User::isConnected() && !empty($args[0])){
+			$team = Team::findById($args[0]);
+            $view = new view();
+			$formEdit = $team->getForm("edit");
+			if ($team->getId() != $args[0]) {
+				header("location:" . WEBROOT);
+			}
+			$editErrors = [];
+			if(!empty($_POST)) {
+				$validator = new Validator();
+				$editErrors = $validator->check($formEdit["struct"], $_POST);
+				if(count($editErrors) == 0) {
+					$team->setTeamName($_POST["teamName"]);
+					$team->setDescription($_POST["description"]);
+					$team->save();
+				}
+			}
+            $view->setView("team/edit.tpl");
+            $view->assign("team", $team);
+            $view->assign("formEdit", $formEdit);
+            $view->assign("editErrors", $editErrors);
+		}else{
+			header('Location:'.WEBROOT.'user/login');
+		}
+    }
+
 	public function showAction($args)
 	{
 		if(User::isConnected() && !empty($args[0])){
