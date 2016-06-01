@@ -1,7 +1,7 @@
 <?php
 
 //Pourquoi un modèle pour une table de liaison? Malheureusement avec le code actuel, si je peux afficher ou récupérer des infos
-// de cette table je suis obligé de créer des instancs différentes propre à ma table, du coups c'est plus simple de créer cette
+// de cette table je suis obligé de créer des instances différentes propre à ma table, du coups c'est plus simple de créer cette
 // classe pour réutiliser les fonctions existantes.
 
 class TeamHasUser extends basesql
@@ -10,6 +10,7 @@ class TeamHasUser extends basesql
 	protected $table = "team_has_user";
 	protected $idTeam;
 	protected $idUser;
+	protected $admin = 0;
 
 	public function __construct(){
 		parent::__construct();
@@ -27,6 +28,10 @@ class TeamHasUser extends basesql
 		return $this->idUser;
 	}
 
+	public function getAdmin() {
+		return $this->admin;
+	}
+
 	public function setId($id) {
 		$this->id = $id;
 	}
@@ -37,6 +42,10 @@ class TeamHasUser extends basesql
 
 	public function setIdUser($idUser){
 		$this->idUser = $idUser;
+	}
+
+	public function setAdmin($admin) {
+		$this->admin = $admin;
 	}
 
 }
