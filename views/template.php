@@ -31,7 +31,7 @@
                     <span class="fa fa-user"></span>
                 </a>
                 <a href="#" class="item">
-                    <span class="fa fa-map-marker"></span>
+                    <span class="fa fa-users"></span>
                 </a>
                 <a href="#" class="item">
                     <span class="fa fa-futbol-o"></span>
