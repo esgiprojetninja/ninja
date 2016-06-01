@@ -64,13 +64,14 @@ class userController
 	*/
 	public function subscribeAction($args) {
 		$view = new view();
+		$view->setView("user/subscribe.tpl");
 		$user = new User();
 		$formSubscribe = $user->getForm("subscription");
 		$formLogin = $user->getForm("login");
 		$subErrors = [];
 		$logErrors = [];
 
-		$validator = new Validator();
+		$validator = new validator();
 		if(!empty($_POST)) {
 			if($_POST["form-type"] == "subscription") {
 				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
@@ -104,7 +105,6 @@ class userController
 				}
 			}
 		}
-		$view->setView("user/subscribe.tpl");
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
 		$view->assign("formLogin", $formLogin);
