@@ -199,7 +199,7 @@ class User extends basesql
 			$form = [
 				"title" => "Welcome back ! Please choose a password to activate your account.",
 				"buttonTxt" => "Activate",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate"],
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$_SESSION['emailActivate']."&token=".$_SESSION['tokenActivate']],
 				"struct" => [
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 
