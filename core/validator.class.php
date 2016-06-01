@@ -10,13 +10,16 @@ class Validator extends basesql{
 			if($options["required"] && self::isEmpty($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["type"]=="password" && !self::passwordCorrect($data[$name])) {
+			elseif($options["msgerror"]=="password" && !self::passwordCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["type"]=="email" && !self::emailCorrect($data[$name])) {
+			elseif($options["msgerror"]=="new_email" && !self::newEmailCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="username" && !self::existUsername($data[$name])){
+			elseif($options["msgerror"]=="email" && !self::emailCorrect($data[$name])) {
+				$listErrors[]=$options["msgerror"];
+			}
+			elseif($options["msgerror"]=="new_username" && !self::existUsername($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 			elseif($options["msgerror"]=="teamName" && !self::verifTeamName($data[$name])){
@@ -40,6 +43,12 @@ class Validator extends basesql{
 	}
 
 	public static function emailCorrect($var){
+		var_dump(!(filter_var($var,FILTER_VALIDATE_EMAIL)));
+		return !(filter_var($var,FILTER_VALIDATE_EMAIL));	
+	}
+
+	public static function newEmailCorrect($var){
+		var_dump("new email");
 		return !((filter_var($var,FILTER_VALIDATE_EMAIL)) && (User::findBy("email", $var, "string")) );	
 	}
 
