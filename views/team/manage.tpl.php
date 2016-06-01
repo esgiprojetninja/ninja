@@ -1,7 +1,7 @@
 <?php
     $team = $this->data["team"];
     //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
-    if(!($admin[0]['admin'] > 0)){
+    if(!($admin[0]['moderator'] > 0)){
       header('Location:'.WEBROOT.'user/login');
     }
 ?>
@@ -28,10 +28,10 @@
                 <br><br>
                 <div class="text-left">
                   <a href="<?= WEBROOT;?>team/show/<?= $team->getId();?>"class="btn btn-primary">Show</a>
-                  <?php if($admin[0]['admin'] >=1) : ?>
+                  <?php if($admin[0]['moderator'] >=1) : ?>
                    <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Edit</a>
                   <?php endif; ?>
-                  <?php if($admin[0]['admin'] >= 2) : ?>
+                  <?php if($admin[0]['moderator'] >= 2) : ?>
                     <button type="button" class="btn btn-danger pull-right">Supprimer mon équipe</button>
                   <?php endif; ?>
                 </div>
@@ -45,7 +45,7 @@
                       if(!($user->getId() == $_SESSION["user_id"])){ ?>
                         <a href="#" >Send message</a>
                         <a href="#" >Kick</a>
-                       <?php if($admin[0]['admin'] >= 2): ?>
+                       <?php if($admin[0]['moderator'] >= 2): ?>
                         <a href="#" >Promote</a>
                         <a href="#" >Demote</a>
                       <?php endif; ?>
