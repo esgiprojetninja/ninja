@@ -16,6 +16,7 @@ class teamController
 				$creaErrors = $validator->check($formCreateTeam["struct"], $_POST);
 				if(count($creaErrors) == 0) {
 					$teamHasUser = new TeamHasUser();
+					$admin = new Admin();
 					$team->setTeamName($_POST["teamName"]);
 					date_default_timezone_set('Europe/Paris');
 					$now = date("Y-m-d H:i");
@@ -28,10 +29,14 @@ class teamController
 					//On rajoute l'utilisateur qui crée la team dans sa team
 					$id_team = Team::findBy("teamName", $_POST["teamName"], "string");
 					$id_team = $id_team->getId();
-					$teamHasUser->setAdmin(2);
 					$teamHasUser->setIdTeam($id_team);
 					$teamHasUser->setIdUser($id_user_creator);
 					$teamHasUser->save();
+
+					$admin->setIdTeam($id_team);
+					$admin->setIdUser($id_user_creator);
+					$admin->setAdmin(2);
+					$admin->save();
 				}
 			}
 			$view->setView("team/create.tpl");
@@ -79,10 +84,12 @@ class teamController
 		if(User::isConnected() && !empty($args[0])){
 			$team = Team::findById($args[0]);
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
+			$admin = Admin::findBy("idUser",$_SESSION['user_id'],"int",false);
             $view = new view();
             $view->setView("team/show.tpl");
             $view->assign("members",$members);
             $view->assign("team", $team);
+            $view->assign("admin",$admin);
 		}else{
 			//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -94,9 +101,11 @@ class teamController
 			$team = Team::findById($args[0]);
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
             $view = new view();
+            $admin = Admin::findBy("idUser",$_SESSION['user_id'],"int",false);
             $view->setView("team/manage.tpl");
             $view->assign("members",$members);
             $view->assign("team", $team);
+            $view->assign("admin",$admin);
 		}else{
 			//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -127,6 +136,7 @@ class teamController
 				$view->assign("errors", $errors);
 			} else {
 				$teamHasUser = new TeamHasUser();
+				$admin = new Admin();
 				if(!isset($email)){
 					$id_user_invited = User::FindBy("username",$username,"string");
 				}else{
@@ -137,6 +147,11 @@ class teamController
 				$teamHasUser->setIdUser($id_user_invited);
 				$teamHasUser->setIdTeam($id_team);
 				$teamHasUser->save();
+
+				$admin->setIdTeam($id_team);
+				$admin->setIdUser($id_user_invited);
+				$admin->setAdmin(0);
+				$admin->save();
 			}
 			$view->assign("id",$args[0]);
             $view->setView("team/invite.tpl");
