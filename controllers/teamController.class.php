@@ -20,13 +20,15 @@ class teamController
 					date_default_timezone_set('Europe/Paris');
 					$now = date("Y-m-d H:i");
 					$team->setDateCreated($now);
-					if(isset($description)){
-						$team->setDescription($description);
+					if(isset($_POST['description'])){
+						$team->setDescription($_POST['description']);
 					}
 					$team->save();
+
 					//On rajoute l'utilisateur qui crée la team dans sa team
 					$id_team = Team::findBy("teamName", $_POST["teamName"], "string");
 					$id_team = $id_team->getId();
+					$teamHasUser->setAdmin(2);
 					$teamHasUser->setIdTeam($id_team);
 					$teamHasUser->setIdUser($id_user_creator);
 					$teamHasUser->save();

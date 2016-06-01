@@ -36,9 +36,11 @@
                         EVENT RECURRENT ?
                     -->
                 </ul>
-                <div class="text-right">
-                    <a href="<?= WEBROOT; ?>team/manage/<?php echo $team->getId(); ?>" class="btn btn-primary">Manage</a>
-                </div>
+                <?php if($members[0]['admin'] > 0): ?>
+                    <div class="text-right">
+                        <a href="<?= WEBROOT; ?>team/manage/<?php echo $team->getId(); ?>" class="btn btn-primary">Manage</a>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php endif;?>
         </div>
