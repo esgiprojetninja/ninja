@@ -127,4 +127,17 @@ class teamController
 		}
 	}
 
+	public function listAction($args){
+		if(User::isConnected()){
+			$teams = Team::FindAll();
+			$view = new view();
+
+            $view->setView("team/list.tpl");
+            $view->assign("teams", $teams);
+		}else{
+			//A voir la redirection
+			header('Location:'.WEBROOT.'user/login');
+		}
+	}
+
 }
