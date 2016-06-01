@@ -185,11 +185,12 @@ class User extends basesql
 		if ($formType == "subscription") {
 			$form = [
 				"title" => "Want to join the Nation ?",
+				"buttonTxt" => "Sign Up",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" ],
 
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username" ],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" ],
 					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
@@ -197,6 +198,7 @@ class User extends basesql
 		else if ($formType == "activation") {
 			$form = [
 				"title" => "Welcome back ! Please choose a password to activate your account.",
+				"buttonTxt" => "Activate",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate"],
 				"struct" => [
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
@@ -209,12 +211,27 @@ class User extends basesql
 		else if ($formType == "login") {
 			$form = [
 				"title" => "Already a sport citizen ?",
+				"buttonTxt" => "Sign In",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct"=>[
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"password" ],
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
 
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"confirm password" ],
 					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+		} else if ($formType == "edit") {
+			$form = [
+				"title" => "Account params",
+				"buttonTxt" => "Confirm",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/edit/" . $this->id],
+				"struct"=>[
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"", "value" => $this->getEmail()],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username", "value" => $this->getUsername()],
+					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()],
+					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()],
+					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()],
+					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
 		}

@@ -1,10 +1,14 @@
 <?php
-    $user = $this->data["user"];
+    //$user = $this->data["user"];
 ?>
-
-<div id="wrap">
-    <ul>
-        <li> UserName = <?= $user->getUsername(); ?> </li>
-        <li> Email = <?= $user->getEmail(); ?></li>
-    </ul>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel">
+            <div class="panel-body">
+                <?php
+                    $this->createForm($formEdit, $editErrors);
+                ?>
+            </div>
+        </div>
+    </div>
 </div>

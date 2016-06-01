@@ -31,8 +31,8 @@
 
 	<?php endforeach;?>
 	
-	<div class="input-grp">
+	<div class="input-grp text-right">
         <input type="hidden" name="subscribe_form" value="true">
-        <input type="submit" value="Sign In" name="submit" class="btn btn-primary">
+        <input type="submit" value="<?php echo $form["buttonTxt"] ?>" name="submit" class="btn btn-primary">
     </div>
 </form>
