@@ -35,8 +35,10 @@ class teamController
 
 					$admin->setIdTeam($id_team);
 					$admin->setIdUser($id_user_creator);
-					$admin->setAdmin(2);
+					$admin->setCaptain(2);
 					$admin->save();
+
+					$view->assign("success","Your team has been created");
 				}
 			}
 			$view->setView("team/create.tpl");
@@ -65,11 +67,31 @@ class teamController
 				$validator = new Validator();
 				$editErrors = $validator->check($formEdit["struct"], $_POST);
 				if(count($editErrors) == 0) {
+					$path = "public/img/teams/".trim(strtolower($_POST["teamName"])).".".strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
+					$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
+					if($movingFile){
+						$view->assign("success","Changes has been saved");
+						//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
+						if($dossier = opendir('public/img/teams')){
+							while(false !== ($fichier = readdir($dossier))){
+								$explode = explode(".", $fichier);
+								if($explode[0] == $_POST['teamName'] && $explode[1] != strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1))){
+									unlink('public/img/teams/'.$fichier);
+								}
+							}
+						}
+					}else{
+						$view->assign("movingFile", "An error while seting your team avatar");
+					}
+					$team->setAvatar($path);
 					$team->setTeamName($_POST["teamName"]);
 					$team->setDescription($_POST["description"]);
 					$team->save();
+					$view->assign("success","Changes has been saved");
 				}
 			}
+			$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
+			$view->assign("admin",$admin);
             $view->setView("team/edit.tpl");
             $view->assign("team", $team);
             $view->assign("formEdit", $formEdit);
@@ -114,51 +136,46 @@ class teamController
 
 	public function inviteAction($args){
 		if(User::isConnected() && !empty($args[0])){
-			$errors = [];
-			$id_user_creator = $_SESSION['user_id'];
-			$validForm = TRUE;
+			$team = Team::findById($args[0]);
+			$inviteErrors = [];
 			$view = new view();
-
-			if(isset($_POST["team_invite_form"]) ) {
-				if(!isset($_POST["usernameOrEmail"])||strlen($_POST["usernameOrEmail"])<3||strlen($_POST["usernameOrEmail"])>30) {
-					$validForm = FALSE;
-					$errors[] = "Please enter a valid Username or Email";
-				}else {
-					if(filter_var($_POST["usernameOrEmail"], FILTER_VALIDATE_EMAIL)){
-						$email = strtolower(htmlspecialchars($_POST["usernameOrEmail"]));
+			$formInviteTeam = $team->getForm("invite");
+			if(!empty($_POST)) {
+				$validator = new Validator();
+				$_SESSION['idTeam'] = $args[0];
+				$inviteErrors = $validator->check($formInviteTeam["struct"], $_POST);
+				if(count($inviteErrors) == 0) {
+					$teamHasUser = new TeamHasUser();
+					$admin = new Admin();
+					if(!filter_var($_POST["emailOrUsername"],FILTER_VALIDATE_EMAIL)){
+						$id_user_invited = User::FindBy("username",$_POST["emailOrUsername"],"string");
 					}else{
-						$username = strtolower(htmlspecialchars($_POST["usernameOrEmail"]));
+						$id_user_invited = User::FindBy("email",$_POST["emailOrUsername"],"string");
+					}
+					//Si l'utilisateur existe
+					if($id_user_invited){
+						unset($_SESSION['idTeam']);
+						$teamHasUser->setIdUser($id_user_invited->getId());
+						$teamHasUser->setIdTeam($args[0]);
+						$teamHasUser->save();
+
+						$admin->setIdTeam($args[0]);
+						$admin->setIdUser($id_user_invited->getId());
+						$admin->setCaptain(0);
+						$admin->save();
+						$view->assign("success","Utilisateur invité !");
+					}else{
+						$view->assign("error","Utilisateur inexistant");
 					}
 				}
-			}else{
-				$validForm = FALSE;
-			}
-			if(!$validForm) {
-				$view->assign("errors", $errors);
-			} else {
-				$teamHasUser = new TeamHasUser();
-				$admin = new Admin();
-				if(!isset($email)){
-					$id_user_invited = User::FindBy("username",$username,"string");
-				}else{
-					$id_user_invited = User::FindBy("email",$email,"string");
-				}
-				$id_user_invited = $id_user_invited->getId();
-				$id_team = $args[0];
-				$teamHasUser->setIdUser($id_user_invited);
-				$teamHasUser->setIdTeam($id_team);
-				$teamHasUser->save();
-
-				$admin->setIdTeam($id_team);
-				$admin->setIdUser($id_user_invited);
-				$admin->setAdmin(0);
-				$admin->save();
-			}
-			$admin = Admin::findBy("idUser",$_SESSION['user_id'],"int",false);
-			$view->assign("id",$args[0]);
+			}		
+			$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
 			$view->assign("admin",$admin);
             $view->setView("team/invite.tpl");
-            }else{
+            $view->assign("team",$team);
+            $view->assign("formInviteTeam", $formInviteTeam);
+            $view->assign("inviteErrors", $inviteErrors);
+        }else{
 			header('Location:'.WEBROOT.'user/login');
 		}
 	}

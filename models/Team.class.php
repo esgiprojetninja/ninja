@@ -8,7 +8,7 @@ class Team extends basesql
 	protected $dateCreated;
 	protected $sports = "";
 	protected $description = "";
-	protected $img = "";
+	protected $avatar = "";
 
 	public function __construct(){
 		parent::__construct();
@@ -34,8 +34,8 @@ class Team extends basesql
 		return $this->description;
 	}
 
-	public function getImg(){
-		return $this->img;
+	public function getAvatar(){
+		return $this->avatar;
 	}
 
 	public function setId($id) {
@@ -58,8 +58,8 @@ class Team extends basesql
 		$this->description = htmlspecialchars($description);
 	}
 
-	public function setImg($img){
-		$this->img = $img;
+	public function setAvatar($avatar){
+		$this->avatar = $avatar;
 	}
 
 	public function getForm($formType){
@@ -67,6 +67,7 @@ class Team extends basesql
 		if ($formType == "create") {
 			$form = [
 				"title" => "Create your own team",
+				"buttonTxt" => "Create",
 				"options" => ["method" => "POST", "action" => WEBROOT . "team/create"],
 				"struct" => [
 					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team Name", "required"=>1, "msgerror"=>"teamName" ],
@@ -79,11 +80,21 @@ class Team extends basesql
 			$form = [
 				"title" => "Team params",
 				"buttonTxt" => "Confirm",
-				"options" => ["method" => "POST", "action" => WEBROOT . "team/edit/" . $this->id],
+				"options" => ["method" => "POST", "action" => WEBROOT . "team/edit/" . $this->id,"enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team name", "required"=>1, "msgerror"=>"teamName", "value" => $this->getTeamName()],
-					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>1, "msgerror"=>"description", "value" => $this->getDescription()],]
+					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team name", "required"=>1, "msgerror"=>"newTeamName", "value" => $this->getTeamName()],
+					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>1, "msgerror"=>"newDescription", "value" => $this->getDescription()],
+					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>1,"msgerror"=>"avatar","value"=>"../../".$this->getAvatar()],]
 			];
+		}
+		else if ($formType == "invite") {
+			$form = [
+				"title" => "Invite a new partner",
+				"buttonTxt" => "Invite",
+				"options" => ["method" => "POST", "action" => WEBROOT . "team/invite/".$this->id],
+				"struct"=>[
+					"emailOrUsername"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email or username to invite", "required"=>1, "msgerror"=>"emailOrUsername"],]
+					];
 		}
 		
 		return $form;

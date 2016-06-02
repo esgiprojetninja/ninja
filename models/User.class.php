@@ -3,7 +3,7 @@
 class User extends basesql
 {
 
-	protected $id;
+	public $id; //passage en public, afin de pouvoir dans le validator vérifier que l'utilisateur ne fasse pas partie de la team
 	protected $table = "users";
 	protected $email = "";
 	protected $token = "";
@@ -16,6 +16,7 @@ class User extends basesql
 	protected $favorite_sports = "";
 	protected $city = "";
 	protected $birthday = "0000-00-00";
+	protected $avatar = "";
 
 
 	/**
@@ -70,6 +71,10 @@ class User extends basesql
 		return $this->birthday;
 	}
 
+	public function getAvatar(){
+		return $this->avatar;
+	}
+
 	public function setIsActive($is_active) {
 		$this->is_active = $is_active;
 	}
@@ -108,6 +113,10 @@ class User extends basesql
 
 	public function setBirthday($birthday){
 		$this->birthday = $birthday;
+	}
+
+	public function setAvatar($avatar){
+		$this->avatar = $avatar;
 	}
 	/**
 	* @return string
@@ -239,13 +248,14 @@ class User extends basesql
 			$form = [
 				"title" => "Account params",
 				"buttonTxt" => "Confirm",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/edit/" . $this->id],
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/edit/" . $this->id,"enctype"=>"multipart/form-data"],
 				"struct"=>[
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"", "value" => $this->getEmail()],
 					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username", "value" => $this->getUsername()],
 					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()],
 					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()],
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()],
+					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>1,"msgerror"=>"avatar","value"=>"../../".$this->getAvatar()],
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];

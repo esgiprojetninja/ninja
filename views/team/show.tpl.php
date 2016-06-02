@@ -10,12 +10,11 @@
                 <h3>Team not found</h3>
             </div>
             <?php else : ?>
-            <!-- IMAGE EQUIPE
-
             <div class="panel-media">
-                <img src="<?= WEBROOT; ?>dist/images/monkey.jpg">
+                <?php if($team->getAvatar() != ""): ?>
+                    <img src="<?= "../../".$team->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php endif;?>
             </div>
-            -->
             <div class="panel-heading"><h3><?php echo $team->getTeamName(); ?></h3></div>
             <div class="panel-body">
                 <ul>

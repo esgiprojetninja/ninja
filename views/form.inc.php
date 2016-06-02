@@ -12,7 +12,7 @@
 	}
 ?>
 
-<form action="<?php echo $form["options"]["action"] ?>" method="<?php echo $form["options"]["method"]?>">
+<form action="<?php echo $form["options"]["action"] ?>" method="<?php echo $form["options"]["method"]?>" <?php echo isset($form["options"]["enctype"]) ? "enctype=\"".$form["options"]["enctype"]."\"" : "" ?>>
 
 	<h3><?= $form["title"]; ?></h3>
 

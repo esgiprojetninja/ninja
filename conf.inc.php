@@ -17,11 +17,13 @@ define("DBNAME","ninja_db");
 DEFINE("SALT", "ABFffds32EOPDx32snklf443dsFDS464");
 
 $errors_msg = [
-	"email"=>"Votre email n'est pas correct ou déjà existante",
-	"username"=>"Username déja existant",
-	"password"=>"Mot de passe incorrect",
-	"confirm_password"=>"Mot de passe différend",
-	"teamName"=>"Nom d'équipe incorrect",
-	"new_email" => "Votre email n'est pas correct ou déjà existante",
-	"new_username" => "Username déja existant"
+	"email"=>"Your email isn't correct or allready exists",
+	"username"=>"Username allready exists",
+	"password"=>"Incorrect password",
+	"confirm_password"=>"Different password",
+	"teamName"=>"Incorrect team name",
+	"new_email" => "Your email isn't correct or allready exists",
+	"new_username" => "Username allready exists",
+	"emailOrUsername"=>"User not found or allready in team",
+	"avatar"=>"Invalid avatar"
 ];
