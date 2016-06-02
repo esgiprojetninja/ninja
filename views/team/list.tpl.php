@@ -31,6 +31,8 @@
                     }
                     ?>
                 </table>
+                <br>
+                <a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your now!</a>
             </div>
         </div>
     </div>

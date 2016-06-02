@@ -10,7 +10,7 @@ class Admin extends basesql
 	protected $table = "admin";
 	protected $idTeam;
 	protected $idUser;
-	protected $admin = 0;
+	protected $captain = 0;
 
 	public function __construct(){
 		parent::__construct();
@@ -28,8 +28,8 @@ class Admin extends basesql
 		return $this->idUser;
 	}
 
-	public function getAdmin() {
-		return $this->admin;
+	public function getCaptain() {
+		return $this->captain;
 	}
 
 	public function setId($id) {
@@ -44,8 +44,8 @@ class Admin extends basesql
 		$this->idUser = $idUser;
 	}
 
-	public function setAdmin($admin) {
-		$this->admin = $admin;
+	public function setCaptain($captain) {
+		$this->captain = $captain;
 	}
 
 }

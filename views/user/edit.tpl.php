@@ -8,7 +8,11 @@
                 <?php
                     $this->createForm($formEdit, $editErrors);
                 ?>
+                <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
             </div>
         </div>
     </div>
 </div>
+
+<?php echo isset($this->data["success"]) ? $this->data["success"] : "" ?>
+<?php echo isset($this->data["movingFile"]) ? $this->data["movingFile"] : "" ?>
