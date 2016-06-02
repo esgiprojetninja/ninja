@@ -12,7 +12,9 @@
             <?php else : ?>
             
             <div class="panel-media">
-                <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php if($user->getAvatar() != ""): ?>
+                    <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php endif;?>
             </div>
             
             <div class="panel-heading"><h3><?php echo $user->getUsername(); ?></h3></div>

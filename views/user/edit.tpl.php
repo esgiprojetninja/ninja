@@ -8,7 +8,9 @@
                 <?php
                     $this->createForm($formEdit, $editErrors);
                 ?>
-                <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php if($user->getAvatar() != ""): ?>
+                    <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php endif;?>
             </div>
         </div>
     </div>

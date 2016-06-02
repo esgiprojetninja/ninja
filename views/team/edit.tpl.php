@@ -11,7 +11,9 @@
                 <?php
                     $this->createForm($formEdit, $editErrors);
                 ?>
-                <img src="<?= "../../".$team->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php if($team->getAvatar() != ""): ?>
+                    <img src="<?= "../../".$team->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php endif;?>
             </div>
         </div>
     </div>

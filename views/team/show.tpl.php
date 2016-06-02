@@ -12,8 +12,8 @@
             <?php else : ?>
             <div class="panel-media">
                 <?php if($team->getAvatar() != ""): ?>
-                <img src="<?= "../../".$team->getAvatar(); ?>" style="width:80px;height:80px">
-            <?php endif;?>
+                    <img src="<?= "../../".$team->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php endif;?>
             </div>
             <div class="panel-heading"><h3><?php echo $team->getTeamName(); ?></h3></div>
             <div class="panel-body">
