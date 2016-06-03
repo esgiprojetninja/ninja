@@ -10,12 +10,13 @@
                 <h3>User not found</h3>
             </div>
             <?php else : ?>
-            <!-- IMAGE USER
-
+            
             <div class="panel-media">
-                <img src="<?= WEBROOT; ?>dist/images/monkey.jpg">
+                <?php if($user->getAvatar() != ""): ?>
+                    <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
+                <?php endif;?>
             </div>
-            -->
+            
             <div class="panel-heading"><h3><?php echo $user->getUsername(); ?></h3></div>
             <div class="panel-body">
                 <ul>
