@@ -25,7 +25,10 @@
 						class="<?php echo $option["class"] ;?>"
 						placeholder="<?php echo $option["placeholder"] ;?>"
 						<?php echo ($option["required"])?"required='required'":""?>
-						value= "<?php if((isset($data[$name]) && $option["type"]!="password" && $option["type"]!="hidden")){echo $data[$name];}else if(isset($option["value"])){echo $option["value"];}?>" > 
+						value= "<?php if((isset($data[$name]) && $option["type"]!="password" && $option["type"]!="hidden")){echo $data[$name];}else if(isset($option["value"])){echo $option["value"];}?>" 
+						<?php if(isset($option["id"])){echo "id=\"".$option["id"]."\"";}?>
+						<?php if(isset($option["autocomplete"])){echo "autocomplete=\"".$option["autocomplete"]."\"";}?>> 
+
 			</div>
 		
 

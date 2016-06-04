@@ -48,4 +48,13 @@ class Admin extends basesql
 		$this->captain = $captain;
 	}
 
+	public function getTitre($captain){
+		if($captain == 0){
+			return "Newbie";
+		}else if($captain == 1 ){
+			return "Casual";
+		}else if($captain == 2){
+			return "Big boss";
+		}
+	}
 }

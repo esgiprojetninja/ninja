@@ -28,16 +28,16 @@ class Validator extends basesql{
 			elseif($options["msgerror"]=="new_username" && !self::existUsername($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="teamName" && !self::verifTeamName($data[$name]) && !self::existTeamName($data[$name])){
+			elseif($options["msgerror"]=="teamName" && !self::existTeamName($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 			elseif($options["msgerror"]=="emailOrUsername" && !self::verifUsernameOfEmail($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="new_teamName" && !self::verifTeamName($data[$name])){
+			elseif($options["msgerror"]=="new_teamName" && !self::newExistTeamName($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="avatar"  && $options["type"]=="file"&& !self::verifAvatar($_FILES[$name])){
+			elseif($options["required"] && $options["msgerror"]=="avatar"  && $options["type"]=="file"&& !self::verifAvatar($_FILES[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 		}
@@ -102,14 +102,23 @@ class Validator extends basesql{
 		return !(User::findBy("username",$var,"string"));
 	}
 
-	public static function verifTeamName($var){
-		return !(strlen($var)<4 || strlen($var)>30);
+	public static function newExistTeamName($var){
+		if(!self::notChangingTeamName($var)){
+			return !(strlen($var)<4 || strlen($var)>30);
+		}
 	}
 
 	public static function existTeamName($var){
-		return !(Team::findBy("teamName",$var,"string"));
+		return !((strlen($var)<4 || strlen($var)>30) || (Team::findBy("teamName",$var,"string")));
 	}
 
+	public static function notChangingTeamName($var){
+		$nameTeam = Team::findById($_SESSION['temp_idTeam']);
+		//Si l'utilisateur ne change pas son nom d'equipe on update tout de meme les autres champs
+		if(strcmp($nameTeam->teamName, $var) != 0){
+			return !strcmp($nameTeam->teamName, $var);
+		}
+	}
 }
 
 

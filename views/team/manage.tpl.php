@@ -32,7 +32,7 @@
                    <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Edit</a>
                   <?php endif; ?>
                   <?php if($admin[0]['captain'] >= 2) : ?>
-                    <button type="button" class="btn btn-danger pull-right">Supprimer mon équipe</button>
+                    <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-danger pull-right deleteTeam">Supprimer mon équipe</a>
                   <?php endif; ?>
                 </div>
                 <br><br>
@@ -41,13 +41,20 @@
                 <?php 
                     foreach($members as $member){ 
                       $user = User::findById($member[2]);
-                      echo "<br>".$user->getUsername();
+                      $actualUserAdmin = Admin::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
+                      echo "<br>".$user->getUsername()." - " . Admin::getTitre($actualUserAdmin->getCaptain());
                       if(!($user->getId() == $_SESSION["user_id"])){ ?>
                         <a href="#" >Send message</a>
-                        <a href="#" >Kick</a>
-                       <?php if($admin[0]['captain'] >= 2): ?>
-                        <a href="#" >Promote</a>
-                        <a href="#" >Demote</a>
+                         <?php if($actualUserAdmin->getCaptain() != 2 ): ?>
+                        <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="kickUser" >Kick</a>
+                        <?php endif; ?>
+                       <?php if($admin[0]['captain'] >= 2 ): ?>
+                        <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() >= 0 ): ?>
+                        <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="promoteUser" >Promote</a>
+                        <?php endif; ?>
+                        <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() > 0): ?>
+                        <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="demoteUser">Demote</a>
+                        <?php endif; ?>
                       <?php endif; ?>
                       <?php
                       }
@@ -56,13 +63,12 @@
                 <br><br>
                 <div class="text-left">
                   <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
+                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right leaveTeam">Leave</a>
                 </div>
                 <!--
                     AFFICHER DERNIER EVENT ?
                     EVENT RECURRENT ?
                 -->
-        
-               
             </div>
             <?php endif;?>
         </div>

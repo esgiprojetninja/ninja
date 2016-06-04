@@ -5,6 +5,7 @@ $lienbase = $protocol . $_SERVER['HTTP_HOST'] . str_replace(end($explode), '', $
 define('WEBROOT', $lienbase);
 define("DBHOST","localhost");
 define("DBUSER","root");
+date_default_timezone_set('Europe/Paris');
 
 
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -21,9 +22,11 @@ $errors_msg = [
 	"username"=>"Username allready exists",
 	"password"=>"Incorrect password",
 	"confirm_password"=>"Different password",
-	"teamName"=>"Incorrect team name",
+	"teamName"=>"Incorrect team name or allready exists",
 	"new_email" => "Your email isn't correct or allready exists",
 	"new_username" => "Username allready exists",
 	"emailOrUsername"=>"User not found or allready in team",
-	"avatar"=>"Invalid avatar"
+	"avatar"=>"Invalid avatar",
+	"sports"=>"ERROR 404 SPORT NOT FOUND",
+	"new_teamName"=>"Incorrect team name or allready exists"
 ];

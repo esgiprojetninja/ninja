@@ -4,7 +4,7 @@ class Team extends basesql
 {
 	protected $id;
 	protected $table = "teams";
-	protected $teamName;
+	public $teamName;
 	protected $dateCreated;
 	protected $sports = "";
 	protected $description = "";
@@ -82,9 +82,9 @@ class Team extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "team/edit/" . $this->id,"enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team name", "required"=>1, "msgerror"=>"newTeamName", "value" => $this->getTeamName()],
-					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>1, "msgerror"=>"newDescription", "value" => $this->getDescription()],
-					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>1,"msgerror"=>"avatar","value"=>"../../".$this->getAvatar()],]
+					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team name", "required"=>1, "msgerror"=>"new_teamName", "value" => $this->getTeamName()],
+					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>0, "msgerror"=>"newDescription", "value" => $this->getDescription()],
+					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>0,"msgerror"=>"avatar","value"=>"../../".$this->getAvatar()],]
 			];
 		}
 		else if ($formType == "invite") {

@@ -17,6 +17,7 @@ class User extends basesql
 	protected $city = "";
 	protected $birthday = "0000-00-00";
 	protected $avatar = "";
+	protected $dateCreated;
 
 
 	/**
@@ -75,6 +76,10 @@ class User extends basesql
 		return $this->avatar;
 	}
 
+	public function getDateCreated() {
+		return $this->dateCreated;
+	}
+
 	public function setIsActive($is_active) {
 		$this->is_active = $is_active;
 	}
@@ -118,6 +123,11 @@ class User extends basesql
 	public function setAvatar($avatar){
 		$this->avatar = $avatar;
 	}
+
+	public function setDateCreated($dateCreated) {
+		$this->dateCreated = $dateCreated;
+	}
+
 	/**
 	* @return string
 	*/
@@ -255,7 +265,7 @@ class User extends basesql
 					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()],
 					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()],
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()],
-					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>1,"msgerror"=>"avatar","value"=>"../../".$this->getAvatar()],
+					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>0,"msgerror"=>"avatar","value"=>$this->getAvatar()],
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
