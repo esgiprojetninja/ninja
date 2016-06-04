@@ -18,8 +18,94 @@ $(function ($) {
     $(".js-close-msg-box").click(function (ev) {
         $(this).parent().parent().fadeOut();
     });
-});
 
+    $("a.kickUser").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/kick/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId, idUser: userId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
+    $("a.demoteUser").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/demote/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId, idUser: userId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
+    $("a.promoteUser").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/promote/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId, idUser: userId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
+    $("a.leaveTeam").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/leave/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
+
+    $("a.deleteTeam").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/delete/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
+});
 
 /**********************
     -- AJAX FORMS --

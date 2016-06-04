@@ -10,6 +10,8 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
     <!-- scripts -->
+    <script type="text/javascript" src="<?= WEBROOT;?>public/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="<?= WEBROOT;?>public/js/all.js"></script>
 </head>
 
 <body>
@@ -56,7 +58,6 @@
 </div>
 
 </body>
-<script type="text/javascript" src="<?= WEBROOT;?>public/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="<?= WEBROOT;?>public/js/all.js"></script>
+
 
 </html>

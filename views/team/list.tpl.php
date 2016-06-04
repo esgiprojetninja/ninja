@@ -26,11 +26,23 @@
                         echo '</td><td>';
                         echo $team['description'];
                         echo '</td><td>';
-                        echo count($members);
+                        echo count($members);                       
                         echo '</td></tr>';
                     }
+
+                    echo '<p align="center">Page : ';
+                    for($i=1; $i<=$nombreDePages; $i++){
+                         if($i==$pageActuelle){
+                             echo ' [ '.$i.' ] '; 
+                         }else{
+                              echo ' <a href='.WEBROOT.'team/list?page='.$i.'>'.$i.'</a> ';
+                         }
+                    }
+                    echo '</p>';
                     ?>
                 </table>
+                <br>
+                <a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your now!</a>
             </div>
         </div>
     </div>

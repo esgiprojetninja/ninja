@@ -7,7 +7,10 @@ class Validator extends basesql{
 	public static function check($struct, $data){
 		$listErrors = [];
 		foreach ($struct as $name => $options) {
-			if($options["required"] && self::isEmpty($data[$name])){
+			if($options["required"] && $options["type"]!="file" && self::isEmpty($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
+			else if($options["required"] && $options["type"]=="file" && self::isFileEmpty($_FILES[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 			elseif($options["msgerror"]=="password" && !self::passwordCorrect($data[$name])) {
@@ -25,13 +28,49 @@ class Validator extends basesql{
 			elseif($options["msgerror"]=="new_username" && !self::existUsername($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="teamName" && !self::verifTeamName($data[$name])){
+			elseif($options["msgerror"]=="teamName" && !self::existTeamName($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
+			elseif($options["msgerror"]=="emailOrUsername" && !self::verifUsernameOfEmail($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
+			elseif($options["msgerror"]=="new_teamName" && !self::newExistTeamName($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
+			elseif($options["required"] && $options["msgerror"]=="avatar"  && $options["type"]=="file"&& !self::verifAvatar($_FILES[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 		}
 		return $listErrors;
 	}
 
+	public static function verifAvatar($var){
+		$sizeMax = 2097152;
+		$extension = ["jpg","jpeg","gif","png"];
+		$extensionUpload = strtolower(substr(strrchr($var['name'], '.'), 1));
+		if($var['size'] > $sizeMax || $var['size'] == 0){
+			return !($var['size'] <= $sizeMax || $var['size'] == 0);
+		}else if(!in_array($extensionUpload, $extension)){
+			return !(in_array($extensionUpload, $extension));
+		}else{
+			return TRUE;
+		}
+	}
+
+	//fonciton de verif pour l'invitation par email ou username
+	public static function verifUsernameOfEmail($var){
+		if(!self::emailCorrect($var)){//Si email
+			$idUser = User::findBy("email",$var,"string");
+			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["string","int"]));
+		}else{//Sinon pseudo
+			$idUser = User::findBy("username",$var,"string");
+			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["string","int"]));
+		}
+	}
+
+	public static function isFileEmpty($var){
+		return empty($var);
+	}
 
 	public static function isEmpty($var){
 		return empty(trim($var));
@@ -52,12 +91,10 @@ class Validator extends basesql{
 	}
 
 	public static function emailCorrect($var){
-		var_dump(!(filter_var($var,FILTER_VALIDATE_EMAIL)));
 		return !(filter_var($var,FILTER_VALIDATE_EMAIL));	
 	}
 
 	public static function newEmailCorrect($var){
-		var_dump("new email");
 		return !((filter_var($var,FILTER_VALIDATE_EMAIL)) && (User::findBy("email", $var, "string")) );	
 	}
 
@@ -65,8 +102,22 @@ class Validator extends basesql{
 		return !(User::findBy("username",$var,"string"));
 	}
 
-	public static function verifTeamName($var){
-		return !((Team::findBy("teamName",$var,"string")) && !(strlen($var)<4 || strlen($var)>30));
+	public static function newExistTeamName($var){
+		if(!self::notChangingTeamName($var)){
+			return !(strlen($var)<4 || strlen($var)>30);
+		}
+	}
+
+	public static function existTeamName($var){
+		return !((strlen($var)<4 || strlen($var)>30) || (Team::findBy("teamName",$var,"string")));
+	}
+
+	public static function notChangingTeamName($var){
+		$nameTeam = Team::findById($_SESSION['temp_idTeam']);
+		//Si l'utilisateur ne change pas son nom d'equipe on update tout de meme les autres champs
+		if(strcmp($nameTeam->teamName, $var) != 0){
+			return !strcmp($nameTeam->teamName, $var);
+		}
 	}
 }
 

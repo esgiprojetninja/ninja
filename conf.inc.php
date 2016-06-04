@@ -5,6 +5,7 @@ $lienbase = $protocol . $_SERVER['HTTP_HOST'] . str_replace(end($explode), '', $
 define('WEBROOT', $lienbase);
 define("DBHOST","localhost");
 define("DBUSER","root");
+date_default_timezone_set('Europe/Paris');
 
 
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -17,11 +18,15 @@ define("DBNAME","ninja_db");
 DEFINE("SALT", "ABFffds32EOPDx32snklf443dsFDS464");
 
 $errors_msg = [
-	"email"=>"Votre email n'est pas correct ou déjà existante",
-	"username"=>"Username déja existant",
-	"password"=>"Mot de passe incorrect",
-	"confirm_password"=>"Mot de passe différend",
-	"teamName"=>"Nom d'équipe incorrect",
-	"new_email" => "Votre email n'est pas correct ou déjà existante",
-	"new_username" => "Username déja existant"
+	"email"=>"Your email isn't correct or allready exists",
+	"username"=>"Username allready exists",
+	"password"=>"Incorrect password",
+	"confirm_password"=>"Different password",
+	"teamName"=>"Incorrect team name or allready exists",
+	"new_email" => "Your email isn't correct or allready exists",
+	"new_username" => "Username allready exists",
+	"emailOrUsername"=>"User not found or allready in team",
+	"avatar"=>"Invalid avatar",
+	"sports"=>"ERROR 404 SPORT NOT FOUND",
+	"new_teamName"=>"Incorrect team name or allready exists"
 ];

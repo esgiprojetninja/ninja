@@ -42,12 +42,33 @@ class userController
 				$validator = new Validator();
 				$editErrors = $validator->check($formEdit["struct"], $_POST);
 				if(count($editErrors) == 0) {
+					if($_FILES['avatar']['size']!= 0){
+						$path = "public/img/users/".trim(strtolower($_POST["username"])).".".strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
+						$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
+						if($movingFile){
+							$v->assign("success","Changes has been saved");
+							$user->setAvatar($path);
+							//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
+							if($dossier = opendir('public/img/users')){
+								while(false !== ($fichier = readdir($dossier))){
+									$explode = explode(".", $fichier);
+									if($explode[0] == $_POST['username'] && $explode[1] != strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1))){
+										unlink('public/img/users/'.$fichier);
+									}
+								}
+							}
+						}else{
+							$v->assign("movingFile", "An error while seting your avatar");
+						}
+					}
 					$user->setEmail(trim($_POST["email"]));
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
+					
 					$user->save();
+					
 				}
 			}
             $v->setView("user/edit.tpl");
@@ -74,8 +95,7 @@ class userController
 			$view->assign("msg", "Not the page you're looking for");
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			if ($user->getIsActive() != 1) {
-				$view->assign("formActivation", $formActivation);
+			if ($user->getIsActive() != 1) {	
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
 					$actErrors = $validator->check($formActivation["struct"], $_POST);
@@ -88,12 +108,13 @@ class userController
 						session_destroy();
 					}
 				}
-				$view->assign("actErrors",$actErrors);	
-				} 
+			} 
 			else {
 				$view->assign("msg", "Looks like your account had already been activated");
 			}
 		}
+		$view->assign("actErrors",$actErrors);	
+		$view->assign("formActivation", $formActivation);
 	}
 
 	public function subscribeAction($args) {
@@ -104,30 +125,26 @@ class userController
 		$formLogin = $user->getForm("login");
 		$subErrors = [];
 		$logErrors = [];
-		if(isset($_POST['form-type'])){
-			$formType = $_POST['form-type'];
-		}else{
-			var_dump($_POST);
-		}
 
 		$validator = new validator();
-		if(!empty($_POST)) {
-			if($formType == "subscription") {
-				$subErrors = $validator->check($formSubscribe["struct"], $_POST);
-				if(count($subErrors) == 0) {
-					$user->setEmail($_POST['email']);
-					$user->setUsername($_POST['username']);
-					$user->setIsActive(0);
-					$user->setToken();
-					$user->save();
-					if($user->sendConfirmationEmail()) {
-						$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
-					} else {
-						$view->assign( "mailerMessage", "Something went when trying to send email." );
-					}
+		if(isset($_POST["form-type"])) {
+			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
+			if(count($subErrors) == 0) {
+				$user->setEmail($_POST['email']);
+				$user->setUsername($_POST['username']);
+				$user->setIsActive(0);
+				$user->setToken();
+				$now = date("Y-m-d H:i:s");
+				$user->setDateCreated($now);
+				$user->save();
+				if($user->sendConfirmationEmail()) {
+					$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
+				} else {
+					$view->assign( "mailerMessage", "Something went when trying to send email." );
 				}
 			}
 		}
+		
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
 		$view->assign("formLogin", $formLogin);
