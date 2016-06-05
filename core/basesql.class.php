@@ -27,9 +27,10 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findAll($limit = false,$orderBy = false) {
+	public static function findAll($limit = false, $orderBy = false, $column = "*") {
 		$instance = new static;
-		$sql = "SELECT * FROM ".$instance->table;
+
+		$sql = "SELECT ".$column." FROM ".$instance->table;
 
 		if($orderBy != false){
 			$sql = $sql . " order by " . $orderBy . " DESC";
@@ -43,6 +44,7 @@ class basesql extends PDO
 				$sql = $sql . " limit 0 , ". $limit;
 			}
 		}
+		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
 		$query->execute();
 		$item = $query->fetchAll();
@@ -163,7 +165,7 @@ class basesql extends PDO
 			try {
 				$stmt->execute();
 			} catch (Exception $e) {
-				die("Eerror : ".$e->getMessage());
+				die("Error : ".$e->getMessage());
 			}
 		}
 		else
@@ -180,7 +182,7 @@ class basesql extends PDO
 			try {
 				$query->execute($data);
 			} catch (Exception $e) {
-				die("Error while saving user: ".$e->getMessage());
+				die("Error while saving ".$e->getMessage());
 			}
 		}
 	}

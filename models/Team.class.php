@@ -93,7 +93,8 @@ class Team extends basesql
 				"buttonTxt" => "Invite",
 				"options" => ["method" => "POST", "action" => WEBROOT . "team/invite/".$this->id],
 				"struct"=>[
-					"emailOrUsername"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email or username to invite", "required"=>1, "msgerror"=>"emailOrUsername"],]
+					"emailOrUsername"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email or username to invite", "required"=>1, "msgerror"=>"emailOrUsername"],
+					"message"=>["type"=>"text","class"=>"form-control","placeholder"=>"A message","required"=>0,"msgerror"=>"messageInvite"],]
 					];
 		}
 		

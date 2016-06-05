@@ -105,6 +105,40 @@ $(function ($) {
       }
     });
 
+    $("a.joinTeam").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/join/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
+    $("a.refuseInvit").click(function(ev){
+        ev.preventDefault();
+        var userId = $(this).data("user");
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure ?')) {
+          $.ajax({
+            url: "http://localhost:8888/ninja/team/refuseInvit/",
+            type : "POST",
+            dataType: "json",
+            data: {idTeam: teamId},
+            success : function(response){
+             console.debug(response);
+            }
+          });
+      }
+    });
+
 });
 
 /**********************

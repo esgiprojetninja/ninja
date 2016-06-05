@@ -92,7 +92,7 @@ class userController
 		$actErrors = [];
 		$validator = new Validator();	
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
-			$view->assign("msg", "Not the page you're looking for");
+			header("location: ".WEBROOT.'user/login');
 		} 
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
 			if ($user->getIsActive() != 1) {	
