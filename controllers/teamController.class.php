@@ -148,24 +148,24 @@ class teamController
 				$_SESSION['idTeam'] = $args[0];
 				$inviteErrors = $validator->check($formInviteTeam["struct"], $_POST);
 				if(count($inviteErrors) == 0) {
-					$teamHasUser = new TeamHasUser();
-					$admin = new Admin();
+					$invitation = new Invitation();
 					if(!filter_var($_POST["emailOrUsername"],FILTER_VALIDATE_EMAIL)){
 						$id_user_invited = User::FindBy("username",$_POST["emailOrUsername"],"string");
 					}else{
 						$id_user_invited = User::FindBy("email",$_POST["emailOrUsername"],"string");
 					}
+					unset($_SESSION['idTeam']);
 					//Si l'utilisateur existe
 					if($id_user_invited){
-						unset($_SESSION['idTeam']);
-						$teamHasUser->setIdUser($id_user_invited->getId());
-						$teamHasUser->setIdTeam($args[0]);
-						$teamHasUser->save();
-
-						$admin->setIdTeam($args[0]);
-						$admin->setIdUser($id_user_invited->getId());
-						$admin->setCaptain(0);
-						$admin->save();
+						$now = date("Y-m-d H:i:s");
+						$invitation->setDateInvited($now);
+						if(!empty($_POST['message'])){
+							$invitation->setMessage($_POST['message']);
+						}
+						$invitation->setState(0);
+						$invitation->setIdTeamInviting($args[0]);
+						$invitation->setIdUserInvited($id_user_invited->getId());
+						$invitation->save();
 						$view->assign("success","Utilisateur invité !");
 					}else{
 						$view->assign("error","Utilisateur inexistant");
@@ -299,6 +299,36 @@ class teamController
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
 		 }
+	}
+
+
+	public function joinAction($args){
+		if(User::isConnected() && isset($args["idTeam"]) && isset($_SESSION['user_id'])){	
+			$teamHasUser = new TeamHasUser();
+			$teamHasUser->setIdUser($_SESSION['user_id']);
+			$teamHasUser->setIdTeam($args["idTeam"]);
+			$teamHasUser->save();
+
+			$admin = new Admin();
+			$admin->setIdTeam($args["idTeam"]);
+			$admin->setIdUser($_SESSION['user_id']);
+			$admin->setCaptain(0);
+			$admin->save();
+
+        	Invitation::delete(["idUserInvited","idTeamInviting"],[$_SESSION['user_id'],$args["idTeam"]],['int','int']);
+		}else{
+		 	//A voir la redirection
+			header('Location:'.WEBROOT.'user/login');
+		}
+	}
+
+	public function refuseInvitAction($args){
+		if(User::isConnected() && isset($args["idTeam"]) && isset($_SESSION['user_id'])){	
+        	Invitation::delete(["idUserInvited","idTeamInviting"],[$_SESSION['user_id'],$args["idTeam"]],['int','int']);
+		}else{
+		 	//A voir la redirection
+			header('Location:'.WEBROOT.'user/login');
+		}
 	}
 
 }

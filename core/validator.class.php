@@ -31,7 +31,7 @@ class Validator extends basesql{
 			elseif($options["msgerror"]=="teamName" && !self::existTeamName($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="emailOrUsername" && !self::verifUsernameOfEmail($data[$name])){
+			elseif($options["msgerror"]=="emailOrUsername" && !self::verifUsernameOrEmail($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
 			elseif($options["msgerror"]=="new_teamName" && !self::newExistTeamName($data[$name])){
@@ -57,14 +57,15 @@ class Validator extends basesql{
 		}
 	}
 
-	//fonciton de verif pour l'invitation par email ou username
-	public static function verifUsernameOfEmail($var){
+	//fonction de verif pour l'invitation par email ou username
+	public static function verifUsernameOrEmail($var){
 		if(!self::emailCorrect($var)){//Si email
 			$idUser = User::findBy("email",$var,"string");
-			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["string","int"]));
+			//premiere partie de la requete : on verifie que l'utilisateur n'est pas deja dans la team, ou si il n'est pas deja invité
+			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser->id],["int","int"])));
 		}else{//Sinon pseudo
 			$idUser = User::findBy("username",$var,"string");
-			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["string","int"]));
+			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser->id],["int","int"])));
 		}
 	}
 
