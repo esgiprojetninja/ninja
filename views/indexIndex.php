@@ -60,14 +60,14 @@
         <div class="col-sm-6">
             <div class="panel panel-danger">
                 <div class="panel-heading">Your notifications</div>
-                <div class="panel-body">
+                <div class="panel-body notifications">
                     <?php
                     foreach ($notifications as $notification) {
                         $idNotification = $notification['id'];
                         $dateNotification = $notification['datetime'];
                         $typeNotification = $notification['type'];
                         $messageNotification = $notification['message'];
-                        echo "The <b>" . $dateNotification."</b> your got the notification : " . $messageNotification."<a href=\"#\" data-id=\"$idNotification\"> VU</a><br>";
+                        echo "<div>The <b>" . $dateNotification."</b> your got the notification : " . $messageNotification."<a href=\"#\" data-id=\"$idNotification\"> VU</a></div>";
                     }
                     ?>
                 </div>
@@ -75,5 +75,6 @@
         </div>
     <?php endif;?>
 
+    
 
 </div>

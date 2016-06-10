@@ -20,18 +20,17 @@ class notificationController
 
 	public function deleteAction($args)
 	{
-		if (User::isConnected() && !empty($args[0])) {
-			$user = User::findById($args[0]);
-			if ($user->getId() != $args[0]) {
-				header("location:" . WEBROOT);
+		//echo "OK " . $args[0];
+		$notification = Notification::findById($args[0]);
+		if ($notification) {
+			if ($notification->getId_user()==$_SESSION['user_id']){
+				$notification->setOpened(1);
+				$notification->save();
+			}else{
+				//Va te faire enculer
 			}
-			$v = new view();
-			$teams = TeamHasUser::findBy("idUser", $args[0], "int", false);
-			$v->setView("user/show.tpl");
-			$v->assign("user", $user);
-			$v->assign("teams", $teams);
 		} else {
-			header('Location:' . WEBROOT . 'user/login');
+			//ici renvoyer un header 404 par exemple
 		}
 	}
 }
