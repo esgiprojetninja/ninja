@@ -12,7 +12,7 @@ class notificationController
 		$notification->setDatetime(date("Y-m-d H:i:s"));
 		$notification->setType(1);
 		$notification->setOpened(0);
-		$notification->setMessage("Bondour vous avez une notification !");
+		$notification->setMessage("COUCOU VOUS ÊTES INVITÉS À UN EVENT !");
 
 		$notification->save();
 
