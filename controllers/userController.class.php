@@ -61,7 +61,7 @@ class userController
 							$v->assign("movingFile", "An error while seting your avatar");
 						}
 					}
-					$user->setEmail(trim($_POST["email"]));
+					$user->setEmail(trim(strtolower($_POST["email"])));
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
@@ -130,7 +130,7 @@ class userController
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
-				$user->setEmail($_POST['email']);
+				$user->setEmail(trim(strtolower($_POST["email"])));
 				$user->setUsername($_POST['username']);
 				$user->setIsActive(0);
 				$user->setToken();
@@ -159,8 +159,8 @@ class userController
 		$subErrors = [];
 		$logErrors = [];
 		if(isset($_POST["form-type"])) {
-			if($user = User::findBy("email", $_POST["email"], "string")) {
-				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
+			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
+				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
 					print_r($user->getToken());
 					$user->save();
