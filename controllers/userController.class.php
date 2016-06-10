@@ -140,7 +140,7 @@ class userController
 				if($user->sendConfirmationEmail()) {
 					$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
 				} else {
-					$view->assign( "mailerMessage", "Something went when trying to send email." );
+					$view->assign( "mailerMessage", "Something went wrong when trying to send email." );
 				}
 			}
 		}
