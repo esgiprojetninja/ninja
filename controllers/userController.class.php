@@ -61,7 +61,7 @@ class userController
 							$v->assign("movingFile", "An error while seting your avatar");
 						}
 					}
-					$user->setEmail(trim($_POST["email"]));
+					$user->setEmailtrim(strtolower($_POST["email"]));
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
@@ -130,7 +130,7 @@ class userController
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
-				$user->setEmail($_POST['email']);
+				$user->setEmail(trim(strtolower($_POST["email"])));
 				$user->setUsername($_POST['username']);
 				$user->setIsActive(0);
 				$user->setToken();

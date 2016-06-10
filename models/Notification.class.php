@@ -8,7 +8,7 @@ class Notification extends basesql
 	protected $id_user;
 	protected $datetime;
 	protected $type;
-	protected $read = 0;
+	protected $opened = 0;
 	protected $message = "";
 
 	//Oui
@@ -29,8 +29,8 @@ class Notification extends basesql
 	public function getType() {
 		return $this->type;
 	}
-	public function getRead() {
-		return $this->read;
+	public function getOpened() {
+		return $this->opened;
 	}
 	public function getMessage() {
 		return $this->message;
@@ -49,8 +49,8 @@ class Notification extends basesql
 	public function setType($type) {
 		$this->type = $type;
 	}
-	public function setRead($read) {
-		$this->read = $read;
+	public function setOpened($opened) {
+		$this->opened = $opened;
 	}
 	public function setMessage($message) {
 		$this->message = $message;

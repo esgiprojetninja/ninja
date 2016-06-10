@@ -55,4 +55,9 @@
             </div>
         </div>
     <?php endif;?>
+    
+    <?php
+    var_dump($notifications)
+    ?>
+
 </div>

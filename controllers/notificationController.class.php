@@ -8,11 +8,11 @@ class notificationController
 
 		$notification = new Notification();
 
-		$notification->setId_user(42);
+		$notification->setId_user(26);
 		$notification->setDatetime(date("Y-m-d H:i:s"));
 		$notification->setType(1);
-		$notification->setRead(1);
-		$notification->setMessage("Bondour");
+		$notification->setOpened(0);
+		$notification->setMessage("Bondour vous avez une notification !");
 
 		$notification->save();
 
