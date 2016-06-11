@@ -193,4 +193,10 @@ class userController
 		header("location: ".WEBROOT."user/login");
 	}
 
+	public function deleteAction($args){
+		if(User::isConnected() && User::isAdmin()){
+			User::delete('id',$args[0],'int');
+		}
+	}
+
 }

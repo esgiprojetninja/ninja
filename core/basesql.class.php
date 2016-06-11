@@ -27,12 +27,12 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findAll($limit = false,$orderBy = false) {
+	public static function findAll($limit = false,$orderBy = false,$descOrAsc = "DESC") {
 		$instance = new static;
 		$sql = "SELECT * FROM ".$instance->table;
 
 		if($orderBy != false){
-			$sql = $sql . " order by " . $orderBy . " DESC";
+			$sql = $sql . " order by " . $orderBy ." ". $descOrAsc;
 		}
 		if(is_array($limit)){
 			if($limit != false){
@@ -43,6 +43,7 @@ class basesql extends PDO
 				$sql = $sql . " limit 0 , ". $limit;
 			}
 		}
+		
 		$query =  $instance->pdo->prepare($sql);
 		$query->execute();
 		$item = $query->fetchAll();

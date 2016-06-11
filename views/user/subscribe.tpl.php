@@ -13,7 +13,9 @@
           </div>
           <div class="col-sm-6">
           <?php
-            $this->createForm($formLogin, $logErrors);
+            if(!User::isConnected()){
+              $this->createForm($formLogin, $logErrors);
+            }
           ?>
           </div>
         </div>

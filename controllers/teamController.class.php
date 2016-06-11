@@ -16,7 +16,7 @@ class teamController
 				$creaErrors = $validator->check($formCreateTeam["struct"], $_POST);
 				if(count($creaErrors) == 0) {
 					$teamHasUser = new TeamHasUser();
-					$admin = new Admin();
+					$captain = new Captain();
 					$team->setTeamName($_POST["teamName"]);
 					$now = date("Y-m-d H:i:s");
 					$team->setDateCreated($now);
@@ -32,10 +32,10 @@ class teamController
 					$teamHasUser->setIdUser($id_user_creator);
 					$teamHasUser->save();
 
-					$admin->setIdTeam($id_team);
-					$admin->setIdUser($id_user_creator);
-					$admin->setCaptain(2);
-					$admin->save();
+					$captain->setIdTeam($id_team);
+					$captain->setIdUser($id_user_creator);
+					$captain->setCaptain(2);
+					$captain->save();
 
 					$view->assign("success","Your team has been created");
 				}
@@ -93,8 +93,8 @@ class teamController
 					$view->assign("success","Changes has been saved");
 				}
 			}
-			$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
-			$view->assign("admin",$admin);
+			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
+			$view->assign("captain",$captain);
             $view->setView("team/edit.tpl");
             $view->assign("team", $team);
             $view->assign("formEdit", $formEdit);
@@ -109,12 +109,12 @@ class teamController
 		if(User::isConnected() && !empty($args[0])){
 			$team = Team::findById($args[0]);
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
-			$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
+			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
 		    $view = new view();
             $view->setView("team/show.tpl");
             $view->assign("members",$members);
             $view->assign("team", $team);
-            $view->assign("admin",$admin);
+            $view->assign("captain",$captain);
 		}else{
 			//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -126,11 +126,11 @@ class teamController
 			$team = Team::findById($args[0]);
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
             $view = new view();
-           	$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
+           	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
 		    $view->setView("team/manage.tpl");
             $view->assign("members",$members);
             $view->assign("team", $team);
-            $view->assign("admin",$admin);
+            $view->assign("captain",$captain);
 		}else{
 			//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -149,7 +149,7 @@ class teamController
 				$inviteErrors = $validator->check($formInviteTeam["struct"], $_POST);
 				if(count($inviteErrors) == 0) {
 					$teamHasUser = new TeamHasUser();
-					$admin = new Admin();
+					$captain = new Captain();
 					if(!filter_var($_POST["emailOrUsername"],FILTER_VALIDATE_EMAIL)){
 						$id_user_invited = User::FindBy("username",$_POST["emailOrUsername"],"string");
 					}else{
@@ -162,18 +162,18 @@ class teamController
 						$teamHasUser->setIdTeam($args[0]);
 						$teamHasUser->save();
 
-						$admin->setIdTeam($args[0]);
-						$admin->setIdUser($id_user_invited->getId());
-						$admin->setCaptain(0);
-						$admin->save();
+						$captain->setIdTeam($args[0]);
+						$captain->setIdUser($id_user_invited->getId());
+						$captain->setCaptain(0);
+						$captain->save();
 						$view->assign("success","Utilisateur invité !");
 					}else{
 						$view->assign("error","Utilisateur inexistant");
 					}
 				}
 			}		
-			$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
-			$view->assign("admin",$admin);
+			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
+			$view->assign("captain",$captain);
             $view->setView("team/invite.tpl");
             $view->assign("team",$team);
             $view->assign("formInviteTeam", $formInviteTeam);
@@ -217,11 +217,11 @@ class teamController
 
 	public function demoteAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
-		 	$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
-		    if(!($admin[0]['captain'] > 0)){
+		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
+		    if(!($captain[0]['captain'] > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
-		    $userToDemote = Admin::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
+		    $userToDemote = Captain::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
 		    // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
 		    if($userToDemote->getCaptain() == 1 ){
 		    	$userToDemote->setCaptain($userToDemote->getCaptain()-1);
@@ -235,11 +235,11 @@ class teamController
 
 	public function promoteAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
-		 	$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
-		    if(!($admin[0]['captain'] > 0)){
+		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
+		    if(!($captain[0]['captain'] > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
-		    $userToPromote = Admin::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
+		    $userToPromote = Captain::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
 		    // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
 		    if($userToPromote->getCaptain() < 2 ){
 		    	$userToPromote->setCaptain($userToPromote->getCaptain()+1);
@@ -253,11 +253,11 @@ class teamController
 
 	public function kickAction($args){
 		 if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
-		 	$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
-		    if(!($admin[0]['captain'] > 0)){
+		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
+		    if(!($captain[0]['captain'] > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
-		    Admin::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
+		    Captain::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
 		    TeamHasUser::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
 		 }else{
 		 	//A voir la redirection
@@ -267,11 +267,11 @@ class teamController
 
 	public function leaveAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($_SESSION['user_id'])){
-		 	$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
-		    if(!($admin[0]['captain'] > 0)){
+		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
+		    if(!($captain[0]['captain'] > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
-		    Admin::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
+		    Captain::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
 		    TeamHasUser::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
 
 			// on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe              
@@ -286,12 +286,12 @@ class teamController
 
 	public function deleteAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($_SESSION['user_id'])){
-		 	$admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
-		    if(!($admin[0]['captain'] > 0)){
+		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
+		    if(!($captain[0]['captain'] > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
 
-		    Admin::delete('idTeam',$args["idTeam"],"int");
+		    Captain::delete('idTeam',$args["idTeam"],"int");
 		    TeamHasUser::delete('idTeam',$args["idTeam"],"int");
 		    Team::delete("id",$args['idTeam'],"int");
 		    

@@ -35,7 +35,7 @@
                         EVENT RECURRENT ?
                     -->
                 </ul>
-                <?php if($admin[0]['captain'] > 0): ?>
+                <?php if($captain[0]['captain'] > 0): ?>
                     <div class="text-right">
                         <a href="<?= WEBROOT; ?>team/manage/<?php echo $team->getId(); ?>" class="btn btn-primary">Manage</a>
                     </div>

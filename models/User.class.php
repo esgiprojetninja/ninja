@@ -18,6 +18,7 @@ class User extends basesql
 	protected $birthday = "0000-00-00";
 	protected $avatar = "";
 	protected $dateCreated;
+	protected $is_admin = 0;
 
 
 	/**
@@ -80,6 +81,10 @@ class User extends basesql
 		return $this->dateCreated;
 	}
 
+	public function getIsAdmin(){
+		return $this->is_admin;
+	}
+
 	public function setIsActive($is_active) {
 		$this->is_active = $is_active;
 	}
@@ -128,6 +133,10 @@ class User extends basesql
 		$this->dateCreated = $dateCreated;
 	}
 
+	public function setIsAdmin($is_admin) {
+		$this->is_admin = $is_admin;
+	}
+
 	/**
 	* @return string
 	*/
@@ -159,6 +168,24 @@ class User extends basesql
 			$token = $user->getToken();
 			$_SESSION["user_token"] = $token;
 			return True;
+		}
+		else {
+			return False;
+		}
+	}
+
+	public static function isAdmin() {
+		if(!isset($_SESSION["user_id"])) {
+			return False;
+		}
+		$user = self::findById(intVal($_SESSION["user_id"]));
+		if ($_SESSION["user_token"] === $user->getToken()) {
+			if($user->getIsAdmin() == 1 ){
+				return True;
+			}else{
+				return False;
+			}
+			
 		}
 		else {
 			return False;

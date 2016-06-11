@@ -1,7 +1,7 @@
 <?php
     $team = $this->data["team"];
     //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
-    if(!($admin[0]['captain'] > 0)){
+    if(!($captain[0]['captain'] > 0)){
       header('Location:'.WEBROOT.'user/login');
     }
 ?>
@@ -28,10 +28,10 @@
                 <br><br>
                 <div class="text-left">
                   <a href="<?= WEBROOT;?>team/show/<?= $team->getId();?>"class="btn btn-primary">Show</a>
-                  <?php if($admin[0]['captain'] >=1) : ?>
+                  <?php if($captain[0]['captain'] >=1) : ?>
                    <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Edit</a>
                   <?php endif; ?>
-                  <?php if($admin[0]['captain'] >= 2) : ?>
+                  <?php if($captain[0]['captain'] >= 2) : ?>
                     <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-danger pull-right deleteTeam">Supprimer mon équipe</a>
                   <?php endif; ?>
                 </div>
@@ -41,14 +41,14 @@
                 <?php 
                     foreach($members as $member){ 
                       $user = User::findById($member[2]);
-                      $actualUserAdmin = Admin::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
-                      echo "<br>".$user->getUsername()." - " . Admin::getTitre($actualUserAdmin->getCaptain());
+                      $actualUserAdmin = Captain::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
+                      echo "<br>".$user->getUsername()." - " . Captain::getTitre($actualUserAdmin->getCaptain());
                       if(!($user->getId() == $_SESSION["user_id"])){ ?>
                         <a href="#" >Send message</a>
                          <?php if($actualUserAdmin->getCaptain() != 2 ): ?>
                         <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="kickUser" >Kick</a>
                         <?php endif; ?>
-                       <?php if($admin[0]['captain'] >= 2 ): ?>
+                       <?php if($captain[0]['captain'] >= 2 ): ?>
                         <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() >= 0 ): ?>
                         <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="promoteUser" >Promote</a>
                         <?php endif; ?>

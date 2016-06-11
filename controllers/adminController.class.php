@@ -1,14 +1,60 @@
 <?php
 
-require_once "models/User.class.php";
-
-
 class adminController
 {
     public function indexAction($args)
     {
         $view = new view;
-        $view->setView("admin/ui-collection.tpl");
+        if(User::isConnected() && User::isAdmin()){
+            $view->setView('admin/global.tpl');
+
+            $users = User::FindAll();
+            $totalUser = count($users);
+            $userParPage=10;
+            $nombreDePagesUser=ceil($totalUser/$userParPage);
+
+            if(isset($_GET['page'])){
+                 $pageActuelleUser=intval($_GET['page']);
+                 if($pageActuelleUser>$nombreDePagesUser)
+                 {
+                      $pageActuelleUser=$nombreDePagesUser;
+                 }
+            }else{
+                 $pageActuelleUser=1;
+            }
+            $premiereEntreeUser=($pageActuelleUser-1)*$userParPage;
+            // La requête sql pour récupérer les messages de la page actuelle.
+            $retour_messagesUser= User::findAll([$premiereEntreeUser,$userParPage],'username','ASC');
+
+            $teams = Team::FindAll();
+            $totalTeam = count($users);
+            $teamParPage=10;
+            $nombreDePagesTeam=ceil($totalTeam/$teamParPage);
+
+            if(isset($_GET['page'])){
+                 $pageActuelleTeam=intval($_GET['page']);
+                 if($pageActuelleTeam>$nombreDePagesTeam)
+                 {
+                      $pageActuelleTeam=$nombreDePagesTeam;
+                 }
+            }else{
+                 $pageActuelleTeam=1;
+            }
+            $premiereEntreeTeam=($pageActuelleTeam-1)*$teamParPage;
+            // La requête sql pour récupérer les messages de la page actuelle.
+            $retour_messagesTeam= Team::findAll([$premiereEntreeTeam,$teamParPage],'teamName','ASC');
+
+            $view->assign('pageActuelleTeam', $pageActuelleTeam);
+            $view->assign('nombreDePagesTeam',$nombreDePagesTeam);
+            $view->assign("teams", $retour_messagesTeam);
+
+            $view->assign('pageActuelleUser', $pageActuelleUser);
+            $view->assign('nombreDePagesUser',$nombreDePagesUser);
+            $view->assign("users", $retour_messagesUser);
+
+        }else{
+            header("location: ".WEBROOT."user/login");
+        }
     }
 
     public function testAction($args)
@@ -16,6 +62,8 @@ class adminController
         echo 'lol';
     }
 
+
+    /*
     # Create database
     public function createdbAction($args) {
        $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
@@ -68,7 +116,7 @@ class adminController
     public function deletedbAction($args) {
         $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
     }
-    
+    */
 
     public function showUiKitAction() {
         $view = new view;

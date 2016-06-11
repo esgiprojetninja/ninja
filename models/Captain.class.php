@@ -4,10 +4,10 @@
 // de cette table je suis obligé de créer des instances différentes propre à ma table, du coups c'est plus simple de créer cette
 // classe pour réutiliser les fonctions existantes.
 
-class Admin extends basesql
+class Captain extends basesql
 {
 	protected $id;
-	protected $table = "admin";
+	protected $table = "captain";
 	protected $idTeam;
 	protected $idUser;
 	protected $captain = 0;
