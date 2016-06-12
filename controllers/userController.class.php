@@ -39,7 +39,7 @@ class userController
 			}
 			$editErrors = [];
 			if(!empty($_POST)) {
-				$validator = new Validator();
+				$validator = new validator();
 				$editErrors = $validator->check($formEdit["struct"], $_POST);
 				if(count($editErrors) == 0) {
 					if($_FILES['avatar']['size']!= 0){
@@ -85,12 +85,17 @@ class userController
 	*/
 
 	public function activateAction($args) {
-		$view = new view();
-		$user = User::FindBy('email',$args['email'],'string');
-		$view->setView("user/activation.tpl");
-		$formActivation = $user->getForm("activation");
+		
 		$actErrors = [];
-		$validator = new Validator();	
+		
+		$view = new view();
+		$view->setView("user/activation.tpl");
+
+		$user  = User::FindBy('email',$args['email'],'string');
+
+		$formActivation = $user->getForm("activation");
+		$view->assign("formActivation", $formActivation);
+				$validator = new validator();	
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
 		} 
@@ -113,18 +118,28 @@ class userController
 				$view->assign("msg", "Looks like your account had already been activated");
 			}
 		}
-		$view->assign("actErrors",$actErrors);	
-		$view->assign("formActivation", $formActivation);
+	
+		$view->assign("actErrors",$actErrors);
 	}
 
 	public function subscribeAction($args) {
-		$view = new view();
-		$view->setView("user/subscribe.tpl");
-		$user = new User();
-		$formSubscribe = $user->getForm("subscription");
-		$formLogin = $user->getForm("login");
+		
+		//php 7 : variable au début de la méthode
 		$subErrors = [];
 		$logErrors = [];
+
+		$view = new view();
+		$view->setView("user/subscribe.tpl");
+		
+		$user = new User();
+		
+		$formSubscribe = $user->getForm("subscription");
+		$view->assign("formSubscribe", $formSubscribe);
+
+		$formLogin = $user->getForm("login");
+		$view->assign("formLogin", $formLogin);
+		
+
 
 		$validator = new validator();
 		if(isset($_POST["form-type"])) {
@@ -145,10 +160,9 @@ class userController
 			}
 		}
 		
-		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
-		$view->assign("logErrors", $logErrors);
+		$view->assign("logErrors", $logErrors);	
+		
 	}
 
 	public function loginAction () {
