@@ -17,8 +17,8 @@ class indexController
             $invitations = Invitation::findBy(["idUserInvited","state"],[$_SESSION['user_id'],0],['int','int'],false);
             $view->assign("invitations",$invitations);
             
-		}else{
-			header('Location:' . WEBROOT . 'user/login');
+		}else if ($route["controller"] != "user" && !User::isConnected()) {
+    		header("location: ".WEBROOT."user/subscribe");
 		}
 	}
 }
