@@ -174,6 +174,27 @@ class User extends basesql
 		}
 	}
 
+	public static function itsMe($idUser){
+		if(!isset($_SESSION["user_id"])) {
+			return False;
+		}
+		if(User::isAdmin()){
+			return True;
+		}
+		$user = self::findById(intVal($_SESSION["user_id"]));
+		if ($_SESSION["user_token"] === $user->getToken()) {
+			if($idUser == $_SESSION['user_id'] ){
+				return True;
+			}else{
+				return False;
+			}
+			
+		}
+		else {
+			return False;
+		}
+	}
+
 	public static function isAdmin() {
 		if(!isset($_SESSION["user_id"])) {
 			return False;

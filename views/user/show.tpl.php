@@ -47,7 +47,9 @@
                     <?php } ?>
                 </ul>
                 <div class="text-right">
-                    <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
+                    <?php if(User::itsMe($idUserArgs)): ?>
+                        <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
+                    <?php endif;?>
                 </div>
             </div>
             <?php endif;?>

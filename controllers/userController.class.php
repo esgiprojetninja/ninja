@@ -19,6 +19,7 @@ class userController
             $v->setView("user/show.tpl");
             $v->assign("user", $user);
             $v->assign("teams",$teams);	
+            $v->assign("idUserArgs",$args[0]);
 		}else{
 			header('Location:' . WEBROOT . 'user/login');
 		}
@@ -30,51 +31,55 @@ class userController
      */
     public function editAction($args)
     {
-    	if(User::isConnected() && !empty($args[0])){
-			$user = User::findById($args[0]);
-            $v = new view();
-			$formEdit = $user->getForm("edit");
-			if ($user->getId() != $args[0]) {
-				header("location:" . WEBROOT);
-			}
-			$editErrors = [];
-			if(!empty($_POST)) {
-				$validator = new Validator();
-				$editErrors = $validator->check($formEdit["struct"], $_POST);
-				if(count($editErrors) == 0) {
-					if($_FILES['avatar']['size']!= 0){
-						$path = "public/img/users/".trim(strtolower($_POST["username"])).".".strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
-						$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
-						if($movingFile){
-							$v->assign("success","Changes has been saved");
-							$user->setAvatar($path);
-							//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
-							if($dossier = opendir('public/img/users')){
-								while(false !== ($fichier = readdir($dossier))){
-									$explode = explode(".", $fichier);
-									if($explode[0] == $_POST['username'] && $explode[1] != strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1))){
-										unlink('public/img/users/'.$fichier);
+    	if(User::isConnected()){
+    		if(!empty($args[0]) && User::itsMe($args[0])){
+				$user = User::findById($args[0]);
+	            $v = new view();
+				$formEdit = $user->getForm("edit");
+				if ($user->getId() != $args[0]) {
+					header("location:" . WEBROOT);
+				}
+				$editErrors = [];
+				if(!empty($_POST)) {
+					$validator = new Validator();
+					$editErrors = $validator->check($formEdit["struct"], $_POST);
+					if(count($editErrors) == 0) {
+						if($_FILES['avatar']['size']!= 0){
+							$path = "public/img/users/".trim(strtolower($_POST["username"])).".".strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
+							$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
+							if($movingFile){
+								$v->assign("success","Changes has been saved");
+								$user->setAvatar($path);
+								//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
+								if($dossier = opendir('public/img/users')){
+									while(false !== ($fichier = readdir($dossier))){
+										$explode = explode(".", $fichier);
+										if($explode[0] == $_POST['username'] && $explode[1] != strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1))){
+											unlink('public/img/users/'.$fichier);
+										}
 									}
 								}
+							}else{
+								$v->assign("movingFile", "An error while seting your avatar");
 							}
-						}else{
-							$v->assign("movingFile", "An error while seting your avatar");
 						}
+						$user->setEmail(trim($_POST["email"]));
+						$user->setUsername(trim(strtolower($_POST["username"])));
+						$user->setFirstName(trim(strtolower($_POST["first_name"])));
+						$user->setLastName(trim(strtolower($_POST["last_name"])));
+						$user->setPhoneNumber($_POST["phone_number"]);
+						
+						$user->save();
+						
 					}
-					$user->setEmail(trim($_POST["email"]));
-					$user->setUsername(trim(strtolower($_POST["username"])));
-					$user->setFirstName(trim(strtolower($_POST["first_name"])));
-					$user->setLastName(trim(strtolower($_POST["last_name"])));
-					$user->setPhoneNumber($_POST["phone_number"]);
-					
-					$user->save();
-					
 				}
-			}
-            $v->setView("user/edit.tpl");
-            $v->assign("user", $user);
-            $v->assign("formEdit", $formEdit);
-            $v->assign("editErrors", $editErrors);
+	            $v->setView("user/edit.tpl");
+	            $v->assign("user", $user);
+	            $v->assign("formEdit", $formEdit);
+	            $v->assign("editErrors", $editErrors);
+	        }else{
+	        	header('Location:'.WEBROOT);
+	        }
 		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}

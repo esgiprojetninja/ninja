@@ -1,8 +1,10 @@
 <?php
     $team = $this->data["team"];
     //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
-    if(!($captain[0]['captain'] > 0)){
-      header('Location:'.WEBROOT.'user/login');
+    if(!User::isAdmin()){
+      if(!($captain[0]['captain'] > 0)){
+        header('Location:'.WEBROOT);
+      }
     }
 ?>
 
