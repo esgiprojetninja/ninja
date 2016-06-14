@@ -14,6 +14,17 @@ $(document).on("click", function (e) {
 **************************/
 
 $(function ($) {
+    // notifications
+    $('div.notifications').on("click","a", function() {
+        var id = $(this).data("id");
+        var $a = $(this);
+        $.get('/notification/delete/' + id,function(){
+            $a.parent().remove();
+        });
+    });
+
+
+
     // msg-box
     $(".js-close-msg-box").click(function (ev) {
         $(this).parent().parent().fadeOut();

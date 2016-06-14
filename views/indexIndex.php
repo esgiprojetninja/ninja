@@ -55,4 +55,27 @@
             </div>
         </div>
     <?php endif;?>
+
+    <?php if($notifications): ?>
+        <div class="col-sm-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Your notifications</div>
+                <div class="panel-body notifications">
+                    <?php
+                    foreach ($notifications as $notification) {
+                        $idNotification = $notification['id'];
+                        $dateNotification = $notification['datetime'];
+                        $typeNotification = $notification['type'];
+                        $messageNotification = $notification['message'];
+                        echo "<div>The <b>" . $dateNotification."</b> your got the notification : " . $messageNotification."<a href=\"#\" data-id=\"$idNotification\"> VU</a></div>";
+                    }
+                    echo "<div>Tout effacer<a href=\"#\" data-id=\"all\"> CLIC</a></div>";
+                    ?>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+
+    
+
 </div>
