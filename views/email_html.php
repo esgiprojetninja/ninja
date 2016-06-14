@@ -12,10 +12,11 @@
 <body style="margin: 0; padding: 0;">
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
 		<tr>
-			<td align="center" bgcolor="#70bbd9" style="padding: 40px 0 30px 0;">
+			<td align="center" bgcolor="#6C6599" style="padding: 40px 0 30px 0;">
 				<a href="<?= $_SESSION['link']; ?>">
 					<img src="<?= WEBROOT; ?>public/img/email/logo.gif" alt="Email Activation World Nation" width="300" height="230" style="display: block;" />
 				</a>
+				<p style="padding: 40px 0 0 40px"> FOR ACTIVATE YOUR ACCOUNT CLIC ON LOGO </p>
 			</td>
 		</tr>
 		<tr>
@@ -30,7 +31,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td style="padding: 25px 0 0 25px;"> SPORT CO </td>
+									<td style="padding: 25px 0 0 50px;"> TEAM LISTE </td>
 								</tr>
 							</table>
 						</td>
@@ -43,7 +44,7 @@
 								</td>
 							</tr>
 								<tr>
-									<td style="padding: 25px 0 0 25px;"> SPORT </td>
+									<td style="padding: 25px 0 0 50px;"> EVENT LISTE </td>
 								</tr>
 							</table>
 						</td>
@@ -52,7 +53,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#ee4c50" style="padding: 30px 30px 30px 30px;">
+			<td bgcolor="#444" style="padding: 30px 30px 30px 30px;">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
 						<td align="right">
