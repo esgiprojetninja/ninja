@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8; image/gif" />
 	<title> SPORT NATION | WORLD WIDE </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -19,7 +19,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+			<td bgcolor="#eee" style="padding: 40px 30px 40px 30px;">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
 						<td width="260" valign="top">
