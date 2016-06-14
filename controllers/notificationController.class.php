@@ -8,7 +8,7 @@ class notificationController
 
 		$notification = new Notification();
 
-		$notification->setId_user(26);
+		$notification->setId_user($_SESSION['user_id']);
 		$notification->setDatetime(date("Y-m-d H:i:s"));
 		$notification->setType(1);
 		$notification->setOpened(0);
@@ -27,7 +27,7 @@ class notificationController
 				$notification->setOpened(1);
 				$notification->save();
 			}else{
-				//Va te faire enculer
+				//Va te faire enculer c'est pas ta notif
 			}
 		} else {
 			//ici renvoyer un header 404 par exemple

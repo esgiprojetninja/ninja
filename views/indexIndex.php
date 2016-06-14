@@ -69,6 +69,7 @@
                         $messageNotification = $notification['message'];
                         echo "<div>The <b>" . $dateNotification."</b> your got the notification : " . $messageNotification."<a href=\"#\" data-id=\"$idNotification\"> VU</a></div>";
                     }
+                    echo "<div>Tout effacer<a href=\"#\" data-id=\"all\"> CLIC</a></div>";
                     ?>
                 </div>
             </div>

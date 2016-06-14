@@ -18,7 +18,7 @@ class userController
             $teams = TeamHasUser::findBy("idUser",$args[0],"int",false);
             $v->setView("user/show.tpl");
             $v->assign("user", $user);
-            $v->assign("teams",$teams);	
+            $v->assign("teams",$teams);
 		}else{
 			header('Location:' . WEBROOT . 'user/login');
 		}
@@ -61,14 +61,16 @@ class userController
 							$v->assign("movingFile", "An error while seting your avatar");
 						}
 					}
+
 					$user->setEmailtrim(strtolower($_POST["email"]));
+					$user->setEmail(trim(strtolower($_POST["email"])));
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
-					
+
 					$user->save();
-					
+
 				}
 			}
             $v->setView("user/edit.tpl");
@@ -90,12 +92,12 @@ class userController
 		$view->setView("user/activation.tpl");
 		$formActivation = $user->getForm("activation");
 		$actErrors = [];
-		$validator = new Validator();	
+		$validator = new Validator();
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
-		} 
+		}
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			if ($user->getIsActive() != 1) {	
+			if ($user->getIsActive() != 1) {
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
 					$actErrors = $validator->check($formActivation["struct"], $_POST);
@@ -108,12 +110,12 @@ class userController
 						session_destroy();
 					}
 				}
-			} 
+			}
 			else {
 				$view->assign("msg", "Looks like your account had already been activated");
 			}
 		}
-		$view->assign("actErrors",$actErrors);	
+		$view->assign("actErrors",$actErrors);
 		$view->assign("formActivation", $formActivation);
 	}
 
@@ -144,7 +146,7 @@ class userController
 				}
 			}
 		}
-		
+
 		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
 		$view->assign("formLogin", $formLogin);
@@ -159,8 +161,8 @@ class userController
 		$subErrors = [];
 		$logErrors = [];
 		if(isset($_POST["form-type"])) {
-			if($user = User::findBy("email", $_POST["email"], "string")) {
-				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
+			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
+				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
 					print_r($user->getToken());
 					$user->save();
@@ -171,7 +173,7 @@ class userController
 					header("location: ".WEBROOT);
 				}
 				else {
-					$view->assign("error_message", "Couldn't find you :(");	
+					$view->assign("error_message", "Couldn't find you :(");
 				}
 			}
 			else {
