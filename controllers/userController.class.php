@@ -119,12 +119,11 @@ class userController
 			}
 		}
 	
-		$view->assign("actErrors",$actErrors);
+		$view->assign("activateErrors",$activateErrors);
 	}
 
 	public function subscribeAction($args) {
 		
-		//php 7 : variable au début de la méthode
 		$subErrors = [];
 		$logErrors = [];
 
@@ -166,12 +165,19 @@ class userController
 	}
 
 	public function loginAction () {
-		$view = new view();
-		$view->setView("user/login.tpl");
-		$formSubscribe = User::getForm("subscription");
-		$formLogin = User::getForm("login");
+		
 		$subErrors = [];
 		$logErrors = [];
+		
+		$view = new view();
+		$view->setView("user/login.tpl");
+		
+		$formSubscribe = User::getForm("subscription");
+		$view->assign("formSubscribe", $formSubscribe);
+		
+		$formLogin = User::getForm("login");
+		$view->assign("formLogin", $formLogin);
+		
 		if(isset($_POST["form-type"])) {
 			if($user = User::findBy("email", $_POST["email"], "string")) {
 				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
@@ -192,9 +198,7 @@ class userController
 				$view->assign("error_message", "Couldn't find you :(");
 			}
 		}
-		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
 		$view->assign("logErrors", $logErrors);
 	}
 
