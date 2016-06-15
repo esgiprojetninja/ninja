@@ -16,14 +16,14 @@ class Notification extends basesql
 		parent::__construct();
 	}
 
-	//Guetteurs
+	//Getteurs
 	public function getId() {
 		return $this->id;
 	}
 	public function getId_user() {
 		return $this->id_user;
 	}
-	public function datetime() {
+	public function getDatetime() {
 		return $this->datetime;
 	}
 	public function getType() {
