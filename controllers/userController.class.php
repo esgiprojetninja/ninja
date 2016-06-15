@@ -164,7 +164,6 @@ class userController
 			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
 				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
-					print_r($user->getToken());
 					$user->save();
 					$token = $user->getToken();
 					$id = $user->getId();

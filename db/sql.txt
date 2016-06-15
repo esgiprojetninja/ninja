@@ -106,6 +106,21 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  `opened` tinyint(1) NOT NULL,
+  `message` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user_has_sport_fav`
 --
 
