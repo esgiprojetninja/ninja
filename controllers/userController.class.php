@@ -86,7 +86,7 @@ class userController
 
 	public function activateAction($args) {
 		
-		$actErrors = [];
+		$activateErrors = [];
 		
 		$view = new view();
 		$view->setView("user/activation.tpl");
