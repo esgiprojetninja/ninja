@@ -12,9 +12,10 @@
           ?>
           </div>
           <div class="col-sm-6">
-          <?php
-            $this->createForm($formLogin, $logErrors);
-          ?>
+            <?php
+              $this->createForm($formLogin, $logErrors);
+            ?>
+            <a href="<?php echo WEBROOT . 'user/resetPassword' ?>">forgot password ?</a>
           </div>
         </div>
       </div>

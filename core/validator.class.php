@@ -34,6 +34,9 @@ class Validator extends basesql{
 			elseif($options["msgerror"]=="emailOrUsername" && !self::verifUsernameOrEmail($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
+			elseif($options["msgerror"] && $options["msgerror"]=="email_exist" && !self::emailExist($data[$name])){
+				$listErrors[]=$options["msgerror"];
+			}
 			elseif($options["msgerror"]=="new_teamName" && !self::newExistTeamName($data[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
@@ -67,6 +70,10 @@ class Validator extends basesql{
 			$idUser = User::findBy("username",$var,"string");
 			return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser->id],["int","int"])));
 		}
+	}
+
+	public static function emailExist($email) {
+		return (User::findBy("email", $email, "string"));
 	}
 
 	public static function isFileEmpty($var){

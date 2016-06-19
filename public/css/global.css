@@ -275,3 +275,13 @@ header .icon .text {
 .msg-box.danger::after {
     background-color: #B84D61;
 }
+
+/*******************
+    -- DEBUG --
+********************/
+
+.xdebug-error {
+    color: black;
+    position: relative;
+    z-index: 1000000;
+}
