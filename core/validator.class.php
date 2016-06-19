@@ -1,5 +1,5 @@
 <?php
-class Validator extends basesql{
+class validator extends basesql{
 	public function __construct(){
 
 	}
