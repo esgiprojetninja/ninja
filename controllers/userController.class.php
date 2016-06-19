@@ -194,4 +194,13 @@ class userController
 		header("location: ".WEBROOT."user/login");
 	}
 
+	public function resetPasswordAction($args) {
+		$view = new view();
+		$form = User::getForm("resetPassword");
+		$formErrors = [];
+		$view->assign("form", $form);
+		$view->assign("formErrors", $formErrors);
+		$view->setView("user/change-password.tpl");
+	}
+
 }

@@ -269,6 +269,27 @@ class User extends basesql
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
+		} else if ($formType == "setNewPassword") {
+			$form = [
+				"title" => "Change password",
+				"buttonTxt" => "Confirm",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/changePassword/" . $this->id,"enctype"=>"multipart/form-data"],
+				"struct"=>[
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
+					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+		} else if ($formType == "resetPasswod") {
+			$form = [
+				"title" => "Reset password",
+				"buttonTxt" => "Confirm",
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPasswod/" . $this->id,"enctype"=>"multipart/form-data"],
+				"struct"=>[
+					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email" ],
+					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
 		}
 		
 		return $form;
