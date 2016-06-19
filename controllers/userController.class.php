@@ -14,7 +14,7 @@ class userController
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
 			}
-            $v = new view();
+            $v = new View();
             $teams = TeamHasUser::findBy("idUser",$args[0],"int",false);
             $v->setView("user/show.tpl");
             $v->assign("user", $user);
@@ -32,8 +32,13 @@ class userController
     {
     	if(User::isConnected() && !empty($args[0])){
 			$user = User::findById($args[0]);
-            $v = new view();
+
+            $v = new View();
+            $v->setView("user/edit.tpl");
+
 			$formEdit = $user->getForm("edit");
+            $v->assign("formEdit", $formEdit);
+
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
 			}
@@ -72,9 +77,7 @@ class userController
 
 				}
 			}
-            $v->setView("user/edit.tpl");
             $v->assign("user", $user);
-            $v->assign("formEdit", $formEdit);
             $v->assign("editErrors", $editErrors);
 		}else{
 			header('Location:'.WEBROOT.'user/login');
@@ -86,12 +89,18 @@ class userController
 	*/
 
 	public function activateAction($args) {
-		$view = new view();
-		$user = User::FindBy('email',$args['email'],'string');
+		$view = new View();
 		$view->setView("user/activation.tpl");
+		
+		$activateErrors = [];
+
+		$user = User::FindBy('email',$args['email'],'string');
+
 		$formActivation = $user->getForm("activation");
-		$actErrors = [];
+		$view->assign("formActivation", $formActivation);
+
 		$validator = new Validator();
+
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
 		}
@@ -114,20 +123,23 @@ class userController
 				$view->assign("msg", "Looks like your account had already been activated");
 			}
 		}
-		$view->assign("actErrors",$actErrors);
-		$view->assign("formActivation", $formActivation);
+		$view->assign("activateErrors",$activateErrors);
 	}
 
 	public function subscribeAction($args) {
-		$view = new view();
+		$view = new View();
 		$view->setView("user/subscribe.tpl");
-		$user = new User();
-		$formSubscribe = $user->getForm("subscription");
-		$formLogin = $user->getForm("login");
+
 		$subErrors = [];
 		$logErrors = [];
 
-		$validator = new validator();
+		$user = new User();
+		$formSubscribe = $user->getForm("subscription");
+		
+		$formLogin = $user->getForm("login");
+		$view->assign("formLogin", $formLogin);
+
+		$validator = new Validator();
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
@@ -146,19 +158,23 @@ class userController
 			}
 		}
 
-		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
 		$view->assign("logErrors", $logErrors);
 	}
 
 	public function loginAction () {
-		$view = new view();
+		$view = new View();
 		$view->setView("user/login.tpl");
-		$formSubscribe = User::getForm("subscription");
-		$formLogin = User::getForm("login");
+
 		$subErrors = [];
 		$logErrors = [];
+
+		$formSubscribe = User::getForm("subscription");
+		$view->assign("formSubscribe", $formSubscribe);
+		
+		$formLogin = User::getForm("login");
+		$view->assign("formLogin", $formLogin);
+
 		if(isset($_POST["form-type"])) {
 			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
 				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
@@ -178,9 +194,8 @@ class userController
 				$view->assign("error_message", "Couldn't find you :(");
 			}
 		}
-		$view->assign("formSubscribe", $formSubscribe);
+
 		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
 		$view->assign("logErrors", $logErrors);
 	}
 
@@ -194,7 +209,7 @@ class userController
 	}
 
 	public function resetPasswordAction($args) {
-		$view = new view();
+		$view = new View();
 		$form = User::getForm("resetPassword");
 		$formErrors = [];
 		$view->assign("form", $form);
@@ -225,7 +240,7 @@ class userController
 			}
 			// Good token ?
 			if ($user->getToken() == $args["token"] || $user->getToken() == $_POST["token"]) {
-				$view = new view();
+				$view = new View();
 				$form = User::getForm("setNewPassword");
 				$form["struct"]["email"]["value"] = $user->getEmail();
 				$form["struct"]["token"]["value"] = $user->getToken();

@@ -17,7 +17,7 @@
         <div class="panel">
             <div class="panel-body">
                 <?php
-                    $this->createForm($formActivation, $actErrors);
+                    $this->createForm($formActivation, $activateErrors);
                 ?>
             </div>
         </div>
