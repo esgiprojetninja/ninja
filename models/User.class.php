@@ -15,7 +15,7 @@ class User extends basesql
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
 	protected $city = "";
-	protected $birthday = "0000-00-00";
+	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
 
