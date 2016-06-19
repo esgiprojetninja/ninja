@@ -28,5 +28,6 @@ $errors_msg = [
 	"emailOrUsername"=>"User not found, allready in team or allready invited",
 	"avatar"=>"Invalid avatar",
 	"sports"=>"ERROR 404 SPORT NOT FOUND",
-	"new_teamName"=>"Incorrect team name or allready exists"
+	"new_teamName"=>"Incorrect team name or allready exists",
+	"email_exist"=>"Couldn't find this email"
 ];
