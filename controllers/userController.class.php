@@ -61,7 +61,12 @@ class userController
 							$v->assign("movingFile", "An error while seting your avatar");
 						}
 					}
+<<<<<<< HEAD
 					$user->setEmail(trim($_POST["email"]));
+=======
+
+					$user->setEmail(trim(strtolower($_POST["email"])));
+>>>>>>> b91e01afe0a5bc4914e39a1f3db96d809ae0ba13
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
@@ -200,6 +205,68 @@ class userController
 	public function logoutAction () {
 		session_destroy();
 		header("location: ".WEBROOT."user/login");
+	}
+
+	public function resetPasswordAction($args) {
+		$view = new view();
+		$form = User::getForm("resetPassword");
+		$formErrors = [];
+		$view->assign("form", $form);
+		$view->assign("formErrors", $formErrors);
+		$view->setView("user/change-password.tpl");
+		if (isset($_POST["form-type"])) {
+			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
+				$user->setToken();
+				$user->save();
+				$user->sendPasswordResetEmail();
+				$view->assign(
+					"error_msg",
+					"An email has just been sent to " . $user->getEmail() . ", please check your email box."
+				);
+			} else {
+				$view->assign("error_msg", "Couldn't find this address");
+			}
+		}
+	}
+
+	public function setNewPasswordAction($args) {
+		// Get ou Post ?
+		if (isset($args["email"]) && isset($args["token"]) || (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword")) {
+			if (isset($args["email"])) {
+				$user = User::findBy("email", strtolower(trim($args["email"])), "string");
+			} else if (isset($_POST["email"])) {
+				$user = User::findBy("email", strtolower(trim($_POST["email"])), "string");
+			}
+			// Good token ?
+			if ($user->getToken() == $args["token"] || $user->getToken() == $_POST["token"]) {
+				$view = new view();
+				$form = User::getForm("setNewPassword");
+				$form["struct"]["email"]["value"] = $user->getEmail();
+				$form["struct"]["token"]["value"] = $user->getToken();
+				$formErrors = [];
+				if (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword") {
+					$validator = new Validator();
+					$formErrors = $validator->check($form["struct"], $_POST);
+					print_r($formErrors);
+					if (count($formErrors) == 0) {
+						$user->setPassword($_POST["password"]);
+						$user->setToken();
+						$user->save();
+						$view->assign(
+							"success",
+							"Your Password has been updated ! You can now log in with you new password :)"
+						);
+					}
+				}
+				$view->assign("form", $form);
+				$view->assign("formErrors", $formErrors);
+				$view->setView("user/set-new-password.tpl");
+			} else {
+				header("location:" . WEBROOT . "/user/logout");
+			}
+		} else {
+			header("location:" . WEBROOT);
+		}
 	}
 
 }
