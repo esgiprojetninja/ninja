@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+
+use Core\basesql;
+
 class User extends basesql
 {
 

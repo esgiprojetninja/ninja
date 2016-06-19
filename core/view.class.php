@@ -1,6 +1,8 @@
-<?php 
+<?php
 
-class view
+namespace Core;
+
+class View
 {
 	protected $data = [];
 	protected $view;

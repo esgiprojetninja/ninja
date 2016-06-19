@@ -7,7 +7,7 @@ class teamController
     {
         if(User::isConnected()){
             $id_user_creator = $_SESSION['user_id'];
-            $view = new view();
+            $view = new View();
             $team = new Team();
             $formCreateTeam = $team->getForm("create");
             $creaErrors = [];
@@ -56,7 +56,7 @@ class teamController
     {
         if(User::isConnected() && !empty($args[0])){
             $team = Team::findById($args[0]);
-            $view = new view();
+            $view = new View();
             $formEdit = $team->getForm("edit");
             if ($team->getId() != $args[0]) {
                 header("location:" . WEBROOT);
@@ -110,7 +110,7 @@ class teamController
             $team = Team::findById($args[0]);
             $members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
             $admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
-            $view = new view();
+            $view = new View();
             $view->setView("team/show.tpl");
             $view->assign("members",$members);
             $view->assign("team", $team);
@@ -125,7 +125,7 @@ class teamController
         if(User::isConnected() && !empty($args[0])){
             $team = Team::findById($args[0]);
             $members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
-            $view = new view();
+            $view = new View();
             $admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
             $view->setView("team/manage.tpl");
             $view->assign("members",$members);
@@ -141,7 +141,7 @@ class teamController
         if(User::isConnected() && !empty($args[0])){
             $team = Team::findById($args[0]);
             $inviteErrors = [];
-            $view = new view();
+            $view = new View();
             $formInviteTeam = $team->getForm("invite");
             if(!empty($_POST)) {
                 $validator = new Validator();
@@ -186,7 +186,7 @@ class teamController
     public function listAction($args){
         if(User::isConnected()){
             $teams = Team::FindAll();
-            $view = new view();
+            $view = new View();
 
             $total = count($teams);//Nombre de team
             $messagesParPage=7; //Nombre de messages par page

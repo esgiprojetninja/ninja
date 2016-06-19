@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use Models\User;
+
 ini_set('display_errors', 1);
 
 session_start();
@@ -31,7 +34,7 @@ if ($route["controller"] != "user" && !User::isConnected()) {
 }
 
 $name_controller = $route['controller']."Controller";
-$path_controller = "controllers/".$name_controller.".class.php";
+$namespace_controller = "Controllers\\" . $name_controller . ".class.php";
 if (file_exists($path_controller)) {
 	include $path_controller;
 	$controller = new $name_controller();

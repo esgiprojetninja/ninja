@@ -1,5 +1,9 @@
 <?php
 
+namespace Core;
+
+use PDO;
+
 class basesql extends PDO
 {
 
@@ -180,8 +184,6 @@ class basesql extends PDO
 
 
 			try {
-				var_dump($query);
-				var_dump($data);
 				$query->execute($data);
 			} catch (Exception $e) {
 				die("Error while saving ".$e->getMessage());
