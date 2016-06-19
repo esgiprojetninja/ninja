@@ -62,7 +62,6 @@ class userController
 						}
 					}
 
-					$user->setEmailtrim(strtolower($_POST["email"]));
 					$user->setEmail(trim(strtolower($_POST["email"])));
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
