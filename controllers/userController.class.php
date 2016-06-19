@@ -201,6 +201,18 @@ class userController
 		$view->assign("form", $form);
 		$view->assign("formErrors", $formErrors);
 		$view->setView("user/change-password.tpl");
+		if (isset($_POST["form-type"])) {
+			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
+				$user->setToken();
+				$user->sendPasswordResetEmail();
+			} else {
+				$view->assign("error_msg", "Couldn't find this address");
+			}
+		}
+	}
+
+	public function setNewPasswordAction($args) {
+		// set new password
 	}
 
 }

@@ -8,6 +8,9 @@
         <?php  
           $this->createForm($form, $formErrors);
         ?>
+        <p>
+          <?php echo isset($this->data["error_msg"])?$this->data["error_msg"]:"" ?>
+        </p>
       </div>
     </div>
   </div>

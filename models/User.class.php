@@ -213,6 +213,53 @@ class User extends basesql
 	}
 
 	/**
+	* Send Password reset email
+	* @return boolean
+	*/
+	public function sendPasswordResetEmail() {
+		try {
+				require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+		} catch(Execption $e) {
+			die("Unable to load phpmailer : ".$e->getMessage());
+		}
+		$mail = new PHPMailer();
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
+		$mail->Password = 'test3ADW';                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;                                    // TCP port to connect to
+
+		$mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
+		$mail->addAddress($this->email);     // Add a recipient
+		//$mail->addReplyTo('info@example.com', 'Information');
+		//$mail->addCC('cc@example.com');
+		//$mail->addBCC('bcc@example.com');
+
+		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'Password reset';
+		$link = WEBROOT."user/setNewPassword?email="
+			.$this->email
+			."&token="
+			.$this->token."";
+		$mail->Body    = 'Click the following link to set a new password : '. $link;
+		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+		//$mail->send();
+		if(!$mail->send()) {
+				echo 'Message could not be sent.';
+				echo 'Mailer Error: ' . $mail->ErrorInfo;
+				return FALSE;
+		} else {
+				return TRUE;
+		}
+	}
+
+	/**
 	* Form subscribe
 	* @return array
 	*/
@@ -280,11 +327,11 @@ class User extends basesql
 					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
-		} else if ($formType == "resetPasswod") {
+		} else if ($formType == "resetPassword") {
 			$form = [
 				"title" => "Reset password",
 				"buttonTxt" => "Confirm",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPasswod/" . $this->id,"enctype"=>"multipart/form-data"],
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPassword/", "enctype"=>"multipart/form-data"],
 				"struct"=>[
 					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email" ],
 					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
