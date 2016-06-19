@@ -39,7 +39,7 @@ class userController
 			}
 			$editErrors = [];
 			if(!empty($_POST)) {
-				$validator = new Validator();
+				$validator = new validator();
 				$editErrors = $validator->check($formEdit["struct"], $_POST);
 				if(count($editErrors) == 0) {
 					if($_FILES['avatar']['size']!= 0){
@@ -61,14 +61,16 @@ class userController
 							$v->assign("movingFile", "An error while seting your avatar");
 						}
 					}
-					$user->setEmail(trim($_POST["email"]));
+
+					$user->setEmailtrim(strtolower($_POST["email"]));
+					$user->setEmail(trim(strtolower($_POST["email"])));
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
-					
+
 					$user->save();
-					
+
 				}
 			}
             $v->setView("user/edit.tpl");
@@ -85,17 +87,27 @@ class userController
 	*/
 
 	public function activateAction($args) {
+		
+		$actErrors = [];
+		
 		$view = new view();
-		$user = User::FindBy('email',$args['email'],'string');
 		$view->setView("user/activation.tpl");
+
+		$user  = User::FindBy('email',$args['email'],'string');
+
 		$formActivation = $user->getForm("activation");
-		$activateErrors = [];
-		$validator = new Validator();	
+<<<<<<< HEAD
+		$actErrors = [];
+		$validator = new Validator();
+=======
+		$view->assign("formActivation", $formActivation);
+				$validator = new validator();	
+>>>>>>> mail_html
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
-		} 
+		}
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			if ($user->getIsActive() != 1) {	
+			if ($user->getIsActive() != 1) {
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
 					$actErrors = $validator->check($formActivation["struct"], $_POST);
@@ -113,8 +125,13 @@ class userController
 				$view->assign("msg", "Looks like your account had already been activated");
 			}
 		}
-		$view->assign("activateErrors",$activatErrors);	
+<<<<<<< HEAD
+		$view->assign("actErrors",$actErrors);
 		$view->assign("formActivation", $formActivation);
+=======
+	
+		$view->assign("actErrors",$actErrors);
+>>>>>>> mail_html
 	}
 
 	public function subscribeAction($args) {
@@ -140,7 +157,7 @@ class userController
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
-				$user->setEmail($_POST['email']);
+				$user->setEmail(trim(strtolower($_POST["email"])));
 				$user->setUsername($_POST['username']);
 				$user->setIsActive(0);
 				$user->setToken();
@@ -150,11 +167,16 @@ class userController
 				if($user->sendConfirmationEmail()) {
 					$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
 				} else {
-					$view->assign( "mailerMessage", "Something went when trying to send email." );
+					$view->assign( "mailerMessage", "Something went wrong when trying to send email." );
 				}
 			}
 		}
+<<<<<<< HEAD
+
+		$view->assign("formSubscribe", $formSubscribe);
+=======
 		
+>>>>>>> mail_html
 		$view->assign("subErrors", $subErrors);
 		$view->assign("logErrors", $logErrors);	
 		
@@ -168,10 +190,9 @@ class userController
 		$subErrors = [];
 		$logErrors = [];
 		if(isset($_POST["form-type"])) {
-			if($user = User::findBy("email", $_POST["email"], "string")) {
-				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
+			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
+				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
-					print_r($user->getToken());
 					$user->save();
 					$token = $user->getToken();
 					$id = $user->getId();
