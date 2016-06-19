@@ -15,7 +15,7 @@ class User extends basesql
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
 	protected $city = "";
-	protected $birthday = "0000-00-00";
+	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
 
@@ -165,6 +165,7 @@ class User extends basesql
 		}
 	}
 
+
 	/**
 	* Send confirmation email using users's email
 	* @return boolean
@@ -199,7 +200,15 @@ class User extends basesql
 			.$this->email
 			."&token="
 			.$this->token."";
-		$mail->Body    = 'Click the following link to validate your registration : '. $link;
+			
+		$_SESSION['link'] = $link;
+
+		ob_start();
+			include("views/email_html.php");
+		$body = ob_get_clean();
+
+		$mail->Body    = $body;
+		//'Click the following link to validate your registration : '. $link;
 		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 		//$mail->send();

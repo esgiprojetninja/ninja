@@ -39,7 +39,7 @@ class userController
 			}
 			$editErrors = [];
 			if(!empty($_POST)) {
-				$validator = new Validator();
+				$validator = new validator();
 				$editErrors = $validator->check($formEdit["struct"], $_POST);
 				if(count($editErrors) == 0) {
 					if($_FILES['avatar']['size']!= 0){
@@ -61,19 +61,16 @@ class userController
 							$v->assign("movingFile", "An error while seting your avatar");
 						}
 					}
-<<<<<<< HEAD
-					$user->setEmail(trim($_POST["email"]));
-=======
 
+					$user->setEmailtrim(strtolower($_POST["email"]));
 					$user->setEmail(trim(strtolower($_POST["email"])));
->>>>>>> b91e01afe0a5bc4914e39a1f3db96d809ae0ba13
 					$user->setUsername(trim(strtolower($_POST["username"])));
 					$user->setFirstName(trim(strtolower($_POST["first_name"])));
 					$user->setLastName(trim(strtolower($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
-					
+
 					$user->save();
-					
+
 				}
 			}
             $v->setView("user/edit.tpl");
@@ -90,17 +87,27 @@ class userController
 	*/
 
 	public function activateAction($args) {
+		
+		$actErrors = [];
+		
 		$view = new view();
-		$user = User::FindBy('email',$args['email'],'string');
 		$view->setView("user/activation.tpl");
+
+		$user  = User::FindBy('email',$args['email'],'string');
+
 		$formActivation = $user->getForm("activation");
-		$activateErrors = [];
-		$validator = new Validator();	
+<<<<<<< HEAD
+		$actErrors = [];
+		$validator = new Validator();
+=======
+		$view->assign("formActivation", $formActivation);
+				$validator = new validator();	
+>>>>>>> mail_html
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
-		} 
+		}
 		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			if ($user->getIsActive() != 1) {	
+			if ($user->getIsActive() != 1) {
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
 					$actErrors = $validator->check($formActivation["struct"], $_POST);
@@ -118,8 +125,13 @@ class userController
 				$view->assign("msg", "Looks like your account had already been activated");
 			}
 		}
-		$view->assign("activateErrors",$activatErrors);	
+<<<<<<< HEAD
+		$view->assign("actErrors",$actErrors);
 		$view->assign("formActivation", $formActivation);
+=======
+	
+		$view->assign("actErrors",$actErrors);
+>>>>>>> mail_html
 	}
 
 	public function subscribeAction($args) {
@@ -145,7 +157,7 @@ class userController
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
-				$user->setEmail($_POST['email']);
+				$user->setEmail(trim(strtolower($_POST["email"])));
 				$user->setUsername($_POST['username']);
 				$user->setIsActive(0);
 				$user->setToken();
@@ -155,11 +167,16 @@ class userController
 				if($user->sendConfirmationEmail()) {
 					$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
 				} else {
-					$view->assign( "mailerMessage", "Something went when trying to send email." );
+					$view->assign( "mailerMessage", "Something went wrong when trying to send email." );
 				}
 			}
 		}
+<<<<<<< HEAD
+
+		$view->assign("formSubscribe", $formSubscribe);
+=======
 		
+>>>>>>> mail_html
 		$view->assign("subErrors", $subErrors);
 		$view->assign("logErrors", $logErrors);	
 		
@@ -173,10 +190,9 @@ class userController
 		$subErrors = [];
 		$logErrors = [];
 		if(isset($_POST["form-type"])) {
-			if($user = User::findBy("email", $_POST["email"], "string")) {
-				if($user->getEmail() == trim($_POST["email"]) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
+			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
+				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
 					$user->setToken();
-					print_r($user->getToken());
 					$user->save();
 					$token = $user->getToken();
 					$id = $user->getId();
@@ -205,68 +221,6 @@ class userController
 	public function logoutAction () {
 		session_destroy();
 		header("location: ".WEBROOT."user/login");
-	}
-
-	public function resetPasswordAction($args) {
-		$view = new view();
-		$form = User::getForm("resetPassword");
-		$formErrors = [];
-		$view->assign("form", $form);
-		$view->assign("formErrors", $formErrors);
-		$view->setView("user/change-password.tpl");
-		if (isset($_POST["form-type"])) {
-			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
-				$user->setToken();
-				$user->save();
-				$user->sendPasswordResetEmail();
-				$view->assign(
-					"error_msg",
-					"An email has just been sent to " . $user->getEmail() . ", please check your email box."
-				);
-			} else {
-				$view->assign("error_msg", "Couldn't find this address");
-			}
-		}
-	}
-
-	public function setNewPasswordAction($args) {
-		// Get ou Post ?
-		if (isset($args["email"]) && isset($args["token"]) || (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword")) {
-			if (isset($args["email"])) {
-				$user = User::findBy("email", strtolower(trim($args["email"])), "string");
-			} else if (isset($_POST["email"])) {
-				$user = User::findBy("email", strtolower(trim($_POST["email"])), "string");
-			}
-			// Good token ?
-			if ($user->getToken() == $args["token"] || $user->getToken() == $_POST["token"]) {
-				$view = new view();
-				$form = User::getForm("setNewPassword");
-				$form["struct"]["email"]["value"] = $user->getEmail();
-				$form["struct"]["token"]["value"] = $user->getToken();
-				$formErrors = [];
-				if (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword") {
-					$validator = new Validator();
-					$formErrors = $validator->check($form["struct"], $_POST);
-					print_r($formErrors);
-					if (count($formErrors) == 0) {
-						$user->setPassword($_POST["password"]);
-						$user->setToken();
-						$user->save();
-						$view->assign(
-							"success",
-							"Your Password has been updated ! You can now log in with you new password :)"
-						);
-					}
-				}
-				$view->assign("form", $form);
-				$view->assign("formErrors", $formErrors);
-				$view->setView("user/set-new-password.tpl");
-			} else {
-				header("location:" . WEBROOT . "/user/logout");
-			}
-		} else {
-			header("location:" . WEBROOT);
-		}
 	}
 
 }
