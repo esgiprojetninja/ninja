@@ -1,7 +1,5 @@
 <?php
 
-namespace Controllers;
-
 class userController
 {
 	public function showAction($args)

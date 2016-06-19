@@ -1,9 +1,5 @@
 <?php
 
-namespace Core;
-
-use PDO;
-
 class basesql extends PDO
 {
 

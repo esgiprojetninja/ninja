@@ -6,10 +6,6 @@
  * Time: 20:21
  */
 
-namespace Controllers;
-
-use Core\View;
-
 class inboxController
 {
     /**
@@ -17,7 +13,12 @@ class inboxController
      * @param $args
      */
     public function myInboxAction($args) {
-        $view = new View();
-        print_r("inbox Controller");
+        if (User::isConnected()) {
+            $view = new View();
+            $view->setView("inbox/inbox.tpl");
+            print_r("inbox Controller");
+        } else {
+            header("location:" . WEBROOT);
+        }
     }
 }
