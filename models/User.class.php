@@ -320,11 +320,13 @@ class User extends basesql
 			$form = [
 				"title" => "Change password",
 				"buttonTxt" => "Confirm",
-				"options" => ["method" => "POST", "action" => WEBROOT . "user/changePassword/" . $this->id,"enctype"=>"multipart/form-data"],
+				"options" => ["method" => "POST", "action" => WEBROOT . "user/setNewPassword/","enctype"=>"multipart/form-data"],
 				"struct"=>[
 					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
 					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
-					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"email" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"],
+					"token" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"],
+					"form-type" => ["type" => "hidden", "value" => "setNewPassword", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
 		} else if ($formType == "resetPassword") {
@@ -333,7 +335,7 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPassword/", "enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email" ],
+					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist" ],
 					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];

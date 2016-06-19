@@ -204,7 +204,12 @@ class userController
 		if (isset($_POST["form-type"])) {
 			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
 				$user->setToken();
+				$user->save();
 				$user->sendPasswordResetEmail();
+				$view->assign(
+					"error_msg",
+					"An email has just been sent to " . $user->getEmail() . ", please check your email box."
+				);
 			} else {
 				$view->assign("error_msg", "Couldn't find this address");
 			}
@@ -212,7 +217,43 @@ class userController
 	}
 
 	public function setNewPasswordAction($args) {
-		// set new password
+		// Get ou Post ?
+		if (isset($args["email"]) && isset($args["token"]) || (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword")) {
+			if (isset($args["email"])) {
+				$user = User::findBy("email", strtolower(trim($args["email"])), "string");
+			} else if (isset($_POST["email"])) {
+				$user = User::findBy("email", strtolower(trim($_POST["email"])), "string");
+			}
+			// Good token ?
+			if ($user->getToken() == $args["token"] || $user->getToken() == $_POST["token"]) {
+				$view = new view();
+				$form = User::getForm("setNewPassword");
+				$form["struct"]["email"]["value"] = $user->getEmail();
+				$form["struct"]["token"]["value"] = $user->getToken();
+				$formErrors = [];
+				if (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword") {
+					$validator = new Validator();
+					$formErrors = $validator->check($form["struct"], $_POST);
+					print_r($formErrors);
+					if (count($formErrors) == 0) {
+						$user->setPassword($_POST["password"]);
+						$user->setToken();
+						$user->save();
+						$view->assign(
+							"success",
+							"Your Password has been updated ! You can now log in with you new password :)"
+						);
+					}
+				}
+				$view->assign("form", $form);
+				$view->assign("formErrors", $formErrors);
+				$view->setView("user/set-new-password.tpl");
+			} else {
+				header("location:" . WEBROOT . "/user/logout");
+			}
+		} else {
+			header("location:" . WEBROOT);
+		}
 	}
 
 }
