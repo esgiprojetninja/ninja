@@ -108,19 +108,18 @@ class userController
 			if ($user->getIsActive() != 1) {
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
-					$actErrors = $validator->check($formActivation["struct"], $_POST);
-					if(count($actErrors) == 0) {
+					$activateErrors = $validator->check($formActivation["struct"], $_POST);
+					if(count($activateErrors) == 0) {
 						$user->setPassword($_POST["password"]);
 						$user->setIsActive(1);
 						$user->save();
-						$view->assign("account_activated", "yeeha");
-						$view->assign("msg", "Your account is now activated");
+						$view->assign("activate_msg", "Your account is now activated");
 						session_destroy();
 					}
 				}
 			}
 			else {
-				$view->assign("msg", "Looks like your account had already been activated");
+				$view->assign("activate_msg", "Looks like your account had already been activated");
 			}
 		}
 		$view->assign("activateErrors",$activateErrors);
@@ -134,12 +133,15 @@ class userController
 		$logErrors = [];
 
 		$user = new User();
+
 		$formSubscribe = $user->getForm("subscription");
-		
+		$view->assign("formSubscribe", $formSubscribe);
+
 		$formLogin = $user->getForm("login");
 		$view->assign("formLogin", $formLogin);
 
 		$validator = new Validator();
+
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
@@ -177,7 +179,7 @@ class userController
 
 		if(isset($_POST["form-type"])) {
 			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
-				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
+				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]), SALT) == $user->getPassword())){
 					$user->setToken();
 					$user->save();
 					$token = $user->getToken();

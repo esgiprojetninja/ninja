@@ -10,7 +10,7 @@
 
 <?php
     //$user = $this->data["user"];
-	if(isset($this->data['msg'])){echo $this->data["msg"];}
+    if(isset($this->data['activate_msg'])){echo $this->data["activate_msg"];}
 ?>
 <div class="row">
     <div class="col-sm-6">

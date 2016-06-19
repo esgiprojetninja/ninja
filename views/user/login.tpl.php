@@ -6,6 +6,7 @@
       </div>
       <div class="panel-body">
         <div class="row">
+          <?php echo isset($this->data["activateMsg"]) ? $this->data["activateMsg"] : "" ?>
           <div class="col-sm-6">
           <?php
             $this->createForm($formSubscribe, $subErrors);

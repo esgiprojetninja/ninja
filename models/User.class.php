@@ -93,7 +93,7 @@ class User extends basesql
 	}
 
 	public function setPassword($password){
-		$this->password = crypt($password);
+		$this->password = crypt($password, SALT);
 	}
 
 	public function setFirstName($first_name){
@@ -195,11 +195,12 @@ class User extends basesql
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
+		
 		$link = WEBROOT."user/activate?email="
 			.$this->email
 			."&token="
 			.$this->token."";
-			
+
 		$_SESSION['link'] = $link;
 
 		ob_start();
@@ -207,7 +208,6 @@ class User extends basesql
 		$body = ob_get_clean();
 
 		$mail->Body    = $body;
-		//'Click the following link to validate your registration : '. $link;
 		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 		//$mail->send();

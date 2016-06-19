@@ -5,7 +5,7 @@ class indexController
 	public function indexAction($args)
 	{
 		if(User::isConnected()){
-			$view = new view;
+			$view = new View;
 			$view->setView("indexIndex");
 
 			$teams = Team::FindAll(10,"dateCreated","teamName");
@@ -22,7 +22,9 @@ class indexController
             $view->assign("invitations",$invitations);
             
 		}else{
-			header('Location:' . WEBROOT . 'user/login');
+			if ($route["controller"] != "user" && !User::isConnected()) {
+	   			header("location: ".WEBROOT."user/subscribe");
+			}
 		}
 	}
 }

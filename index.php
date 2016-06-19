@@ -26,9 +26,9 @@ spl_autoload_register('autoloader');
 
 $route = routing::setRouting();
 
-if ($route["controller"] != "user" && !User::isConnected()) {
-    header("location: ".WEBROOT."user/subscribe");
-}
+//if ($route["controller"] != "user" && !User::isConnected()) {
+//    header("location: ".WEBROOT."user/login");
+//}
 
 $name_controller = $route['controller']."Controller";
 $path_controller = "controllers/".$name_controller.".class.php";
