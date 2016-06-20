@@ -15,7 +15,7 @@ class User extends basesql
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
 	protected $city = "";
-	protected $birthday = "0000-00-00";
+	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
 
@@ -93,7 +93,7 @@ class User extends basesql
 	}
 
 	public function setPassword($password){
-		$this->password = crypt($password);
+		$this->password = crypt($password, SALT);
 	}
 
 	public function setFirstName($first_name){
@@ -195,11 +195,19 @@ class User extends basesql
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
+		
 		$link = WEBROOT."user/activate?email="
 			.$this->email
 			."&token="
 			.$this->token."";
-		$mail->Body    = 'Click the following link to validate your registration : '. $link;
+
+		$_SESSION['link'] = $link;
+
+		ob_start();
+			include("views/email_html.php");
+		$body = ob_get_clean();
+
+		$mail->Body    = $body;
 		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 		//$mail->send();

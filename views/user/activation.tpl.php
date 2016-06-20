@@ -10,14 +10,14 @@
 
 <?php
     //$user = $this->data["user"];
-	if(isset($this->data['msg'])){echo $this->data["msg"];}
+    if(isset($this->data['activate_msg'])){echo $this->data["activate_msg"];}
 ?>
 <div class="row">
     <div class="col-sm-6">
         <div class="panel">
             <div class="panel-body">
                 <?php
-                    $this->createForm($formActivation, $actErrors);
+                    $this->createForm($formActivation, $activateErrors);
                 ?>
             </div>
         </div>

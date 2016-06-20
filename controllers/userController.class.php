@@ -2,6 +2,11 @@
 
 class userController
 {
+
+	public function indexAction($args){
+
+	}
+
 	public function showAction($args)
 	{
 		if(User::isConnected() && !empty($args[0])){
@@ -27,8 +32,13 @@ class userController
     {
     	if(User::isConnected() && !empty($args[0])){
 			$user = User::findById($args[0]);
+
             $v = new View();
+            $v->setView("user/edit.tpl");
+
 			$formEdit = $user->getForm("edit");
+            $v->assign("formEdit", $formEdit);
+
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
 			}
@@ -67,9 +77,7 @@ class userController
 
 				}
 			}
-            $v->setView("user/edit.tpl");
             $v->assign("user", $user);
-            $v->assign("formEdit", $formEdit);
             $v->assign("editErrors", $editErrors);
 		}else{
 			header('Location:'.WEBROOT.'user/login');
@@ -82,10 +90,15 @@ class userController
 
 	public function activateAction($args) {
 		$view = new View();
-		$user = User::FindBy('email',$args['email'],'string');
 		$view->setView("user/activation.tpl");
+		
+		$activateErrors = [];
+
+		$user = User::FindBy('email',$args['email'],'string');
+
 		$formActivation = $user->getForm("activation");
-		$actErrors = [];
+		$view->assign("formActivation", $formActivation);
+
 		$validator = new Validator();
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
@@ -94,35 +107,40 @@ class userController
 			if ($user->getIsActive() != 1) {
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
-					$actErrors = $validator->check($formActivation["struct"], $_POST);
-					if(count($actErrors) == 0) {
+					$activateErrors = $validator->check($formActivation["struct"], $_POST);
+					if(count($activateErrors) == 0) {
 						$user->setPassword($_POST["password"]);
 						$user->setIsActive(1);
 						$user->save();
-						$view->assign("account_activated", "yeeha");
-						$view->assign("msg", "Your account is now activated");
+						$view->assign("activate_msg", "Your account is now activated");
 						session_destroy();
 					}
 				}
 			}
 			else {
-				$view->assign("msg", "Looks like your account had already been activated");
+				$view->assign("activate_msg", "Looks like your account had already been activated");
 			}
 		}
-		$view->assign("actErrors",$actErrors);
-		$view->assign("formActivation", $formActivation);
+		$view->assign("activateErrors",$activateErrors);
 	}
 
 	public function subscribeAction($args) {
 		$view = new View();
 		$view->setView("user/subscribe.tpl");
-		$user = new User();
-		$formSubscribe = $user->getForm("subscription");
-		$formLogin = $user->getForm("login");
+
 		$subErrors = [];
 		$logErrors = [];
 
-		$validator = new validator();
+		$user = new User();
+
+		$formSubscribe = $user->getForm("subscription");
+		$view->assign("formSubscribe", $formSubscribe);
+
+		$formLogin = $user->getForm("login");
+		$view->assign("formLogin", $formLogin);
+
+		$validator = new Validator();
+
 		if(isset($_POST["form-type"])) {
 			$subErrors = $validator->check($formSubscribe["struct"], $_POST);
 			if(count($subErrors) == 0) {
@@ -141,22 +159,26 @@ class userController
 			}
 		}
 
-		$view->assign("formSubscribe", $formSubscribe);
 		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
 		$view->assign("logErrors", $logErrors);
 	}
 
 	public function loginAction () {
 		$view = new View();
 		$view->setView("user/login.tpl");
-		$formSubscribe = User::getForm("subscription");
-		$formLogin = User::getForm("login");
+
 		$subErrors = [];
 		$logErrors = [];
+
+		$formSubscribe = User::getForm("subscription");
+		$view->assign("formSubscribe", $formSubscribe);
+		
+		$formLogin = User::getForm("login");
+		$view->assign("formLogin", $formLogin);
+
 		if(isset($_POST["form-type"])) {
 			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
-				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]),$user->getPassword()) == $user->getPassword())){
+				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]), SALT) == $user->getPassword())){
 					$user->setToken();
 					$user->save();
 					$token = $user->getToken();
@@ -173,9 +195,8 @@ class userController
 				$view->assign("error_message", "Couldn't find you :(");
 			}
 		}
-		$view->assign("formSubscribe", $formSubscribe);
+
 		$view->assign("subErrors", $subErrors);
-		$view->assign("formLogin", $formLogin);
 		$view->assign("logErrors", $logErrors);
 	}
 
