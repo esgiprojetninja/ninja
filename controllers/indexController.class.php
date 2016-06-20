@@ -4,7 +4,7 @@ class indexController
 {
 	public function indexAction($args)
 	{
-		if(User::isConnected()){
+		if (User::isConnected()) {
 			$view = new View;
 			$view->setView("indexIndex");
 
@@ -20,11 +20,9 @@ class indexController
 
             $invitations = Invitation::findBy(["idUserInvited","state"],[$_SESSION['user_id'],0],['int','int'],false);
             $view->assign("invitations",$invitations);
-            
-		}else{
-			if ($route["controller"] != "user" && !User::isConnected()) {
-	   			header("location: ".WEBROOT."user/subscribe");
-			}
+
+		} else {
+	   		header("location: ".WEBROOT."user/subscribe");
 		}
 	}
 }
