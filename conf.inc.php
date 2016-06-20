@@ -14,7 +14,7 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
      define("DBPWD","root");
 }
 
-define("DBNAME","ninjadb");
+define("DBNAME","ninja_db");
 define("SALT", "fR!3ndlY");
 
 $errors_msg = [
