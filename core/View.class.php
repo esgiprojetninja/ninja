@@ -1,6 +1,6 @@
 <?php 
 
-class view
+class View
 {
 	protected $data = [];
 	protected $view;
