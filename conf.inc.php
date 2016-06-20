@@ -14,8 +14,8 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
      define("DBPWD","root");
 }
 
-define("DBNAME","ninja_db");
-define("SALT", "fr!3ndly");
+define("DBNAME","ninjadb");
+define("SALT", "fR!3ndlY");
 
 $errors_msg = [
 	"email"=>"Your email isn't correct or allready exists",
