@@ -20,10 +20,10 @@ class Pivot {
      */
     public function __construct(
         $table,
-        $idOne,
-        $idTwo,
         $columnOne,
-        $columnTwo) {
+        $columnTwo,
+        $idOne,
+        $idTwo = null) {
 
             $this->table = $table;
             $this->idOne = $idOne;
@@ -40,11 +40,25 @@ class Pivot {
     		}
     }
 
+    /**
+     * Save a new row in pivot table if not exists.
+     */
     public function save() {
-        $sql = "INSERT INTO " . $this->table . " (" .
+        $sql = "INSERT IGNORE INTO " . $this->table . " (" .
         $this->columnOne . "," . $this->columnTwo . ") VALUE (" .
         $this->idOne . "," . $this->idTwo . ");";
 
         $this->pdo->exec($sql);
+    }
+
+    /**
+     * Return array of data.
+     * @return array
+     */
+    public function getData() {
+        $sql = "SELECT " . $this->columnTwo . " FROM " . $this->table .
+        " WHERE " . $this->columnOne . " = " . $this->idOne;
+        $query = $this->pdo->prepare($sql);
+        return $query->fetch();
     }
 }

@@ -16,11 +16,13 @@ class inboxController
         }
     }
 
-    public function createDiscussion($peoples) {
-        $discussion = new discussion();
-        foreach ($peoples as $key => $p) {
-            if (is_numeric($p)) {
-                $discussion->addUser();
+    public function createDiscussion($people) {
+        if (User::isConnected()) {
+            $discussion = new discussion();
+            foreach ($people as $key => $p) {
+                if (is_numeric($p)) {
+                    $discussion->addUser($p);
+                }
             }
         }
     }
