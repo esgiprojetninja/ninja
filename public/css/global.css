@@ -276,6 +276,23 @@ header .icon .text {
     background-color: #B84D61;
 }
 
+/********************
+    -- INBOX --
+********************/
+
+.my-inbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.my-inbox .discussion-list {
+    width: 30%;
+}
+
+.my-inbox .chat-body {
+    width: 70%;
+}
+
 /*******************
     -- DEBUG --
 ********************/

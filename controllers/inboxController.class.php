@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: roland
- * Date: 19/06/16
- * Time: 20:21
- */
 
 class inboxController
 {
@@ -19,6 +13,15 @@ class inboxController
             print_r("inbox Controller");
         } else {
             header("location:" . WEBROOT);
+        }
+    }
+
+    public function createDiscussion($peoples) {
+        $discussion = new discussion();
+        foreach ($peoples as $key => $p) {
+            if (is_numeric($p)) {
+                $discussion->addUser();
+            }
         }
     }
 }
