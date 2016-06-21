@@ -43,6 +43,7 @@ class inboxController
                     $discussion->save();
                     $discussion->addUser(intval($userTarget->getId()));
                     $discussion->addUser(intval($_SESSION["user_id"]));
+                    $discussion->save();
                     http_response_code(200);
                     $response["status"] = "success";
                     $response["message"] = "Discussion created !";

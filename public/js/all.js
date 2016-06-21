@@ -162,6 +162,7 @@ $(function ($) {
         var action = $(this).attr("action");
         var method = $(this).attr("method");
         var success = $(this).data("success");
+        var callback = $(this).data("callback");
         var data = {};
         if(typeof success == "undefined") {
             success = "Data updated !";
@@ -186,6 +187,7 @@ $(function ($) {
             }).success(function (data) {
                 showMessage(data.message, "success");
                 console.debug(data);
+                triggerCallback(callback);
             }).fail(function (jqXHR, textStatus) {
                 console.debug(jqXHR);
                 var errors = (JSON.parse(jqXHR.responseText));
@@ -220,6 +222,10 @@ function showMessage(msg, code) {
 ********************/
 
 $(function ($) {
+    getDiscussions();
+});
+
+function getDiscussions() {
     var $list = $(".js-discussion-list");
     if ($list.length) {
         $.ajax({
@@ -232,21 +238,34 @@ $(function ($) {
         }).then(function (data) {
             console.debug(data);
             var currentUserId = Number(data.current_user_id);
+            var items = "";
             for (i = 0; i < data.message.length; i ++) {
                 var penPals = [];
                 for(j = 0; j < data.message[i].users.length; j++) {
                     var user = data.message[i].users[j];
                     if(Number(user.id) !== currentUserId) {
-                        console.debug(user);
                         penPals.push(user.username);
                     }
                 }
-                $list.find("ul").append(
-                    "<li data-discussion='" + data.message[i].id +
+                items += "<li data-discussion='" + data.message[i].id +
                     "' class='js-discussion-list-item'> To: " +
                     penPals.join(", ") + "</li>"
-                );
             }
+            $list.find("ul").html(items);
         });
     }
-});
+}
+
+/*********************
+    -- Callbacks --
+*********************/
+
+function triggerCallback(callback) {
+    switch(callback) {
+        case "discussions":
+            getDiscussions();
+            break;
+        default:
+            null
+    }
+}
