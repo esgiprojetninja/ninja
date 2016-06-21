@@ -230,9 +230,22 @@ $(function ($) {
         }).fail(function (jqXHR, textStatus) {
             console.debug(jqXHR);
         }).then(function (data) {
-            console.debug(data.message);
+            console.debug(data);
+            var currentUserId = Number(data.current_user_id);
             for (i = 0; i < data.message.length; i ++) {
-                $list.find("ul").append("<li>" + data.message[i].id + "</li>");
+                var penPals = [];
+                for(j = 0; j < data.message[i].users.length; j++) {
+                    var user = data.message[i].users[j];
+                    if(Number(user.id) !== currentUserId) {
+                        console.debug(user);
+                        penPals.push(user.username);
+                    }
+                }
+                $list.find("ul").append(
+                    "<li data-discussion='" + data.message[i].id +
+                    "' class='js-discussion-list-item'> To: " +
+                    penPals.join(", ") + "</li>"
+                );
             }
         });
     }

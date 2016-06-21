@@ -9,11 +9,9 @@
                     <!-- DISCUSSION LIST -->
                     <div class="discussion-list">
                         <div class="new-discussion">
-                            new discussion
                             <?php $this->createForm($form, $formErrors) ?>
                         </div>
-                        <div class="discussion-list js-discussion-list">
-                            discussion list
+                        <div class="js-discussion-list">
                             <ul></ul>
                         </div>
                     </div>

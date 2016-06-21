@@ -289,6 +289,28 @@ header .icon .text {
     width: 30%;
 }
 
+.my-inbox .discussion-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.my-inbox .discussion-list ul li {
+    display: block;
+    cursor: pointer;
+    min-height: 30px;
+    margin: 2px;
+    border-left: 2px solid #433A4B;
+    text-align: center;
+    transition-property: all;
+    transition-duration: 0.1s;
+    padding-top: 10px;
+}
+
+.my-inbox .discussion-list ul li:hover {
+    box-shadow: 2px 2px 2px #D2D2D2;
+    color: #000000;
+}
+
 .my-inbox .chat-body {
     width: 70%;
 }

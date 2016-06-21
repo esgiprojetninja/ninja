@@ -73,6 +73,7 @@ class inboxController
      */
     public function getDiscussionsAction() {
         $response = [];
+        $response["current_user_id"] = $_SESSION["user_id"];
         if (User::isConnected()) {
             $user = User::findById($_SESSION["user_id"]);
             $response["message"] = $user->getDiscussions();
