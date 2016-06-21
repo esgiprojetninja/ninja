@@ -10,7 +10,7 @@ $(document).on("click", function (e) {
 });
 
 /**************************
-    -- DOCUMENT EVENTS -- 
+    -- DOCUMENT EVENTS --
 **************************/
 
 $(function ($) {
@@ -183,10 +183,19 @@ $(function ($) {
                 method: method,
                 url: action,
                 data: data
-            }).success(function (msg) {
-                showMessage("Data was updated !", "success");
+            }).success(function (data) {
+                showMessage(data.message, "success");
+                console.debug(data);
             }).fail(function (jqXHR, textStatus) {
-                showMessage("Request failed :(", "danger");
+                console.debug(jqXHR);
+                var errors = (JSON.parse(jqXHR.responseText));
+                var errorText = "";
+                if (errors.errorText.length > 0) {
+                    errorText = errors.errorText;
+                } else {
+                    errorText = "Request failed :(";
+                }
+                showMessage(errorText, "danger");
             });
         }
     });

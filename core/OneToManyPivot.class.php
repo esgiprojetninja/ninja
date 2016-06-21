@@ -1,6 +1,6 @@
 <?php
 
-class Pivot {
+class OneToManyPivot {
 
     private $pdo;
     protected $table;
@@ -33,7 +33,7 @@ class Pivot {
 
             $dns = "mysql:host=".DBHOST.";dbname=".DBNAME;
             try{
-    			$this->pdo = new PDO($dsn,DBUSER,DBPWD);
+    			$this->pdo = new PDO($dns,DBUSER,DBPWD);
     			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     		}catch(Exception $e){
     			die("Erreur SQL:".$e->getMessage());

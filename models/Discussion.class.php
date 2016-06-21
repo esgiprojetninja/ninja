@@ -5,6 +5,9 @@ class Discussion extends basesql {
     protected $table = "discussions";
     protected $pivotTable = "discussions_users_pivot";
     protected $people = [];
+    protected $columns = [
+        "id"
+    ];
 
 
     /**
@@ -29,6 +32,14 @@ class Discussion extends basesql {
     }
 
     /**
+     * Set people.
+     * @param array $ppl
+     */
+    public function setPeople($ppl) {
+        $this->people = $ppl;
+    }
+
+    /**
      * Add a new user id to people array
      * @param int
      */
@@ -42,20 +53,67 @@ class Discussion extends basesql {
         }
     }
 
+    /**
+     * Get people from DB and set attribute
+     * @return array
+     */
+    public function gatherPeople() {
+        $pivot = new OneToManyPivot(
+            $this->pivotTable,
+            "discussion_id",
+            "user_id",
+            $this->id
+        );
+        return $pivot->getData();
+    }
 
     /**
      * For each people, save a pivot table.
      */
     public function savePeople() {
         foreach ($this->people as $userId) {
-            $pivot = new Pivot(
+            $pivot = new OneToManyPivot(
                 $this->pivotTable,
-                $this->id,
-                $userId,
                 "discussion_id",
-                "user_id"
+                "user_id",
+                $this->id,
+                $userId
             );
             $pivot->save();
         }
+    }
+
+    /**
+     * Save people then save.
+     */
+    public function save() {
+        if (count($this->people) > 0) {
+            $this->savePeople();
+        }
+        $this->id = parent::save();
+    }
+
+    /**
+     * Return form structure.
+     * @param string $formType
+     * @return array
+     */
+    public function getForm($formType) {
+
+        $form = [];
+
+        if ($formType == "createDiscussion") {
+            $form = [
+				"title" => "Create a discussion",
+				"buttonTxt" => "Create",
+				"options" => ["method" => "POST", "action" => WEBROOT . "inbox/createDiscussion", "class" => "ajax-form"],
+				"struct" => [
+					"username"=>[ "type"=>"username", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username_doesnt_exists" ],
+					"form-type" => ["type" => "hidden", "value" => "createDiscussion", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+				]
+			];
+        }
+
+        return $form;
     }
 }

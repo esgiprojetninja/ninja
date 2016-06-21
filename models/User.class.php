@@ -19,6 +19,22 @@ class User extends basesql
 	protected $avatar = "";
 	protected $dateCreated;
 
+	protected $columns = [
+		"email",
+		"token",
+		"is_active",
+		"password",
+		"username",
+		"first_name",
+		"last_name",
+		"phone_number",
+		"avatar",
+		"favorite_sports",
+		"city",
+		"birthday",
+		"dateCreated"
+	];
+
 
 	/**
 	* @param array
@@ -195,7 +211,7 @@ class User extends basesql
 		$mail->isHTML(true);                                  // Set email format to HTML
 
 		$mail->Subject = 'Welcome in Sport Nation World Wide';
-		
+
 		$link = WEBROOT."user/activate?email="
 			.$this->email
 			."&token="
@@ -285,7 +301,7 @@ class User extends basesql
 					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
-		} 
+		}
 		else if ($formType == "activation") {
 			$form = [
 				"title" => "Welcome back ! Please choose a password to activate your account.",
@@ -348,7 +364,7 @@ class User extends basesql
 				]
 			];
 		}
-		
+
 		return $form;
 	}
 }

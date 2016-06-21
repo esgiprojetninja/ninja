@@ -10,6 +10,7 @@
                     <div class="discussion-list">
                         <div class="new-discussion">
                             new discussion
+                            <?php $this->createForm($form, $formErrors) ?>
                         </div>
                         <div class="discussion-list">
                             discussion list

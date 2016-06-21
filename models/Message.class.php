@@ -9,6 +9,14 @@ class Message extends basesql {
     protected $date;
     protected $discussion_id;
 
+    protected $columns = [
+        "id",
+        "sender_id",
+        "content",
+        "date",
+        "discussion_id"
+    ];
+
     /**
      * Init parent, good for db candies
      */

@@ -10,6 +10,15 @@ class Team extends basesql
 	protected $description = "";
 	protected $avatar = "";
 
+	protected $culomns = [
+		"id",
+		"teamName",
+		"dateCreated",
+		"sports",
+		"description",
+		"avatar"
+	];
+
 	public function __construct(){
 		parent::__construct();
 	}
@@ -75,7 +84,7 @@ class Team extends basesql
 					"form-type" => ["type" => "hidden", "value" => "createTeam", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
-		} 
+		}
 		else if ($formType == "edit") {
 			$form = [
 				"title" => "Team params",
@@ -97,7 +106,7 @@ class Team extends basesql
 					"message"=>["type"=>"text","class"=>"form-control","placeholder"=>"A message","required"=>0,"msgerror"=>"messageInvite"],]
 					];
 		}
-		
+
 		return $form;
 	}
 
