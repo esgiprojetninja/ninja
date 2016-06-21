@@ -12,8 +12,9 @@
                             new discussion
                             <?php $this->createForm($form, $formErrors) ?>
                         </div>
-                        <div class="discussion-list">
+                        <div class="discussion-list js-discussion-list">
                             discussion list
+                            <ul></ul>
                         </div>
                     </div>
                     <!-- CHAT BODY -->

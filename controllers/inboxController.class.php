@@ -24,15 +24,14 @@ class inboxController
         }
     }
 
+    /**
+     * Create a new discussion and store.
+     * @param array $args
+     * @echo json
+     */
     public function createDiscussionAction($args) {
         $response = [];
         if (User::isConnected()) {
-            // $discussion = new discussion();
-            // foreach ($people as $key => $p) {
-            //     if (is_numeric($p)) {
-            //         $discussion->addUser($p);
-            //     }
-            // }
             $errors = [];
             if(isset($_POST["form-type"]) && $_POST["form-type"] == "createDiscussion") {
                 $form = Discussion::getForm("createDiscussion");
@@ -60,10 +59,29 @@ class inboxController
             }
 
         } else {
+            http_response_code(403);
             $response["status"] = "error";
             $response["errorText"] = "You must be connected.";
         }
+        header('Content-type: application/json');
+        echo json_encode($response);
+    }
 
+    /**
+     * Return all discussion ids for current user.
+     * @echo json
+     */
+    public function getDiscussionsAction() {
+        $response = [];
+        if (User::isConnected()) {
+            $user = User::findById($_SESSION["user_id"]);
+            $response["message"] = $user->getDiscussions();
+            $response["status"] = "success";
+        } else {
+            http_response_code(403);
+            $response["status"] = "error";
+            $response["errorText"] = "You must be connected.";
+        }
         header('Content-type: application/json');
         echo json_encode($response);
     }

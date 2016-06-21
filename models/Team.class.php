@@ -10,7 +10,7 @@ class Team extends basesql
 	protected $description = "";
 	protected $avatar = "";
 
-	protected $culomns = [
+	protected $columns = [
 		"id",
 		"teamName",
 		"dateCreated",

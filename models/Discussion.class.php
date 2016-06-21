@@ -58,7 +58,7 @@ class Discussion extends basesql {
      * @return array
      */
     public function gatherPeople() {
-        $pivot = new OneToManyPivot(
+        $pivot = new ManyToManyPivot(
             $this->pivotTable,
             "discussion_id",
             "user_id",
@@ -72,7 +72,7 @@ class Discussion extends basesql {
      */
     public function savePeople() {
         foreach ($this->people as $userId) {
-            $pivot = new OneToManyPivot(
+            $pivot = new ManyToManyPivot(
                 $this->pivotTable,
                 "discussion_id",
                 "user_id",

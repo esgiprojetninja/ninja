@@ -18,6 +18,7 @@ class User extends basesql
 	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
+	protected $discussionPivotTable = "discussions_users_pivot";
 
 	protected $columns = [
 		"email",
@@ -366,5 +367,15 @@ class User extends basesql
 		}
 
 		return $form;
+	}
+
+	public function getDiscussions() {
+		$pivot = new ManyToManyPivot(
+			$this->discussionPivotTable,
+			"user",
+			"discussion",
+			$this->id
+		);
+		return $pivot->getData();
 	}
 }

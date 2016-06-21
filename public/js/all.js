@@ -214,3 +214,26 @@ function showMessage(msg, code) {
         $box.fadeOut();
     }, 5000);
 }
+
+/********************
+    -- Inbox --
+********************/
+
+$(function ($) {
+    var $list = $(".js-discussion-list");
+    if ($list.length) {
+        $.ajax({
+            method: "GET",
+            url: location.origin + "/inbox/getDiscussions",
+        }).success(function (data) {
+            //showMessage(data.message, "success");
+        }).fail(function (jqXHR, textStatus) {
+            console.debug(jqXHR);
+        }).then(function (data) {
+            console.debug(data.message);
+            for (i = 0; i < data.message.length; i ++) {
+                $list.find("ul").append("<li>" + data.message[i].id + "</li>");
+            }
+        });
+    }
+});
