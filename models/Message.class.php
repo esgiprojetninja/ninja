@@ -80,7 +80,7 @@ class Message extends basesql {
      * @param string $content
      */
     public function setContent($content) {
-        $this->content = htmlspecialchars($conten);
+        $this->content = htmlspecialchars($content);
     }
 
     /**
@@ -88,6 +88,6 @@ class Message extends basesql {
      * @param int $discussion_id
      */
     public function setDiscussionId($discussion_id) {
-        $thi->discussion_id = $discussion_id;
+        $this->discussion_id = $discussion_id;
     }
 }

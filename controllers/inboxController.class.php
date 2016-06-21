@@ -87,4 +87,43 @@ class inboxController
         header('Content-type: application/json');
         echo json_encode($response);
     }
+
+    /**
+     * Get messages from given discussion id.
+     * @echo array
+     */
+    public function getMessagesAction() {
+        if (User::isConnected()) {
+            $messages = Message::findBy(
+                "discussion_id",
+                intval($_POST["discussion_id"]),
+                "int",
+                false
+            );
+            $response = $messages;
+        } else {
+            http_response_code(403);
+            $response["status"] = "error";
+            $response["errorText"] = "You must be connected.";
+        }
+        header('Content-type: application/json');
+        echo json_encode($response);
+    }
+
+    public function sendMessageAction() {
+        if (User::isConnected()) {
+            if (isset($_POST["discussion_id"])) {
+                $message = new Message();
+                $message->setSenderId($_SESSION["user_id"]);
+                $message->setContent(htmlspecialchars($_POST["message"]));
+                $message->setDate(new Datetime());
+                $message->setDiscussionId(intval($_POST["discussion_id"]));
+                $message->save();
+                header('Content-type: application/json');
+                echo json_encode($message);
+            }
+        } else {
+            header("location:" . WEBROOT . "user/subscribe");
+        }
+    }
 }

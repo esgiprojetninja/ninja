@@ -163,6 +163,7 @@ $(function ($) {
         var method = $(this).attr("method");
         var success = $(this).data("success");
         var callback = $(this).data("callback");
+        var attributes = $(this).data;
         var data = {};
         if(typeof success == "undefined") {
             success = "Data updated !";
@@ -252,9 +253,38 @@ function getDiscussions() {
                     penPals.join(", ") + "</li>"
             }
             $list.find("ul").html(items);
+            listenForChooseDiscussion();
         });
     }
 }
+
+function listenForChooseDiscussion() {
+    $(".js-discussion-list-item").click(function (ev) {
+        var discussionId = ($(this).data("discussion"));
+        $messageForm = $(".chat-body").find(".js-inbox-message-form");
+        $messageForm.find("input[name='discussion_id']").val(discussionId);
+        $.ajax({
+            method: "POST",
+            url: location.origin + "/inbox/getMessages",
+            data: {"discussion_id" : discussionId}
+        }).success(function(data) {
+            // SUCCESS
+        }).fail(function (jqXHR, textStatus) {
+            //FAIL
+        }).then(function (data) {
+            console.debug(data);
+            listenForNeMessage($messageForm);
+        });
+    });
+}
+
+function listenForNeMessage($form) {
+    // $form.submit(function (ev) {
+    //     ev.preventDefault();
+    //     console.debug($form.find("input[name='message']").val());
+    // });
+}
+
 
 /*********************
     -- Callbacks --

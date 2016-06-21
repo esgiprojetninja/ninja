@@ -11,6 +11,11 @@ form select[class='form-control'] {
     height: 30px;
 }
 
+form .input-grp-btn {
+    display: flex;
+    flex-direction: row;
+}
+
 form .form-control:focus,
 form .form-control:active {
     outline: #6C6599 auto 5px;
