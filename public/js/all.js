@@ -236,9 +236,7 @@ function getDiscussions() {
         }).success(function (data) {
             //showMessage(data.message, "success");
         }).fail(function (jqXHR, textStatus) {
-            console.debug(jqXHR);
         }).then(function (data) {
-            console.debug(data);
             var currentUserId = Number(data.current_user_id);
             var items = "";
             for (i = 0; i < data.message.length; i ++) {
