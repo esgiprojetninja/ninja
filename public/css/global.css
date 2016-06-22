@@ -283,6 +283,7 @@ header .icon .text {
 .my-inbox {
     display: flex;
     flex-direction: row;
+    max-height: 80vh;
 }
 
 .my-inbox .discussion-list {
@@ -321,16 +322,15 @@ header .icon .text {
     border-radius: 2px;
     margin-bottom: 10px;
     height: calc(100% - 40px);
-    display: flex;
-    align-items: baseline;
-    flex-direction: column;
-    justify-content: flex-end;
+    overflow: auto;
 }
 
 .my-inbox .chat-body .message-list .message {
     width: 100%;
     height: 20px;
     margin: 5px 0;
+    flex-shrink: 0;
+    overflow: auto;
 }
 
 .my-inbox .chat-body .message-list .message.sender-is-current {

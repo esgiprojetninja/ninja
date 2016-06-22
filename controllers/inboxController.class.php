@@ -38,15 +38,32 @@ class inboxController
                 $validator = new Validator();
                 $errors = $validator->check($form["struct"], $_POST);
                 if (count($errors) == 0) {
+                    $currentUser = User::findById(intval($_SESSION["user_id"]));
                     $userTarget = User::findBy("username", $_POST["username"], "string");
-                    $discussion = new Discussion();
-                    $discussion->save();
-                    $discussion->addUser(intval($userTarget->getId()));
-                    $discussion->addUser(intval($_SESSION["user_id"]));
-                    $discussion->save();
-                    http_response_code(200);
-                    $response["status"] = "success";
-                    $response["message"] = "Discussion created !";
+                    $discussions = $currentUser->getDiscussions();
+                    $discussion_exists = false;
+                    foreach ($discussions as $discussion) {
+                        $user_ids = split(",", $discussion["user_id"]);
+                        if(in_array($userTarget->getId(), $user_ids)) {
+                            $discussion_exists = true;
+                            break;
+                        }
+                    }
+                    if ($discussion_exists) {
+                        http_response_code(400);
+                        $response["status"] = "error";
+                        $response["errorText"] = "A discussion with this
+                        user already exists";
+                    } else {
+                        $discussion = new Discussion();
+                        $discussion->save();
+                        $discussion->addUser(intval($userTarget->getId()));
+                        $discussion->addUser(intval($_SESSION["user_id"]));
+                        $discussion->save();
+                        http_response_code(200);
+                        $response["status"] = "success";
+                        $response["message"] = "Discussion created !";
+                    }
                 } else {
                     http_response_code(404);
                     global $errors_msg; // Il faut vraiment trouver mieux que ça.
@@ -119,8 +136,13 @@ class inboxController
                 $message->setDate(new Datetime());
                 $message->setDiscussionId(intval($_POST["discussion_id"]));
                 $message->save();
+                $response["messageContent"] = $message->getContent();
+                $response["callback"] = $_POST["callback"];
+                $response["current_user_id"] = $_SESSION["user_id"];
+                $response["discussion_id"] = $message->getDiscussionId();
+                $response["message"] = "Message sent !";
                 header('Content-type: application/json');
-                echo json_encode($message);
+                echo json_encode($response);
             }
         } else {
             header("location:" . WEBROOT . "user/subscribe");

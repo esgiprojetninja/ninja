@@ -106,7 +106,7 @@ class Discussion extends basesql {
             $form = [
 				"title" => "Create a discussion",
 				"buttonTxt" => "Create",
-				"options" => ["method" => "POST", "action" => WEBROOT . "inbox/createDiscussion", "class" => "ajax-form", "data-attributes" => ["callback"=>"discussions"]],
+				"options" => ["method" => "POST", "action" => WEBROOT . "inbox/createDiscussion", "class" => "ajax-form js-create-discussion", "data-attributes" => ["callback"=>"discussions"]],
 				"struct" => [
 					"username"=>[ "type"=>"username", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username_doesnt_exists" ],
 					"form-type" => ["type" => "hidden", "value" => "createDiscussion", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
