@@ -253,15 +253,16 @@ function getDiscussions() {
                     penPals.join(", ") + "</li>"
             }
             $list.find("ul").html(items);
-            listenForChooseDiscussion();
+            listenForChooseDiscussion(currentUserId);
         });
     }
 }
 
-function listenForChooseDiscussion() {
+function listenForChooseDiscussion(currentUserId) {
     $(".js-discussion-list-item").click(function (ev) {
         var discussionId = ($(this).data("discussion"));
-        $messageForm = $(".chat-body").find(".js-inbox-message-form");
+        var $chatBody = $(".chat-body");
+        $messageForm = $chatBody.find(".js-inbox-message-form");
         $messageForm.find("input[name='discussion_id']").val(discussionId);
         $.ajax({
             method: "POST",
@@ -272,7 +273,30 @@ function listenForChooseDiscussion() {
         }).fail(function (jqXHR, textStatus) {
             //FAIL
         }).then(function (data) {
-            console.debug(data);
+            var $messageList = $chatBody.find(".js-message-list");
+            $messageList.html("");
+            var $messages = [];
+            $.each(data, function (index, message) {
+                var $messageBox = $("<div></div>");
+                $messageBox.data("sender", message.sender_id);
+                $messageBox.append(
+                    "<span class='content'>" +
+                    message.content +
+                    "</span>"
+                );
+                $messageBox.addClass("message");
+                if (message.sender_id == currentUserId) {
+                    $messageBox.addClass("sender-is-current");
+                }
+                $messages.push($messageBox);
+            });
+            if ($messages.length > 0) {
+                $.each($messages, function (index, $message) {
+                    $messageList.append($message);
+                });
+            } else {
+                $messageList.html("No message yet.");
+            }
             listenForNeMessage($messageForm);
         });
     });

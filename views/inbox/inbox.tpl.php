@@ -17,7 +17,7 @@
                     </div>
                     <!-- CHAT BODY -->
                     <div class="chat-body">
-                        <div class="message-list"></div>
+                        <div class="message-list js-message-list"></div>
                         <form class="js-inbox-message-form ajax-form" method="POST" action=<?= WEBROOT . "inbox/sendMessage" ?>>
                             <div class="input-grp-btn">
                                 <input type="text" class="form-control" name="message" placeholder="Type a message">

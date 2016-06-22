@@ -18,8 +18,10 @@
 	<?php echo isset($form["options"]["enctype"]) ? "enctype=\"".$form["options"]["enctype"]."\"" : "" ?>
 	class="<?php echo isset($form['options']['class']) ? $form['options']['class']: '' ?>"
 	<?php
-		foreach ($form["options"]["data-attributes"] as $key => $value) {
-			echo "data-" . $key . "='" . $value . "'";
+		if (isset($form["options"]["data-attributes"])) {
+			foreach ($form["options"]["data-attributes"] as $key => $value) {
+				echo "data-" . $key . "='" . $value . "'";
+			}
 		}
 	?>
 >
