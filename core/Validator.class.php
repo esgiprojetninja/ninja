@@ -25,8 +25,11 @@ class Validator extends basesql{
 			elseif($options["msgerror"]=="email" && !self::emailCorrect($data[$name])) {
 				$listErrors[]=$options["msgerror"];
 			}
-			elseif($options["msgerror"]=="new_username" && !self::existUsername($data[$name])){
+			elseif($options["msgerror"]=="new_username" && self::existUsername($data[$name])){
 				$listErrors[]=$options["msgerror"];
+			}
+			elseif($options["msgerror"] == "username_doesnt_exists" && !self::existUsername($data[$name])) {
+				$listErrors[] = $options["msgerror"];
 			}
 			elseif($options["msgerror"]=="teamName" && !self::existTeamName($data[$name])){
 				$listErrors[]=$options["msgerror"];
@@ -89,25 +92,25 @@ class Validator extends basesql{
 	}
 
 	public static function passwordCorrect($var){
-		$_SESSION['passwordValidator'] = $var; 
+		$_SESSION['passwordValidator'] = $var;
 // on stocke le mdp avant de vérifier qu'il soit identique au mot de passe de conf,
 // pas d'inquietude, la session est detruite a la fin du processus d'activation
 		return !( strlen($var)<8 || strlen($var)>12 ||
 					!preg_match("/[0-9]/", $var) ||
 					!preg_match("/[a-z]/", $var) ||
-					!preg_match("/[A-Z]/", $var) );	
+					!preg_match("/[A-Z]/", $var) );
 	}
 
 	public static function emailCorrect($var){
-		return !(filter_var($var,FILTER_VALIDATE_EMAIL));	
+		return !(filter_var($var,FILTER_VALIDATE_EMAIL));
 	}
 
 	public static function newEmailCorrect($var){
-		return !((filter_var($var,FILTER_VALIDATE_EMAIL)) && (User::findBy("email", $var, "string")) );	
+		return !((filter_var($var,FILTER_VALIDATE_EMAIL)) && (User::findBy("email", $var, "string")) );
 	}
 
 	public static function existUsername($var){
-		return !(User::findBy("username",$var,"string"));
+		return (User::findBy("username",$var,"string"));
 	}
 
 	public static function newExistTeamName($var){
@@ -128,10 +131,3 @@ class Validator extends basesql{
 		}
 	}
 }
-
-
-
-
-
-
-

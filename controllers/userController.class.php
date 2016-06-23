@@ -100,7 +100,6 @@ class userController
 		$view->assign("formActivation", $formActivation);
 
 		$validator = new Validator();
-
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
 		}

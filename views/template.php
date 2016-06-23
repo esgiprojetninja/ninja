@@ -45,6 +45,9 @@
                     </ul>
                 </div>
 
+                <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
+                    <span class="fa fa-envelope-o"></span>
+                </a>
             </div>
             <div class="items-down items">
 

@@ -10,7 +10,7 @@ $(document).on("click", function (e) {
 });
 
 /**************************
-    -- DOCUMENT EVENTS -- 
+    -- DOCUMENT EVENTS --
 **************************/
 
 $(function ($) {
@@ -171,6 +171,7 @@ $(function ($) {
         var method = $(this).attr("method");
         var success = $(this).data("success");
         var data = {};
+        data.callback = $(this).data("callback");
         if(typeof success == "undefined") {
             success = "Data updated !";
         }
@@ -191,10 +192,18 @@ $(function ($) {
                 method: method,
                 url: action,
                 data: data
-            }).success(function (msg) {
-                showMessage("Data was updated !", "success");
+            }).success(function (data) {
+                showMessage(data.message, "success");
+                triggerCallback(data);
             }).fail(function (jqXHR, textStatus) {
-                showMessage("Request failed :(", "danger");
+                var errors = (JSON.parse(jqXHR.responseText));
+                var errorText = "";
+                if (errors.errorText.length > 0) {
+                    errorText = errors.errorText;
+                } else {
+                    errorText = "Request failed :(";
+                }
+                showMessage(errorText, "danger");
             });
         }
     });
@@ -225,3 +234,115 @@ $(function ($) {
     }
     $("#popupNotifications").append("</ul>");
 });
+
+/********************
+    -- Inbox --
+********************/
+
+$(function ($) {
+    getDiscussions();
+    $(".js-create-discussion").submit(function (ev) {
+        getDiscussions();
+    });
+    var refreshMessagesInterval;
+});
+
+function getDiscussions() {
+    var $list = $(".js-discussion-list");
+    if ($list.length) {
+        $.ajax({
+            method: "GET",
+            url: location.origin + "/inbox/getDiscussions",
+        }).success(function (data) {
+            //showMessage(data.message, "success");
+        }).fail(function (jqXHR, textStatus) {
+        }).then(function (data) {
+            var currentUserId = Number(data.current_user_id);
+            var items = "";
+            if (data.message.length) {
+                for (i = 0; i < data.message.length; i ++) {
+                    var penPals = [];
+                    for(j = 0; j < data.message[i].users.length; j++) {
+                        var user = data.message[i].users[j];
+                        if(Number(user.id) !== currentUserId) {
+                            penPals.push(user.username);
+                        }
+                    }
+                    items += "<li data-discussion='" + data.message[i].id +
+                    "' class='js-discussion-list-item'> To: " +
+                    penPals.join(", ") + "</li>"
+                }
+                $list.find("ul").html(items);
+            }
+            listenForChooseDiscussion(currentUserId);
+        });
+    }
+}
+
+function listenForChooseDiscussion(currentUserId) {
+    $.each($(".js-discussion-list-item"), function (index, elem) {
+        refreshMessages(currentUserId, $(elem).data("discussion"));
+        refreshMessagesInterval = setInterval(function () {
+            refreshMessages(currentUserId, $(elem).data("discussion"));
+        }, 5000);
+    });
+}
+
+function refreshMessages(currentUserId, discussionId) {
+    var $chatBody = $(".chat-body");
+    $chatBody.attr("data-discussion", discussionId);
+    $messageForm = $chatBody.find(".js-inbox-message-form");
+    $messageForm.find("input[name='discussion_id']").val(discussionId);
+    $.ajax({
+        method: "POST",
+        url: location.origin + "/inbox/getMessages",
+        data: {"discussion_id" : discussionId}
+    }).success(function(data) {
+        // SUCCESS
+    }).fail(function (jqXHR, textStatus) {
+        //FAIL
+    }).then(function (data) {
+        var $messageList = $chatBody.find(".js-message-list");
+        $messageList.html("");
+        var $messages = [];
+        $.each(data, function (index, message) {
+            var $messageBox = $("<div></div>");
+            $messageBox.data("sender", message.sender_id);
+            $messageBox.append(
+                "<span class='content'>" +
+                message.content +
+                "</span>"
+            );
+            $messageBox.addClass("message");
+            if (message.sender_id == currentUserId) {
+                $messageBox.addClass("sender-is-current");
+            }
+            $messages.push($messageBox);
+        });
+        if ($messages.length > 0) {
+            $.each($messages, function (index, $message) {
+                $messageList.append($message);
+            });
+        } else {
+            $messageList.html("No message yet.");
+        }
+    });
+}
+
+
+/*********************
+    -- Callbacks --
+*********************/
+
+function triggerCallback(data) {
+    switch(data.callback) {
+        case "discussions":
+            getDiscussions();
+            break;
+        case "messages":
+            refreshMessages(data.current_user_id, data.discussion_id);
+            break;
+        default:
+            null
+    }
+}

@@ -3,7 +3,6 @@
 class basesql extends PDO
 {
 
-	private $columns = [];
 	private $pdo;
 
 	public function __construct()
@@ -19,7 +18,7 @@ class basesql extends PDO
 		//$this->table = get_called_class();
 		$all_vars = get_object_vars($this);
 		$class_vars = get_class_vars(get_class());
-		$this->columns = array_keys(array_diff_key($all_vars, $class_vars));
+		//$this->columns = array_keys(array_diff_key($all_vars, $class_vars));
 
 		// Unsetting "table" attribute
 		if(($key = array_search("table", $this->columns)) !== false) {
@@ -115,10 +114,10 @@ class basesql extends PDO
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}
-		
+
 		/*
 		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
-		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur. 
+		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
 		*/
 
 		if($fetch == true){
@@ -164,6 +163,7 @@ class basesql extends PDO
 			}
 			try {
 				$stmt->execute();
+				return $this->pdo->lastInsertId();
 			} catch (Exception $e) {
 				die("Error : ".$e->getMessage());
 			}
@@ -180,9 +180,8 @@ class basesql extends PDO
 
 
 			try {
-				var_dump($query);
-				var_dump($data);
 				$query->execute($data);
+				return $this->pdo->lastInsertId();
 			} catch (Exception $e) {
 				die("Error while saving ".$e->getMessage());
 			}

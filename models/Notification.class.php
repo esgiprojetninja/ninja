@@ -11,6 +11,15 @@ class Notification extends basesql
 	protected $opened = 0;
 	protected $message = "";
 
+	protected $columns = [
+		"id",
+		"id_user",
+		"datetime",
+		"type",
+		"opened",
+		"message"
+	];
+
 	//Oui
 	public function __construct(){
 		parent::__construct();

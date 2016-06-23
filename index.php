@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 ini_set('display_errors', 1);
 
 session_start();
@@ -27,7 +28,7 @@ spl_autoload_register('autoloader');
 $route = routing::setRouting();
 
 $name_controller = $route['controller']."Controller";
-$path_controller = "controllers/".$name_controller.".class.php";
+$path_controller = "controllers/" . $name_controller . ".class.php";
 if (file_exists($path_controller)) {
 	include $path_controller;
 	$controller = new $name_controller();
