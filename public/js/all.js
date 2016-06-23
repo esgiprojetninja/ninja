@@ -23,6 +23,14 @@ $(function ($) {
         });
     });
 
+    $('#popupNotifications').on("click","a", function() {
+        var id = $(this).data("id");
+        var $a = $(this);
+        $.get('/notification/delete/' + id,function(){
+            $a.parent().remove();
+        });
+    });
+
 
 
     // msg-box
@@ -205,3 +213,15 @@ function showMessage(msg, code) {
         $box.fadeOut();
     }, 5000);
 }
+
+/***************************
+    -- Notification box --
+ ****************************/
+
+$(function ($) {
+    $("#popupNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
+    for (var keyNotification in notificationsJS) {
+        $("#listeNotifications").append("<div><li>" +notificationsJS[keyNotification].message+"<a href=\"#\" data-id=\""+notificationsJS[keyNotification].id+"\"> VU</a></div></li>");
+    }
+    $("#popupNotifications").append("</ul>");
+});

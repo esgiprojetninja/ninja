@@ -20,14 +20,13 @@ class notificationController
 
 	public function deleteAction($args)
 	{
-		//echo "OK " . $args[0];
 		$notification = Notification::findById($args[0]);
 		if ($notification) {
 			if ($notification->getId_user()==$_SESSION['user_id']){
 				$notification->setOpened(1);
 				$notification->save();
 			}else{
-				//Va te faire enculer c'est pas ta notif
+				//Non, ce n'est pas ta notif
 			}
 		} else {
 			//ici renvoyer un header 404 par exemple

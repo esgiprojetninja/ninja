@@ -48,7 +48,7 @@
                             echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation['dateInvited']." : ".$invitation['message'];
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="joinTeam">Join</a>';
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
-                        
+
                         }
                     ?>
                 </div>
@@ -57,23 +57,9 @@
     <?php endif;?>
 
     <?php if($notifications): ?>
-        <div class="col-sm-6">
-            <div class="panel panel-danger">
-                <div class="panel-heading">Your notifications</div>
-                <div class="panel-body notifications">
-                    <?php
-                    foreach ($notifications as $notification) {
-                        $idNotification = $notification['id'];
-                        $dateNotification = $notification['datetime'];
-                        $typeNotification = $notification['type'];
-                        $messageNotification = $notification['message'];
-                        echo "<div>The <b>" . $dateNotification."</b> your got the notification : " . $messageNotification."<a href=\"#\" data-id=\"$idNotification\"> VU</a></div>";
-                    }
-                    echo "<div>Tout effacer<a href=\"#\" data-id=\"all\"> CLIC</a></div>";
-                    ?>
-                </div>
-            </div>
-        </div>
+        <script type="text/javascript">
+            var notificationsJS = <?php echo json_encode($notifications); ?>;
+        </script>
     <?php endif;?>
 
     

@@ -38,9 +38,16 @@
                 <a href="#" class="item">
                     <span class="fa fa-futbol-o"></span>
                 </a>
+
+                <div class="item dropdown header-burger icon" id="popupNotifications">
+                    <span class="icon-menu fa fa-bars"></span>
+
+                    </ul>
+                </div>
+
             </div>
             <div class="items-down items">
-                
+
             </div>
         </div>
         <div class="grid-container">
