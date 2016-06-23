@@ -2,7 +2,7 @@
 
 class Event extends basesql
 {
-    
+
     public $id;
     protected $table = "event";
     protected $name;
@@ -16,6 +16,21 @@ class Event extends basesql
     protected $finish;
     protected $place;
     protected $sport;
+
+    protected $columns = [
+        "id",
+        "name",
+        "description",
+        "content",
+        "id_creator",
+        "date_creation",
+        "date_event",
+        "max_people",
+        "current_people",
+        "finish",
+        "place",
+        "sport"
+    ];
 
     //Oui
     public function __construct(){

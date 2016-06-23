@@ -276,6 +276,80 @@ header .icon .text {
     background-color: #B84D61;
 }
 
+/********************
+    -- INBOX --
+********************/
+
+.my-inbox {
+    display: flex;
+    flex-direction: row;
+    max-height: 80vh;
+}
+
+.my-inbox .discussion-list {
+    width: 30%;
+}
+
+.my-inbox .discussion-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.my-inbox .discussion-list ul li {
+    display: block;
+    cursor: pointer;
+    min-height: 30px;
+    margin: 2px;
+    border-left: 2px solid #433A4B;
+    text-align: center;
+    transition-property: all;
+    transition-duration: 0.1s;
+    padding-top: 10px;
+}
+
+.my-inbox .discussion-list ul li:hover {
+    box-shadow: 2px 2px 2px #D2D2D2;
+    color: #000000;
+}
+
+.my-inbox .chat-body {
+    width: 70%;
+}
+
+.my-inbox .chat-body .message-list {
+    border: 1px solid #433A4B;
+    width: 100%;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    height: calc(100% - 40px);
+    overflow: auto;
+}
+
+.my-inbox .chat-body .message-list .message {
+    width: 100%;
+    height: 20px;
+    margin: 5px 0;
+    flex-shrink: 0;
+    overflow: auto;
+}
+
+.my-inbox .chat-body .message-list .message.sender-is-current {
+    text-align: right;
+}
+
+.my-inbox .chat-body .message-list .message .content {
+    padding: 5px;
+    margin: 5px;
+    background-color: #D2D2D2;
+    color: #000000;
+    border-radius: 2px;
+}
+
+.my-inbox .chat-body .message-list .message.sender-is-current .content {
+    background-color: #328396;
+    color: #FFFFFF;
+}
+
 /*******************
     -- DEBUG --
 ********************/

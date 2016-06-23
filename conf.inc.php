@@ -1,4 +1,4 @@
-<?php 
+<?php
 $explode = explode('/', $_SERVER['SCRIPT_NAME']);
 $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
 $lienbase = $protocol . $_SERVER['HTTP_HOST'] . str_replace(end($explode), '', $_SERVER['SCRIPT_NAME']);
@@ -25,6 +25,7 @@ $errors_msg = [
 	"teamName"=>"Incorrect team name or allready exists",
 	"new_email" => "Your email isn't correct or allready exists",
 	"new_username" => "Username allready exists",
+    "username_doesnt_exists" => "This username doesn't exist",
 	"emailOrUsername"=>"User not found, allready in team or allready invited",
 	"avatar"=>"Invalid avatar",
 	"sports"=>"ERROR 404 SPORT NOT FOUND",

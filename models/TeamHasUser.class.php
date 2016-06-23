@@ -11,6 +11,12 @@ class TeamHasUser extends basesql
 	protected $idTeam;
 	protected $idUser;
 
+	protected $columns = [
+		"id",
+		"idTeam",
+		"idUser"
+	];
+
 	public function __construct(){
 		parent::__construct();
 	}

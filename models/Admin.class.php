@@ -12,6 +12,13 @@ class Admin extends basesql
 	protected $idUser;
 	protected $captain = 0;
 
+	protected $columns = [
+		"id",
+		"idTeam",
+		"idUser",
+		"captain"
+	];
+
 	public function __construct(){
 		parent::__construct();
 	}

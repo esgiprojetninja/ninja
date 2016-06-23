@@ -38,6 +38,9 @@
                 <a href="#" class="item">
                     <span class="fa fa-futbol-o"></span>
                 </a>
+                <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
+                    <span class="fa fa-envelope-o"></span>
+                </a>
             </div>
             <div class="items-down items">
                 
