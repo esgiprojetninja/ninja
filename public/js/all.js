@@ -239,19 +239,21 @@ function getDiscussions() {
         }).then(function (data) {
             var currentUserId = Number(data.current_user_id);
             var items = "";
-            for (i = 0; i < data.message.length; i ++) {
-                var penPals = [];
-                for(j = 0; j < data.message[i].users.length; j++) {
-                    var user = data.message[i].users[j];
-                    if(Number(user.id) !== currentUserId) {
-                        penPals.push(user.username);
+            if (data.message.length) {
+                for (i = 0; i < data.message.length; i ++) {
+                    var penPals = [];
+                    for(j = 0; j < data.message[i].users.length; j++) {
+                        var user = data.message[i].users[j];
+                        if(Number(user.id) !== currentUserId) {
+                            penPals.push(user.username);
+                        }
                     }
-                }
-                items += "<li data-discussion='" + data.message[i].id +
+                    items += "<li data-discussion='" + data.message[i].id +
                     "' class='js-discussion-list-item'> To: " +
                     penPals.join(", ") + "</li>"
+                }
+                $list.find("ul").html(items);
             }
-            $list.find("ul").html(items);
             listenForChooseDiscussion(currentUserId);
         });
     }
