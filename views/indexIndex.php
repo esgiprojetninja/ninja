@@ -56,4 +56,8 @@
         </div>
     <?php endif;?>
 
+    <?php
+    Notification::createNotification("blah blah notification de l'user ".$_SESSION['user_id']. "à ");
+    ?>
+
 </div>

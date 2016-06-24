@@ -12,8 +12,8 @@ class notificationController
 		$notification->setDatetime(date("Y-m-d H:i:s"));
 		$notification->setType(1);
 		$notification->setOpened(0);
-		//$notification->setMessage($args['msg']);
-		$notification->setMessage('Notification');
+		$notification->setMessage($args['msg']);
+		//$notification->setMessage('Notification');
 
 		$notification->save();
 

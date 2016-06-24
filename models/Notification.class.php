@@ -65,4 +65,20 @@ class Notification extends basesql
 		$this->message = $message;
 	}
 
+	public static function createNotification($msg)
+	{
+
+		$notification = new Notification();
+
+		$notification->setId_user($_SESSION['user_id']);
+		$notification->setDatetime(date("Y-m-d H:i:s"));
+		$notification->setType(1);
+		$notification->setOpened(0);
+		$notification->setMessage($msg);
+		//$notification->setMessage('Notification');
+
+		$notification->save();
+
+	}
+	
 }
