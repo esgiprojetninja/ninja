@@ -13,7 +13,7 @@ class notificationController
 		$notification->setType(1);
 		$notification->setOpened(0);
 		//$notification->setMessage($args['msg']);
-		$notification->setMessage($args['Notification']);
+		$notification->setMessage('Notification');
 
 		$notification->save();
 
