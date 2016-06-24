@@ -38,11 +38,13 @@
                 <a href="#" class="item">
                     <span class="fa fa-futbol-o"></span>
                 </a>
-
                 <div class="item dropdown header-burger icon" id="popupNotifications">
                     <span class="icon-menu fa fa-bars"></span>
-
-                    </ul>
+                    <?php if($notifications): ?>
+                        <script type="text/javascript">
+                            var notificationsJS = <?php echo json_encode($notifications); ?>;
+                        </script>
+                    <?php endif;?>
                 </div>
 
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
@@ -65,7 +67,7 @@
             </div>
         </div> <!-- END GRID CONTAINER -->
     </div>
-</div>
+
 
 </body>
 

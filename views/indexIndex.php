@@ -55,13 +55,5 @@
             </div>
         </div>
     <?php endif;?>
-
-    <?php if($notifications): ?>
-        <script type="text/javascript">
-            var notificationsJS = <?php echo json_encode($notifications); ?>;
-        </script>
-    <?php endif;?>
-
     
-
 </div>
