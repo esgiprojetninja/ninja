@@ -151,7 +151,7 @@ class userController
 				$now = date("Y-m-d H:i:s");
 				$user->setDateCreated($now);
 				$user->save();
-				if($user->sendConfirmationEmail()) {
+				if($user->sendEmail("subscribe")) {
 					$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
 				} else {
 					$view->assign( "mailerMessage", "Something went wrong when trying to send email." );
@@ -213,20 +213,22 @@ class userController
 		$view = new View();
 		$form = User::getForm("resetPassword");
 		$formErrors = [];
+		
 		$view->assign("form", $form);
 		$view->assign("formErrors", $formErrors);
 		$view->setView("user/change-password.tpl");
+		
 		if (isset($_POST["form-type"])) {
 			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
 				$user->setToken();
 				$user->save();
-				$user->sendPasswordResetEmail();
+				$user->sendEmail("reset");
 				$view->assign(
-					"error_msg",
-					"An email has just been sent to " . $user->getEmail() . ", please check your email box."
+					"mail_new_pwd",
+					"An email has just been sent to " . $user->getEmail() . ", for reset password. Please check your email box."
 				);
 			} else {
-				$view->assign("error_msg", "Couldn't find this address");
+				$view->assign("mail_new_pwd", "Couldn't find this address");
 			}
 		}
 	}

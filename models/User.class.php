@@ -186,7 +186,7 @@ class User extends basesql
 	* Send confirmation email using users's email
 	* @return boolean
 	*/
-	public function sendConfirmationEmail() {
+	public function sendEmail($typeMail) {
 		try {
 				require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 		} catch(Execption $e) {
@@ -210,77 +210,61 @@ class User extends basesql
 
 		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 		$mail->isHTML(true);                                  // Set email format to HTML
+		
+		if( $typeMail == "subscribe"){
 
-		$mail->Subject = 'Welcome in Sport Nation World Wide';
+			$mail->Subject = 'Welcome in Sport Nation World Wide';
 
-		$link = WEBROOT."user/activate?email="
-			.$this->email
-			."&token="
-			.$this->token."";
+			$link = WEBROOT."user/activate?email="
+				.$this->email
+				."&token="
+				.$this->token."";
 
-		$_SESSION['link'] = $link;
+			$_SESSION['link'] = $link;
 
-		ob_start();
-			include("views/email_html.php");
-		$body = ob_get_clean();
+			ob_start();
+				include("views/subscribe_mail_html.php");
+			$body = ob_get_clean();
 
-		$mail->Body    = $body;
-		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+			$mail->Body    = $body;
+			//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-		//$mail->send();
-		if(!$mail->send()) {
-				echo 'Message could not be sent.';
-				echo 'Mailer Error: ' . $mail->ErrorInfo;
-				return FALSE;
-		} else {
-				return TRUE;
-		}
-	}
+			//$mail->send();
+			if(!$mail->send()) {
+					echo 'Message could not be sent.';
+					echo 'Mailer Error: ' . $mail->ErrorInfo;
+					return FALSE;
+			} else {
+					return TRUE;
+			}
 
-	/**
-	* Send Password reset email
-	* @return boolean
-	*/
-	public function sendPasswordResetEmail() {
-		try {
-				require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
-		} catch(Execption $e) {
-			die("Unable to load phpmailer : ".$e->getMessage());
-		}
-		$mail = new PHPMailer();
+		}else if( $typeMail == "reset"){
+			
+			$mail->Subject = 'Password reset';
+			
+			$link = WEBROOT."user/setNewPassword?email="
+				.$this->email
+				."&token="
+				.$this->token."";
 
-		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-		$mail->SMTPAuth = true;                               // Enable SMTP authentication
-		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
-		$mail->Password = 'test3ADW';                           // SMTP password
-		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-		$mail->Port = 587;                                    // TCP port to connect to
+			$_SESSION['link'] = $link;
 
-		$mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
-		$mail->addAddress($this->email);     // Add a recipient
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
+			ob_start();
+				include("views/resetpwd_mail_html.php");
+			$body = ob_get_clean();
 
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		$mail->isHTML(true);                                  // Set email format to HTML
 
-		$mail->Subject = 'Password reset';
-		$link = WEBROOT."user/setNewPassword?email="
-			.$this->email
-			."&token="
-			.$this->token."";
-		$mail->Body    = 'Click the following link to set a new password : '. $link;
-		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+			$mail->Body    = $body;
+			//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-		//$mail->send();
-		if(!$mail->send()) {
-				echo 'Message could not be sent.';
-				echo 'Mailer Error: ' . $mail->ErrorInfo;
-				return FALSE;
-		} else {
-				return TRUE;
+			//$mail->send();
+			if(!$mail->send()) {
+					echo 'Message could not be sent.';
+					echo 'Mailer Error: ' . $mail->ErrorInfo;
+					return FALSE;
+			} else {
+					return TRUE;
+			}
 		}
 	}
 
