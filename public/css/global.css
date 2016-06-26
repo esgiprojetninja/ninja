@@ -361,10 +361,14 @@ header .icon .text {
 }
 
 
-/*******************
-    -- ACTION INFO --
-********************/
+/************************
+    -- INFO AND ACTION --
+*************************/
 
 .info{
     font-weight: 800;
+    color: #6C6599;
+}
+a{
+    text-decoration: none;
 }

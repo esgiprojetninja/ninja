@@ -281,9 +281,12 @@ class User extends basesql
 				"buttonTxt" => "Sign Up",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" ],
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" ],
-					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" 
+					],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		}
@@ -293,9 +296,12 @@ class User extends basesql
 				"buttonTxt" => "Activate",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$this->getEmail()."&token=".$this->getToken()],
 				"struct" => [
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
-					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		}
@@ -305,9 +311,12 @@ class User extends basesql
 				"buttonTxt" => "Sign In",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/login"],
 				"struct"=>[
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" 
+					],
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		} else if ($formType == "edit") {
@@ -316,13 +325,22 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/edit/" . $this->id,"enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"", "value" => $this->getEmail()],
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username", "value" => $this->getUsername()],
-					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()],
-					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()],
-					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()],
-					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>0,"msgerror"=>"avatar","value"=>$this->getAvatar()],
-					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>0,"msgerror"=>"avatar","value"=>$this->getAvatar()
+					],
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"", "value" => $this->getEmail()
+					],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username", "value" => $this->getUsername()
+					],
+					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()
+					],
+					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()
+					],
+					"favorite_sports"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Favorite_sports", "required"=>1, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
+					],
+					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
+					],
+					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		} else if ($formType == "setNewPassword") {
@@ -331,11 +349,16 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/setNewPassword/","enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
-					"email" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"],
-					"token" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"],
-					"form-type" => ["type" => "hidden", "value" => "setNewPassword", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" 
+					],
+					"email" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"
+					],
+					"token" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"
+					],
+					"form-type" => ["type" => "hidden", "value" => "setNewPassword", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		} else if ($formType == "resetPassword") {
@@ -344,8 +367,10 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPassword/", "enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist" ],
-					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		}
