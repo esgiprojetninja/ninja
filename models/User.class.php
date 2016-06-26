@@ -220,7 +220,7 @@ class User extends basesql
 				."&token="
 				.$this->token."";
 
-			$_SESSION['link'] = $link;
+			$_SESSION['link_subscribe'] = $link;
 
 			ob_start();
 				include("views/subscribe_mail_html.php");
@@ -247,7 +247,7 @@ class User extends basesql
 				."&token="
 				.$this->token."";
 
-			$_SESSION['link'] = $link;
+			$_SESSION['link_reset_pwd'] = $link;
 
 			ob_start();
 				include("views/resetpwd_mail_html.php");

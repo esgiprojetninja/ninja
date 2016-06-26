@@ -4,9 +4,9 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="panel">
-
+            <div class="panel-heading"><h3 class="upper center">Edit your profil</h3></div>
             <div class="panel-body">
-            
+
             <?php if($user->getAvatar() != ""): ?>
                <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
             <?php endif;?>
