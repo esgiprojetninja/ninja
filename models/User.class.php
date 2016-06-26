@@ -231,8 +231,8 @@ class User extends basesql
 
 			//$mail->send();
 			if(!$mail->send()) {
-					echo 'Message could not be sent.';
-					echo 'Mailer Error: ' . $mail->ErrorInfo;
+					echo "<span class='info'> Message could not be sent. </span>";
+					echo "<span class='info'> Mailer Error: " . $mail->ErrorInfo ."</span>";
 					return FALSE;
 			} else {
 					return TRUE;
@@ -259,8 +259,8 @@ class User extends basesql
 
 			//$mail->send();
 			if(!$mail->send()) {
-					echo 'Message could not be sent.';
-					echo 'Mailer Error: ' . $mail->ErrorInfo;
+					echo "<span class='info'> Message could not be sent. </span>";
+					echo "<span class='info'> Mailer Error: " . $mail->ErrorInfo . "</span>";
 					return FALSE;
 			} else {
 					return TRUE;

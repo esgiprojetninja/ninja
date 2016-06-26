@@ -359,3 +359,12 @@ header .icon .text {
     position: relative;
     z-index: 1000000;
 }
+
+
+/*******************
+    -- ACTION INFO --
+********************/
+
+.info{
+    font-weight: 800;
+}
