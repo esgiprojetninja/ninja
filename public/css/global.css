@@ -362,7 +362,7 @@ header .icon .text {
 
 
 /************************
-    -- INFO AND ACTION --
+    -- OTHER --
 *************************/
 
 .info{
@@ -371,4 +371,18 @@ header .icon .text {
 }
 a{
     text-decoration: none;
+}
+.avatar{
+    width: 100%;
+    height: auto;
+    margin: 30px 0 0 70px;
+    border-radius: 5%;
+    box-shadow: -1px 1px 10px 0px #555;
+}
+
+.upper{
+    text-transform: uppercase;
+}
+.center{
+    text-align: center;
 }

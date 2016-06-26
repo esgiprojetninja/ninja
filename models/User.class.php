@@ -335,7 +335,7 @@ class User extends basesql
 					],
 					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()
 					],
-					"favorite_sports"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Favorite_sports", "required"=>1, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
+					"favorite_sports"=>[ "type"=>"select", "class"=>"form-control", "placeholder"=>"Favorite sports", "required"=>0, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
 					],
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
 					],

@@ -11,13 +11,15 @@
             </div>
             <?php else : ?>
             
+            
+            <div class="panel-heading"><h3 class="upper center"><?php echo $user->getUsername(); ?></h3></div>
+            
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>
-                    <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
+                    <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
                 <?php endif;?>
             </div>
-            
-            <div class="panel-heading"><h3><?php echo $user->getUsername(); ?></h3></div>
+
             <div class="panel-body">
                 <ul>
                     <li>

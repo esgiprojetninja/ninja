@@ -4,13 +4,16 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="panel">
+
             <div class="panel-body">
+            
+            <?php if($user->getAvatar() != ""): ?>
+               <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
+            <?php endif;?>
+
                 <?php
                     $this->createForm($formEdit, $editErrors);
                 ?>
-                <?php if($user->getAvatar() != ""): ?>
-                    <img src="<?= "../../".$user->getAvatar(); ?>" style="width:80px;height:80px">
-                <?php endif;?>
             </div>
         </div>
     </div>
