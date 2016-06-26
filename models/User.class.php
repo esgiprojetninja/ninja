@@ -20,6 +20,8 @@ class User extends basesql
 	protected $dateCreated;
 	protected $discussionPivotTable = "discussions_users_pivot";
 
+	protected $link;
+
 	protected $columns = [
 		"email",
 		"token",
@@ -161,6 +163,16 @@ class User extends basesql
 			);
 	}
 
+	public function getLink($type) {
+		if( $type == "subscribe" ){
+			$this->link = WEBROOT."user/activate?email=".$this->email."&token=".$this->token."";
+		}else if( $type =="reset" ){
+			$this->link = WEBROOT."user/setNewPassword?email=".$this->email."&token=".$this->token."";
+		}
+
+		return $this->link;
+	}
+
 	/**
 	* Check user token and assign user to session
 	* @return boolean
@@ -215,13 +227,6 @@ class User extends basesql
 
 			$mail->Subject = 'Welcome in Sport Nation World Wide';
 
-			$link = WEBROOT."user/activate?email="
-				.$this->email
-				."&token="
-				.$this->token."";
-
-			$_SESSION['link_subscribe'] = $link;
-
 			ob_start();
 				include("views/subscribe_mail_html.php");
 			$body = ob_get_clean();
@@ -242,13 +247,6 @@ class User extends basesql
 			
 			$mail->Subject = 'Password reset';
 			
-			$link = WEBROOT."user/setNewPassword?email="
-				.$this->email
-				."&token="
-				.$this->token."";
-
-			$_SESSION['link_reset_pwd'] = $link;
-
 			ob_start();
 				include("views/resetpwd_mail_html.php");
 			$body = ob_get_clean();
