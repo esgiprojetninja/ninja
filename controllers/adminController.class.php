@@ -7,7 +7,7 @@ class adminController
 {
     public function indexAction($args)
     {
-        $view = new view;
+        $view = new View;
         $view->setView("admin/ui-collection.tpl");
     }
 
@@ -71,7 +71,7 @@ class adminController
     
 
     public function showUiKitAction() {
-        $view = new view;
+        $view = new View;
         $view->setView("admin/ui-collection.tpl");
     }
 }

@@ -63,7 +63,7 @@ class userController
 								}
 							}
 						}else{
-							$v->assign("movingFile", "An error while seting your avatar");
+							$v->assign("movingFile", "<span class='info'> An error while seting your avatar </span>");
 						}
 					}
 
@@ -112,13 +112,13 @@ class userController
 						$user->setPassword($_POST["password"]);
 						$user->setIsActive(1);
 						$user->save();
-						$view->assign("activate_msg", "Your account is now activated");
+						$view->assign("activate_msg", "<span class='info'> Your account is now activated </span>");
 						session_destroy();
 					}
 				}
 			}
 			else {
-				$view->assign("activate_msg", "Looks like your account had already been activated");
+				$view->assign("activate_msg", "<span class='info'> Looks like your account had already been activated </span>");
 			}
 		}
 		$view->assign("activateErrors",$activateErrors);
@@ -151,10 +151,10 @@ class userController
 				$now = date("Y-m-d H:i:s");
 				$user->setDateCreated($now);
 				$user->save();
-				if($user->sendConfirmationEmail()) {
-					$view->assign( "mailerMessage", "An email has just been sent to ".$user->getEmail() );
+				if($user->sendEmail("subscribe")) {
+					$view->assign( "mailerMessage", "<span class='info'> An email has just been sent to ".$user->getEmail() . "</span>" );
 				} else {
-					$view->assign( "mailerMessage", "Something went wrong when trying to send email." );
+					$view->assign( "mailerMessage", "<span class='info'> Something went wrong when trying to send email. </span>" );
 				}
 			}
 		}
@@ -188,11 +188,11 @@ class userController
 					header("location: ".WEBROOT);
 				}
 				else {
-					$view->assign("error_message", "Couldn't find you :(");
+					$view->assign("error_message", "<span class='info'> Couldn't find you :( </span>");
 				}
 			}
 			else {
-				$view->assign("error_message", "Couldn't find you :(");
+				$view->assign("error_message", "<span class='info'> Couldn't find you :( </span>");
 			}
 		}
 
@@ -213,20 +213,22 @@ class userController
 		$view = new View();
 		$form = User::getForm("resetPassword");
 		$formErrors = [];
+		
 		$view->assign("form", $form);
 		$view->assign("formErrors", $formErrors);
 		$view->setView("user/change-password.tpl");
+		
 		if (isset($_POST["form-type"])) {
 			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
 				$user->setToken();
 				$user->save();
-				$user->sendPasswordResetEmail();
+				$user->sendEmail("reset");
 				$view->assign(
-					"error_msg",
-					"An email has just been sent to " . $user->getEmail() . ", please check your email box."
+					"mail_new_pwd",
+					"<span class='info'> An email has just been sent to " . $user->getEmail() . ", for reset password. Please check your email box. </span>"
 				);
 			} else {
-				$view->assign("error_msg", "Couldn't find this address");
+				$view->assign("mail_new_pwd", "<span class='info'> Couldn't find this address </span>");
 			}
 		}
 	}
@@ -256,12 +258,13 @@ class userController
 						$user->save();
 						$view->assign(
 							"success",
-							"Your Password has been updated ! You can now log in with you new password :)"
+							"<span class='info'> Your Password has been updated ! You can now log in with you new password :) </span>"
 						);
 					}
 				}
 				$view->assign("form", $form);
 				$view->assign("formErrors", $formErrors);
+
 				$view->setView("user/set-new-password.tpl");
 			} else {
 				header("location:" . WEBROOT . "/user/logout");

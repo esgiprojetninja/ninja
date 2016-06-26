@@ -8,6 +8,9 @@
         <?php  
           $this->createForm($form, $formErrors);
         ?>
+        <p>
+          <?php echo isset($this->data["mail_new_pwd"])?$this->data["mail_new_pwd"]:"" ?>
+        </p>
       </div>
     </div>
   </div>
