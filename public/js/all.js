@@ -15,9 +15,9 @@ $(document).on("click", function (e) {
 
 $(function ($) {
     // notifications
-    $('div.notifications').on("click","a", function() {
-        var id = $(this).data("id");
+    $('#popupNotifications').on("click","a", function() {
         var $a = $(this);
+        var id = $a.data("id");
         $.get('/notification/delete/' + id,function(){
             $a.parent().remove();
         });
@@ -214,6 +214,18 @@ function showMessage(msg, code) {
         $box.fadeOut();
     }, 5000);
 }
+
+/***************************
+    -- Notification box --
+ ****************************/
+
+$(function ($) {
+    $("#popupNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
+    for (var keyNotification in notificationsJS) {
+        $("#listeNotifications").append("<li>" +notificationsJS[keyNotification].message+"<a href=\"#\" data-id=\""+notificationsJS[keyNotification].id+"\"> VU</a></li>");
+    }
+    $("#popupNotifications").append("</ul>");
+});
 
 /********************
     -- Inbox --

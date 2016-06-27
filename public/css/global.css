@@ -170,6 +170,12 @@ header .icon .text {
 
 }
 
+.notifications {
+    color: #000000;
+    min-width: 450px!important;
+    font-size: 15px;
+}
+
 .dropdown .dropdown-menu.right {
     right: 0px;
     left: auto;
