@@ -118,14 +118,14 @@ $(function ($) {
 
     $("a.joinTeam").click(function(ev){
         ev.preventDefault();
-        var userId = $(this).data("user");
+        var type = $(this).data("type");
         var teamId = $(this).data("team");
         if (confirm('Are you sure ?')) {
           $.ajax({
             url: "http://localhost:8888/ninja/team/join/",
             type : "POST",
             dataType: "json",
-            data: {idTeam: teamId},
+            data: {idTeam: teamId,type:type},
             success : function(response){
              console.debug(response);
             }

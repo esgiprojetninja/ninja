@@ -1,6 +1,6 @@
  <?php
  //Se l'utilisateur y accede par URL, mais n'a pas les droit on le redirige
-    if(!($admin[0]['captain'] > 0)){
+    if(!($captain[0]['captain'] > 0)){
       header('Location:'.WEBROOT.'user/login');
     }
 

@@ -54,7 +54,7 @@
                             //echo $idTeamInviting;
                             $teamInviting = Team::FindById($idTeamInviting);
                             echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation['dateInvited']." : ".$invitation['message'];
-                            echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="joinTeam">Join</a>';
+                            echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-type="0" class="joinTeam">Join</a>';
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
 
                         }
