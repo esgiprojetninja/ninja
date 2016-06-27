@@ -34,4 +34,12 @@ class notificationController
 			//ici renvoyer un header 404 par exemple
 		}
 	}
+
+	public function listAction($args)
+	{
+		header('Content-Type: application/json');
+		$notifications = Notification::findBy(["id_user","opened"],[$_SESSION['user_id'],0],['int','int'],false);
+		echo json_encode($notifications);
+	}
+
 }
