@@ -16,7 +16,7 @@
             <?php
               $this->createForm($formLogin, $logErrors);
             ?>
-            <a href="<?php echo WEBROOT . 'user/resetPassword' ?>">forgot password ?</a>
+            <a class="btn btn-default" href="<?php echo WEBROOT . 'user/resetPassword' ?>">forgot password ?</a>
           </div>
         </div>
       </div>

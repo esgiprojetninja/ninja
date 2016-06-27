@@ -20,6 +20,8 @@ class User extends basesql
 	protected $dateCreated;
 	protected $discussionPivotTable = "discussions_users_pivot";
 
+	protected $link;
+
 	protected $columns = [
 		"email",
 		"token",
@@ -161,6 +163,16 @@ class User extends basesql
 			);
 	}
 
+	public function getEmailLink($type) {
+		if( $type == "subscribe" ){
+			$this->link = WEBROOT."user/activate?email=".$this->email."&token=".$this->token."";
+		}else if( $type =="reset" ){
+			$this->link = WEBROOT."user/setNewPassword?email=".$this->email."&token=".$this->token."";
+		}
+
+		return $this->link;
+	}
+
 	/**
 	* Check user token and assign user to session
 	* @return boolean
@@ -186,7 +198,7 @@ class User extends basesql
 	* Send confirmation email using users's email
 	* @return boolean
 	*/
-	public function sendConfirmationEmail() {
+	public function sendEmail($typeMail) {
 		try {
 				require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 		} catch(Execption $e) {
@@ -210,77 +222,47 @@ class User extends basesql
 
 		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 		$mail->isHTML(true);                                  // Set email format to HTML
+		
+		if( $typeMail == "subscribe"){
 
-		$mail->Subject = 'Welcome in Sport Nation World Wide';
+			$mail->Subject = 'Welcome in Sport Nation World Wide';
 
-		$link = WEBROOT."user/activate?email="
-			.$this->email
-			."&token="
-			.$this->token."";
+			ob_start();
+				include("views/subscribe_mail_html.php");
+			$body = ob_get_clean();
 
-		$_SESSION['link'] = $link;
+			$mail->Body    = $body;
+			//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-		ob_start();
-			include("views/email_html.php");
-		$body = ob_get_clean();
+			//$mail->send();
+			if(!$mail->send()) {
+					echo "<span class='info'> Message could not be sent. </span>";
+					echo "<span class='info'> Mailer Error: " . $mail->ErrorInfo ."</span>";
+					return FALSE;
+			} else {
+					return TRUE;
+			}
 
-		$mail->Body    = $body;
-		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+		}else if( $typeMail == "reset"){
+			
+			$mail->Subject = 'Password reset';
+			
+			ob_start();
+				include("views/resetpwd_mail_html.php");
+			$body = ob_get_clean();
 
-		//$mail->send();
-		if(!$mail->send()) {
-				echo 'Message could not be sent.';
-				echo 'Mailer Error: ' . $mail->ErrorInfo;
-				return FALSE;
-		} else {
-				return TRUE;
-		}
-	}
 
-	/**
-	* Send Password reset email
-	* @return boolean
-	*/
-	public function sendPasswordResetEmail() {
-		try {
-				require 'vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
-		} catch(Execption $e) {
-			die("Unable to load phpmailer : ".$e->getMessage());
-		}
-		$mail = new PHPMailer();
+			$mail->Body    = $body;
+			//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-		$mail->SMTPAuth = true;                               // Enable SMTP authentication
-		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
-		$mail->Password = 'test3ADW';                           // SMTP password
-		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-		$mail->Port = 587;                                    // TCP port to connect to
-
-		$mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
-		$mail->addAddress($this->email);     // Add a recipient
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		$mail->isHTML(true);                                  // Set email format to HTML
-
-		$mail->Subject = 'Password reset';
-		$link = WEBROOT."user/setNewPassword?email="
-			.$this->email
-			."&token="
-			.$this->token."";
-		$mail->Body    = 'Click the following link to set a new password : '. $link;
-		//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-		//$mail->send();
-		if(!$mail->send()) {
-				echo 'Message could not be sent.';
-				echo 'Mailer Error: ' . $mail->ErrorInfo;
-				return FALSE;
-		} else {
-				return TRUE;
+			//$mail->send();
+			if(!$mail->send()) {
+					echo "<span class='info'> Message could not be sent. </span>";
+					echo "<span class='info'> Mailer Error: " . $mail->ErrorInfo . "</span>";
+					return FALSE;
+			} else {
+					return TRUE;
+			}
 		}
 	}
 
@@ -297,9 +279,12 @@ class User extends basesql
 				"buttonTxt" => "Sign Up",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" ],
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" ],
-					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" 
+					],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		}
@@ -309,9 +294,12 @@ class User extends basesql
 				"buttonTxt" => "Activate",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$this->getEmail()."&token=".$this->getToken()],
 				"struct" => [
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
-					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		}
@@ -321,9 +309,12 @@ class User extends basesql
 				"buttonTxt" => "Sign In",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/login"],
 				"struct"=>[
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" ],
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" 
+					],
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		} else if ($formType == "edit") {
@@ -332,13 +323,22 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/edit/" . $this->id,"enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"", "value" => $this->getEmail()],
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username", "value" => $this->getUsername()],
-					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()],
-					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()],
-					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()],
-					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>0,"msgerror"=>"avatar","value"=>$this->getAvatar()],
-					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"avatar"=>["type"=>"file","class"=>"form-control","placeholder"=>"Your avatar","required"=>0,"msgerror"=>"avatar","value"=>$this->getAvatar()
+					],
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"", "value" => $this->getEmail()
+					],
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"username", "value" => $this->getUsername()
+					],
+					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>1, "msgerror"=>"first_name", "value" => $this->getFirstName()
+					],
+					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>1, "msgerror"=>"last_name", "value" => $this->getLastName()
+					],
+					"favorite_sports"=>[ "type"=>"select", "class"=>"form-control", "placeholder"=>"Favorite sports", "required"=>0, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
+					],
+					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
+					],
+					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		} else if ($formType == "setNewPassword") {
@@ -347,11 +347,16 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/setNewPassword/","enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" ],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" ],
-					"email" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"],
-					"token" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"],
-					"form-type" => ["type" => "hidden", "value" => "setNewPassword", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					],
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" 
+					],
+					"email" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"
+					],
+					"token" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"
+					],
+					"form-type" => ["type" => "hidden", "value" => "setNewPassword", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		} else if ($formType == "resetPassword") {
@@ -360,8 +365,10 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPassword/", "enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist" ],
-					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
+					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist" 
+					],
+					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+					]
 				]
 			];
 		}
