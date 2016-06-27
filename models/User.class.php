@@ -163,7 +163,7 @@ class User extends basesql
 			);
 	}
 
-	public function getLink($type) {
+	public function getEmailLink($type) {
 		if( $type == "subscribe" ){
 			$this->link = WEBROOT."user/activate?email=".$this->email."&token=".$this->token."";
 		}else if( $type =="reset" ){
