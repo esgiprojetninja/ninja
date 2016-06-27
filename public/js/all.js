@@ -15,7 +15,7 @@ $(document).on("click", function (e) {
 
 $(function ($) {
     // notifications
-    $('#popupNotifications').on("click","a", function() {
+    $('#popinNotifications').on("click","a", function() {
         var $a = $(this);
         var id = $a.data("id");
         $.get('/notification/delete/' + id,function(){
@@ -219,12 +219,25 @@ function showMessage(msg, code) {
     -- Notification box --
  ****************************/
 
+/*
+Ancien code non ajax
 $(function ($) {
     $("#popupNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
     for (var keyNotification in notificationsJS) {
         $("#listeNotifications").append("<li>" +notificationsJS[keyNotification].message+"<a href=\"#\" data-id=\""+notificationsJS[keyNotification].id+"\"> VU</a></li>");
     }
     $("#popupNotifications").append("</ul>");
+});
+*/
+
+$(function ($) {
+    $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
+    $.getJSON( webrootJs+"notification/list", function(notifications) {
+        for (var notification in notifications) {
+            $("#listeNotifications").append("<li>" + notifications[notification].message + "<a href=\"#\" data-id=\"" + notifications[notification].id + "\"> VU</a></li>");
+        }
+        $("#popinNotifications").append("</ul>");
+    })
 });
 
 /********************

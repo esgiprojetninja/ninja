@@ -10,6 +10,7 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
     <!-- scripts -->
+    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>";</script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/js/all.js"></script>
 </head>
@@ -38,15 +39,9 @@
                 <a href="#" class="item">
                     <span class="fa fa-futbol-o"></span>
                 </a>
-                <div class="item dropdown header-burger icon" id="popupNotifications">
+                <div class="item dropdown header-burger icon" id="popinNotifications">
                     <span class="icon-menu fa fa-bars"></span>
-                    <?php if($notifications): ?>
-                        <script type="text/javascript">
-                            var notificationsJS = <?php echo json_encode($notifications); ?>;
-                        </script>
-                    <?php endif;?>
                 </div>
-
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
                     <span class="fa fa-envelope-o"></span>
                 </a>
