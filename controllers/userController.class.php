@@ -138,7 +138,6 @@ class userController
 
 		$formLogin = $user->getForm("login");
 		$view->assign("formLogin", $formLogin);
-
 		$validator = new Validator();
 
 		if(isset($_POST["form-type"])) {
@@ -158,7 +157,6 @@ class userController
 				}
 			}
 		}
-
 		$view->assign("subErrors", $subErrors);
 		$view->assign("logErrors", $logErrors);
 	}

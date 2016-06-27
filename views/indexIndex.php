@@ -4,8 +4,12 @@
             <div class="panel-heading">10 last subscribers</div>
             <div class="panel-body">
                 <?php
-                    foreach($users as $user){
-                        echo $user['username'].'<br>';
+                    if(count($users) == 0){
+                        echo '<h1> No User yet</h1>';
+                    }else{
+                        foreach($users as $user){
+                            echo $user['username'].'<br>';
+                        }
                     }
                 ?>
             </div>
@@ -16,8 +20,12 @@
             <div class="panel-heading">10 last teams</div>
             <div class="panel-body">
                 <?php
-                    foreach($teams as $team){
-                        echo $team['teamName'].'<br>';
+                    if(count($teams) == 0){
+                        echo '<h1> No team yet</h1>';
+                    }else{
+                        foreach($teams as $team){
+                            echo $team['teamName'].'<br>';
+                        }
                     }
                 ?>
             </div>
