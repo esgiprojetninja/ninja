@@ -21,6 +21,9 @@
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
             <ul class="dropdown-menu right">
+                <?php if(User::isAdmin()):  ?>
+                    <li><a href="<?= WEBROOT;?>admin/global">Admin</a></li>
+                <?php endif; ?>
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">Help</a></li>
                 <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>

@@ -8,7 +8,8 @@
                         echo '<h1> No User yet</h1>';
                     }else{
                         foreach($users as $user){
-                            echo $user['username'].'<br>';
+                            $link = WEBROOT."user/show/".$user['id'];
+                            echo '<a href="'.$link.'">'.$user['username'].'</a><br>';
                         }
                     }
                 ?>
@@ -24,7 +25,8 @@
                         echo '<h1> No team yet</h1>';
                     }else{
                         foreach($teams as $team){
-                            echo $team['teamName'].'<br>';
+                            $link = WEBROOT."team/show/".$team['id'];
+                            echo '<a href="'.$link.'">'.$team['teamName'].'</a><br>';
                         }
                     }
                 ?>

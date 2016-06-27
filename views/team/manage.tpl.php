@@ -1,7 +1,7 @@
 <?php
     $team = $this->data["team"];
     //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
-    if(!($captain[0]['captain'] > 0)){
+    if(!Team::imIn($team->getId())){
       header('Location:'.WEBROOT.'user/login');
     }
 ?>
@@ -62,7 +62,9 @@
                 ?>
                 <br><br>
                 <div class="text-left">
-                  <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
+                  <?php if($captain[0]['captain'] > 0): ?>
+                    <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
+                  <?php endif; ?>
                   <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right leaveTeam">Leave</a>
                 </div>
                 <!--

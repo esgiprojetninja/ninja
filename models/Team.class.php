@@ -71,6 +71,18 @@ class Team extends basesql
 		$this->avatar = $avatar;
 	}
 
+	public static function imIn($idTeam){
+		if(User::isConnected()){
+			if(TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$idTeam],["int","int"])){
+				return True;
+			}else{
+				return False;
+			}
+		}else{
+			return False;
+		}
+	}
+
 	public function getForm($formType){
 		$form = [];
 		if ($formType == "create") {

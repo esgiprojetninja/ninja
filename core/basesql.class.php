@@ -28,8 +28,19 @@ class basesql extends PDO
 
 	public static function findAll($limit = false, $orderBy = false, $column = "*") {
 		$instance = new static;
-
-		$sql = "SELECT ".$column." FROM ".$instance->table;
+		if(is_array($column)){
+			$sql = "SELECT ";
+			for($i=0;$i < count($column);$i++) {
+				if($i == 0){
+					$sql = $sql .$column[$i];
+				}else{
+					$sql = $sql .", ".$column[$i];
+				}
+			}
+			$sql = $sql ." FROM ".$instance->table;
+		}else{
+			$sql = "SELECT ".$column." FROM ".$instance->table;
+		}
 
 		if($orderBy != false){
 			$sql = $sql . " order by " . $orderBy . " DESC";

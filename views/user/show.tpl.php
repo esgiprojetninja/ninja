@@ -48,9 +48,11 @@
                     </li>
                     <?php } ?>
                 </ul>
-                <div class="text-right">
-                    <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
-                </div>
+                <?php if(User::itsMy($idUser)): ?>
+                    <div class="text-right">
+                        <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php endif;?>
         </div>

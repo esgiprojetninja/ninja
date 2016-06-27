@@ -19,6 +19,7 @@ class userController
             $v->setView("user/show.tpl");
             $v->assign("user", $user);
             $v->assign("teams",$teams);
+            $v->assign("idUser",$args[0]);
 		}else{
 			header('Location:' . WEBROOT . 'user/login');
 		}
@@ -78,6 +79,7 @@ class userController
 				}
 			}
             $v->assign("user", $user);
+            $v->assign("idUser",$args[0]);
             $v->assign("editErrors", $editErrors);
 		}else{
 			header('Location:'.WEBROOT.'user/login');

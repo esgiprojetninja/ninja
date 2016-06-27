@@ -1,5 +1,8 @@
 <?php
     //$user = $this->data["user"];
+    if(!User::itsMy($idUser)){
+        header("location: ".WEBROOT."index");
+    }
 ?>
 <div class="row">
     <div class="col-sm-6">
