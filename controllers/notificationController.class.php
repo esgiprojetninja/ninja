@@ -8,12 +8,12 @@ class notificationController
 
 		$notification = new Notification();
 
-		$notification->setId_user($_SESSION['user_id']);
+		$notification->setId_user($args['id_user']);
 		$notification->setDatetime(date("Y-m-d H:i:s"));
 		$notification->setType(1);
 		$notification->setOpened(0);
-		$notification->setMessage($args['msg']);
-		//$notification->setMessage('Notification');
+		$notification->setMessage($args['message']);
+		$notification->setAction($args['action']);
 
 		$notification->save();
 
@@ -38,7 +38,7 @@ class notificationController
 	public function listAction($args)
 	{
 		header('Content-Type: application/json');
-		$notifications = Notification::findBy(["id_user","opened"],[$_SESSION['user_id'],0],['int','int'],false);
+		$notifications = Notification::findBy(["id_user"],[$_SESSION['user_id']],['int','int'],false);
 		echo json_encode($notifications);
 	}
 

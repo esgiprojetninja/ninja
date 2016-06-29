@@ -40,7 +40,7 @@
                     <span class="fa fa-futbol-o"></span>
                 </a>
                 <div class="item dropdown header-burger icon" id="popinNotifications">
-                    <span class="icon-menu fa fa-bars"></span>
+                    <span class="icon-menu fa fa-flag-o" id="notificationIcon"></span>
                 </div>
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
                     <span class="fa fa-envelope-o"></span>

@@ -219,22 +219,20 @@ function showMessage(msg, code) {
     -- Notification box --
  ****************************/
 
-/*
-Ancien code non ajax
-$(function ($) {
-    $("#popupNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
-    for (var keyNotification in notificationsJS) {
-        $("#listeNotifications").append("<li>" +notificationsJS[keyNotification].message+"<a href=\"#\" data-id=\""+notificationsJS[keyNotification].id+"\"> VU</a></li>");
-    }
-    $("#popupNotifications").append("</ul>");
-});
-*/
-
 $(function ($) {
     $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
     $.getJSON( webrootJs+"notification/list", function(notifications) {
+        var nbNotifications = 0;
+        $("#listeNotifications").append("<li class=\"notifications-heading\">Notifications</li>");
         for (var notification in notifications) {
-            $("#listeNotifications").append("<li>" + notifications[notification].message + "<a href=\"#\" data-id=\"" + notifications[notification].id + "\"> VU</a></li>");
+            $("#listeNotifications").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+            if (notifications[notification].opened){
+                $("#notif").attr("class", "notificationsLi opened");
+                nbNotifications++;
+            }
+        }
+        if(nbNotifications != 0){
+            $("#notificationIcon").attr("class", "icon-menu fa fa-flag");
         }
         $("#popinNotifications").append("</ul>");
     })

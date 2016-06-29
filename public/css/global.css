@@ -172,8 +172,33 @@ header .icon .text {
 
 .notifications {
     color: #000000;
-    min-width: 450px!important;
-    font-size: 15px;
+    min-width: 650px!important;
+    font-size: 15px!important;
+}
+
+.notifications-heading {
+    background-color: #EBAB51;
+    color: white;
+    font-size: 18px!important;
+}
+
+.notificationsLi {
+    color: white;
+    font-size: 15px!important;
+}
+
+.notOpened {
+    background-color: #FFE2B8;
+}
+
+.opened {
+    background-color: white;
+}
+
+#listeNotifications{
+    margin-left: 75px;
+    margin-top: -45px;
+    border: black;
 }
 
 .dropdown .dropdown-menu.right {
