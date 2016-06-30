@@ -223,6 +223,7 @@ $(function ($) {
     $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
+        console.log(notifications);
         $("#listeNotifications").append("<li class=\"notifications-heading\">Notifications</li>");
         for (var notification in notifications) {
             $("#listeNotifications").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
