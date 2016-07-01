@@ -1,250 +1,196 @@
 <?php
 
-class Event extends basesql
-{
+    class Event extends basesql {
 
-    public $id;
-    protected $table = "event";
-    protected $name;
-    protected $description;
-    protected $content;
-    protected $id_creator = 0;
-    protected $date_creation;
-    protected $date_event;
-    protected $max_people;
-    protected $current_people;
-    protected $finish;
-    protected $place;
-    protected $sport;
+        protected $id;
+        protected $table = "events";
+        protected $pivot_table = "events_users_pivot";
+        protected $name;
+        protected $from_date;
+        protected $to_date;
+        protected $joignable_until;
+        protected $tags;
+        protected $owner;
+        protected $description;
+        protected $location;
 
-    protected $columns = [
-        "id",
-        "name",
-        "description",
-        "content",
-        "id_creator",
-        "date_creation",
-        "date_event",
-        "max_people",
-        "current_people",
-        "finish",
-        "place",
-        "sport"
-    ];
+        protected $columns = [
+            "id",
+            "name",
+            "from_date",
+            "to_date",
+            "joignable_until",
+            "tags",
+            "owner",
+            "description",
+            "location"
+        ];
 
-    //Oui
-    public function __construct(){
-        parent::__construct();
+
+        /**
+         * return id attribute
+         * @return int
+         */
+        public function getId() {
+            return $this->id;
+        }
+
+        /**
+         * return name attribute
+         * @return string
+         */
+        public function getName() {
+            return $this->name;
+        }
+
+        /**
+         * return from_date attribute
+         * @return datetime
+         */
+        public function getFromDate() {
+            return $this->from_date;
+        }
+
+        /**
+         * return to_date attribute
+         * @return datetime
+         */
+        public function getToDate() {
+            return $this->to_date;
+        }
+
+        /**
+         * return joignable_until attribute
+         * @return datetime
+         */
+        public function getJoignableUntil() {
+            return $this->joignable_until;
+        }
+
+        /**
+         * return tags attribute
+         * @return string
+         */
+        public function getTags() {
+            return $this->tags;
+        }
+
+        /**
+         * return users attribute
+         * @return array
+         */
+        public function getUsers() {
+            return $this->users;
+        }
+
+        /**
+         * return owner attribute
+         * @return int
+         */
+        public function getOwner() {
+            return $this->owner;
+        }
+
+        /**
+         * return description attribute
+         * @return string
+         */
+        public function getDescription() {
+            return $this->description;
+        }
+
+        /**
+         * return location attribute
+         * @return string
+         */
+        public function getLocation() {
+            return $this->location;
+        }
+
+        /**
+         * Set id attribute
+         * @param int $id
+         */
+        public function setId($id) {
+            $this->id = $id;
+        }
+
+        /**
+         * Set name attribute
+         * @param string $name
+         */
+        public function sesetNametId($name) {
+            $this->name = $name;
+        }
+
+        /**
+         * Set from_date attribute
+         * @param datetime $date
+         */
+        public function setFromDate($date) {
+            $this->from_date = $date;
+        }
+
+        /**
+         * Set to_date attribute
+         * @param datetime $date
+         */
+        public function setToDate($date) {
+            $this->to_date = $date;
+        }
+
+        /**
+         * Set joignable_until attribute
+         * @param datetime $date
+         */
+        public function setJoignableUntil($date) {
+            $this->joignable_until = $date;
+        }
+
+        /**
+         * Set tags attribute
+         * @param string $tags
+         */
+        public function setTags($tags) {
+            $this->tags = $tags;
+        }
+
+        /**
+         * Set owner attribute
+         * @param int $id
+         */
+        public function setOwner($id) {
+            $this->owner = $id;
+        }
+
+        /**
+         * Set description attribute
+         * @param string $description
+         */
+        public function setDescription($description) {
+            $this->description = $description;
+        }
+
+        /**
+         * Set location attribute
+         * @param string $location
+         */
+        public function setLocation($location) {
+            $this->location = $location;
+        }
+
+        /**
+         * Return occurences of the relation
+         * @return array of User
+         */
+        public function gatherUsers() {
+            $pivot = new ManyToManyPivot(
+                $this->pivot_table,
+                "event_id",
+                "user_id",
+                $this->id
+            );
+            return $pivot->getData();
+        }
+
     }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTable()
-    {
-        return $this->table;
-    }
-
-    /**
-     * @param string $table
-     */
-    public function setTable($table)
-    {
-        $this->table = $table;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param mixed $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdCreator()
-    {
-        return $this->id_creator;
-    }
-
-    /**
-     * @param int $id_creator
-     */
-    public function setIdCreator($id_creator)
-    {
-        $this->id_creator = $id_creator;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDateCreation()
-    {
-        return $this->date_creation;
-    }
-
-    /**
-     * @param mixed $date_creation
-     */
-    public function setDateCreation($date_creation)
-    {
-        $this->date_creation = $date_creation;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDateEvent()
-    {
-        return $this->date_event;
-    }
-
-    /**
-     * @param mixed $date_event
-     */
-    public function setDateEvent($date_event)
-    {
-        $this->date_event = $date_event;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMaxPeople()
-    {
-        return $this->max_people;
-    }
-
-    /**
-     * @param mixed $max_people
-     */
-    public function setMaxPeople($max_people)
-    {
-        $this->max_people = $max_people;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCurrentPeople()
-    {
-        return $this->current_people;
-    }
-
-    /**
-     * @param mixed $current_people
-     */
-    public function setCurrentPeople($current_people)
-    {
-        $this->current_people = $current_people;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFinish()
-    {
-        return $this->finish;
-    }
-
-    /**
-     * @param mixed $finish
-     */
-    public function setFinish($finish)
-    {
-        $this->finish = $finish;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPlace()
-    {
-        return $this->place;
-    }
-
-    /**
-     * @param mixed $place
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSport()
-    {
-        return $this->sport;
-    }
-
-    /**
-     * @param mixed $sport
-     */
-    public function setSport($sport)
-    {
-        $this->sport = $sport;
-    }
-
-
-
-}
