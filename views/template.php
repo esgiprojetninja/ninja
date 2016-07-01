@@ -36,8 +36,8 @@
                 <a href="<?= WEBROOT; ?>team/list" class="item">
                     <span class="fa fa-users"></span>
                 </a>
-                <a href="#" class="item">
-                    <span class="fa fa-futbol-o"></span>
+                <a href="<?= WEBROOT; ?>event/list" class="item">
+                    <span class="fa fa-calendar-check-o"></span>
                 </a>
                 <div class="item dropdown header-burger icon" id="popinNotifications">
                     <span class="icon-menu fa fa-bars"></span>
