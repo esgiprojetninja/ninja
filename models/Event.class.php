@@ -195,7 +195,7 @@
 
         /**
          * Add user to event
-         * @param [int] $id 
+         * @param [int] $id
          */
         public function addUser($id) {
             if (is_numeric($id)) {
@@ -206,6 +206,24 @@
                     $this->id,
                     $id
                 );
+            }
+        }
+
+        /**
+         * return splitted tag list
+         * @return [array]
+         */
+        public function getTagArray() {
+            return split(",", $this->getTags());
+        }
+
+        /**
+         * Serialize tags
+         * @param  [array] $tags
+         */
+        public function serializeTags($tags) {
+            if (is_array($tags)) {
+                $this->setTags(join(",", $tags));
             }
         }
 

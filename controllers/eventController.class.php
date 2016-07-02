@@ -10,6 +10,7 @@ class eventController {
                 for ($i = 0; $i < count($events); $i++) {
                     $owner = $this->getOwnerDetail(intval($events[$i]["owner"]));
                     $events[$i]["owner_name"] = $owner->getUserName();
+                    $events[$i]["tag_array"] = split(",", $events[$i]["tags"]);
                 }
             }
             $view->assign("events", $events);

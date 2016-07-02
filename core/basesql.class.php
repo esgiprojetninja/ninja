@@ -46,8 +46,8 @@ class basesql extends PDO
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
 		$query->execute();
-		$item = $query->fetchAll();
-		return $item;
+		$items = $query->fetchAll(PDO::FETCH_ASSOC);
+		return $items;
 	}
 
 	public static function findById($id) {
