@@ -193,4 +193,46 @@
             return $pivot->getData();
         }
 
+        /**
+         * Add user to event
+         * @param [int] $id 
+         */
+        public function addUser($id) {
+            if (is_numeric($id)) {
+                $pivot = new ManyToManyPivot(
+                    $this->pivot_table,
+                    "event_id",
+                    "user_id",
+                    $this->id,
+                    $id
+                );
+            }
+        }
+
+        /**
+         * Return form structure.
+         * @param string $formType
+         * @return array
+         */
+        public function getForm($formType) {
+
+            $form = [];
+
+            if ($formType == "createEvent") {
+                $form = [
+    				"title" => "Create an event",
+    				"buttonTxt" => "Create",
+    				"options" => ["method" => "POST", "action" => WEBROOT . "inbox/createEvent", "class" => "", "data-attributes" => []],
+    				"struct" => [
+    					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"" ],
+                        "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"" ],
+    					"from_date" => ["type" => "date", "placeholder" => "From date", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "to_date"=>[ "type"=>"date", "class"=>"form-control", "placeholder"=>"To date", "required"=>1, "msgerror"=>"" ]
+    				]
+    			];
+            }
+
+            return $form;
+        }
+
     }
