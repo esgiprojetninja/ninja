@@ -1,10 +1,16 @@
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Manage events</div>
+            <div class="panel-body">
+                <a class="btn btn-success" href="<?= WEBROOT ?>event/create">Create Event</a>
+            </div>
+        </div>
         <?php foreach ($events as $key => $event): ?>
             <div class="panel panel-success">
                 <div class="panel-heading"><?= $event->getName(); ?></div>
                 <div class="panel-body">
-                    <h3 class="underlined">Owner : <?= $event->getOwnerName(); ?></h3>
+                    <p class="underlined">Owner : <?= $event->getOwnerName(); ?></p>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="tag-box">

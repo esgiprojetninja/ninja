@@ -14,6 +14,7 @@
         protected $owner_name;
         protected $description;
         protected $location;
+        protected $nb_people_max;
 
         protected $columns = [
             "id",
@@ -25,7 +26,8 @@
             "owner",
             "owner_name",
             "description",
-            "location"
+            "location",
+            "nb_people_max"
         ];
 
 
@@ -118,6 +120,14 @@
         }
 
         /**
+         * return nb_people_max attribute
+         * @return int
+         */
+        public function getNbPeopleMax() {
+            return $this->nb_people_max;
+        }
+
+        /**
          * Set id attribute
          * @param int $id
          */
@@ -129,7 +139,7 @@
          * Set name attribute
          * @param string $name
          */
-        public function sesetNametId($name) {
+        public function setName($name) {
             $this->name = $name;
         }
 
@@ -198,6 +208,14 @@
         }
 
         /**
+         * Set nb_people_max attribute
+         * @param int $max
+         */
+        public function setNbPeopleMax($max) {
+            $this->nb_people_max = $max;
+        }
+
+        /**
          * Return occurences of the relation
          * @return array of User
          */
@@ -258,12 +276,16 @@
                 $form = [
     				"title" => "Create an event",
     				"buttonTxt" => "Create",
-    				"options" => ["method" => "POST", "action" => WEBROOT . "inbox/createEvent", "class" => "", "data-attributes" => []],
+    				"options" => ["method" => "POST", "action" => WEBROOT . "event/create", "class" => "", "data-attributes" => []],
     				"struct" => [
     					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"" ],
                         "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"" ],
     					"from_date" => ["type" => "date", "placeholder" => "From date", "required" => 1, "msgerror" => "", "class" => "form-control"],
-                        "to_date"=>[ "type"=>"date", "class"=>"form-control", "placeholder"=>"To date", "required"=>1, "msgerror"=>"" ]
+                        "to_date"=>[ "type"=>"date", "class"=>"form-control", "placeholder"=>"To date", "required"=>1, "msgerror"=>"" ],
+                        "joignable_until" => ["type" => "date", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "location" => ["type" => "text", "placeholder" => "Location", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "nb_people_max" => ["type" => "number", "placeholder" => "Max number of people", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "tags" => ["type" => "text", "placeholder" => "Tags", "required" => 1, "msgerror" => "", "class" => "form-control"],
     				]
     			];
             }

@@ -4,15 +4,8 @@ class eventController {
 
     public function listAction($args) {
         if (User::isConnected()) {
-            $view = new view();
+            $view = new View();
             $events = Event::findAll();
-            // if(count($events) > 0) {
-            //     for ($i = 0; $i < count($events); $i++) {
-            //         $owner = $this->getOwnerDetail(intval($events[$i]->getOwner()));
-            //         $events[$i]["owner_name"] = $owner->getUserName();
-            //         $events[$i]["tag_array"] = split(",", $events[$i]->getTags());
-            //     }
-            // }
             $view->assign("events", $events);
             $view->setView("event/list.tpl");
         } else {
@@ -20,14 +13,36 @@ class eventController {
         }
     }
 
-    /**
-     * Return user object from owner id
-     * @param  [int] $id
-     * @return [User]
-     */
-    public function getOwnerDetail($id) {
-        $owner = User::findById($id);
-        return $owner;
+    public function createAction($arg) {
+        if (User::isConnected()) {
+            $form = Event::getForm("createEvent");
+            $view = new View();
+            $formErrors = [];
+            $view->assign("form", $form);
+            $view->assign("form_errors", $formErrors);
+            $view->setView("event/create.tpl");
+            if (!empty($_POST)) {
+                $validator = new Validator();
+                $errors = $validator->check($form["struct"], $_POST);
+                if (count($errors) == 0) {
+                    $event = new Event();
+                    $currentUser = User::findById($_SESSION["user_id"]);
+                    $event->setOwner($currentUser->getId());
+                    $event->setOwnerName($currentUser->getUsername());
+                    $event->setName(htmlspecialchars($_POST["name"]));
+                    $event->setFromDate($_POST["from_date"]);
+                    $event->setToDate($_POST["to_date"]);
+                    $event->setJoignableUntil($_POST["joignable_until"]);
+                    $event->setLocation(htmlspecialchars($_POST["location"]));
+                    $event->setDescription(htmlspecialchars($_POST["description"]));
+                    $event->setTags(htmlspecialchars($_POST["tags"]));
+                    $event->setNbPeopleMax($_POST["nb_people_max"]);
+                    $event->addUser($currentUser->getId());
+                    $event->save();
+                }
+            }
+        } else {
+            header("location:" . WEBROOT);
+        }
     }
-
 }
