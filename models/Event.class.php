@@ -11,6 +11,7 @@
         protected $joignable_until;
         protected $tags;
         protected $owner;
+        protected $owner_name;
         protected $description;
         protected $location;
 
@@ -22,6 +23,7 @@
             "joignable_until",
             "tags",
             "owner",
+            "owner_name",
             "description",
             "location"
         ];
@@ -89,6 +91,14 @@
          */
         public function getOwner() {
             return $this->owner;
+        }
+
+        /**
+         * return owner_name attribute
+         * @return string
+         */
+        public function getOwnerName() {
+            return $this->owner_name;
         }
 
         /**
@@ -161,6 +171,14 @@
          */
         public function setOwner($id) {
             $this->owner = $id;
+        }
+
+        /**
+         * Set owner_name attribute
+         * @param string $id
+         */
+        public function setOwnerName($name) {
+            $this->owner_name = $name;
         }
 
         /**

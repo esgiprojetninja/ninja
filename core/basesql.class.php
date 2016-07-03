@@ -46,7 +46,8 @@ class basesql extends PDO
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
 		$query->execute();
-		$items = $query->fetchAll(PDO::FETCH_ASSOC);
+		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+		$items = $query->fetchAll();
 		return $items;
 	}
 

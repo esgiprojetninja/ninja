@@ -6,13 +6,13 @@ class eventController {
         if (User::isConnected()) {
             $view = new view();
             $events = Event::findAll();
-            if(count($events) > 0) {
-                for ($i = 0; $i < count($events); $i++) {
-                    $owner = $this->getOwnerDetail(intval($events[$i]["owner"]));
-                    $events[$i]["owner_name"] = $owner->getUserName();
-                    $events[$i]["tag_array"] = split(",", $events[$i]["tags"]);
-                }
-            }
+            // if(count($events) > 0) {
+            //     for ($i = 0; $i < count($events); $i++) {
+            //         $owner = $this->getOwnerDetail(intval($events[$i]->getOwner()));
+            //         $events[$i]["owner_name"] = $owner->getUserName();
+            //         $events[$i]["tag_array"] = split(",", $events[$i]->getTags());
+            //     }
+            // }
             $view->assign("events", $events);
             $view->setView("event/list.tpl");
         } else {
