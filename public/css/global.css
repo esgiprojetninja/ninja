@@ -201,6 +201,12 @@ header .icon .text {
     border: black;
 }
 
+#scroll{
+    max-height: 320px;
+    overflow: auto;
+    margin-left: -40px;
+}
+
 .dropdown .dropdown-menu.right {
     right: 0px;
     left: auto;

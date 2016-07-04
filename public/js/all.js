@@ -224,9 +224,9 @@ $(function ($) {
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
         console.log(notifications);
-        $("#listeNotifications").append("<li class=\"notifications-heading\">Notifications</li>");
+        $("#listeNotifications").append("<li class=\"notifications-heading\">Notifications</li></ul><div id=\"tata>\"><ul id='scroll'>");
         for (var notification in notifications) {
-            $("#listeNotifications").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+            $("#scroll").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             if (notifications[notification].opened){
                 $("#notif").attr("class", "notificationsLi opened");
                 nbNotifications++;
@@ -235,7 +235,7 @@ $(function ($) {
         if(nbNotifications != 0){
             $("#notificationIcon").attr("class", "icon-menu fa fa-flag");
         }
-        $("#popinNotifications").append("</ul>");
+        $("#popinNotifications").append("</ul></div>");
     })
 });
 
