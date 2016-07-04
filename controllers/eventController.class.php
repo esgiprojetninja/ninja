@@ -37,8 +37,8 @@ class eventController {
                     $event->setDescription(htmlspecialchars($_POST["description"]));
                     $event->setTags(htmlspecialchars($_POST["tags"]));
                     $event->setNbPeopleMax($_POST["nb_people_max"]);
-                    $event->addUser($currentUser->getId());
                     $event->save();
+                    $event->addUser($currentUser->getId());
                 }
             }
         } else {

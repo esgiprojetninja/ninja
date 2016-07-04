@@ -234,14 +234,15 @@
          * @param [int] $id
          */
         public function addUser($id) {
-            if (is_numeric($id)) {
+            if (is_numeric(intval($id))) {
                 $pivot = new ManyToManyPivot(
                     $this->pivot_table,
-                    "event_id",
-                    "user_id",
+                    "event",
+                    "user",
                     $this->id,
                     $id
                 );
+                $pivot->save();
             }
         }
 
