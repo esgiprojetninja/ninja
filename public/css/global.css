@@ -412,9 +412,10 @@ a{
 }
 
 .form-info {
-    font-weight: bold;
+    font-style: italic;
 }
 
 .form-content {
-    font-style: italic;
+    color: #6C6599 ;
+    font-weight: bold;
 }
