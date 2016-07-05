@@ -1,5 +1,5 @@
 <?php
-	if(!($captain[0]['captain'] > 0)){
+	if(!($captain[0]->getCaptain() > 0)){
       header('Location:'.WEBROOT.'user/login');
     }
 ?>

@@ -57,8 +57,9 @@ class basesql extends PDO
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
 		$query->execute();
-		$item = $query->fetchAll();
-		return $item;
+		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $items = $query->fetchAll();
+        return $items;
 	}
 
 	public static function findById($id) {
@@ -131,25 +132,16 @@ class basesql extends PDO
 		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
 		*/
 
-		if($fetch == true){
-			$item = $query->fetch(PDO::FETCH_ASSOC);
-			if($item) {
-				foreach ($item as $column => $value) {
-					$instance->$column = $value;
-				}
-				return $instance;
-			}
-			else {
-				return False;
-			}
-		}else{
-			$item = $query->fetchAll();
-			if($item) {
-				return $item;
-			}
-			else {
-				return False;
-			}
+		$items = [];
+		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+		while($item = $query->fetch()) {
+			$items[] = $item;
+		}
+
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
 		}
 	}
 

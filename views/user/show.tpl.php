@@ -38,9 +38,9 @@
                     <?php if(!empty($teams)){ ?><li>
                         <span class="fa fa-team"></span>
                         <?php 
-                            foreach($teams as $team){ 
-                                $Team = Team::findById($team[1]);
-                                echo '<a href='.WEBROOT.'team/show/'.$team[1].'>';
+                            foreach($teams as $team){
+                                $Team = Team::findById($team->getIdTeam());
+                                echo '<a href='.WEBROOT.'team/show/'.$team->getIdTeam().'>';
                                 echo $Team->getTeamName()."<br>";
                                 echo '</a>';
                             }

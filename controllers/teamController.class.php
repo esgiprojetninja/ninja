@@ -110,14 +110,14 @@ class teamController
 			$team = Team::findById($args[0]);
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int",false);
 			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
-		    $view = new view();
-		    $invitation = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args[0],1],['int',"int","int"]);
-            $view->setView("team/show.tpl");
-            $view->assign("invitation",$invitation);
-            $view->assign("members",$members);
-            $view->assign("team", $team);
-            $view->assign("captain",$captain);
-            $view->assign("idTeam",$args[0]);
+	    $view = new view();
+	    $invitation = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args[0],1],['int',"int","int"]);
+      $view->setView("team/show.tpl");
+      $view->assign("invitation",$invitation);
+      $view->assign("members",$members);
+      $view->assign("team", $team);
+      $view->assign("captain",$captain);
+      $view->assign("idTeam",$args[0]);
 		}else{
 			//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -180,7 +180,7 @@ class teamController
 						$view->assign("error","Utilisateur inexistant");
 					}
 				}
-			}		
+			}
 			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"],false);
 			$view->assign("captain",$captain);
             $view->setView("team/invite.tpl");
@@ -218,7 +218,7 @@ class teamController
 				$myTeams = Team::findById($myTeams);
 				$view->assign("myTeams",$myTeams);
 			}
-			
+
 			$view->assign('pageActuelle', $pageActuelle);
 			$view->assign('nombreDePages',$nombreDePages);
             $view->setView("team/list.tpl");
@@ -284,7 +284,7 @@ class teamController
 		    Captain::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
 		    TeamHasUser::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
 
-			// on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe              
+			// on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
 		    if(TeamHasUser::findBy("idTeam",$args['idTeam'],"int",false) == false){
 		    	Team::delete("id",$args['idTeam'],"int");
 		    }
@@ -304,7 +304,7 @@ class teamController
 		    Captain::delete('idTeam',$args["idTeam"],"int");
 		    TeamHasUser::delete('idTeam',$args["idTeam"],"int");
 		    Team::delete("id",$args['idTeam'],"int");
-		    
+
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -349,12 +349,12 @@ class teamController
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
-		}		
+		}
 	}
 
 
 	public function refuseInvitAction($args){
-		if(User::isConnected() && isset($args["idTeam"]) && isset($args['idUser'])){	
+		if(User::isConnected() && isset($args["idTeam"]) && isset($args['idUser'])){
         	Invitation::delete(["idUserInvited","idTeamInviting"],[$args['idUser'],$args["idTeam"]],['int','int']);
 		}else{
 		 	//A voir la redirection

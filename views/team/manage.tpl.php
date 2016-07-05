@@ -1,5 +1,6 @@
 <?php
     $team = $this->data["team"];
+    $captain = $this->data["captain"];
     //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
     if(!Team::imIn($team->getId())){
       header('Location:'.WEBROOT.'user/login');
@@ -28,10 +29,10 @@
                 <br><br>
                 <div class="text-left">
                   <a href="<?= WEBROOT;?>team/show/<?= $team->getId();?>"class="btn btn-primary">Show</a>
-                  <?php if($captain[0]['captain'] >=1) : ?>
+                  <?php if($captain[0]->getCaptain() >=1) : ?>
                    <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Edit</a>
                   <?php endif; ?>
-                  <?php if($captain[0]['captain'] >= 2) : ?>
+                  <?php if($captain[0]->getCaptain()>= 2) : ?>
                     <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-danger pull-right deleteTeam">Supprimer mon équipe</a>
                   <?php endif; ?>
                 </div>
@@ -40,7 +41,7 @@
                 <p>Members : </p>
                 <?php 
                     foreach($members as $member){ 
-                      $user = User::findById($member[2]);
+                      $user = User::findById($member->getIdUser());
                       $actualUserAdmin = Captain::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
                       echo "<br>".$user->getUsername()." - " . Captain::getTitre($actualUserAdmin->getCaptain());
                       if(!($user->getId() == $_SESSION["user_id"])){ ?>
@@ -62,7 +63,7 @@
                 ?>
                 <br><br>
                 <div class="text-left">
-                  <?php if($captain[0]['captain'] > 0): ?>
+                  <?php if($captain[0]->getCaptain() > 0): ?>
                     <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
                   <?php endif; ?>
                   <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right leaveTeam">Leave</a>

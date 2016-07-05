@@ -1,6 +1,7 @@
  <?php
  //Se l'utilisateur y accede par URL, mais n'a pas les droit on le redirige
-    if(!($captain[0]['captain'] > 0)){
+    $captain = $this->data["captain"];
+    if(!($captain[0]->getCaptain() > 0)){
       header('Location:'.WEBROOT.'user/login');
     }
 

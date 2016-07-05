@@ -1,5 +1,6 @@
 <?php
     $team = $this->data["team"];
+    var_dump($members);
 ?>
 
 <div class="row">
@@ -24,8 +25,9 @@
                     <li>
                         <span class="fa fa-user"></span>
                         <?php
-                            foreach($members as $member){ 
-                                $user = User::findById($member[2]);
+                            foreach($members as $member){
+                              var_dump($members);
+                                $user = User::findById($member->getIdUser());
                                 echo $user->getUsername()."<br>";
                             }
                         ?>

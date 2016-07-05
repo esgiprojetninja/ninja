@@ -234,6 +234,20 @@ class User extends basesql
 		}
 	}
 
+	/**
+	* Return the number of team of a user
+	* @return int
+	*/
+	public static function howMuchTeamIHave($user){
+		$nbTeam = TeamHasUser::findBy('idUser',$user, "int","false");
+		$count = count($nbTeam);
+		if($nbTeam){
+			return $count;
+		}else{
+			return 0;
+		}
+	}
+
 
 	/**
 	* Send confirmation email using users's email

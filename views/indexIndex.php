@@ -8,8 +8,8 @@
                         echo '<h1> No User yet</h1>';
                     }else{
                         foreach($users as $user){
-                            $link = WEBROOT."user/show/".$user['id'];
-                            echo '<a href="'.$link.'">'.$user['username'].'</a><br>';
+                            $link = WEBROOT."user/show/".$user->getId();
+                            echo '<a href="'.$link.'">'.$user->getUsername().'</a><br>';
                         }
                     }
                 ?>
@@ -25,8 +25,8 @@
                         echo '<h1> No team yet</h1>';
                     }else{
                         foreach($teams as $team){
-                            $link = WEBROOT."team/show/".$team['id'];
-                            echo '<a href="'.$link.'">'.$team['teamName'].'</a><br>';
+                            $link = WEBROOT."team/show/".$team->getId();
+                            echo '<a href="'.$link.'">'.$team->getTeamName().'</a><br>';
                         }
                     }
                 ?>
@@ -55,7 +55,7 @@
                             $idTeamInviting = $invitation['idTeamInviting'];
                             //echo $idTeamInviting;
                             $teamInviting = Team::FindById($idTeamInviting);
-                            echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation['dateInvited']." : ".$invitation['message'];
+                            echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation->getDateInvited()." : ".$invitation->getMessage();
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-type="0" class="joinTeam">Join</a>';
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
 
