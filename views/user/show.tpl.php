@@ -10,10 +10,10 @@
                 <h3>User not found</h3>
             </div>
             <?php else : ?>
-            
-            
+
+
             <div class="panel-heading"><h3 class="upper center"><?php echo $user->getUsername(); ?></h3></div>
-            
+
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>
                     <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
@@ -37,13 +37,20 @@
                     </li>
                     <?php if(!empty($teams)){ ?><li>
                         <span class="fa fa-team"></span>
-                        <?php 
+                        <?php
+                          if(is_array($teams)){
                             foreach($teams as $team){
                                 $Team = Team::findById($team->getIdTeam());
-                                echo '<a href='.WEBROOT.'team/show/'.$team->getIdTeam().'>';
+                                echo '<a href='.WEBROOT.'team/show/'.$Team->getId().'>';
                                 echo $Team->getTeamName()."<br>";
                                 echo '</a>';
                             }
+                          }else{
+                            $Team = Team::findById($teams->getIdTeam());
+                            echo '<a href='.WEBROOT.'team/show/'.$Team->getId().'>';
+                            echo $Team->getTeamName()."<br>";
+                            echo '</a>';
+                          }
                         ?>
                     </li>
                     <?php } ?>

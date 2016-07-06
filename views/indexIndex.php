@@ -51,15 +51,21 @@
                 <div class="panel-heading">Your invitations</div>
                 <div class="panel-body">
                     <?php
+                      if(!is_array($invitations)){
+                        $idTeamInviting = $invitations->getIdTeamInviting();
+                        $teamInviting = Team::FindById($idTeamInviting);
+                        echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitations->getDateInvited()." : ".$invitations->getMessage();
+                        echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-type="0" class="joinTeam">Join</a>';
+                        echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
+                      }else{
                         foreach ($invitations as $invitation) {
-                            $idTeamInviting = $invitation['idTeamInviting'];
-                            //echo $idTeamInviting;
+                            $idTeamInviting = $invitation->getIdTeamInviting();
                             $teamInviting = Team::FindById($idTeamInviting);
                             echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation->getDateInvited()." : ".$invitation->getMessage();
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-type="0" class="joinTeam">Join</a>';
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
-
                         }
+                      }
                     ?>
                 </div>
             </div>

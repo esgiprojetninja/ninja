@@ -17,7 +17,7 @@ class indexController
             $users = User::findAll(10,"dateCreated",["username","id"]);
             $view->assign("users",$users);
 
-            $invitations = Invitation::findBy(["idUserInvited","type"],[$_SESSION['user_id'],0],['int','int'],false);
+            $invitations = Invitation::findBy(["idUserInvited","type"],[$_SESSION['user_id'],0],['int','int']);
             $view->assign("invitations",$invitations);
 
 		} else {

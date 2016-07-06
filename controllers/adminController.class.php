@@ -8,7 +8,16 @@ class adminController
     public function indexAction($args)
     {
         $view = new view;
-        $view->setView("admin/ui-collection.tpl");
+        if(User::isConnected()){
+            if(!User::isAdmin()){
+                $view->setView("admin/ui-collection.tpl");
+            }else{
+                header("Location:".WEBROOT);
+            }
+        }else{
+            header("location: ".WEBROOT."user/login");
+        }
+
     }
 
     public function globalAction($args)
@@ -34,8 +43,8 @@ class adminController
                 }
                 $premiereEntreeUser=($pageActuelleUser-1)*$userParPage;
                 // La requête sql pour récupérer les messages de la page actuelle.
-                $retour_messagesUser= User::findAll([$premiereEntreeUser,$userParPage],'username','ASC');
-
+                //$retour_messagesUser= User::findAll([$premiereEntreeUser,$userParPage],'username','ASC');
+                $retour_messagesUser = User::findAll([$premiereEntreeUser,$userParPage],true,'username');
                 $teams = Team::FindAll();
                 $totalTeam = count($users);
                 $teamParPage=10;
@@ -52,7 +61,8 @@ class adminController
                 }
                 $premiereEntreeTeam=($pageActuelleTeam-1)*$teamParPage;
                 // La requête sql pour récupérer les messages de la page actuelle.
-                $retour_messagesTeam= Team::findAll([$premiereEntreeTeam,$teamParPage],'teamName','ASC');
+                //$retour_messagesTeam= Team::findAll([$premiereEntreeTeam,$teamParPage],'teamName','ASC');
+                $retour_messagesTeam = Team::findAll([$premiereEntreeUser,$userParPage],true,'teamName');
 
                 $view->assign('pageActuelleTeam', $pageActuelleTeam);
                 $view->assign('nombreDePagesTeam',$nombreDePagesTeam);
@@ -61,7 +71,7 @@ class adminController
                 $view->assign('pageActuelleUser', $pageActuelleUser);
                 $view->assign('nombreDePagesUser',$nombreDePagesUser);
                 $view->assign("users", $retour_messagesUser);
-            
+
             }else{
                 header("Location:".WEBROOT);
             }
@@ -122,7 +132,7 @@ class adminController
     public function deletedbAction($args) {
         $pdo = new PDO("mysql:host=".DBHOST,DBUSER,DBPWD);
     }
-    
+
 
     public function showUiKitAction() {
         $view = new view;

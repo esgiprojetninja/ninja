@@ -74,13 +74,19 @@
                     }else{
                         echo '<table>';
                         $teams = TeamHasUser::findBy("idUser",$_SESSION['user_id'],"int");
-                            for($i=0;$i<$hasTeam;$i++){
-                                $team = Team::findById($teams[$i]->getIdTeam());
+                            if(!is_array($teams)){
+                              $team = Team::findById($teams->getIdTeam());
+                              echo '<tr><td>';
+                              echo '<a href='.WEBROOT.'team/show/'.$team->getId().'>'.$team->getTeamName();
+                              echo '</td></tr>';
+                            }else{
+                              foreach($teams as $team){
+                                $team = Team::findById($team->getIdTeam());
                                 echo '<tr><td>';
                                 echo '<a href='.WEBROOT.'team/show/'.$team->getId().'>'.$team->getTeamName();
                                 echo '</td></tr>';
+                              }
                             }
-
                         echo '</table>';
                     }
                 ?>

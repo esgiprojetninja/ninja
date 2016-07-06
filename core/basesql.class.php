@@ -56,10 +56,18 @@ class basesql extends PDO
 		}
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
+
 		$query->execute();
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-        $items = $query->fetchAll();
-        return $items;
+		while($item = $query->fetch()) {
+			$items[] = $item;
+		}
+
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
+		}
 	}
 
 	public static function findById($id) {
@@ -86,7 +94,7 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType, $fetch=true) {
+	public static function findBy($column, $value, $valueType) {
 		$instance = new static;
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
@@ -128,8 +136,7 @@ class basesql extends PDO
 		}
 
 		/*
-		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
-		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
+			S'il y a une seule occurence on renvoie l'objet, s'il y en a plus on renvoie un array d'objet.
 		*/
 
 		$items = [];

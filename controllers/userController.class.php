@@ -14,12 +14,12 @@ class userController
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
 			}
-            $v = new View();
-            $teams = TeamHasUser::findBy("idUser",$args[0],"int",false);
-            $v->setView("user/show.tpl");
-            $v->assign("user", $user);
-            $v->assign("teams",$teams);
-            $v->assign("idUser",$args[0]);
+      $v = new View();
+      $teams = TeamHasUser::findBy("idUser",$args[0],"int");
+      $v->setView("user/show.tpl");
+      $v->assign("user", $user);
+      $v->assign("teams",$teams);
+      $v->assign("idUser",$args[0]);
 		}else{
 			header('Location:' . WEBROOT . 'user/login');
 		}
@@ -34,11 +34,11 @@ class userController
     	if(User::isConnected() && !empty($args[0])){
 			$user = User::findById($args[0]);
 
-            $v = new View();
-            $v->setView("user/edit.tpl");
+      $v = new View();
+      $v->setView("user/edit.tpl");
 
 			$formEdit = $user->getForm("edit");
-            $v->assign("formEdit", $formEdit);
+      $v->assign("formEdit", $formEdit);
 
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
@@ -78,9 +78,9 @@ class userController
 
 				}
 			}
-            $v->assign("user", $user);
-            $v->assign("idUser",$args[0]);
-            $v->assign("editErrors", $editErrors);
+      $v->assign("user", $user);
+      $v->assign("idUser",$args[0]);
+      $v->assign("editErrors", $editErrors);
 		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}
@@ -93,7 +93,7 @@ class userController
 	public function activateAction($args) {
 		$view = new View();
 		$view->setView("user/activation.tpl");
-		
+
 		$activateErrors = [];
 
 		$user = User::FindBy('email',$args['email'],'string');
@@ -172,7 +172,7 @@ class userController
 
 		$formSubscribe = User::getForm("subscription");
 		$view->assign("formSubscribe", $formSubscribe);
-		
+
 		$formLogin = User::getForm("login");
 		$view->assign("formLogin", $formLogin);
 
@@ -213,11 +213,11 @@ class userController
 		$view = new View();
 		$form = User::getForm("resetPassword");
 		$formErrors = [];
-		
+
 		$view->assign("form", $form);
 		$view->assign("formErrors", $formErrors);
 		$view->setView("user/change-password.tpl");
-		
+
 		if (isset($_POST["form-type"])) {
 			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
 				$user->setToken();
