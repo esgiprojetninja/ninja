@@ -55,6 +55,7 @@ class ManyToManyPivot {
         $sql = "INSERT IGNORE INTO " . $this->table . " (" .
         $this->columnOne . "," . $this->columnTwo . ") VALUE (" .
         $this->idOne . "," . $this->idTwo . ");";
+
         $this->pdo->exec($sql);
     }
 

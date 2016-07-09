@@ -392,13 +392,3 @@ a{
 .center{
     text-align: center;
 }
-
-/**********************
-    -- PHP var dump --
-**********************/
-
-.xdebug-var-dump {
-    position: relative;
-    background: #FFFFFF;
-    z-index: 100000000;
-}

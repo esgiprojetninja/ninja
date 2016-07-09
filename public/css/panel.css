@@ -13,8 +13,7 @@ div.panel panel-primary/success/warning...(optional)
 .panel {
     width: 100%;
     background-color: #FFFFFF;
-    /*color: #8E8D8F;*/
-    color: #000000;
+    color: #8E8D8F;
     box-shadow: 2px 2px 2px #D2D2D2;
     margin-bottom: 15px;
 }
@@ -72,24 +71,4 @@ div.panel panel-primary/success/warning...(optional)
     background-color: #B84D61;
     color: #FFFFFF;
     border-color: #D9D9D9;
-}
-
-/********************
-    -- TITLES --
-********************/
-
-.panel .panel-body .underlined {
-    border-bottom: 1px solid #C2C2C2;
-    padding-bottom: 1em;
-}
-
-/******************
-     -- TAGS --
-******************/
-
-.panel .panel-body .tag-box {
-    background-color: #E2E2E2;
-    padding: 5px;
-    border: 1px solid #C2C2C2;
-    border-raduis: 4px;
 }

@@ -15,7 +15,7 @@
           <?php
             $this->createForm($formLogin, $logErrors);
           ?>
-          <a href="#">forgot password ?</a>
+          <a class="btn btn-default" href="#">forgot password ?</a>
           </div>
         </div>
       </div>
