@@ -57,7 +57,6 @@ $(function ($) {
           action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
           if($(this).is(".prompt")){
             var promptInput = prompt("Add a message with your ask");
-            console.log("gflmkgdflmkdgfmkldgfmlmdgfllgdfmlmkgdfmlkdgfmlkgdfmklgdfmkldfgkmldgf");
             if(promptInput){
               data.messageInvit = promptInput;
               lock = true;
@@ -116,6 +115,7 @@ function showMessage(msg, code) {
     $box.fadeIn();
     setTimeout(function () {
         $box.fadeOut();
+        //window.location.reload(false);
     }, 5000);
 }
 

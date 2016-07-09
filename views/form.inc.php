@@ -34,7 +34,6 @@
 
 	<?php foreach ($form["struct"] as $name => $option ) :?>
 
-
 			<div class="input-grp">
 				<input name="<?php echo $name ?>"
 						type="<?php echo $option["type"] ;?>"

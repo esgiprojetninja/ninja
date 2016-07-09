@@ -75,7 +75,6 @@ class userController
 					$user->setPhoneNumber($_POST["phone_number"]);
 
 					$user->save();
-
 				}
 			}
       $v->assign("user", $user);
@@ -274,4 +273,18 @@ class userController
 		}
 	}
 
+	public function deleteAvatarAction($args){
+			if(User::isConnected()){
+				$user = User::findById($_SESSION['user_id']);
+				if($user->getAvatar()){
+					unlink($user->getAvatar());
+					$user->setAvatar("");
+					$user->save();
+				}else{
+					header("location:" . WEBROOT);
+				}
+			}else {
+				header("location:" . WEBROOT);
+			}
+	}
 }

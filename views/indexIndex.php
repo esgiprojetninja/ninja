@@ -55,15 +55,15 @@
                         $idTeamInviting = $invitations->getIdTeamInviting();
                         $teamInviting = Team::FindById($idTeamInviting);
                         echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitations->getDateInvited()." : ".$invitations->getMessage();
-                        echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-type="0" class="joinTeam">Join</a>';
-                        echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
+                        echo ' - <a href="#" data-url="team/join" class="ajax-link" data-team="'.$idTeamInviting.'" data-type="0">Join</a>';
+                        echo ' - <a href="#" data-url="team/cancelInvitation" class="ajax-link" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" >Don\'t join</a>';
                       }else{
                         foreach ($invitations as $invitation) {
-                            $idTeamInviting = $invitation->getIdTeamInviting();
-                            $teamInviting = Team::FindById($idTeamInviting);
-                            echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation->getDateInvited()." : ".$invitation->getMessage();
-                            echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-type="0" class="joinTeam">Join</a>';
-                            echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
+                          $idTeamInviting = $invitation->getIdTeamInviting();
+                          $teamInviting = Team::FindById($idTeamInviting);
+                          echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation->getDateInvited()." : ".$invitation->getMessage();
+                          echo ' - <a href="#" data-url="team/join" class="ajax-link" data-team="'.$idTeamInviting.'" data-type="0">Join</a>';
+                          echo ' - <a href="#" data-url="team/cancelInvitation" class="ajax-link" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" >Don\'t join</a>';
                         }
                       }
                     ?>

@@ -15,7 +15,16 @@
             <?php endif;?>
 
                 <?php
+                    if($formEdit["struct"]["hidden-avatar"]["value"] == "avatar-hidden-true"){
+                      echo '<a href="#" class="ajax-link" data-url="user/deleteAvatar">Delete my avatar</a>';
+                    }else{
+                      //VERIFIER SI LE PROFIL EST COMPLET, SI OUI ON PEUX RAJOUTER UN AVATAR,
+                      // SINON ON MET UN TEXte : 3VEUILLEZ REMPLIR VOTRE PROFIL
+                      echo "nicolas petit zizi";
+                    }
+
                     $this->createForm($formEdit, $editErrors);
+
                 ?>
             </div>
         </div>

@@ -126,6 +126,7 @@ class teamController
 
 	public function manageAction($args){
 		if(User::isConnected() && !empty($args[0])){
+				$response = [];
 				$team = Team::findById($args[0]);
 				$members = TeamHasUser::findBy("idTeam",$args[0],"int");
         $view = new view();
@@ -242,6 +243,7 @@ class teamController
 		    	$userToDemote->setCaptain($userToDemote->getCaptain()-1);
 		    	$userToDemote->save();
 		    }
+				Helpers::getMessageAjaxForm("User has been demoted !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -260,6 +262,7 @@ class teamController
 		    	$userToPromote->setCaptain($userToPromote->getCaptain()+1);
 		    	$userToPromote->save();
 		    }
+				Helpers::getMessageAjaxForm("User has been promoted !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -274,6 +277,7 @@ class teamController
 		    }
 		    Captain::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
 		    TeamHasUser::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
+				Helpers::getMessageAjaxForm("User has been kicked !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -289,6 +293,8 @@ class teamController
 		    if(TeamHasUser::findBy("idTeam",$args['idTeam'],"int") == false){
 		    	Team::delete("id",$args['idTeam'],"int");
 		    }
+
+				Helpers::getMessageAjaxForm("Invitation canceled !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -306,6 +312,7 @@ class teamController
 		    TeamHasUser::delete('idTeam',$args["idTeam"],"int");
 		    Team::delete("id",$args['idTeam'],"int");
 
+				Helpers::getMessageAjaxForm("Team deleted !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -332,6 +339,7 @@ class teamController
 			$captain->save();
 
       Invitation::delete(["idUserInvited","idTeamInviting","type"],[$idUser,$args["idTeam"],$args["type"]],['int','int','int']);
+			Helpers::getMessageAjaxForm("Invitation accepted !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -352,6 +360,7 @@ class teamController
 				$invitation->setIdUserInvited($_SESSION['user_id']);
 				$invitation->save();
 			}
+			Helpers::getMessageAjaxForm("Invitation sent !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -366,6 +375,8 @@ class teamController
 				$idUser = $_SESSION['user_id'];
 			}
       Invitation::delete(["idUserInvited","idTeamInviting"],[$idUser,$args["idTeam"]],['int','int']);
+
+			Helpers::getMessageAjaxForm("Invitation canceled !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');

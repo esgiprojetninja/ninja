@@ -393,9 +393,16 @@ class User extends basesql
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
 					],
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
-					]
+					],
+					"hidden-avatar"=>["type"=>"hidden","value"=>"avatar-hidden-false","required"=>0,"placeholder" => "","msgerror"=>"avatar"]
+
 				]
 			];
+			if(empty($form["struct"]["avatar"]["value"])){
+				$form["struct"]['hidden-avatar']["value"]= "avatar-hidden-false";
+			}else{
+				$form["struct"]['hidden-avatar']["value"] = "avatar-hidden-true";
+			}
 		} else if ($formType == "setNewPassword") {
 			$form = [
 				"title" => "Change password",
