@@ -34,15 +34,30 @@ class eventController {
                         $unformatedDate["day"] . " " .
                         $_POST["from_time"]
                     );
-                    $event->setFromDate($from_date);
-                    $event->setToDate($_POST["to_date"] . " " . $_POST["to_time"]);
-                    $event->setJoignableUntil($_POST["joignable_until"] . " " . $_POST["joignable_until_time"]);
+                    $event->setFromDate($from_date->format("Y-m-d H:i"));
+                    $unformatedDate = date_parse_from_format("d/m/Y", $_POST["to_date"]);
+                    $to_date = new Datetime(
+                        $unformatedDate["year"] . "-" .
+                        $unformatedDate["month"] . "-" .
+                        $unformatedDate["day"] . " " .
+                        $_POST["to_time"]
+                    );
+                    $event->setToDate($to_date->format("Y-m-d H:i"));
+                    $unformatedDate = date_parse_from_format("d/m/Y", $_POST["joignable_until"]);
+                    $joignable_until = new Datetime(
+                        $unformatedDate["year"] . "-" .
+                        $unformatedDate["month"] . "-" .
+                        $unformatedDate["day"] . " " .
+                        $_POST["joignable_until_time"]
+                    );
+                    $event->setJoignableUntil($joignable_until->format("Y-m-d H:i"));
                     $event->setLocation(htmlspecialchars($_POST["location"]));
                     $event->setDescription(htmlspecialchars($_POST["description"]));
                     $event->setTags(htmlspecialchars($_POST["tags"]));
                     $event->setNbPeopleMax($_POST["nb_people_max"]);
                     $event->save();
                     $event->addUser($currentUser->getId());
+                    header("location:" . WEBROOT . "event/list");
                 }
             }
             $view->assign("form", $form);
