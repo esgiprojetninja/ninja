@@ -1,250 +1,335 @@
 <?php
 
-class Event extends basesql
-{
+    class Event extends basesql {
 
-    public $id;
-    protected $table = "event";
-    protected $name;
-    protected $description;
-    protected $content;
-    protected $id_creator = 0;
-    protected $date_creation;
-    protected $date_event;
-    protected $max_people;
-    protected $current_people;
-    protected $finish;
-    protected $place;
-    protected $sport;
+        protected $id;
+        protected $table = "events";
+        protected $pivot_table = "events_users_pivot";
+        protected $name;
+        protected $from_date;
+        protected $to_date;
+        protected $joignable_until;
+        protected $tags;
+        protected $owner;
+        protected $owner_name;
+        protected $description;
+        protected $location;
+        protected $nb_people_max;
 
-    protected $columns = [
-        "id",
-        "name",
-        "description",
-        "content",
-        "id_creator",
-        "date_creation",
-        "date_event",
-        "max_people",
-        "current_people",
-        "finish",
-        "place",
-        "sport"
-    ];
+        protected $columns = [
+            "id",
+            "name",
+            "from_date",
+            "to_date",
+            "joignable_until",
+            "tags",
+            "owner",
+            "owner_name",
+            "description",
+            "location",
+            "nb_people_max"
+        ];
 
-    //Oui
-    public function __construct(){
-        parent::__construct();
+
+        /**
+         * return id attribute
+         * @return int
+         */
+        public function getId() {
+            return $this->id;
+        }
+
+        /**
+         * return name attribute
+         * @return string
+         */
+        public function getName() {
+            return $this->name;
+        }
+
+        /**
+         * return from_date attribute
+         * @return datetime
+         */
+        public function getFromDate() {
+            return $this->from_date;
+        }
+
+        /**
+         * return to_date attribute
+         * @return datetime
+         */
+        public function getToDate() {
+            return $this->to_date;
+        }
+
+        /**
+         * return joignable_until attribute
+         * @return datetime
+         */
+        public function getJoignableUntil() {
+            return $this->joignable_until;
+        }
+
+        /**
+         * return tags attribute
+         * @return string
+         */
+        public function getTags() {
+            return $this->tags;
+        }
+
+        /**
+         * return users attribute
+         * @return array
+         */
+        public function getUsers() {
+            return $this->users;
+        }
+
+        /**
+         * return owner attribute
+         * @return int
+         */
+        public function getOwner() {
+            return $this->owner;
+        }
+
+        /**
+         * return owner_name attribute
+         * @return string
+         */
+        public function getOwnerName() {
+            return $this->owner_name;
+        }
+
+        /**
+         * return description attribute
+         * @return string
+         */
+        public function getDescription() {
+            return $this->description;
+        }
+
+        /**
+         * return location attribute
+         * @return string
+         */
+        public function getLocation() {
+            return $this->location;
+        }
+
+        /**
+         * return nb_people_max attribute
+         * @return int
+         */
+        public function getNbPeopleMax() {
+            return $this->nb_people_max;
+        }
+
+        /**
+         * Set id attribute
+         * @param int $id
+         */
+        public function setId($id) {
+            $this->id = $id;
+        }
+
+        /**
+         * Set name attribute
+         * @param string $name
+         */
+        public function setName($name) {
+            $this->name = $name;
+        }
+
+        /**
+         * Set from_date attribute
+         * @param datetime $date
+         */
+        public function setFromDate($date) {
+            $this->from_date = $date;
+        }
+
+        /**
+         * Set to_date attribute
+         * @param datetime $date
+         */
+        public function setToDate($date) {
+            $this->to_date = $date;
+        }
+
+        /**
+         * Set joignable_until attribute
+         * @param datetime $date
+         */
+        public function setJoignableUntil($date) {
+            $this->joignable_until = $date;
+        }
+
+        /**
+         * Set tags attribute
+         * @param string $tags
+         */
+        public function setTags($tags) {
+            $this->tags = $tags;
+        }
+
+        /**
+         * Set owner attribute
+         * @param int $id
+         */
+        public function setOwner($id) {
+            $this->owner = $id;
+        }
+
+        /**
+         * Set owner_name attribute
+         * @param string $id
+         */
+        public function setOwnerName($name) {
+            $this->owner_name = $name;
+        }
+
+        /**
+         * Set description attribute
+         * @param string $description
+         */
+        public function setDescription($description) {
+            $this->description = $description;
+        }
+
+        /**
+         * Set location attribute
+         * @param string $location
+         */
+        public function setLocation($location) {
+            $this->location = $location;
+        }
+
+        /**
+         * Set nb_people_max attribute
+         * @param int $max
+         */
+        public function setNbPeopleMax($max) {
+            $this->nb_people_max = $max;
+        }
+
+        /**
+         * Return occurences of the relation
+         * @return array of User
+         */
+        public function gatherUsers() {
+            $pivot = new ManyToManyPivot(
+                $this->pivot_table,
+                "event_id",
+                "user_id",
+                $this->id
+            );
+            return $pivot->getData();
+        }
+
+        /**
+         * Add user to event
+         * @param [int] $id
+         */
+        public function addUser($id) {
+            if (is_numeric(intval($id))) {
+                $pivot = new ManyToManyPivot(
+                    $this->pivot_table,
+                    "event",
+                    "user",
+                    $this->id,
+                    intval($id)
+                );
+                $pivot->save();
+            }
+        }
+
+        /**
+         * return splitted tag list
+         * @return [array]
+         */
+        public function getTagArray() {
+            return split(",", $this->getTags());
+        }
+
+        /**
+         * Serialize tags
+         * @param  [array] $tags
+         */
+        public function serializeTags($tags) {
+            if (is_array($tags)) {
+                $this->setTags(join(",", $tags));
+            }
+        }
+
+        /**
+         * Return formated time or date
+         * @param  [string] $type
+         * @param  [string] $datetime
+         * @return [string]
+         */
+        public function getFormatedDateTime($type, $datetime) {
+            $datetime = new Datetime($datetime);
+            if ($type == "date") {
+                return $datetime->format("d/m/Y");
+            } else if ($type == "time") {
+                return $datetime->format("H:i");
+            }
+        }
+
+        /**
+         * Return form structure.
+         * @param string $formType
+         * @return array
+         */
+        public function getForm($formType) {
+
+            $form = [];
+
+            if ($formType == "createEvent") {
+                $form = [
+    				"title" => "Create an event",
+    				"buttonTxt" => "Create",
+    				"options" => ["method" => "POST", "action" => WEBROOT . "event/create", "class" => "", "data-attributes" => []],
+    				"struct" => [
+    					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"" ],
+                        "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"" ],
+    					"from_date" => ["type" => "text", "placeholder" => "From date", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date"],
+                        "from_time" => ["type" => "text", "placeholder" => "From Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time"],
+                        "to_date"=>[ "type"=>"text", "class"=>"form-control js-time-input js-date", "placeholder"=>"To date", "required"=>1, "msgerror"=>"date_format" ],
+                        "to_time" => ["type" => "text", "placeholder" => "To Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time"],
+                        "joignable_until" => ["type" => "text", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date"],
+                        "joignable_until_time" => ["type" => "text", "placeholder" => "Joignable until time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time"],
+                        "location" => ["type" => "text", "placeholder" => "Location", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "nb_people_max" => ["type" => "number", "placeholder" => "Max number of people", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "tags" => ["type" => "text", "placeholder" => "Tags", "required" => 1, "msgerror" => "", "class" => "form-control"],
+    				]
+    			];
+            } else if ($formType == "updateEvent") {
+                $form = [
+    				"title" => "Update an event",
+    				"buttonTxt" => "Update",
+                    "deletable" => $this->getId(),
+    				"options" => ["method" => "POST", "action" => WEBROOT . "event/update/" . $this->getId(), "class" => "", "data-attributes" => []],
+    				"struct" => [
+    					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"", "value" => $this->getName()],
+                        "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"", "value" => $this->getDescription() ],
+    					"from_date" => ["type" => "text", "placeholder" => "From date", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date", "value" => $this->getFormatedDateTime("date", $this->getFromDate())],
+                        "from_time" => ["type" => "text", "placeholder" => "From Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time", "value" => $this->getFormatedDateTime("time", $this->getFromDate())],
+                        "to_date"=>[ "type"=>"text", "class"=>"form-control js-time-input js-date", "placeholder"=>"To date", "required"=>1, "msgerror"=>"date_format", "value" => $this->getFormatedDateTime("date", $this->getToDate())],
+                        "to_time" => ["type" => "text", "placeholder" => "To Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time", "value" => $this->getFormatedDateTime("time", $this->getToDate())],
+                        "joignable_until" => ["type" => "text", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date", "value" => $this->getFormatedDateTime("date", $this->getJoignableUntil())],
+                        "joignable_until_time" => ["type" => "text", "placeholder" => "Joignable until time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time", "value" => $this->getFormatedDateTime("time", $this->getJoignableUntil())],
+                        "location" => ["type" => "text", "placeholder" => "Location", "required" => 1, "msgerror" => "", "class" => "form-control", "value" => $this->getLocation()],
+                        "nb_people_max" => ["type" => "number", "placeholder" => "Max number of people", "required" => 1, "msgerror" => "", "class" => "form-control", "value" => $this->getNbPeopleMax()],
+                        "tags" => ["type" => "text", "placeholder" => "Tags", "required" => 1, "msgerror" => "", "class" => "form-control", "value" => $this->getTags()],
+    				]
+    			];
+            }
+
+            return $form;
+        }
+
     }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTable()
-    {
-        return $this->table;
-    }
-
-    /**
-     * @param string $table
-     */
-    public function setTable($table)
-    {
-        $this->table = $table;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param mixed $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIdCreator()
-    {
-        return $this->id_creator;
-    }
-
-    /**
-     * @param int $id_creator
-     */
-    public function setIdCreator($id_creator)
-    {
-        $this->id_creator = $id_creator;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDateCreation()
-    {
-        return $this->date_creation;
-    }
-
-    /**
-     * @param mixed $date_creation
-     */
-    public function setDateCreation($date_creation)
-    {
-        $this->date_creation = $date_creation;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDateEvent()
-    {
-        return $this->date_event;
-    }
-
-    /**
-     * @param mixed $date_event
-     */
-    public function setDateEvent($date_event)
-    {
-        $this->date_event = $date_event;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMaxPeople()
-    {
-        return $this->max_people;
-    }
-
-    /**
-     * @param mixed $max_people
-     */
-    public function setMaxPeople($max_people)
-    {
-        $this->max_people = $max_people;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCurrentPeople()
-    {
-        return $this->current_people;
-    }
-
-    /**
-     * @param mixed $current_people
-     */
-    public function setCurrentPeople($current_people)
-    {
-        $this->current_people = $current_people;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFinish()
-    {
-        return $this->finish;
-    }
-
-    /**
-     * @param mixed $finish
-     */
-    public function setFinish($finish)
-    {
-        $this->finish = $finish;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPlace()
-    {
-        return $this->place;
-    }
-
-    /**
-     * @param mixed $place
-     */
-    public function setPlace($place)
-    {
-        $this->place = $place;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSport()
-    {
-        return $this->sport;
-    }
-
-    /**
-     * @param mixed $sport
-     */
-    public function setSport($sport)
-    {
-        $this->sport = $sport;
-    }
-
-
-
-}
