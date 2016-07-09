@@ -182,6 +182,7 @@ class basesql extends PDO
 
 			try {
 				$query->execute($data);
+				$this->id = $this->pdo->lastInsertId();
 				return $this->pdo->lastInsertId();
 			} catch (Exception $e) {
 				die("Error while saving ".$e->getMessage());

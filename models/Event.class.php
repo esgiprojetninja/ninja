@@ -240,7 +240,7 @@
                     "event",
                     "user",
                     $this->id,
-                    $id
+                    intval($id)
                 );
                 $pivot->save();
             }
@@ -282,8 +282,11 @@
     					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"" ],
                         "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"" ],
     					"from_date" => ["type" => "date", "placeholder" => "From date", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "from_time" => ["type" => "text", "placeholder" => "From Time", "required" => 1, "msgerror" => "", "class" => "form-control js-time-input"],
                         "to_date"=>[ "type"=>"date", "class"=>"form-control", "placeholder"=>"To date", "required"=>1, "msgerror"=>"" ],
+                        "to_time" => ["type" => "text", "placeholder" => "To Time", "required" => 1, "msgerror" => "", "class" => "form-control js-time-input"],
                         "joignable_until" => ["type" => "date", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "", "class" => "form-control"],
+                        "joignable_until_time" => ["type" => "text", "placeholder" => "Joignable until time", "required" => 1, "msgerror" => "", "class" => "form-control js-time-input"],
                         "location" => ["type" => "text", "placeholder" => "Location", "required" => 1, "msgerror" => "", "class" => "form-control"],
                         "nb_people_max" => ["type" => "number", "placeholder" => "Max number of people", "required" => 1, "msgerror" => "", "class" => "form-control"],
                         "tags" => ["type" => "text", "placeholder" => "Tags", "required" => 1, "msgerror" => "", "class" => "form-control"],
