@@ -46,8 +46,30 @@ class Validator extends basesql{
 			elseif($options["required"] && $options["msgerror"]=="avatar"  && $options["type"]=="file"&& !self::verifAvatar($_FILES[$name])){
 				$listErrors[]=$options["msgerror"];
 			}
+			elseif ($options["required"] && $options["msgerror"]=="date_format"  && !self::dateFormat($data[$name])) {
+				$listErrors[] = $options["msgerror"];
+			}
+			elseif ($options["required"] && $options["msgerror"]=="time_format"  && !self::timeFormat($data[$name])) {
+				$listErrors[] = $options["msgerror"];
+			}
 		}
 		return $listErrors;
+	}
+
+	public static function dateFormat($date) {
+		if (date_parse_from_format('Y-m-d', $date)["error_count"] != 0) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
+	public static function timeFormat($time) {
+		if (date_parse_from_format("H:i", $time)["error_count"] != 0) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
 	}
 
 	public static function verifAvatar($var){
