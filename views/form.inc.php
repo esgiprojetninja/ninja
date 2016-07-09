@@ -49,7 +49,9 @@
 	<?php endforeach;?>
 
 	<div class="input-grp text-right">
-        <input type="hidden" name="subscribe_form" value="true">
+		<?php if (isset($form["deletable"])): ?>
+			<a href="<?= WEBROOT ?>event/delete/<?= $form['deletable']?>" class="btn btn-danger">Delete</a>
+		<?php endif; ?>
         <input type="submit" value="<?php echo $form["buttonTxt"] ?>" name="submit" class="btn btn-primary">
     </div>
 </form>

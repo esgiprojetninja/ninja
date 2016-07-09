@@ -190,44 +190,10 @@ class basesql extends PDO
 		}
 	}
 
-	public static function delete($column, $value, $valueType){
-		$instance = new static;
-		if(is_array($column) && is_array($value) && is_array($valueType)){
-			$sql = "DELETE FROM "
-			.$instance->table." WHERE ";
-			for($i=0;$i<count($column);$i++){
-				if($i == 0){
-					$sql = $sql . $column[$i];
-				}else{
-					$sql = $sql . " AND ".$column[$i];
-				}
-
-				if ($valueType[$i] == "string") {
-					$sql = $sql."='".$value[$i]."'";
-				}
-				else if ($valueType[$i] == "int") {
-					$sql = $sql."=".$value[$i];
-				}
-
-				if($i+1 == count($column)){
-					$sql = $sql.";";
-				}
-
-			}
-			$query = $instance->pdo->prepare($sql);
-			$query->execute();
-		}else{ //Sinon on fait une simple requete sur une colonne
-			$sql = "DELETE FROM "
-			.$instance->table." WHERE "
-			.$column;
-			if ($valueType == "string") {
-				$sql = $sql."='".$value."';";
-			}
-			else if ($valueType == "int") {
-				$sql = $sql."=".$value.";";
-			}
-			$query = $instance->pdo->prepare($sql);
-			$query->execute();
+	public function delete(){
+		if (isset($this->id)) {
+			$sql = "DELETE from " . $this->table . " WHERE id = " . $this->id;
+			$this->pdo->exec($sql);
 		}
 	}
 }

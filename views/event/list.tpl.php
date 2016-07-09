@@ -33,7 +33,7 @@
                     <a class="btn btn-success">Join</a>
                     <a class="btn btn-danger">Leave</a>
                     <?php if ($event->getOwner() == $_SESSION["user_id"]): ?>
-                        <a class="btn btn-primary">Manage</a>
+                        <a href="<?= WEBROOT ?>event/update/<?= $event->getId() ?>" class="btn btn-primary">Manage</a>
                     <?php endif; ?>
                 </div>
             </div>

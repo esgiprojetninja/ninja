@@ -265,6 +265,21 @@
         }
 
         /**
+         * Return formated time or date
+         * @param  [string] $type
+         * @param  [string] $datetime
+         * @return [string]
+         */
+        public function getFormatedDateTime($type, $datetime) {
+            $datetime = new Datetime($datetime);
+            if ($type == "date") {
+                return $datetime->format("d/m/Y");
+            } else if ($type == "time") {
+                return $datetime->format("H:i");
+            }
+        }
+
+        /**
          * Return form structure.
          * @param string $formType
          * @return array
@@ -281,15 +296,35 @@
     				"struct" => [
     					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"" ],
                         "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"" ],
-    					"from_date" => ["type" => "date", "placeholder" => "From date", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date"],
+    					"from_date" => ["type" => "text", "placeholder" => "From date", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date"],
                         "from_time" => ["type" => "text", "placeholder" => "From Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time"],
-                        "to_date"=>[ "type"=>"date", "class"=>"form-control js-time-input js-date", "placeholder"=>"To date", "required"=>1, "msgerror"=>"date_format" ],
+                        "to_date"=>[ "type"=>"text", "class"=>"form-control js-time-input js-date", "placeholder"=>"To date", "required"=>1, "msgerror"=>"date_format" ],
                         "to_time" => ["type" => "text", "placeholder" => "To Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time"],
-                        "joignable_until" => ["type" => "date", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date"],
+                        "joignable_until" => ["type" => "text", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date"],
                         "joignable_until_time" => ["type" => "text", "placeholder" => "Joignable until time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time"],
                         "location" => ["type" => "text", "placeholder" => "Location", "required" => 1, "msgerror" => "", "class" => "form-control"],
                         "nb_people_max" => ["type" => "number", "placeholder" => "Max number of people", "required" => 1, "msgerror" => "", "class" => "form-control"],
                         "tags" => ["type" => "text", "placeholder" => "Tags", "required" => 1, "msgerror" => "", "class" => "form-control"],
+    				]
+    			];
+            } else if ($formType == "updateEvent") {
+                $form = [
+    				"title" => "Update an event",
+    				"buttonTxt" => "Update",
+                    "deletable" => $this->getId(),
+    				"options" => ["method" => "POST", "action" => WEBROOT . "event/update/" . $this->getId(), "class" => "", "data-attributes" => []],
+    				"struct" => [
+    					"name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Event Name", "required"=>1, "msgerror"=>"", "value" => $this->getName()],
+                        "description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Event description", "required"=>0, "msgerror"=>"", "value" => $this->getDescription() ],
+    					"from_date" => ["type" => "text", "placeholder" => "From date", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date", "value" => $this->getFormatedDateTime("date", $this->getFromDate())],
+                        "from_time" => ["type" => "text", "placeholder" => "From Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time", "value" => $this->getFormatedDateTime("time", $this->getFromDate())],
+                        "to_date"=>[ "type"=>"text", "class"=>"form-control js-time-input js-date", "placeholder"=>"To date", "required"=>1, "msgerror"=>"date_format", "value" => $this->getFormatedDateTime("date", $this->getToDate())],
+                        "to_time" => ["type" => "text", "placeholder" => "To Time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time", "value" => $this->getFormatedDateTime("time", $this->getToDate())],
+                        "joignable_until" => ["type" => "text", "placeholder" => "Joignable until", "required" => 1, "msgerror" => "date_format", "class" => "form-control js-time-input js-date", "value" => $this->getFormatedDateTime("date", $this->getJoignableUntil())],
+                        "joignable_until_time" => ["type" => "text", "placeholder" => "Joignable until time", "required" => 1, "msgerror" => "time_format", "class" => "form-control js-time-input js-time", "value" => $this->getFormatedDateTime("time", $this->getJoignableUntil())],
+                        "location" => ["type" => "text", "placeholder" => "Location", "required" => 1, "msgerror" => "", "class" => "form-control", "value" => $this->getLocation()],
+                        "nb_people_max" => ["type" => "number", "placeholder" => "Max number of people", "required" => 1, "msgerror" => "", "class" => "form-control", "value" => $this->getNbPeopleMax()],
+                        "tags" => ["type" => "text", "placeholder" => "Tags", "required" => 1, "msgerror" => "", "class" => "form-control", "value" => $this->getTags()],
     				]
     			];
             }

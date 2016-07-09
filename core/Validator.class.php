@@ -57,7 +57,7 @@ class Validator extends basesql{
 	}
 
 	public static function dateFormat($date) {
-		if (date_parse_from_format('Y-m-d', $date)["error_count"] != 0) {
+		if (date_parse_from_format('d/m/Y', $date)["error_count"] != 0) {
 			return FALSE;
 		} else {
 			return TRUE;
