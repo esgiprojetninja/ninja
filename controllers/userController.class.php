@@ -91,7 +91,7 @@ class userController
 	public function activateAction($args) {
 		$view = new View();
 		$view->setView("user/activation.tpl");
-		
+
 		$activateErrors = [];
 
 		$user = User::FindBy('email',$args['email'],'string');
@@ -172,7 +172,7 @@ class userController
 
 		$formSubscribe = User::getForm("subscription");
 		$view->assign("formSubscribe", $formSubscribe);
-		
+
 		$formLogin = User::getForm("login");
 		$view->assign("formLogin", $formLogin);
 
@@ -213,11 +213,11 @@ class userController
 		$view = new View();
 		$form = User::getForm("resetPassword");
 		$formErrors = [];
-		
+
 		$view->assign("form", $form);
 		$view->assign("formErrors", $formErrors);
 		$view->setView("user/change-password.tpl");
-		
+
 		if (isset($_POST["form-type"])) {
 			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
 				$user->setToken();
@@ -251,7 +251,6 @@ class userController
 				if (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword") {
 					$validator = new Validator();
 					$formErrors = $validator->check($form["struct"], $_POST);
-					print_r($formErrors);
 					if (count($formErrors) == 0) {
 						$user->setPassword($_POST["password"]);
 						$user->setToken();

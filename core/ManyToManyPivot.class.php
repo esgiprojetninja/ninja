@@ -55,7 +55,6 @@ class ManyToManyPivot {
         $sql = "INSERT IGNORE INTO " . $this->table . " (" .
         $this->columnOne . "," . $this->columnTwo . ") VALUE (" .
         $this->idOne . "," . $this->idTwo . ");";
-
         $this->pdo->exec($sql);
     }
 
@@ -66,7 +65,7 @@ class ManyToManyPivot {
     public function getData() {
         $sql = "SELECT "  . $this->tableTwo . ".*, group_concat(" .
         $this->tableOne . ".id) as " . $this->entityOne . "_id FROM " .
-        $this->tableTwo . " LEFT JOIN " . $this->table . " on " . $this->table .
+        $this->tableTwo . "  JOIN " . $this->table . " on " . $this->table .
         "." .$this->columnTwo . " = " . $this->tableTwo . ".id LEFT JOIN " .
         $this->tableOne . " on " .$this->table . "." .$this->columnOne . " = " .
         $this->tableOne . ".id GROUP BY " . $this->tableTwo . ".id";
@@ -84,5 +83,12 @@ class ManyToManyPivot {
             }
         }
         return $result;
+    }
+
+    public function delete() {
+        $sql = "DELETE from " . $this->table . " WHERE " . $this->columnOne .
+        " = " . $this->idOne . " AND " . $this->columnTwo . " = " .
+        $this->idTwo . ";";
+        $this->pdo->exec($sql);
     }
 }
