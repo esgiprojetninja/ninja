@@ -393,6 +393,17 @@ a{
     text-align: center;
 }
 
+/**********************
+    -- PHP var dump --
+**********************/
+
+.xdebug-var-dump {
+    position: relative;
+    background: #FFFFFF;
+    z-index: 100000000;
+}
+
+
 .header-ul {
     padding-top: 15px;
     list-style-type:none;
