@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 23 Juin 2016 à 07:33
+-- Généré le: Dim 10 Juillet 2016 à 14:47
 -- Version du serveur: 5.5.49-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.16
 
@@ -32,14 +32,15 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `idTeam` int(11) NOT NULL,
   `captain` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `admin`
 --
 
 INSERT INTO `admin` (`id`, `idUser`, `idTeam`, `captain`) VALUES
-(1, 2, 0, 0);
+(1, 2, 0, 0),
+(2, 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -50,14 +51,14 @@ INSERT INTO `admin` (`id`, `idUser`, `idTeam`, `captain`) VALUES
 CREATE TABLE IF NOT EXISTS `discussions` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `discussions`
 --
 
 INSERT INTO `discussions` (`id`) VALUES
-(19);
+(1);
 
 -- --------------------------------------------------------
 
@@ -72,15 +73,67 @@ CREATE TABLE IF NOT EXISTS `discussions_users_pivot` (
   PRIMARY KEY (`id`),
   KEY `discussion_id` (`discussion_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `discussions_users_pivot`
 --
 
 INSERT INTO `discussions_users_pivot` (`id`, `discussion_id`, `user_id`) VALUES
-(29, 19, 3),
-(30, 19, 2);
+(1, 1, 3),
+(2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `events`
+--
+
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `name` char(50) DEFAULT NULL,
+  `from_date` datetime DEFAULT NULL,
+  `to_date` datetime DEFAULT NULL,
+  `joignable_until` datetime DEFAULT NULL,
+  `tags` longtext,
+  `owner` int(6) NOT NULL,
+  `description` longtext,
+  `location` longtext,
+  `owner_name` varchar(50) DEFAULT NULL,
+  `nb_people_max` int(10) NOT NULL,
+  `open` int(6) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Contenu de la table `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `from_date`, `to_date`, `joignable_until`, `tags`, `owner`, `description`, `location`, `owner_name`, `nb_people_max`, `open`) VALUES
+(30, 'Mon event', '2016-08-14 18:00:00', '2016-08-14 22:00:00', '2016-08-14 12:00:00', '#belote,#amour,#bonheur', 2, 'Un super match de belote', 'Le bistro du coin', 'renaud', 24, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `events_users_pivot`
+--
+
+CREATE TABLE IF NOT EXISTS `events_users_pivot` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `event_id` int(6) NOT NULL,
+  `user_id` int(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `fk_event` (`event_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+
+--
+-- Contenu de la table `events_users_pivot`
+--
+
+INSERT INTO `events_users_pivot` (`id`, `event_id`, `user_id`) VALUES
+(19, 30, 2);
 
 -- --------------------------------------------------------
 
@@ -96,7 +149,14 @@ CREATE TABLE IF NOT EXISTS `invitations` (
   `idTeamInviting` int(11) NOT NULL,
   `idUserInvited` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `invitations`
+--
+
+INSERT INTO `invitations` (`id`, `dateInvited`, `message`, `state`, `idTeamInviting`, `idUserInvited`) VALUES
+(1, '2016-06-27 19:09:58', 'viens dans ma team pd', 0, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -113,43 +173,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `discussion_id` (`discussion_id`),
   KEY `sender_id` (`sender_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
-
---
--- Contenu de la table `messages`
---
-
-INSERT INTO `messages` (`id`, `sender_id`, `content`, `date`, `discussion_id`) VALUES
-(7, 2, 'mon message', '2016-06-22 11:44:45', 19),
-(8, 2, 'Mon deuxiÃ¨me message', '2016-06-22 11:45:26', 19),
-(9, 2, 'Un autre message', '2016-06-22 11:50:25', 19),
-(10, 2, 'un message de plus', '2016-06-22 11:51:03', 19),
-(11, 2, 'toto', '2016-06-22 12:00:37', 19),
-(12, 2, 'tutu', '2016-06-22 12:08:27', 19),
-(13, 2, 'titi', '2016-06-22 12:14:44', 19),
-(14, 2, 'tata', '2016-06-22 12:15:12', 19),
-(15, 2, 'aegrer', '2016-06-22 12:16:39', 19),
-(16, 2, 'zergzerr', '2016-06-22 12:16:58', 19),
-(17, 2, 'ffff', '2016-06-22 12:17:35', 19),
-(18, 2, 'ezrgzer', '2016-06-22 14:00:07', 19),
-(19, 2, 'aergez', '2016-06-22 14:00:39', 19),
-(20, 2, 'zegzer', '2016-06-22 14:03:25', 19),
-(21, 2, 'ergzeg', '2016-06-22 14:05:08', 19),
-(22, 2, 'arger', '2016-06-22 14:05:36', 19),
-(23, 2, 'agergzerg', '2016-06-22 14:06:31', 19),
-(24, 2, 'azfaz', '2016-06-22 14:08:49', 19),
-(25, 2, 'afze', '2016-06-22 14:09:43', 19),
-(26, 2, 'zergzer', '2016-06-22 14:10:02', 19),
-(27, 2, 'azrra', '2016-06-22 14:18:21', 19),
-(28, 2, 'toot', '2016-06-22 14:27:46', 19),
-(29, 2, 'pÃ©pÃ©', '2016-06-22 14:29:17', 19),
-(30, 2, 'pÃ©pÃ©pupu', '2016-06-22 14:29:20', 19),
-(31, 2, 'pÃ©pÃ©pupu', '2016-06-22 14:29:52', 19),
-(32, 2, 'pÃ©pÃ©pupu', '2016-06-22 14:29:53', 19),
-(33, 2, 'pÃ©pÃ©pupu', '2016-06-22 14:29:53', 19),
-(34, 2, 'pÃ©pÃ©pupu', '2016-06-22 14:29:56', 19),
-(35, 2, 'mmm', '2016-06-22 16:52:44', 19),
-(36, 2, 'toto', '2016-06-22 16:56:04', 19);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -166,6 +190,13 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `message` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `id_user`, `datetime`, `type`, `opened`, `message`) VALUES
+(1, 2, '2016-06-28 07:18:16', 1, 0, 'Une notif');
+
 -- --------------------------------------------------------
 
 --
@@ -180,7 +211,14 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `description` varchar(255) NOT NULL,
   `avatar` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `teams`
+--
+
+INSERT INTO `teams` (`id`, `teamName`, `dateCreated`, `sports`, `description`, `avatar`) VALUES
+(1, 'My team', '2016-06-27 19:08:19', '', 'La mÃ©ga team de la mort qui tue', '');
 
 -- --------------------------------------------------------
 
@@ -193,7 +231,14 @@ CREATE TABLE IF NOT EXISTS `team_has_user` (
   `idTeam` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `team_has_user`
+--
+
+INSERT INTO `team_has_user` (`id`, `idTeam`, `idUser`) VALUES
+(1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -224,8 +269,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `last_name`, `first_name`, `city`, `birthday`, `email`, `password`, `favorite_sports`, `token`, `is_active`, `username`, `phone_number`, `avatar`, `dateCreated`) VALUES
-(2, 'bellec', 'renaud', '', '0000-00-00', 'renaud.bellec.3@gmail.com', 'ABVmdrEehFnsI', '', '496420b46c9f6ea8dc46920740922246', 1, 'renaud', '087956432', 'public/img/users/renaud.jpg', '2016-06-15 09:56:37'),
-(3, '', '', '', '0000-00-00', 'roland.kuku@gmail.com', 'ABVmdrEehFnsI', '', '47575ed20f508d1990c8ae0f11b8a489', 1, 'Roland', '0', '', '2016-06-19 18:45:55');
+(2, 'bellec', 'renaud', '', '0000-00-00', 'renaud.bellec.3@gmail.com', 'ABVmdrEehFnsI', '', '97a5de09d6182e30e16993170674d430', 1, 'renaud', '087956432', 'public/img/users/renaud.jpg', '2016-06-15 09:56:37'),
+(3, '', '', '', '0000-00-00', 'roland.kuku@gmail.com', 'ABVmdrEehFnsI', '', '0617f52a5165872fe786533a7cf93697', 1, 'Roland', '0', '', '2016-06-19 18:45:55');
 
 --
 -- Contraintes pour les tables exportées
@@ -237,6 +282,20 @@ INSERT INTO `users` (`id`, `last_name`, `first_name`, `city`, `birthday`, `email
 ALTER TABLE `discussions_users_pivot`
   ADD CONSTRAINT `discussions_users_pivot_ibfk_1` FOREIGN KEY (`discussion_id`) REFERENCES `discussions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `discussions_users_pivot_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Contraintes pour la table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`);
+
+--
+-- Contraintes pour la table `events_users_pivot`
+--
+ALTER TABLE `events_users_pivot`
+  ADD CONSTRAINT `events_users_pivot_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  ADD CONSTRAINT `events_users_pivot_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `messages`

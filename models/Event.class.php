@@ -222,8 +222,8 @@
         public function gatherUsers() {
             $pivot = new ManyToManyPivot(
                 $this->pivot_table,
-                "event_id",
-                "user_id",
+                "event",
+                "user",
                 $this->id
             );
             return $pivot->getData();
@@ -244,6 +244,35 @@
                 );
                 $pivot->save();
             }
+        }
+
+        /**
+         * Remove User from event
+         * @param [int] $id
+         */
+        public function removeUser($id) {
+            if (is_numeric(intval($id))) {
+                $pivot = new ManyToManyPivot(
+                    $this->pivot_table,
+                    "event",
+                    "user",
+                    $this->id,
+                    intval($id)
+                );
+                $pivot->delete();
+            }
+        }
+
+        /**
+         * return array with event's user ids
+         * @return [array]
+         */
+        public function getUsersId() {
+            $ids = [];
+            foreach ($this->gatherUsers() as $key => $user) {
+                $ids[] = $user["id"];
+            }
+            return $ids;
         }
 
         /**
