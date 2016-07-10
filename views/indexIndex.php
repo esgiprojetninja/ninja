@@ -3,11 +3,11 @@
         <div class="panel panel-primary2">
             <div class="panel-heading">10 last subscribers</div>
             <div class="panel-body">
-                <?php
-                    foreach($users as $user){
-                        echo $user['username'].'<br>';
-                    }
-                ?>
+                <ul>
+                    <?php foreach ($users as $key => $user): ?>
+                        <li><?= $user->getUsername(); ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
@@ -15,11 +15,11 @@
         <div class="panel panel-success">
             <div class="panel-heading">10 last teams</div>
             <div class="panel-body">
-                <?php
-                    foreach($teams as $team){
-                        echo $team['teamName'].'<br>';
-                    }
-                ?>
+                <ul>
+                    <?php foreach ($teams as $key => $team): ?>
+                        <li><?= $team->getTeamName(); ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
