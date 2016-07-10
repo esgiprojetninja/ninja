@@ -3,16 +3,16 @@
 ?>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="panel panel-primary">
             <div class="panel-body">
                 <table style="border: 2px solid black">
                     <tr>
-                        <td>Nom d'équipe</td>
-                        <td>Date de création</td>
+                        <td>Group Name</td>
+                        <td>Date of creation</td>
                         <td>Sports</td>
                         <td>Description</td>
-                        <td>Nombre de membres</td>
+                        <td>Number of members</td>
                     </tr>
                     <?php
                     foreach($teams as $team){
@@ -33,7 +33,7 @@
                     echo '<p align="center">Page : ';
                     for($i=1; $i<=$nombreDePages; $i++){
                          if($i==$pageActuelle){
-                             echo ' [ '.$i.' ] '; 
+                             echo ' [ '.$i.' ] ';
                          }else{
                               echo ' <a href='.WEBROOT.'team/list?page='.$i.'>'.$i.'</a> ';
                          }

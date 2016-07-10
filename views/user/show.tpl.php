@@ -12,7 +12,7 @@
             <?php else : ?>
             
             
-            <div class="panel-heading"><h3 class="upper center"> Informations</h3></div>
+            <div class="panel-heading"><h3 class="center header-li"> Informations profil <?php echo $user->getUsername(); ?></h3></div>
             
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>
@@ -21,24 +21,23 @@
             </div>
 
             <div class="panel-body">
-                <li class="center header-li"> informations :</li>
                 <div class="col-sm-6">
                     <ul class="header-ul">
                         <li class="li-list fa fa-user"> Personnal</li>
                         <li class="li-list">
-                            <span class="form-info">Your username :</span>
+                            <span class="form-info">Username : </span>
                             <span class="form-content"><?php echo $user->getUsername(); ?></span>
                         </li>
                         <li class="li-list">
-                            <span class="form-info">Your lastname :</span>
-                            <span class="form-content"><?php echo $user->getLastName(); ?></span>
-                        </li>
-                        <li class="li-list">
-                            <span class="form-info">Your firstname :</span>
+                            <span class="form-info">Firstname : </span>
                             <span class="form-content"><?php echo $user->getFirstName(); ?></span>
                         </li>
                         <li class="li-list">
-                            <span class="form-info">Your favorites sports :</span>
+                            <span class="form-info">Lastname : </span>
+                            <span class="form-content"><?php echo $user->getLastName(); ?></span>
+                        </li>
+                        <li class="li-list">
+                            <span class="form-info">Favorites sports : </span>
                             <span class="form-content"><?php echo $user->getFavoriteSports(); ?></span>
                         </li>
                     </ul>
@@ -47,28 +46,28 @@
                     <ul class="header-ul">
                         <li class="li-list"><span class=" fa fa-phone"></span> <span class=" fa fa-at"></span> Contact</li>
                         <li class="li-list">
-                           <span class="form-info">Email address :</span>
+                           <span class="form-info">Email address : </span>
                             <span class="form-content"><?php echo $user->getEmail(); ?></span>
                         </li>
                         <li class="li-list">
-                            <span class="form-info">Phone number :</span>
+                            <span class="form-info">Phone number : </span>
                             <span class="form-content"><?php echo $user->getPhoneNumber(); ?></span>
                         </li>
                         <li class="li-list">
-                            <span class="form-info">Location :</span>
+                            <span class="form-info">Location : </span>
                             <span class="form-content"><?php echo $user->getCity(); ?></span>
                         </li>
                     </ul>
                 </div>
                 <?php endif;?>
                 <div class="text-right">
-                    <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit your profile</a>
+                    <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary edit-button">Edit your profile</a>
                 </div>
             </div>
 
         </div>
         <div class="panel panel-primary">
-            <div class="panel-heading"><h3 class="upper center">Groups</h3></div>
+            <div class="panel-heading"><h3 class="center header-li">Groups</h3></div>
             <div class="panel-body">
                 <ul class="header-ul">
                     <?php
@@ -76,8 +75,8 @@
                         foreach ($teams as $team) {
                             $Team = Team::findById($team[1]);
                             echo '<li class="li-list"><a href=' . WEBROOT . 'team/show/' . $team[1] . '>';
-                            echo $Team->getTeamName() . "<br>";
-                            echo '</li></a>';
+                            echo "Group : " . $Team->getTeamName() . "</a> | Description : " . $Team->getDescription(). "<br>";
+                            echo '</li>';
                         }
                     }
                     ?>

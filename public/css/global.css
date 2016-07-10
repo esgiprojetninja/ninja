@@ -416,6 +416,10 @@ a{
 }
 
 .form-content {
-    color: #6C6599 ;
+    color: #433A4B ;
+    font-weight: bold;
+}
+
+.edit-button {
     font-weight: bold;
 }
