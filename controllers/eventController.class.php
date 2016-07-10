@@ -148,7 +148,7 @@ class eventController {
             header("location:" . WEBROOT . "event/list");
         } else {
             http_response_code(404);
-            echo "User not found";
+            echo "Event not found";
         }
     }
 
