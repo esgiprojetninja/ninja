@@ -189,7 +189,7 @@ class teamController
             $view = new View();
 
             $total = count($teams);//Nombre de team
-            $messagesParPage=7; //Nombre de messages par page
+            $messagesParPage=6; //Nombre de messages par page
             $nombreDePages=ceil($total/$messagesParPage);
 
             if(isset($_GET['page'])){

@@ -4,7 +4,20 @@
 
 <div class="row">
     <div class="col-sm-12">
+        <?php
+        echo '<p align="center">Page : ';
+        for($i=1; $i<=$nombreDePages; $i++){
+            if($i==$pageActuelle){
+                echo ' [ '.$i.' ] ';
+            }else{
+                echo ' <a href='.WEBROOT.'team/list?page='.$i.'>'.$i.'</a> ';
+            }
+        }
+        ?>
+        <a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your own now!</a>
+
                 <?php
+                echo '</p>';
                 if(!empty($teams)) {
                     foreach ($teams as $team) {
                         $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
@@ -41,10 +54,6 @@
                     }
                 }
                 ?>
-
-                <br>
-                <a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your now!</a>
-
         </div>
     </div>
 </div>
