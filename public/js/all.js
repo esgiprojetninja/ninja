@@ -19,7 +19,7 @@ $(function ($) {
         var $a = $(this);
         var id = $a.data("id");
         $.get('/notification/delete/' + id,function(){
-            $a.parent().remove();
+            //$a.parent().remove();
         });
     });
 
@@ -223,12 +223,12 @@ $(function ($) {
     $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
-        console.log(notifications);
         $("#listeNotifications").append("<li class=\"notifications-heading\">Notifications</li></ul><div id=\"tata>\"><ul id='scroll'>");
         for (var notification in notifications) {
-            $("#scroll").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
-            if (notifications[notification].opened){
-                $("#notif").attr("class", "notificationsLi opened");
+            if (notifications[notification].opened == 1){
+                $("#scroll").append("<li id=\"notif\" class=\"notificationsLi opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+            } else {
+                $("#scroll").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
                 nbNotifications++;
             }
         }
