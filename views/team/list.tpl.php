@@ -7,6 +7,7 @@
                 <?php
                 if(!empty($teams)) {
                     foreach ($teams as $team) {
+                        $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
                         echo '
                             <div class="col-sm-6">
                                 <div class="panel panel-primary">
@@ -31,7 +32,7 @@
                                             </li>
                                             <li class="li-list">
                                                 <span class="form-info">Number of numbers : </span>
-                                                <span class="form-content">'.$team->getId().'</span>
+                                                <span class="form-content">'.count($members).'</span>
                                             </li>
                                         </ul>  
                                     </div>
