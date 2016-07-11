@@ -223,7 +223,7 @@ $(function ($) {
     $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
-        $("#listeNotifications").append("<li class=\"notifications-heading\">Notifications</li></ul><div id=\"tata>\"><ul id='scroll'>");
+        $("#listeNotifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
             if (notifications[notification].opened == 1){
                 $("#scroll").append("<li id=\"notif\" class=\"notificationsLi opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
