@@ -74,9 +74,9 @@
                     if(!empty($teams)) {
                         foreach ($teams as $team) {
                             $Team = Team::findById($team[1]);
-                            echo '<li class="li-list"><a href=' . WEBROOT . 'team/show/' . $team[1] . '>';
-                            echo "Group : " . $Team->getTeamName() . "</a> | Description : " . $Team->getDescription(). "<br>";
-                            echo '</li>';
+                            echo '<li class="li-list"><span class="form-info">Group : </span>';
+                            echo "<a href=' . WEBROOT . 'team/show/' . $team[1] . '>" . $Team->getTeamName() . "</a>";
+                            echo "<span class=\"form-info\"> Description : </span>" . $Team->getDescription(). "<br></li>";
                         }
                     }
                     ?>
