@@ -434,3 +434,7 @@ a{
 .edit-button {
     font-weight: bold;
 }
+
+.panel-heading a{
+    color: white;
+}
