@@ -185,7 +185,7 @@ class teamController
 
     public function listAction($args){
         if(User::isConnected()){
-            $teams = Team::FindAll();
+            $teams = Team::FindAll(false,"teamName","*");
             $view = new View();
 
             $total = count($teams);//Nombre de team
