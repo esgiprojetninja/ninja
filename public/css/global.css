@@ -438,3 +438,7 @@ a{
 .panel-heading a{
     color: white;
 }
+
+.frame {
+    padding: 0px;
+}

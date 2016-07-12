@@ -24,7 +24,7 @@
                         <div class="panel-body">
                             <form class="ajax-form" action="' .  WEBROOT .'team/list/" method="POST" >
                                 <div class="input-grp">
-                                     <input class="form-control" type="text" name="text-ajax" placeholder="Type something :)">
+                                     <input class="form-control" type="text" name="text-ajax" placeholder="Type something :)" id="search-team">
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-primary" type="submit">OK</button>
@@ -35,8 +35,8 @@
                 </div>'
             ;
 
-
             if(!empty($teams)) {
+                echo '<div class="col-sm-12 frame">';
                 foreach ($teams as $team) {
                     $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
                     echo '
@@ -71,6 +71,7 @@
                         </div>'
                     ;
                 }
+                echo '</div>';
             }
         ?>
         </div>
