@@ -3,70 +3,54 @@
 class Rating extends basesql{
 	
 	protected $id;
-	protected $table = "user_score";
+	protected $table = "rating";
 	protected $idUser;
-	protected $promote = 0;
-	protected $idUserLastPromote;
-	protected $demote = 1;
-	protected $idUserLastDemote;
-	protected $ratio = 0;
+	protected $idFor;
+	protected $type;
+	protected $date;
 
 	protected $columns = [
-		"id", // id rate
-		"idUser", // user concerne
-		"promote", // appreciation
-		"idUserLastPromote",
-		"demote", // depreciation
-		"idUserLastDemote",
-		"ratio"
+		"id", // id row
+		"id_user", // user connecte $id
+		"id_for", // user connecte $idUser
+		"type",
+		"date"
 	];
 
 	public function __construct(){
 		parent::__construct();
 	}
 
-	public function getId() {
-		return $this->id;
-	}
-
 	public function getIdUser(){
 		return $this->idUser;
 	}
 
-	public function getPromote(){
-		return $this->promote;
+	public function getIdFor(){
+		return $this->idFor;
 	}
 	
-	public function getIdUserLastPromote(){
-		return $this->idUserLastPromote;	
+	public function getType(){
+		return $this->type;	
 	}
 
-	public function getDemote(){
-		return $this->demote;
-	}
-
-	public function getIdUserLastDemote(){
-		return $this->idUserLastDemote;	
-	}
-
-	public function getRatio(){
-		return $this->ratio;
+	public function getDate(){
+		return $this->date;
 	}
 
 	public function setIdUser($idUser){
 		$this->idUser = $idUser;
 	}
 
-	public function setPromote($promote){
-		$this->promote = $promote;
+	public function setIdFor($idFor){
+		$this->idFor = $idFor;
 	}
 
-	public function setDemote($demote){
-		$this->demote = $demote;
+	public function setType($type){
+		$this->type = $type;
 	}
 
-	public function setRatio($ratio){
-		$this->ratio = $ratio;
+	public function setDate($date){
+		$this->date = $date;
 	}
 
 	public function getForm($formType){
@@ -82,8 +66,6 @@ class Rating extends basesql{
 					],
 					"demote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>"demote", "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
-					"ratio"=>[ "type"=>"text", "class"=>"", "value"=> $this->getRatio(), "placeholder"=>"", "required"=>0, "disabled"=>1, "msgerror"=>"vote"
-					],
 					"form-type" => ["type" => "hidden", "value" => "ratingForm", "placeholder" => "", "required" => 0, "msgerror" => "hidden_input", "class" => ""
 					]
 				]
@@ -96,31 +78,38 @@ class Rating extends basesql{
 	public static function rating(){
 		var_dump($_POST);
 		
-		if(isset($_POST['promote'])){
+		
+    	if(User::isConnected() && !empty($args[0])){
 			
-			$user = new User();
-			$id = $user->getId();
+			$user = self::findById($args[0]);
 
-			$rate = new Rating();
-			
-			$rate->setIdUser($id);
-			
+			if(isset($_POST['promote'])){
+					
+				$type = $_POST['promote'];
 
-			$promote = $rate->getPromote();
-			$newPromote =  $promote + 1;
+				$noted = new Rating();
+				$noted->setIdUser(1);
+				$noted->setIdFor(1);
+				$noted->setType($type);
+				$noted->save();
 
-			$demote = $rate->getDemote();
+				return True;
 
-			$ratio = $promote / $demote;
+			}else if(isset($_POST['demote'])){
 
-			$rate->setRatio($ratio);
+				$type = $_POST['demote'];
 
-			$rate->setPromote($newPromote);
-			$rate->save();
+				$noted = new Rating();
+				$noted->setType(2);
+				$noted->setIdFor(2);
+				$noted->setType($type);
+				$noted->save();
 
-			return True;
-		}else{
-			echo "tepu";
+				return True;
+
+			}else{
+				echo "tepu";
+			}
 		}
 	}
 	

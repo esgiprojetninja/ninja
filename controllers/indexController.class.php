@@ -20,15 +20,15 @@ class indexController
             $invitations = Invitation::findBy(["idUserInvited","state"],[$_SESSION['user_id'],0],['int','int'],false);
             $view->assign("invitations",$invitations);
 
-            $rate = new Rating();
-			$formRating = $rate->getForm("rating");
+            $note = new Rating();
+			$formRating = $note->getForm("rating");
 			
 			$view->assign("formRating", $formRating);
 
             $ratingErrors = [];
 			$view->assign("ratingErrors", $ratingErrors);
             
-            if($rate->rating()){
+            if($note->rating()){
             	echo "ENJOY !";
             }
 
