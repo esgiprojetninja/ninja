@@ -13,7 +13,7 @@
             
             
             <div class="panel-heading"><h3 class="center header-li"> Informations profil <?php echo $user->getUsername(); ?></h3></div>
-            
+
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>
                     <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
@@ -21,6 +21,7 @@
             </div>
 
             <div class="panel-body">
+                <div class="col-sm-12">
                 <div class="col-sm-6">
                     <ul class="header-ul">
                         <li class="li-list fa fa-user"> Personnal</li>
@@ -58,6 +59,7 @@
                             <span class="form-content"><?php echo $user->getCity(); ?></span>
                         </li>
                     </ul>
+                </div>
                 </div>
                 <?php endif;?>
                 <div class="text-right">

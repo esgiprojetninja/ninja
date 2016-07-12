@@ -18,6 +18,28 @@
 
                 <?php
                 echo '</p>';
+
+
+                echo '
+    <div class="col-sm-12">
+        <div class="panel">
+        <div class="panel-heading"><h3 class="center header-li "> Find a group right now ! </h3></div>
+            <div class="panel-body">
+                <form class="ajax-form" action="' .  WEBROOT .'team/list/" method="POST" >
+                    <div class="input-grp">
+                        <input class="form-control" type="text" name="text-ajax" placeholder="Type something :)">
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit">
+                            OK
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>';
+
+
                 if(!empty($teams)) {
                     foreach ($teams as $team) {
                         $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
