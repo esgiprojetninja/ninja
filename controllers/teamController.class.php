@@ -185,7 +185,7 @@ class teamController
 
     public function listAction($args){
         if(User::isConnected()){
-            $teams = Team::FindAll(false,"teamName","*");
+            $teams = Team::FindAll();
             $view = new View();
 
             $total = count($teams);//Nombre de team
@@ -203,7 +203,7 @@ class teamController
             }
             $premiereEntree=($pageActuelle-1)*$messagesParPage;
             // La requête sql pour récupérer les messages de la page actuelle.
-            $retour_messages= Team::findAll([$premiereEntree,$messagesParPage],'id');
+            $retour_messages= Team::findAll([$premiereEntree,$messagesParPage],'teamName', "*", "ASC");
 
             $view->assign('pageActuelle', $pageActuelle);
             $view->assign('nombreDePages',$nombreDePages);

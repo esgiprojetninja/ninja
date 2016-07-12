@@ -26,13 +26,13 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findAll($limit = false, $orderBy = false, $column = "*") {
+	public static function findAll($limit = false, $orderBy = false, $column = "*", $orderWay="ASC") {
 		$instance = new static;
 
 		$sql = "SELECT ".$column." FROM ".$instance->table;
 
 		if($orderBy != false){
-			$sql = $sql . " order by " . $orderBy . " DESC";
+			$sql = $sql . " order by " . $orderBy . " ". $orderWay;
 		}
 		if(is_array($limit)){
 			if($limit != false){
