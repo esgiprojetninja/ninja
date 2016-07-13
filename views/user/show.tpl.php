@@ -12,7 +12,7 @@
             <?php else : ?>
             
             
-            <div class="panel-heading"><h3 class="center header-li"> Informations profil <?php echo $user->getUsername(); ?></h3></div>
+            <div class="panel-heading"><h3 class="center header-li"> Informations <?php echo $user->getUsername(); ?>'s profile</h3></div>
 
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>

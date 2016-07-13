@@ -55,10 +55,4 @@
             </div>
         </div>
     <?php endif;?>
-
-    <?php
-    // Pour créer une notif test
-    //Notification::createNotification("blah blah notification de l'user ".$_SESSION['user_id']);
-    ?>
-
 </div>
