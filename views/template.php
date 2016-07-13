@@ -40,7 +40,7 @@
                     <span class="fa fa-calendar-check-o"></span>
                 </a>
                 <div class="item dropdown header-burger ico row" id="popin-notifications">
-                    <span class="icon-menu fa fa-flag-o" id="notification-icon"></span>
+                    <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
                 </div>
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
                     <span class="fa fa-envelope-o"></span>

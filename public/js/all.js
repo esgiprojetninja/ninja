@@ -224,23 +224,21 @@ $(function ($) {
         var width = $( window ).width();
         width = $( window ).width()/2;
         $("#liste-notifications").css("width", width);
-        console.log(width);
     });
     $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
-            console.log(notification);
             if (notifications[notification].opened == 1){
                 $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             } else {
-                $("#scroll").append("<li id=\"notif\" class=\"notifications-li notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
                 nbNotifications++;
             }
         }
         if(nbNotifications != 0){
-            $("#notification-icon").attr("class", "icon-menu fa fa-flag");
+            $("#notification-icon").attr("class", "icon-menu fa fa-bell");
         }
         $("#popin-notifications").append("</ul></div>");
     })
