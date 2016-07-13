@@ -221,8 +221,7 @@ function showMessage(msg, code) {
 $(function ($) {
     var width = $( window ).width()/2;
     $( window ).resize(function() {
-        var width = $( window ).width();
-        width = $( window ).width()/2;
+        var width = $( window ).width()/2;
         $("#liste-notifications").css("width", width);
     });
     $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");

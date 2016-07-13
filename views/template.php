@@ -39,7 +39,7 @@
                 <a href="<?= WEBROOT; ?>event/list" class="item">
                     <span class="fa fa-calendar-check-o"></span>
                 </a>
-                <div class="item dropdown header-burger ico row" id="popin-notifications">
+                <div class="item dropdown header-burger icon" id="popin-notifications">
                     <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
                 </div>
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
