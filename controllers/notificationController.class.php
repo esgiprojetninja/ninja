@@ -39,7 +39,6 @@ class notificationController
 	{
 		header('Content-Type: application/json');
 		$notifications = Notification::findBy(["id_user"],[$_SESSION['user_id']],['int','int'],false,true,"id","DESC");
-		//$notifications = Notification::findAll(false,true,"id");
 		echo json_encode($notifications);
 	}
 

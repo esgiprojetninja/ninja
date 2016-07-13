@@ -15,11 +15,10 @@ $(document).on("click", function (e) {
 
 $(function ($) {
     // notifications
-    $('#popinNotifications').on("click","a", function() {
+    $('#popin-notifications').on("click","a", function() {
         var $a = $(this);
         var id = $a.data("id");
         $.get('/notification/delete/' + id,function(){
-            //$a.parent().remove();
         });
     });
 
@@ -220,24 +219,23 @@ function showMessage(msg, code) {
  ****************************/
 
 $(function ($) {
-    $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
+    $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications'>");
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
-        console.log(notifications);
-        $("#listeNotifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
+        $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
             console.log(notification);
             if (notifications[notification].opened == 1){
-                $("#scroll").append("<li id=\"notif\" class=\"notificationsLi opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             } else {
-                $("#scroll").append("<li id=\"notif\" class=\"notificationsLi notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li notOpened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
                 nbNotifications++;
             }
         }
         if(nbNotifications != 0){
-            $("#notificationIcon").attr("class", "icon-menu fa fa-flag");
+            $("#notification-icon").attr("class", "icon-menu fa fa-flag");
         }
-        $("#popinNotifications").append("</ul></div>");
+        $("#popin-notifications").append("</ul></div>");
     })
 });
 
