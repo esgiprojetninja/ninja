@@ -48,17 +48,11 @@
                             echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation['dateInvited']." : ".$invitation['message'];
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="joinTeam">Join</a>';
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
-
                         }
                     ?>
                 </div>
             </div>
         </div>
     <?php endif;?>
-
-    <?php
-    // Pour créer une notif test
-    //Notification::createNotification("blah blah notification de l'user ".$_SESSION['user_id']);
-    ?>
 
 </div>

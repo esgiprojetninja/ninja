@@ -166,6 +166,8 @@ class teamController
                         $invitation->setIdTeamInviting($args[0]);
                         $invitation->setIdUserInvited($id_user_invited->getId());
                         $invitation->save();
+                        $message= $now." : the team ".$team->getTeamName()."  has invited you";
+                        Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$invitation->getIdTeamInviting());
                         $view->assign("success","Utilisateur invité !");
                     }else{
                         $view->assign("error","Utilisateur inexistant");
@@ -244,6 +246,9 @@ class teamController
             if($userToPromote->getCaptain() < 2 ){
                 $userToPromote->setCaptain($userToPromote->getCaptain()+1);
                 $userToPromote->save();
+                $peoples = TeamHasUser::findAll();
+                echo $peoples;
+                //Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$invitation->getIdTeamInviting());
             }
         }else{
             //A voir la redirection
@@ -259,6 +264,7 @@ class teamController
             }
             Admin::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
             TeamHasUser::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
+            Notification::createNotification($id_user=$args['idUser'],$message="You've got rekt of the group ".$args['idTeam']." bro !",$action=WEBROOT);
         }else{
             //A voir la redirection
             header('Location:'.WEBROOT.'user/login');
