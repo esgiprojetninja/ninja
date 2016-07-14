@@ -31,6 +31,10 @@ form .input-grp .control-label {
     font-size: 1.1em;
 }
 
+form .input-grp-inl{
+    display: inline-block;
+}
+
 form .input-grp .hintBox {
     color: #328396;
     padding: 5px;

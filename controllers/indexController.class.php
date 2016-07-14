@@ -20,6 +20,18 @@ class indexController
             $invitations = Invitation::findBy(["idUserInvited","state"],[$_SESSION['user_id'],0],['int','int'],false);
             $view->assign("invitations",$invitations);
 
+            $note = new Rating();
+			$formRating = $note->getForm("rating");
+			
+			$view->assign("formRating", $formRating);
+
+            $ratingErrors = [];
+			$view->assign("ratingErrors", $ratingErrors);
+            
+            if($note->rating()){
+            	echo "ENJOY !";
+            }
+
 		} else {
 	   		header("location: ".WEBROOT."user/subscribe");
 		}
