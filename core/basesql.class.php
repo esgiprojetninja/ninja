@@ -75,12 +75,12 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC", $like=false) {
+	public static function findBy($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
 		$instance = new static;
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
 			$sql = "SELECT * FROM "
-			.$instance->table." WHERE ";
+				.$instance->table." WHERE ";
 			for($i=0;$i<count($column);$i++){
 				if($i == 0){
 					$sql = $sql . $column[$i];
@@ -89,18 +89,10 @@ class basesql extends PDO
 				}
 
 				if ($valueType[$i] == "string") {
-					if ($like == true){
-						$sql = $sql." LIKE '%'".$value[$i]."'%'";
-					} else {
-						$sql = $sql."='".$value[$i]."'";
-					}
+					$sql = $sql."='".$value[$i]."'";
 				}
 				else if ($valueType[$i] == "int") {
-					if ($like == true){
-						$sql = $sql." LIKE '%".$value[$i]."%'";
-					} else {
-						$sql = $sql."=".$value[$i];
-					}
+					$sql = $sql."=".$value[$i];
 				}
 
 				if($i+1 == count($column)){
@@ -116,36 +108,20 @@ class basesql extends PDO
 			$query->execute();
 		}else{ //Sinon on fait une simple requete sur une colonne
 			$sql = "SELECT * FROM "
-			.$instance->table." WHERE "
-			.$column;
+				.$instance->table." WHERE "
+				.$column;
 			if ($valueType == "string") {
 				if ($Orderby==true){
-					if ($like == true){
-						$sql = $sql." LIKE '%'".$value."'%' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-					} else {
-						$sql = $sql."='".$value."' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-					}
+					$sql = $sql."='".$value."' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
 				} else{
-					if ($like == true){
-						$sql = $sql." LIKE '%'".$value."'%';";
-					} else {
-						$sql = $sql."='".$value."';";
-					}
-				}				
+					$sql = $sql."='".$value."';";
+				}
 			}
 			else if ($valueType == "int") {
 				if ($Orderby==true){
-					if ($like == true){
-						$sql = $sql." LIKE '%".$value."%' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-					} else {
-						$sql = $sql."=".$value." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-					}
+					$sql = $sql."=".$value." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
 				} else{
-					if ($like == true){
-						$sql = $sql." LIKE '%".$value."%';";
-					} else {
-						$sql = $sql."=".$value.";";
-					}
+					$sql = $sql."=".$value.";";
 				}
 			}
 			$query = $instance->pdo->prepare($sql);
