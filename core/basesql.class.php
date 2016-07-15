@@ -75,7 +75,7 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType, $fetch=true) {
+	public static function findBy($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
 		$instance = new static;
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
@@ -96,7 +96,11 @@ class basesql extends PDO
 				}
 
 				if($i+1 == count($column)){
-					$sql = $sql.";";
+					if ($Orderby==true){
+						$sql = $sql." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
+					} else{
+						$sql = $sql." ;";
+					}
 				}
 
 			}
@@ -107,10 +111,18 @@ class basesql extends PDO
 			.$instance->table." WHERE "
 			.$column;
 			if ($valueType == "string") {
-				$sql = $sql."='".$value."';";
+				if ($Orderby==true){
+					$sql = $sql."='".$value."' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
+				} else{
+					$sql = $sql."='".$value."';";
+				}				
 			}
 			else if ($valueType == "int") {
-				$sql = $sql."=".$value.";";
+				if ($Orderby==true){
+					$sql = $sql."=".$value." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
+				} else{
+					$sql = $sql."=".$value.";";
+				}
 			}
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();

@@ -10,6 +10,7 @@ class Notification extends basesql
 	protected $type;
 	protected $opened = 0;
 	protected $message = "";
+	protected $action;
 
 	protected $columns = [
 		"id",
@@ -17,7 +18,8 @@ class Notification extends basesql
 		"datetime",
 		"type",
 		"opened",
-		"message"
+		"message",
+		"action"
 	];
 
 	//Oui
@@ -44,6 +46,9 @@ class Notification extends basesql
 	public function getMessage() {
 		return $this->message;
 	}
+	public function getAction() {
+		return $this->action;
+	}
 
 	//Setteurs
 	public function setId($id) {
@@ -64,18 +69,21 @@ class Notification extends basesql
 	public function setMessage($message) {
 		$this->message = $message;
 	}
+	public function setAction($action) {
+		$this->action = $action;
+	}
 
-	public static function createNotification($msg)
+	public static function createNotification($id_user,$message,$action)
 	{
 
 		$notification = new Notification();
 
-		$notification->setId_user($_SESSION['user_id']);
+		$notification->setId_user($id_user);
 		$notification->setDatetime(date("Y-m-d H:i:s"));
 		$notification->setType(1);
 		$notification->setOpened(0);
-		$notification->setMessage($msg);
-		//$notification->setMessage('Notification');
+		$notification->setMessage($message);
+		$notification->setAction($action);
 
 		$notification->save();
 

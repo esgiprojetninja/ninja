@@ -170,10 +170,37 @@ header .icon .text {
 
 }
 
-.notifications {
-    color: #000000;
-    min-width: 450px!important;
+.global{
+    background-color: #EBAB51;
+    color: white;
+    font-size: 18px;
+}
+
+.notifications-li {
+    color: white;
     font-size: 15px;
+}
+
+.not-opened {
+    background-color: #FFE2B8;
+}
+
+.opened {
+    background-color: white;
+}
+
+#liste-notifications{
+    margin-left: 75px;
+    margin-top: -45px;
+    border: black;
+    color: #000000;
+    font-size: 15px;
+}
+
+#scroll{
+    max-height: 320px;
+    overflow: auto;
+    margin-left: -40px;
 }
 
 .dropdown .dropdown-menu.right {
@@ -191,7 +218,7 @@ header .icon .text {
 
 .dropdown .dropdown-menu li {
     padding: 5px;
-    height: 30px;
+    min-height: 30px;
     transition-property: all;
     transition-duration: 0.5s;
 }
@@ -202,7 +229,6 @@ header .icon .text {
 
 .dropdown .dropdown-menu li:hover a {
     color: #FFFFFF;
-    line-height: 30px;
 }
 
 .dropdown .dropdown-menu li a {
