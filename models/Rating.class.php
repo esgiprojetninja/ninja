@@ -12,7 +12,7 @@ class Rating extends basesql{
 	protected $columns = [
 		"id", // id row
 		"id_user", // user connecte $id
-		"id_for", // user connecte $idUser
+		"id_for", // user pour qui je vote
 		"type",
 		"date"
 	];
@@ -62,7 +62,7 @@ class Rating extends basesql{
 				"buttonTxt" => "",
 				"options" => ["method" => "POST", "action" => WEBROOT],
 				"struct" => [
-					"promote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>"promote", "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
+					"promote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>User., "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
 					"demote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>"demote", "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
@@ -78,40 +78,26 @@ class Rating extends basesql{
 	public static function rating(){
 		var_dump($_POST);
 		
-		
-    	if(User::isConnected() && !empty($args[0])){
-			
-			$user = self::findById($args[0]);
+        if( User::isConnected() && !empty($args[0]) ){
+            if(isset($_POST['promote'])){
 
-			if(isset($_POST['promote'])){
-					
-				$type = $_POST['promote'];
+            	$userWhoPromote = User::findById($arg[0]);
 
+            	// ICI J'AIMERAIS trouver le user pour qui je vote grace au bouton : $_POST['promote'] = 'id_user_pour_qui_je_vote'
+        		
 				$noted = new Rating();
-				$noted->setIdUser(1);
-				$noted->setIdFor(1);
-				$noted->setType($type);
+				$noted->setIdUser($args[0]);
+				$noted->setType('promote');
+				$noted->setIdFor('id_user_pour_qui_je_vote');
 				$noted->save();
+        	}else if(isset($_POST['demote'])){
 
-				return True;
+        	}
+        }else{
 
-			}else if(isset($_POST['demote'])){
-
-				$type = $_POST['demote'];
-
-				$noted = new Rating();
-				$noted->setType(2);
-				$noted->setIdFor(2);
-				$noted->setType($type);
-				$noted->save();
-
-				return True;
-
-			}else{
-				echo "tepu";
-			}
-		}
-	}
+            header('Location:'.WEBROOT);
+        }
+    
 	
 
 }
