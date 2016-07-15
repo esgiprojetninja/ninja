@@ -10,40 +10,17 @@
     }
     ?>
     <a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your own now!</a></p>
-
-
-    <div class="col-sm-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h3 class="center header-li "> Find a group right now ! </h3></div>
-        </div>
+    <div align="center">
+        <h3 class="center header-li ">Or find one :</h3>
+        <input type="text" id="search-team">
+        <select id="select-criteria">
+            <option value="id">By all criteria</option>
+            <option value="teamName">By name</option>
+            <option value="sport">By sport</option>
+            <option value="creator">By creator</option>
+        </select>
     </div>
-    <div class="col-sm-12">
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <p align="center">By name</p>
-            <input>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <p align="center">By name</p>
-            <input>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <p align="center">By name</p>
-            <input>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <p align="center">By name</p>
-            <input>
-        </div>
-    </div>
-    </div>
-
+    <div class="col-sm-12" id="search-team-results">
     <?php
     $teams = $this->data["teams"];
     if(!empty($teams)) {
@@ -83,6 +60,7 @@
         }
     }
     ?>
+    </div>
 
 </div>
 

@@ -217,6 +217,18 @@ class teamController
         }
     }
 
+    public function searchAction($args)
+    {
+        header('Content-Type: application/json');
+        $args = implode(",", $args);
+        $args = explode(",", $args);
+        $args1 = $args[0];
+        $args2 = $args[1];
+        $args3 = $args[2];
+        $teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC");
+        echo json_encode($teams);
+    }
+
     public function demoteAction($args){
         if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
             $admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
@@ -225,7 +237,7 @@ class teamController
             }
             $userToDemote = Admin::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
             // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
-            if($userToDemote->getCaptain() == 1 ){
+            if($userToDemote->getCaptain() == 1){
                 $userToDemote->setCaptain($userToDemote->getCaptain()-1);
                 $userToDemote->save();
             }

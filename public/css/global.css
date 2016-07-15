@@ -468,3 +468,11 @@ a{
 .frame {
     padding: 0px;
 }
+
+/**********************
+    -- Search box --
+**********************/
+
+#search-team-results {
+    padding-top: 15px;
+}

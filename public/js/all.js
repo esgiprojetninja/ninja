@@ -225,7 +225,7 @@ $(function ($) {
         $("#liste-notifications").css("width", width);
     });
     $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");
-    $.getJSON( webrootJs+"notification/list", function(notifications) {
+    $.getJSON(webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
@@ -377,3 +377,42 @@ $(function ($) {
         $(ev.target).parent().find(".hintBox").remove();
     });
 });
+
+/***************************
+ -- Search box --
+ ****************************/
+
+$(function ($) {
+    $("#search-team").keyup(function(){
+        var search = $('#search-team').val();
+        var select = $('#select-criteria').val();
+        var type;
+        if (select == "id"){
+            type = "int";
+        } else {
+            type = "string";
+        }
+        var arraySearch = [select,search,type];
+        //console.log(arraySearch);
+        //var arraySearch = ["id","1","int"];
+        //console.log(arraySearch);
+        if (search != "") {
+            $("#search-team-results").hide();
+            $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
+                console.log(teams);
+                if (teams != null){
+                    for (var team in teams) {
+                        console.log(teams[team].teamName);
+                        console.log(teams[team].id);
+                        console.log(teams[team].dateCreated);
+                    }
+                }  else {
+                console.log("No Results founds !");
+                }
+            });
+        } else {
+            $("#search-team-results").show();
+        }
+    });
+});
+
