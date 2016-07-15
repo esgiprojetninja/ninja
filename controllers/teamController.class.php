@@ -225,7 +225,7 @@ class teamController
         $args1 = $args[0];
         $args2 = $args[1];
         $args3 = $args[2];
-        $teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC");
+        $teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC",true);
         echo json_encode($teams);
     }
 

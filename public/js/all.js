@@ -395,6 +395,7 @@ $(function ($) {
         var arraySearch = [select,search,type];
         if (search != "") {
             $("#all-teams").hide();
+            $("#pages").hide();
             $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
                 var nbTeams =0;
                     for (var team in teams) {
@@ -441,6 +442,7 @@ $(function ($) {
         } else {
             $( "#search-team-results" ).empty();
             $("#all-teams").show();
+            $("#pages").show();
         }
     });
 });

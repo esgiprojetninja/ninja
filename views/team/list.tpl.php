@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
     <?php
-    echo '<p align="center">Page : ';
+    echo '<p align="center" id="pages">Page : ';
     for($i=1; $i<=$nombreDePages; $i++){
         if($i==$pageActuelle){
             echo ' [ '.$i.' ] ';
@@ -8,13 +8,13 @@
             echo ' <a href='.WEBROOT.'team/list?page='.$i.'>'.$i.'</a> ';
         }
     }
-    ?>
-    <a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your own now!</a></p>
+    ?></p>
+    <p align="center"><a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your own now!</a></p>
     <div align="center">
         <h3 class="center header-li ">Or find one :</h3>
         <input type="text" id="search-team">
         <select id="select-criteria">
-            <option value="">By all criteria</option>
+            <option value="id">By all criteria</option>
             <option value="teamName" selected>By name</option>
             <option value="sport">By sport</option>
             <option value="creator">By creator</option>
