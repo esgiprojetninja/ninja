@@ -15,7 +15,7 @@
         <input type="text" id="search-team">
         <select id="select-criteria">
             <option value="">By all criteria</option>
-            <option value="teamName">By name</option>
+            <option value="teamName" selected>By name</option>
             <option value="sport">By sport</option>
             <option value="creator">By creator</option>
         </select>

@@ -396,23 +396,51 @@ $(function ($) {
         if (search != "") {
             $("#all-teams").hide();
             $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
-                console.log(teams);
-                if (teams != null){
+                var nbTeams =0;
                     for (var team in teams) {
                         $( "#search-team-results" ).empty();
-
-                        $("#search-team-results").append('<div class="col-sm-6"><h3 class="center header-li ">toto</h3></div>');
-
-                        console.log(teams[team].teamName);
-                        console.log(teams[team].id);
-                        console.log(teams[team].dateCreated);
+                        $("#search-team-results").append('<div class="col-sm-6">' +
+                            '                            <div class="panel panel-primary">' +
+                            '                            <div class="panel-heading"><h3 class="center header-li "><a href="'+webrootJs+'team/show/'+teams[team].teamName+'"> Group '+teams[team].teamName+'</a></h3></div>' +
+                            '                            <div class="panel-body">' +
+                            '                            <ul class="header-ul">' +
+                            '                            <li class="li-list">' +
+                            '                            <span class="form-info">Name : </span>' +
+                            '                        <span class="form-content">'+teams[team].teamName+'</span>' +
+                        '                            </li>' +
+                        '                            <li class="li-list">' +
+                        '                            <span class="form-info">Date Of Creation : </span>' +
+                        '                        <span class="form-content">'+teams[team].dateCreated+'</span>' +
+                        '                            </li>' +
+                        '                            <li class="li-list">' +
+                        '                            <span class="form-info">Sports : </span>' +
+                        '                        <span class="form-content">'+teams[team].sports+'</span>' +
+                        '                            </li>' +
+                        '                            <li class="li-list">' +
+                        '                            <span class="form-info">Description : </span>' +
+                        '                        <span class="form-content">'+teams[team].description+'</span>' +
+                        '                            </li>' +
+                        '                            <li class="li-list">' +
+                        '                            <span class="form-info">Number of numbers : </span>' +
+                        '                        <span class="form-content">'+teams[team].teamName+'</span>' +
+                        '                            </li>' +
+                        '                            </ul>' +
+                        '                            </div>' +
+                        '                            </div>' +
+                        '                            </div>'
+                    );
+                        nbTeams++;
                     }
-                }  else {
-                console.log("No Results founds !");
+                if (nbTeams ==0) {
+                    $( "#search-team-results" ).empty();
+                    $("#search-team-results").append('<div class="col-sm-12">' +
+                        '                            <div class="panel panel-primary">' +
+                        '                            <div class="panel-heading"><h3 class="center header-li ">No Group found</a></h3></div></div>');
                 }
             });
         } else {
-            $("#search-team-results").show();
+            $( "#search-team-results" ).empty();
+            $("#all-teams").show();
         }
     });
 });
