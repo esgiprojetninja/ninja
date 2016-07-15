@@ -393,15 +393,16 @@ $(function ($) {
             type = "string";
         }
         var arraySearch = [select,search,type];
-        //console.log(arraySearch);
-        //var arraySearch = ["id","1","int"];
-        //console.log(arraySearch);
         if (search != "") {
-            $("#search-team-results").hide();
+            $("#all-teams").hide();
             $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
                 console.log(teams);
                 if (teams != null){
                     for (var team in teams) {
+                        $( "#search-team-results" ).empty();
+
+                        $("#search-team-results").append('<div class="col-sm-6"><h3 class="center header-li ">toto</h3></div>');
+
                         console.log(teams[team].teamName);
                         console.log(teams[team].id);
                         console.log(teams[team].dateCreated);

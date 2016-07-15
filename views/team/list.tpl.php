@@ -14,13 +14,15 @@
         <h3 class="center header-li ">Or find one :</h3>
         <input type="text" id="search-team">
         <select id="select-criteria">
-            <option value="id">By all criteria</option>
+            <option value="">By all criteria</option>
             <option value="teamName">By name</option>
             <option value="sport">By sport</option>
             <option value="creator">By creator</option>
         </select>
     </div>
-    <div class="col-sm-12" id="search-team-results">
+    <div id="search-team-results""></div>
+        
+    <div class="col-sm-12" id="all-teams">
     <?php
     $teams = $this->data["teams"];
     if(!empty($teams)) {
