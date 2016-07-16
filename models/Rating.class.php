@@ -13,7 +13,7 @@ class Rating extends basesql{
 		"id", // id row
 		"id_user", // user connecte $id
 		"id_for", // user pour qui je vote
-		"type",
+		"type", // promote or demote
 		"date"
 	];
 
@@ -54,17 +54,18 @@ class Rating extends basesql{
 	}
 
 	public function getForm($formType){
-
 		$form = [];
+
 		if ($formType == "rating") {
 			$form = [
 				"title" => "rating",
 				"buttonTxt" => "",
-				"options" => ["method" => "POST", "action" => WEBROOT],
+				"options" => ["method" => "POST", "action" => WEBROOT
+				],
 				"struct" => [
-					"promote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>User., "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
+					"promote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>$promote, "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
-					"demote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>"demote", "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
+					"demote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>$demote, "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
 					"form-type" => ["type" => "hidden", "value" => "ratingForm", "placeholder" => "", "required" => 0, "msgerror" => "hidden_input", "class" => ""
 					]
@@ -76,30 +77,26 @@ class Rating extends basesql{
 	}
 
 	public static function rating(){
-		var_dump($_POST);
-		
-        if( User::isConnected() && !empty($args[0]) ){
+
+        if( User::isConnected()){
             if(isset($_POST['promote'])){
 
-            	$userWhoPromote = User::findById($arg[0]);
+            	$userToPromote = User::findById($_SESSION['user_id']);
 
-            	// ICI J'AIMERAIS trouver le user pour qui je vote grace au bouton : $_POST['promote'] = 'id_user_pour_qui_je_vote'
-        		
-				$noted = new Rating();
-				$noted->setIdUser($args[0]);
-				$noted->setType('promote');
-				$noted->setIdFor('id_user_pour_qui_je_vote');
-				$noted->save();
+            	$userPromote = $_POST['promote'];
+
+            	self::setIdUser($userToPromote);
+            	self::setIdFor($userPromote);
+				// var_dump($userToPromote);
+				// var_dump($userPromote);
+
         	}else if(isset($_POST['demote'])){
 
         	}
-        }else{
-
-            header('Location:'.WEBROOT);
-        }
-    
+        
+    	}
+	}
 	
 
 }
 
-?>
