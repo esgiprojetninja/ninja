@@ -45,6 +45,9 @@
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
                     <span class="fa fa-envelope-o"></span>
                 </a>
+                <a href="<?= WEBROOT; ?>rss/flux" class="item">
+                    <span class="fa fa-rss-square"></span>
+                </a>
             </div>
             <div class="items-down items">
 
