@@ -37,7 +37,7 @@ class View
 	}
 
 	public function createRss($rss){
-		include "views/rss.inc.php";
+		include "views/rss.inc.xml";
 	}
 
 	public function __destruct()
