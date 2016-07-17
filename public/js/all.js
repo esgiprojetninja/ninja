@@ -396,9 +396,13 @@ $(function ($) {
         if (search != "") {
             $("#all-teams").hide();
             $("#pages").hide();
-            $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
+            $.getJSON(webrootJs+"team/search", function(teams) {
                 var nbTeams =0;
+                //console.log(teams);
                     for (var team in teams) {
+                        console.log(teams[team].teamName);
+                        console.log(teams[team].dateCreated);
+                        console.log(teams[team].teamName);
                         $( "#search-team-results" ).empty();
                         $("#search-team-results").append('<div class="col-sm-6">' +
                             '                            <div class="panel panel-primary">' +

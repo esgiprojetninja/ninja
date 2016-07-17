@@ -220,12 +220,13 @@ class teamController
     public function searchAction($args)
     {
         header('Content-Type: application/json');
-        $args = implode(",", $args);
-        $args = explode(",", $args);
-        $args1 = $args[0];
-        $args2 = $args[1];
-        $args3 = $args[2];
-        $teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC",true);
+        //$args = implode(",", $args);
+        //$args = explode(",", $args);
+        //$args1 = $args[0];
+        //$args2 = $args[1];
+        //$args3 = $args[2];
+        //$teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC",true);
+        $teams = Team::findLike("c");
         echo json_encode($teams);
     }
 
