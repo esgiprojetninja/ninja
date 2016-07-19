@@ -44,14 +44,14 @@ class rssController
 	}
 
 	public function feedTeamAction($args) {
-       header("Content-Type: application/rss+xml; charset=ISO-8859-1");
+        header("Content-Type: application/rss+xml; charset=ISO-8859-1");
         
         $feedTeam = '<?xml version="1.0" encoding="ISO-8859-1"?>';
         $feedTeam .= '<rss version="2.0">';
         $feedTeam .= '<channel>';
-        $feedTeam .= '<title>My RSS feed EVENT</title>';
-        $feedTeam .= '<link> ninja.dev/rss/feedEvent</link>';
-        $feedTeam .= '<description>My Latest cool event !</description>';
+        $feedTeam .= '<title>My RSS feed TEAM</title>';
+        $feedTeam .= '<link> ninja.dev/rss/feedTeamt</link>';
+        $feedTeam .= '<description>My Latest cool Team !</description>';
         $feedTeam .= '<language>en-us</language>';
         $feedTeam .= '<copyright>Copyright (C) 2016 ninja.dev</copyright>';
         
@@ -60,7 +60,7 @@ class rssController
         foreach($teams as $key => $team )
         {
             $feedTeam .= '<item>';
-            $feedTeam .= '<title>' . $team->getTeamName() . '</title>';
+            $feedTeam .= '<title> Nouvelle team :' . $team->getTeamName() . '</title>';
             $feedTeam .= '<description>' . $team->getDescription() . '</description>';
             $feedTeam .= '<link> link </link>';
             $feedTeam .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($team->getDateCreated() )) . '</pubDate>';
@@ -69,7 +69,7 @@ class rssController
      
         $feedTeam .= '</channel>';
         $feedTeam .= '</rss>';
-     
+        
         echo $feedTeam;
     }
 }
