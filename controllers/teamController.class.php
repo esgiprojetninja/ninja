@@ -224,13 +224,15 @@ class teamController
         $args = explode(",", $args);
         $args1 = $args[0];
         $args2 = $args[1];
-        //$teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC",true);
         $teams = Team::findLike($args1,$args2);
         echo json_encode($teams);
     }
     
     public function membersAction($args){
-        $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
+        $args = implode(",", $args);
+        $members = TeamHasUser::findBy("idTeam",$args,"int",false);
+        $members = count($members);
+        echo json_encode($members);
     }
     
     
