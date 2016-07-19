@@ -36,10 +36,6 @@ class View
 		$this->data[$key] = $value;
 	}
 
-	public function createRss($feed){
-		include "views/rss.inc.php";
-	}
-
 	public function __destruct()
 	{
 		extract($this->data);

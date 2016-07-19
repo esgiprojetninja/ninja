@@ -4,7 +4,7 @@
     <title>SPORT NATION | WORLD WIDE</title>
     <meta charset="UTF-8">
     <?php if(isset($feed)): ?>
-        <link rel='alternate' href="<?= WEBROOT; ?>rss/feeds/" title="My RSS" type="application/rss+xml" />
+    <link rel='alternate' href="<?= WEBROOT; ?>rss/feeds/" title="My RSS" type="application/rss+xml">
     <?php endif; ?>
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/grid.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/global.css">
