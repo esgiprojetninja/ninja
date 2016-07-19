@@ -220,15 +220,20 @@ class teamController
     public function searchAction($args)
     {
         header('Content-Type: application/json');
-        //$args = implode(",", $args);
-        //$args = explode(",", $args);
-        //$args1 = $args[0];
-        //$args2 = $args[1];
-        //$args3 = $args[2];
+        $args = implode(",", $args);
+        $args = explode(",", $args);
+        $args1 = $args[0];
+        $args2 = $args[1];
         //$teams = Team::findBy($args1,$args2,$args3,false,true,"id","DESC",true);
-        $teams = Team::findLike("c");
+        $teams = Team::findLike($args1,$args2);
         echo json_encode($teams);
     }
+    
+    public function membersAction($args){
+        $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
+    }
+    
+    
 
     public function demoteAction($args){
         if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){

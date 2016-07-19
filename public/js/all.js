@@ -383,60 +383,67 @@ $(function ($) {
  ****************************/
 
 $(function ($) {
+    $("#select-criteria").change(function(){
+        $("#search-team").val("");
+        $("#all-teams").show();
+        $("#pages").show();
+    });
     $("#search-team").keyup(function(){
         var search = $('#search-team').val();
         var select = $('#select-criteria').val();
-        var type;
-        if (select == "id"){
-            type = "int";
+        if (select == 1){
+            var column = "teamName";
+        } else if (select == 2){
+            var column = "sports";
         } else {
-            type = "string";
+            var column = "description";
         }
-        var arraySearch = [select,search,type];
+        var arraySearch = [column,search];
         if (search != "") {
             $("#all-teams").hide();
             $("#pages").hide();
-            $.getJSON(webrootJs+"team/search", function(teams) {
+            $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
                 var nbTeams =0;
-                //console.log(teams);
+                console.log(teams);
+                if (teams != null) {
+                    $("#search-team-results").empty();
                     for (var team in teams) {
-                        console.log(teams[team].teamName);
-                        console.log(teams[team].dateCreated);
-                        console.log(teams[team].teamName);
-                        $( "#search-team-results" ).empty();
+      /*                  $.getJSON(webrootJs+"team/search/"+teams[team].id, function(teams) {
+
+                        });*/
                         $("#search-team-results").append('<div class="col-sm-6">' +
                             '                            <div class="panel panel-primary">' +
-                            '                            <div class="panel-heading"><h3 class="center header-li "><a href="'+webrootJs+'team/show/'+teams[team].teamName+'"> Group '+teams[team].teamName+'</a></h3></div>' +
+                            '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].teamName + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
                             '                            <div class="panel-body">' +
                             '                            <ul class="header-ul">' +
                             '                            <li class="li-list">' +
                             '                            <span class="form-info">Name : </span>' +
-                            '                        <span class="form-content">'+teams[team].teamName+'</span>' +
-                        '                            </li>' +
-                        '                            <li class="li-list">' +
-                        '                            <span class="form-info">Date Of Creation : </span>' +
-                        '                        <span class="form-content">'+teams[team].dateCreated+'</span>' +
-                        '                            </li>' +
-                        '                            <li class="li-list">' +
-                        '                            <span class="form-info">Sports : </span>' +
-                        '                        <span class="form-content">'+teams[team].sports+'</span>' +
-                        '                            </li>' +
-                        '                            <li class="li-list">' +
-                        '                            <span class="form-info">Description : </span>' +
-                        '                        <span class="form-content">'+teams[team].description+'</span>' +
-                        '                            </li>' +
-                        '                            <li class="li-list">' +
-                        '                            <span class="form-info">Number of numbers : </span>' +
-                        '                        <span class="form-content">'+teams[team].teamName+'</span>' +
-                        '                            </li>' +
-                        '                            </ul>' +
-                        '                            </div>' +
-                        '                            </div>' +
-                        '                            </div>'
-                    );
+                            '                        <span class="form-content">' + teams[team].teamName + '</span>' +
+                            '                            </li>' +
+                            '                            <li class="li-list">' +
+                            '                            <span class="form-info">Date Of Creation : </span>' +
+                            '                        <span class="form-content">' + teams[team].dateCreated + '</span>' +
+                            '                            </li>' +
+                            '                            <li class="li-list">' +
+                            '                            <span class="form-info">Sports : </span>' +
+                            '                        <span class="form-content">' + teams[team].sports + '</span>' +
+                            '                            </li>' +
+                            '                            <li class="li-list">' +
+                            '                            <span class="form-info">Description : </span>' +
+                            '                        <span class="form-content">' + teams[team].description + '</span>' +
+                            '                            </li>' +
+                            '                            <li class="li-list">' +
+                            '                            <span class="form-info">Number of numbers : </span>' +
+                            '                        <span class="form-content">' + teams[team].teamName + '</span>' +
+                            '                            </li>' +
+                            '                            </ul>' +
+                            '                            </div>' +
+                            '                            </div>' +
+                            '                            </div>'
+                        );
                         nbTeams++;
                     }
-                if (nbTeams ==0) {
+                } else {
                     $( "#search-team-results" ).empty();
                     $("#search-team-results").append('<div class="col-sm-12">' +
                         '                            <div class="panel panel-primary">' +

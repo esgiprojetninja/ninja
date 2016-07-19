@@ -156,16 +156,34 @@ class basesql extends PDO
 	}
 
 
-	/*public static function findLike($args) {
+	public static function findLike($column,$search,$fetch=false) {
 		$instance = new static;
 		$sql = "SELECT * FROM ".$instance->table;
-		$sql = $sql." WHERE teamName LIKE '%".$args."%';";
+		$sql = $sql." WHERE ".$column." LIKE '%".$search."%';";
 		$query =  $instance->pdo->prepare($sql);
 		$query->execute();
-		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-		$items = $query->fetchAll();
+		if($fetch == true){
+			$item = $query->fetch(PDO::FETCH_ASSOC);
+			if($item) {
+				foreach ($item as $column => $value) {
+					$instance->$column = $value;
+				}
+				return $instance;
+			}
+			else {
+				return False;
+			}
+		}else{
+			$item = $query->fetchAll();
+			if($item) {
+				return $item;
+			}
+			else {
+				return False;
+			}
+		}
 		return $items;
-	}*/
+	}
 
 	public function save()
 	{
@@ -221,85 +239,6 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findLike($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
-		$instance = new static;
-		//Si il y a plusieurs columns a vérifier
-		if(is_array($column) && is_array($value) && is_array($valueType)){
-			$sql = "SELECT * FROM "
-				.$instance->table." WHERE ";
-			for($i=0;$i<count($column);$i++){
-				if($i == 0){
-					$sql = $sql . $column[$i];
-				}else{
-					$sql = $sql . " AND ".$column[$i];
-				}
-
-				if ($valueType[$i] == "string") {
-					$sql = $sql."='".$value[$i]."'";
-				}
-				else if ($valueType[$i] == "int") {
-					$sql = $sql."=".$value[$i];
-				}
-
-				if($i+1 == count($column)){
-					if ($Orderby==true){
-						$sql = $sql." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-					} else{
-						$sql = $sql." ;";
-					}
-				}
-
-			}
-			$query = $instance->pdo->prepare($sql);
-			$query->execute();
-		}else{ //Sinon on fait une simple requete sur une colonne
-			$sql = "SELECT * FROM "
-				.$instance->table." WHERE "
-				.$column;
-			if ($valueType == "string") {
-				if ($Orderby==true){
-					$sql = $sql."='".$value."' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-				} else{
-					$sql = $sql."='".$value."';";
-				}
-			}
-			else if ($valueType == "int") {
-				if ($Orderby==true){
-					$sql = $sql."=".$value." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
-				} else{
-					$sql = $sql."=".$value.";";
-				}
-			}
-			$query = $instance->pdo->prepare($sql);
-			$query->execute();
-		}
-
-		/*
-		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
-		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
-		*/
-
-		if($fetch == true){
-			$item = $query->fetch(PDO::FETCH_ASSOC);
-			if($item) {
-				foreach ($item as $column => $value) {
-					$instance->$column = $value;
-				}
-				return $instance;
-			}
-			else {
-				return False;
-			}
-		}else{
-			$item = $query->fetchAll();
-			if($item) {
-				return $item;
-			}
-			else {
-				return False;
-			}
-		}
-	}
 
 
 }
