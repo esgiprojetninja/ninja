@@ -3,6 +3,9 @@
 <head>
     <title>SPORT NATION | WORLD WIDE</title>
     <meta charset="UTF-8">
+    <?php if(isset($flux)): ?>
+        <link rel='alternate' href="<?= WEBROOT; ?>rss/flux/" title="My RSS" type="application/rss+xml" />
+    <?php endif; ?>
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/grid.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/global.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/panel.css">
