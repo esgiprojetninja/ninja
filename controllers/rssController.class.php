@@ -7,24 +7,22 @@ class rssController
      * Main RSS action
      * @param $args
      */
-    public function fluxAction($args) {
+    public function feedsAction($args) {
         $view = new View();
         $view->setView("rss/showrss.tpl");
-        $flux = Rss::getRss("all");
-        $view->assign("flux", $flux);
     }
 
-	public function fluxEventAction($args) {
+	public function feedEventAction($args) {
         $view = new View();
-        $view->setView("rss/showrss.tpl");
-        $flux = Rss::getRss("event");
-        $view->assign("flux", $flux);
+        $view->setView("rss/showfeed.tpl");
+        $feed = Rss::getRss("event");
+        $view->assign("feed", $feed);
 	}
 
-	public function fluxTeamAction($args) {
+	public function feedTeamAction($args) {
         $view = new View();
-        $view->setView("rss/showrss.tpl");
-        $flux = Rss::getRss("team");
-        $view->assign("flux", $flux);
+        $view->setView("rss/showfeed.tpl");
+        $feed = Rss::getRss("team");
+        $view->assign("feed", $feed);
 	}
 }
