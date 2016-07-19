@@ -36,8 +36,8 @@ class View
 		$this->data[$key] = $value;
 	}
 
-	public function createRss($rss){
-		include "views/rss.inc.xml";
+	public function createRss($flux){
+		include "views/rss.inc.php";
 	}
 
 	public function __destruct()

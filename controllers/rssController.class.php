@@ -4,7 +4,7 @@ class rssController
 {
 
 	/**
-     * Main inbox action
+     * Main RSS action
      * @param $args
      */
     public function fluxAction($args) {
