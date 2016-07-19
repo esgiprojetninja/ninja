@@ -284,7 +284,7 @@ class teamController
             }
             Admin::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
             TeamHasUser::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
-            Notification::createNotification($id_user=$args['idUser'],$message="You've got rekt of the group ".$args['idTeam']." bro !",$action=WEBROOT);
+            Notification::createNotification($id_user=$args['idUser'],$message="You've got kicked out of the group ".$args['idTeam']." !",$action=WEBROOT);
         }else{
             //A voir la redirection
             header('Location:'.WEBROOT.'user/login');
@@ -299,8 +299,9 @@ class teamController
             }
             Admin::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
             TeamHasUser::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
+            Notification::createNotification($id_user=$args['idUser'],$message="You've just left the group ".$args['idTeam']." !",$action=WEBROOT);
 
-            // on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
+            // on vérifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
             if(TeamHasUser::findBy("idTeam",$args['idTeam'],"int",false) == false){
                 Team::delete("id",$args['idTeam'],"int");
             }
@@ -317,13 +318,19 @@ class teamController
                 header('Location:'.WEBROOT.'user/login');
             }
 
-            Admin::delete('idTeam',$args["idTeam"],"int");
-            TeamHasUser::delete('idTeam',$args["idTeam"],"int");
-            Team::delete("id",$args['idTeam'],"int");
+            //Admin::delete('idTeam',$args["idTeam"],"int");
+            //TeamHasUser::delete('idTeam',$args["idTeam"],"int");
+            //Team::delete("id",$args['idTeam'],"int");
+            //Tout le monde ?
+            $members = TeamHasUser::findAll();
+            echo $members;
+            var_dump($members);
+            //Notifie seulement l'admin en question
+            Notification::createNotification($id_user=$args['idUser'],$message="The group ".$args['idTeam']." has been deleted !",$action=WEBROOT);
 
         }else{
             //A voir la redirection
-            header('Location:'.WEBROOT.'user/login');
+         //   header('Location:'.WEBROOT.'user/login');
         }
     }
 

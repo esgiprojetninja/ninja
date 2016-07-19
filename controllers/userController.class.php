@@ -113,6 +113,7 @@ class userController
 						$user->setIsActive(1);
 						$user->save();
 						$view->assign("activate_msg", "<span class='info'> Your account is now activated </span>");
+						Notification::createNotification($id_user=$user->getId(),$message="Hey welcome, complete your profile now to help you to find other peoples !",$action=WEBROOT."user/show/".$user->getId());
 						session_destroy();
 					}
 				}
