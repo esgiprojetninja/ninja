@@ -16,6 +16,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Panel Default</div>
             <div class="panel-body">
+                <h3 class="underlined">Underlined title</h3>
                 <p>Panels are the very base of our material design ui-kit. You can use them with or without .panel-heading and .panel-footer divs. Primary, Primary2, Success, warning, and Danger classes are availables.</p>
                 <div class="text-right">
                     <button class="btn btn-default">Button</button>

@@ -250,7 +250,6 @@ class userController
 				if (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword") {
 					$validator = new Validator();
 					$formErrors = $validator->check($form["struct"], $_POST);
-					print_r($formErrors);
 					if (count($formErrors) == 0) {
 						$user->setPassword($_POST["password"]);
 						$user->setToken();
@@ -280,6 +279,8 @@ class userController
 					unlink($user->getAvatar());
 					$user->setAvatar("");
 					$user->save();
+					Helpers::getMessageAjaxForm("Avatar deleted !");
+					
 				}else{
 					header("location:" . WEBROOT);
 				}

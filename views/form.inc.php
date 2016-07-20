@@ -34,6 +34,10 @@
 
 	<?php foreach ($form["struct"] as $name => $option ) :?>
 
+			<?php if ($option["type"] != "hidden"): ?>
+				<label for="<?= $name ?>"><?= $option["placeholder"] ?> : </label>
+			<?php endif; ?>
+
 			<div class="input-grp">
 				<input name="<?php echo $name ?>"
 						type="<?php echo $option["type"] ;?>"
@@ -50,7 +54,9 @@
 	<?php endforeach;?>
 
 	<div class="input-grp text-right">
-        <input type="hidden" name="subscribe_form" value="true">
+		<?php if (isset($form["deletable"])): ?>
+			<a href="<?= WEBROOT ?>event/delete/<?= $form['deletable']?>" class="btn btn-danger">Delete</a>
+		<?php endif; ?>
         <input type="submit" value="<?php echo $form["buttonTxt"] ?>" name="submit" class="btn btn-primary">
     </div>
 </form>

@@ -115,7 +115,7 @@ function showMessage(msg, code) {
     $box.fadeIn();
     setTimeout(function () {
         $box.fadeOut();
-        //window.location.reload(false);
+        window.location.reload(false);
     }, 5000);
 }
 
@@ -255,3 +255,26 @@ function triggerCallback(data) {
             null
     }
 }
+
+/**************************
+    -- Inputs hints --
+*************************/
+
+$(function ($) {
+    $(".js-time-input").click(function(ev) {
+        if (!$(ev.target).parent().find(".hintBox").length) {
+            $inputGrp = $(ev.target).parent();
+            $hintBox = $(document.createElement("div"));
+            $hintBox.addClass("hintBox");
+            if ($(ev.target).hasClass("js-time")) {
+                $hintBox.append("Please respect the following format => hh:mm");
+            } else if ($(ev.target).hasClass("js-date")) {
+                $hintBox.append("Please respect the following format => dd/mm/yyyy");
+            }
+            $inputGrp.append($hintBox);
+        }
+    });
+    $(".js-time-input").blur(function(ev) {
+        $(ev.target).parent().find(".hintBox").remove();
+    });
+});

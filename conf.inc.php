@@ -31,4 +31,6 @@ $errors_msg = [
 	"sports"=>"ERROR 404 SPORT NOT FOUND",
 	"new_teamName"=>"Incorrect team name or allready exists",
 	"email_exist"=>"Couldn't find this email",
+  "date_format"=>"Please stick to this date format => dd/mm/yyy",
+  "time_format" => "Please stick to this time format => hh:mm"
 ];

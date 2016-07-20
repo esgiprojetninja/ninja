@@ -26,4 +26,5 @@ class Helpers
     echo json_encode($response);
   }
 
+
 }

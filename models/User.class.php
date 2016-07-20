@@ -181,6 +181,27 @@ class User extends basesql
 		return $this->link;
 	}
 
+	public function __call($methodName, $params = null)
+    {
+        $methodPrefix = substr($methodName, 0, 3);
+        $key = strtolower(substr($method, 3));
+        if($methodPrefix == 'set' && count($params) == 1)
+        {
+            $value = $params[0];
+            $this->settings[$key] = $value;
+        }
+        elseif($methodPrefix == 'get')
+        {
+            if(array_key_exists($key, $this->settings)) return $this->settings[$key];
+        }
+        else
+        {
+            exit('Opps! The method is not defined!');
+        }
+    }
+
+
+
 	/**
 	* Check user token and assign user to session
 	* @return boolean
@@ -394,15 +415,9 @@ class User extends basesql
 					],
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					],
-					"hidden-avatar"=>["type"=>"hidden","value"=>"avatar-hidden-false","required"=>0,"placeholder" => "","msgerror"=>"avatar"]
-
 				]
 			];
-			if(empty($form["struct"]["avatar"]["value"])){
-				$form["struct"]['hidden-avatar']["value"]= "avatar-hidden-false";
-			}else{
-				$form["struct"]['hidden-avatar']["value"] = "avatar-hidden-true";
-			}
+
 		} else if ($formType == "setNewPassword") {
 			$form = [
 				"title" => "Change password",

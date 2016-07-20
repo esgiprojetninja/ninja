@@ -9,7 +9,7 @@ class adminController
     {
         $view = new view;
         if(User::isConnected()){
-            if(!User::isAdmin()){
+            if(User::isAdmin()){
                 $view->setView("admin/ui-collection.tpl");
             }else{
                 header("Location:".WEBROOT);
