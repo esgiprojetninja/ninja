@@ -5,7 +5,8 @@
             <div class="panel-body">
                 <ul>
                     <?php foreach ($users as $key => $user): ?>
-                        <li><?= $user->getUsername(); $user->getId(); ?> <br> <?php $this->createForm($formRating, $ratingErrors); ?> </li>
+                        <li><?= $user->getUsername(); ?> <br>
+                            <?php $this->createForm($formRating, $ratingErrors); ?> </li>
                     <?php endforeach; ?>
                 </ul>
             </div>

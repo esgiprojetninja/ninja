@@ -63,9 +63,9 @@ class Rating extends basesql{
 				"options" => ["method" => "POST", "action" => WEBROOT
 				],
 				"struct" => [
-					"promote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>$promote, "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
+					"promote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>$idUser, "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
-					"demote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>$demote, "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
+					"demote"=>[ "type"=>"submit", "class"=>"btn btn-primary", "value"=>$idUser, "placeholder"=>"", "required"=>0, "msgerror"=>"vote" 
 					],
 					"form-type" => ["type" => "hidden", "value" => "ratingForm", "placeholder" => "", "required" => 0, "msgerror" => "hidden_input", "class" => ""
 					]
@@ -85,10 +85,9 @@ class Rating extends basesql{
 
             	$userPromote = $_POST['promote'];
 
-            	self::setIdUser($userToPromote);
-            	self::setIdFor($userPromote);
-				// var_dump($userToPromote);
-				// var_dump($userPromote);
+            	self::setIdUser($userToPromote );
+            	self::setIdFor($userPromote );
+
 
         	}else if(isset($_POST['demote'])){
 
