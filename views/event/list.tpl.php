@@ -6,6 +6,15 @@
                 <a class="btn btn-success" href="<?= WEBROOT ?>event/create">Create Event</a>
             </div>
         </div>
+
+        <?php echo "User :"; var_dump($eventsFromUser) ; echo '<br>'; ?>
+
+        <?php echo "City :"; var_dump($eventsFromCity) ; echo '<br>'; ?>
+
+        <?php echo "Zipcode :"; var_dump($eventsFromZipcode) ; echo '<br>'; ?>
+
+        <?php echo "Sport :"; var_dump($eventsFromSport) ; echo '<br>'; ?>
+
         <?php foreach ($events as $key => $event): ?>
             <div class="panel panel-success">
                 <div class="panel-heading"><?= $event->getName(); ?></div>

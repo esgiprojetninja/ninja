@@ -15,6 +15,9 @@ class User extends basesql
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
 	protected $city = "";
+	protected $zipcode =0;
+	protected $country = "";
+	protected $street = "";
 	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
@@ -34,6 +37,9 @@ class User extends basesql
 		"avatar",
 		"favorite_sports",
 		"city",
+		"country",
+		"zipcode",
+		"street",
 		"birthday",
 		"dateCreated"
 	];
@@ -87,6 +93,18 @@ class User extends basesql
 		return $this->city;
 	}
 
+	public function getZipcode(){
+		return $this->zipcode;
+	}
+
+	public function getCountry(){
+		return $this->country;
+	}
+
+	public function getStreet(){
+		return $this->country;
+	}
+
 	public function getBirthday(){
 		return $this->birthday;
 	}
@@ -133,6 +151,18 @@ class User extends basesql
 
 	public function setCity($city){
 		$this->city = $city;
+	}
+
+	public function setZipcode($zipcode){
+		$this->zipcode = $zipcode;
+	}
+
+	public function setCountry($country){
+		$this->country = $country;
+	}
+
+	public function setStreet($street){
+		$this->street = $street;
 	}
 
 	public function setBirthday($birthday){
@@ -222,7 +252,7 @@ class User extends basesql
 
 		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
 		$mail->isHTML(true);                                  // Set email format to HTML
-		
+
 		if( $typeMail == "subscribe"){
 
 			$mail->Subject = 'Welcome in Sport Nation World Wide';
@@ -244,9 +274,9 @@ class User extends basesql
 			}
 
 		}else if( $typeMail == "reset"){
-			
+
 			$mail->Subject = 'Password reset';
-			
+
 			ob_start();
 				include("views/resetpwd_mail_html.php");
 			$body = ob_get_clean();
@@ -279,9 +309,9 @@ class User extends basesql
 				"buttonTxt" => "Sign Up",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email" 
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email"
 					],
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username" 
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username"
 					],
 					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]
@@ -294,9 +324,9 @@ class User extends basesql
 				"buttonTxt" => "Activate",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$this->getEmail()."&token=".$this->getToken()],
 				"struct" => [
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password"
 					],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" 
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password"
 					],
 					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]
@@ -309,9 +339,9 @@ class User extends basesql
 				"buttonTxt" => "Sign In",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/login"],
 				"struct"=>[
-					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email" 
+					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email"
 					],
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password"
 					],
 					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]
@@ -347,9 +377,9 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/setNewPassword/","enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password" 
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password"
 					],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password" 
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password"
 					],
 					"email" => ["type" => "hidden", "value" => "", "class" => "", "placeholder" => "", "required" => 1, "msgerror" => "hidden input"
 					],
@@ -365,7 +395,7 @@ class User extends basesql
 				"buttonTxt" => "Confirm",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPassword/", "enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist" 
+					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist"
 					],
 					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]

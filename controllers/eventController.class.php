@@ -6,8 +6,27 @@ class eventController {
         if (User::isConnected()) {
             $view = new View();
             $events = Event::findAll();
+
+            $user = 2; //Ton id d'user à rechercher
+            $eventsFromUser = Event::findBy("owner",$user,"int",false); //La requête
+            $view->assign("eventsFromUser",$eventsFromUser);
+
+            $city = "Fairfax"; //A l'image d'un petit $city = "Bordeaux" t'as vu.
+            $eventsFromCity = Event::findBy("city",$city,"string",false);
+            $view->assign("eventsFromCity",$eventsFromCity);
+
+            $zipcode = 22181;
+            $eventsFromZipcode = Event::findBy("zipcode",$zipcode,"int",false);
+            $view->assign("eventsFromZipcode",$eventsFromZipcode);
+
+            $sport = "amour";
+            $sport = "#".$sport;
+            $eventsFromSport = Event::findByLike("tags",$sport);
+            $view->assign("eventsFromSport",$eventsFromSport);
+
             $view->assign("events", $events);
             $view->setView("event/list.tpl");
+
         } else {
             header("location:" . WEBROOT);
         }

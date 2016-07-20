@@ -87,18 +87,15 @@ class basesql extends PDO
 				}else{
 					$sql = $sql . " AND ".$column[$i];
 				}
-
 				if ($valueType[$i] == "string") {
 					$sql = $sql."='".$value[$i]."'";
 				}
 				else if ($valueType[$i] == "int") {
 					$sql = $sql."=".$value[$i];
 				}
-
 				if($i+1 == count($column)){
 					$sql = $sql.";";
 				}
-
 			}
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
@@ -115,31 +112,18 @@ class basesql extends PDO
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}
-
 		/*
-		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
-		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
+			S'il y a une seule occurence on renvoie l'objet, s'il y en a plus on renvoie un array d'objet.
 		*/
-
-		if($fetch == true){
-			$item = $query->fetch(PDO::FETCH_ASSOC);
-			if($item) {
-				foreach ($item as $column => $value) {
-					$instance->$column = $value;
-				}
-				return $instance;
-			}
-			else {
-				return False;
-			}
-		}else{
-			$item = $query->fetchAll();
-			if($item) {
-				return $item;
-			}
-			else {
-				return False;
-			}
+		$items = [];
+		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+		while($item = $query->fetch()) {
+			$items[] = $item;
+		}
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
 		}
 	}
 
@@ -194,6 +178,31 @@ class basesql extends PDO
 		if (isset($this->id)) {
 			$sql = "DELETE from " . $this->table . " WHERE id = " . $this->id;
 			$this->pdo->exec($sql);
+		}
+	}
+
+	public static function findByLike($column, $value){
+		$instance = new static;
+
+		$sql = "SELECT * FROM ".$instance->table."";
+		$query = $instance->pdo->prepare($sql);
+		$query->execute();
+
+		$result = [];
+
+		while($row = $query->fetch()){
+			$explode = explode(",",$row['tags']);
+			foreach($explode as $valueExplode){
+				if($valueExplode == $value){
+					$result[] = $row;
+				}
+			}
+		}
+
+		if(count($result) == 1){
+			return $result[0];
+		}else{
+			return $result;
 		}
 	}
 }
