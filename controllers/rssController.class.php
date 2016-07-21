@@ -34,7 +34,7 @@ class rssController
                     foreach($events as $key => $event)
                     {
                         $feed .= '<item>';
-                        $feed .= '<title>' . $event->getName() . '</title>';
+                        $feed .= '<title> Event :' . $event->getName() . '</title>';
                         $feed .= '<description>' . $event->getDescription() . '</description>';
                         $feed .= '<tags>' . $event->getTags() . '</tags>';
                         $feed .= '<link> '. WEBROOT. 'event/list </link>';
@@ -65,7 +65,7 @@ class rssController
                     foreach($teams as $key => $team)
                     {
                         $feed .= '<item>';
-                        $feed .= '<title>' . $team->getTeamName() . '</title>';
+                        $feed .= '<title> Team :' . $team->getTeamName() . '</title>';
                         $feed .= '<description>' . $team->getDescription() . '</description>';
                         $feed .= '<sports>' . $team->getSports() .'</sports>';
                         $feed .= '<link> '. WEBROOT. 'team/list </link>';
@@ -75,7 +75,7 @@ class rssController
                       foreach($events as $key => $event)
                     {
                         $feed .= '<item>';
-                        $feed .= '<title>' . $event->getName() . '</title>';
+                        $feed .= '<title> ' . $event->getName() . '</title>';
                         $feed .= '<description>' . $event->getDescription() . '</description>';
                         $feed .= '<tags>' . $event->getTags() . '</tags>';
                         $feed .= '<link> '. WEBROOT. 'event/list </link>';
