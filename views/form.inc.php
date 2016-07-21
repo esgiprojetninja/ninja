@@ -26,14 +26,14 @@
 	?>
 >
 
-	<h3><?= $form["title"]; ?></h3>
+	<h3><?= (!empty($form["title"]) && $form["title"] != "rating" )? $form["title"] : ""; ?></h3>
 
 	<?php foreach ($form["struct"] as $name => $option ) :?>
 
-			<?php if ($option["type"] != "hidden"): ?>
-				<label for="<?= $name ?>"><?= $option["placeholder"] ?> : </label>
+			<?php if (!empty($option["placeholder"])): ?>
+				<label for="<?= $name ?>"><?= $option["placeholder"].":"; ?> </label>
 			<?php endif; ?>
-			<div class="input-grp">
+			<div class="input-grp<?= ($form["title"] == "rating")? "-inl": ""; ?>">
 				<input name="<?php echo $name ?>"
 						type="<?php echo $option["type"] ;?>"
 						class="<?php echo $option["class"] ;?>"
@@ -51,7 +51,8 @@
 	<div class="input-grp text-right">
 		<?php if (isset($form["deletable"])): ?>
 			<a href="<?= WEBROOT ?>event/delete/<?= $form['deletable']?>" class="btn btn-danger">Delete</a>
-		<?php endif; ?>
-        <input type="submit" value="<?php echo $form["buttonTxt"] ?>" name="submit" class="btn btn-primary">
+		<?php elseif(!empty($form["buttonTxt"])): ?>
+        	<input type="submit" value="<?php echo $form["buttonTxt"] ?>" name="submit" class="btn btn-primary">
+    	<?php endif; ?>
     </div>
 </form>

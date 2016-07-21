@@ -89,7 +89,7 @@ class Team extends basesql
 			$form = [
 				"title" => "Team params",
 				"buttonTxt" => "Confirm",
-				"options" => ["method" => "POST", "action" => WEBROOT . "team/edit/" . $this->id,"enctype"=>"multipart/form-data"],
+				"options" => ["method" => "POST", "action" => WEBROOT . "team/edit/" . $this->getId(),"enctype"=>"multipart/form-data"],
 				"struct"=>[
 					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Team name", "required"=>1, "msgerror"=>"new_teamName", "value" => $this->getTeamName()],
 					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>0, "msgerror"=>"newDescription", "value" => $this->getDescription()],

@@ -3,6 +3,9 @@
 <head>
     <title>SPORT NATION | WORLD WIDE</title>
     <meta charset="UTF-8">
+    <?php if(isset($feed)): ?>
+    <link rel='alternate' href="<?= WEBROOT; ?>rss/feeds/" title="My RSS" type="application/rss+xml">
+    <?php endif; ?>
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/grid.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/global.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/panel.css">
@@ -44,6 +47,9 @@
                 </div>
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
                     <span class="fa fa-envelope-o"></span>
+                </a>
+                <a href="<?= WEBROOT; ?>rss/feeds" class="item">
+                    <span class="fa fa-rss-square"></span>
                 </a>
             </div>
             <div class="items-down items">
