@@ -131,14 +131,13 @@ class basesql extends PDO
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 		while($item = $query->fetch()) {
 			$items[] = $item;
-<<<<<<< Updated upstream
-=======
+
 		}
 		if (count($items) == 1) {
 			return $items[0];
 		} else {
 			return $items;
->>>>>>> Stashed changes
+
 		}
 		if (count($items) == 1) {
 			return $items[0];
