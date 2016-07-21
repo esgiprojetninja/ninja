@@ -93,7 +93,7 @@ class rssController
             }
             else
             {
-                $feed = "DUDE, ARE YOU CRAZY ?";
+                $feed = "THIS FEED NOT EXIST";
             }
         
             echo $feed;
