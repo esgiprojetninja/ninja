@@ -15,6 +15,9 @@
         protected $description;
         protected $location;
         protected $nb_people_max;
+        protected $city = "";
+        protected $zipcode =0;
+        protected $country = "";
 
         protected $columns = [
             "id",
@@ -27,7 +30,10 @@
             "owner_name",
             "description",
             "location",
-            "nb_people_max"
+            "nb_people_max",
+            "city",
+            "country",
+            "zipcode",
         ];
 
 
@@ -128,6 +134,30 @@
         }
 
         /**
+         * return City attribute
+         * @return int
+         */
+      	public function getCity(){
+      		return $this->city;
+      	}
+
+        /**
+         * return Zipcode attribute
+         * @return int
+         */
+      	public function getZipcode(){
+      		return $this->zipcode;
+      	}
+
+        /**
+         * return getCountry attribute
+         * @return int
+         */
+      	public function getCountry(){
+      		return $this->country;
+      	}
+
+        /**
          * Set id attribute
          * @param int $id
          */
@@ -213,6 +243,30 @@
          */
         public function setNbPeopleMax($max) {
             $this->nb_people_max = $max;
+        }
+
+        /**
+         * Set City attribute
+         * @param string $city
+         */
+        public function setCity($city){
+          $this->$city = $city;
+        }
+
+        /**
+         * Set Zipcode attribute
+         * @param int $zipcode
+         */
+        public function setZipcode($zipcode){
+          $this->zipcode = $zipcode;
+        }
+
+        /**
+         * Set Country attribute
+         * @param string $country
+         */
+        public function setCountry($country){
+          $this->country = $country;
         }
 
         /**

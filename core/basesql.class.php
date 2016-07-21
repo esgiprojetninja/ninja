@@ -26,13 +26,13 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findAll($limit = false, $orderBy = false, $column = "*") {
+	public static function findAll($limit = false, $orderBy = false, $column = "*", $orderWay="ASC") {
 		$instance = new static;
 
 		$sql = "SELECT ".$column." FROM ".$instance->table;
 
 		if($orderBy != false){
-			$sql = $sql . " order by " . $orderBy . " DESC";
+			$sql = $sql . " order by " . $orderBy . " ". $orderWay;
 		}
 		if(is_array($limit)){
 			if($limit != false){
@@ -80,21 +80,19 @@ class basesql extends PDO
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
 			$sql = "SELECT * FROM "
-			.$instance->table." WHERE ";
+				.$instance->table." WHERE ";
 			for($i=0;$i<count($column);$i++){
 				if($i == 0){
 					$sql = $sql . $column[$i];
 				}else{
 					$sql = $sql . " AND ".$column[$i];
 				}
-
 				if ($valueType[$i] == "string") {
 					$sql = $sql."='".$value[$i]."'";
 				}
 				else if ($valueType[$i] == "int") {
 					$sql = $sql."=".$value[$i];
 				}
-
 				if($i+1 == count($column)){
 					if ($Orderby==true){
 						$sql = $sql." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
@@ -102,20 +100,19 @@ class basesql extends PDO
 						$sql = $sql." ;";
 					}
 				}
-
 			}
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}else{ //Sinon on fait une simple requete sur une colonne
 			$sql = "SELECT * FROM "
-			.$instance->table." WHERE "
-			.$column;
+				.$instance->table." WHERE "
+				.$column;
 			if ($valueType == "string") {
 				if ($Orderby==true){
 					$sql = $sql."='".$value."' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
 				} else{
 					$sql = $sql."='".$value."';";
-				}				
+				}
 			}
 			else if ($valueType == "int") {
 				if ($Orderby==true){
@@ -127,12 +124,35 @@ class basesql extends PDO
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}
-
 		/*
-		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
-		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
+			S'il y a une seule occurence on renvoie l'objet, s'il y en a plus on renvoie un array d'objet.
 		*/
+		$items = [];
+		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+		while($item = $query->fetch()) {
+			$items[] = $item;
 
+		}
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
+
+		}
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
+		}
+	}
+
+
+	public static function findLike($column,$search,$fetch=false) {
+		$instance = new static;
+		$sql = "SELECT * FROM ".$instance->table;
+		$sql = $sql." WHERE ".$column." LIKE '%".$search."%';";
+		$query =  $instance->pdo->prepare($sql);
+		$query->execute();
 		if($fetch == true){
 			$item = $query->fetch(PDO::FETCH_ASSOC);
 			if($item) {
@@ -153,6 +173,7 @@ class basesql extends PDO
 				return False;
 			}
 		}
+		return $items;
 	}
 
 	public function save()
@@ -208,4 +229,66 @@ class basesql extends PDO
 			$this->pdo->exec($sql);
 		}
 	}
+
+	public static function findByLike($column, $value){
+		$instance = new static;
+		/*
+		Requete verifiant le champs exact
+		$sql = "SELECT * FROM ".$instance->table."";
+		$query = $instance->pdo->prepare($sql);
+		$query->execute();
+
+		$result = [];
+
+		while($row = $query->fetch()){
+			$explode = explode(",",$row['tags']);
+			foreach($explode as $valueExplode){
+				if($valueExplode == $value){
+					$result[] = $row;
+				}
+			}
+		}
+
+		if(count($result) == 1){
+			return $result[0];
+		}else{
+			return $result;
+		}
+	}*/
+
+	$sql = "SELECT * FROM "
+	.$instance->table." WHERE "
+	.$column;
+
+	$sql = $sql." LIKE '%".$value."%';";
+
+	$query = $instance->pdo->prepare($sql);
+	$query->execute();
+
+	$items = [];
+	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+	while($item = $query->fetch()) {
+		$items[] = $item;
+	}
+	if (count($items) == 1) {
+		return $items[0];
+	} else {
+		return $items;
+	}
+
+	$query = $instance->pdo->prepare($sql);
+	$query->execute();
+
+	$items = [];
+	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+	while($item = $query->fetch()) {
+		$items[] = $item;
+	}
+	if (count($items) == 1) {
+		return $items[0];
+	} else {
+		return $items;
+	}
+}
+
 }

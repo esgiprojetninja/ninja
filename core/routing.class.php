@@ -19,6 +19,5 @@ class routing{
 		$args = array_merge($explode_uri, $_REQUEST);
 
 		return ["controller" => $controller, "action" => $action, "args" => $args];
-
 	}
 }

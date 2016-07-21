@@ -428,3 +428,51 @@ a{
     background: #FFFFFF;
     z-index: 100000000;
 }
+
+
+.header-ul {
+    padding-top: 15px;
+    list-style-type:none;
+}
+
+.header-li {
+    font-size: 18px;
+    font-weight: bold;
+    list-style-type:none;
+    margin-top: 10px;
+}
+
+.li-list {
+    font-size: 15px;
+    margin-top: 10px;
+    list-style-type:none;
+}
+
+.form-info {
+    font-style: italic;
+}
+
+.form-content {
+    color: #433A4B ;
+    font-weight: bold;
+}
+
+.edit-button {
+    font-weight: bold;
+}
+
+.panel-heading a{
+    color: white;
+}
+
+.frame {
+    padding: 0px;
+}
+
+/**********************
+    -- Search box --
+**********************/
+
+#search-team-results {
+    padding-top: 15px;
+}
