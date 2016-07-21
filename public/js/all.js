@@ -225,7 +225,7 @@ $(function ($) {
         $("#liste-notifications").css("width", width);
     });
     $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");
-    $.getJSON(webrootJs+"notification/list", function(notifications) {
+    $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
