@@ -183,7 +183,8 @@ class basesql extends PDO
 
 	public static function findByLike($column, $value){
 		$instance = new static;
-
+		/*
+		Requete verifiant le champs exact
 		$sql = "SELECT * FROM ".$instance->table."";
 		$query = $instance->pdo->prepare($sql);
 		$query->execute();
@@ -204,5 +205,28 @@ class basesql extends PDO
 		}else{
 			return $result;
 		}
+	}*/
+
+	$sql = "SELECT * FROM "
+	.$instance->table." WHERE "
+	.$column;
+
+	$sql = $sql." LIKE '%".$value."%';";
+
+	$query = $instance->pdo->prepare($sql);
+	$query->execute();
+
+	$items = [];
+	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+	while($item = $query->fetch()) {
+		$items[] = $item;
 	}
+	if (count($items) == 1) {
+		return $items[0];
+	} else {
+		return $items;
+	}
+
+}
+
 }

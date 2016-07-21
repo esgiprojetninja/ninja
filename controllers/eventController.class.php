@@ -19,8 +19,8 @@ class eventController {
             $eventsFromZipcode = Event::findBy("zipcode",$zipcode,"int",false);
             $view->assign("eventsFromZipcode",$eventsFromZipcode);
 
-            $sport = "amour";
-            $sport = "#".$sport;
+            $sport = "amour"; //Renvoie les events dont le tag contient cette chaine
+            $sport = "#".$sport; //Renverra uniquement les chaines commencant par le mot recherché
             $eventsFromSport = Event::findByLike("tags",$sport);
             $view->assign("eventsFromSport",$eventsFromSport);
 
