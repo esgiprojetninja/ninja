@@ -9,9 +9,9 @@
                     <!-- Flux Liste -->
                     <div class="flux-list">
                             <ul> 
-                                <li> <a title="All" href="#"> All </a></li>
-                                <li> <a title="Event" href="<?= WEBROOT; ?>rss/feedEvent"> Event </a></li>
-                                <li> <a title="Team" href="<?= WEBROOT; ?>rss/feedTeam"> Team </a></li>
+                                <li> <a title="All" href="<?= WEBROOT; ?>rss/feed/global"> All </a></li>
+                                <li> <a title="Event" href="<?= WEBROOT; ?>rss/feed/event"> Event </a></li>
+                                <li> <a title="Team" href="<?= WEBROOT; ?>rss/feed/team"> Team </a></li>
                             </ul>
                     </div>
                 </div>

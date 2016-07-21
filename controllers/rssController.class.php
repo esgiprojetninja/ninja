@@ -7,69 +7,97 @@ class rssController
      * Main RSS action
      * @param $args
      */
-    public function feedsAction($args) {
+    public function listAction($args) {
         $view = new View();
         $view->setView("rss/showrss.tpl");
     }
 
-	public function feedEventAction($args) {
+	public function feedAction($args) {
         header("Content-Type: application/rss+xml; charset=ISO-8859-1");
-        
-        $feedEvent = '<?xml version="1.0" encoding="ISO-8859-1"?>';
-        $feedEvent .= '<rss version="2.0">';
-        $feedEvent .= '<channel>';
-        $feedEvent .= '<title>My RSS feed EVENT</title>';
-        $feedEvent .= '<link> ninja.dev/rss/feedEvent</link>';
-        $feedEvent .= '<description>My Latest cool event !</description>';
-        $feedEvent .= '<language>en-us</language>';
-        $feedEvent .= '<copyright>Copyright (C) 2016 ninja.dev</copyright>';
-     
-        $events = Event::findAll();
+            
+            $args_access = ["team", "event", "all"];
 
-        foreach($events as $key => $event)
-        {
-            $feedEvent .= '<item>';
-            $feedEvent .= '<title>' . $event->getName() . '</title>';
-            $feedEvent .= '<description>' . $event->getDescription() . '</description>';
-            $feedEvent .= '<link> link </link>';
-            $feedEvent .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getFromDate() )) . '</pubDate>';
-            $feedEvent .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getToDate() )) . '</pubDate>';
-            $feedEvent .= '</item>';
-        }
-     
-        $feedEvent .= '</channel>';
-        $feedEvent .= '</rss>';
-     
-        echo $feedEvent;
-	}
+            if( !empty( $args ) && in_array($args[0], $args_access, true) )
+            {    
 
-	public function feedTeamAction($args) {
-        header("Content-Type: application/rss+xml; charset=ISO-8859-1");
-        
-        $feedTeam = '<?xml version="1.0" encoding="ISO-8859-1"?>';
-        $feedTeam .= '<rss version="2.0">';
-        $feedTeam .= '<channel>';
-        $feedTeam .= '<title>My RSS feed TEAM</title>';
-        $feedTeam .= '<link> ninja.dev/rss/feedTeamt</link>';
-        $feedTeam .= '<description>My Latest cool Team !</description>';
-        $feedTeam .= '<language>en-us</language>';
-        $feedTeam .= '<copyright>Copyright (C) 2016 ninja.dev</copyright>';
-        
-        $teams = Team::findAll();
+                $feed = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+                $feed .= '<rss version="2.0">';
+                $feed .= '<channel>';
+                $feed .= '<title>My RSS feed '.$args[0].' </title>';
+                $feed .= '<link> ninja.dev/rss/feed/'. $args[0]. ' </link>';
+                $feed .= '<description>My Latest cool '.$args[0]. ' ! </description>';
+                $feed .= '<language>en-us</language>';
+                $feed .= '<copyright>Copyright (C) 2016 ninja.dev</copyright>';
+             
+                if($args[0] == "event" )
+                {   
+                    $events = Event::findAll();
+                    foreach($events as $key => $event)
+                    {
+                        $feed .= '<item>';
+                        $feed .= '<title>' . $event->getName() . '</title>';
+                        $feed .= '<description>' . $event->getDescription() . '</description>';
+                        $feed .= '<tags>' . $event->getTags() . '</tags>';
+                        $feed .= '<link> link </link>';
+                        $feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getFromDate() )) . '</pubDate>';
+                        $feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getToDate() )) . '</pubDate>';
+                        $feed .= '</item>';
+                    }
+                }
+                else if($args[0] == "team" )
+                {
+                    $teams = Team::findAll();
+                    foreach($teams as $key => $team)
+                    {
+                        $feed .= '<item>';
+                        $feed .= '<title> New Team : ' . $team->getTeamName() . '</title>';
+                        $feed .= '<description>' . $team->getDescription() . '</description>';
+                        $feed .= '<sports>'. $team->getSports() .'</sports>';
+                        $feed .= '<link> link </link>';
+                        $feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($team->getDateCreated() )) . '</pubDate>';
+                        $feed .= '</item>';
+                    }
+                }
+                else if($args[0] == "all" )
+                {
+                    $teams = Team::findAll();
+                    $events = Event::findAll();
 
-        foreach($teams as $key => $team )
-        {
-            $feedTeam .= '<item>';
-            $feedTeam .= '<title> Nouvelle team :' . $team->getTeamName() . '</title>';
-            $feedTeam .= '<description>' . $team->getDescription() . '</description>';
-            $feedTeam .= '<link> link </link>';
-            $feedTeam .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($team->getDateCreated() )) . '</pubDate>';
-            $feedTeam .= '</item>';
-        }
-     
-        $feedTeam .= '</channel>';
-        $feedTeam .= '</rss>';
+                    foreach($teams as $key => $team)
+                    {
+                        $feed .= '<item>';
+                        $feed .= '<title>' . $team->getTeamName() . '</title>';
+                        $feed .= '<description>' . $team->getDescription() . '</description>';
+                        $feed .= '<sports>' . $team->getSports() .'</sports>';
+                        $feed .= '<link> link </link>';
+                        $feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($team->getDateCreated() )) . '</pubDate>';
+                        $feed .= '</item>';
+                    }
+                      foreach($events as $key => $event)
+                    {
+                        $feed .= '<item>';
+                        $feed .= '<title>' . $event->getName() . '</title>';
+                        $feed .= '<description>' . $event->getDescription() . '</description>';
+                        $feed .= '<tags>' . $event->getTags() . '</tags>';
+                        $feed .= '<link> link </link>';
+                        $feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getFromDate() )) . '</pubDate>';
+                        $feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getToDate() )) . '</pubDate>';
+                        $feed .= '</item>';
+                    }
+                }
+                
+                
+             
+                $feed .= '</channel>';
+                $feed .= '</rss>';
+            
+            }
+            else
+            {
+                $feed = "DUDE, ARE YOU CRAZY ?";
+            }
         
-        echo $feedTeam;
+            echo $feed;
+	    
+        } 
     }
-}
