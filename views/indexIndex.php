@@ -3,11 +3,11 @@
         <div class="panel panel-primary2">
             <div class="panel-heading">10 last subscribers</div>
             <div class="panel-body">
-                <?php
-                    foreach($users as $user){
-                        echo $user['username'].'<br>';
-                    }
-                ?>
+                <ul>
+                    <?php foreach ($users as $key => $user): ?>
+                        <li><?= $user->getUsername(); ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
@@ -15,11 +15,11 @@
         <div class="panel panel-success">
             <div class="panel-heading">10 last teams</div>
             <div class="panel-body">
-                <?php
-                    foreach($teams as $team){
-                        echo $team['teamName'].'<br>';
-                    }
-                ?>
+                <ul>
+                    <?php foreach ($teams as $key => $team): ?>
+                        <li><?= $team->getTeamName(); ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </div>
     </div>
@@ -48,17 +48,11 @@
                             echo "The team <b>" . $teamInviting->getTeamName()."</b> has invited you the " . $invitation['dateInvited']." : ".$invitation['message'];
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="joinTeam">Join</a>';
                             echo ' - <a href="#" data-team="'.$idTeamInviting.'" data-user="'.$_SESSION['user_id'].'" class="refuseInvit">Don\'t join</a>';
-
                         }
                     ?>
                 </div>
             </div>
         </div>
     <?php endif;?>
-
-    <?php
-    // Pour créer une notif test
-    //Notification::createNotification("blah blah notification de l'user ".$_SESSION['user_id']);
-    ?>
 
 </div>

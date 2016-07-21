@@ -60,8 +60,8 @@ class Discussion extends basesql {
     public function gatherPeople() {
         $pivot = new ManyToManyPivot(
             $this->pivotTable,
-            "discussion_id",
-            "user_id",
+            "discussion",
+            "user",
             $this->id
         );
         return $pivot->getData();
