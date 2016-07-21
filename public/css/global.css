@@ -181,6 +181,10 @@ header .icon .text {
     font-size: 15px;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .not-opened {
     background-color: #FFE2B8;
 }
@@ -190,15 +194,12 @@ header .icon .text {
 }
 
 #liste-notifications{
-    margin-left: 75px;
-    margin-top: -45px;
     border: black;
     color: #000000;
     font-size: 15px;
 }
 
 #scroll{
-    max-height: 320px;
     overflow: auto;
     margin-left: -40px;
 }
