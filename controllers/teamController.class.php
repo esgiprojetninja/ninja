@@ -318,14 +318,13 @@ class teamController
                 header('Location:'.WEBROOT.'user/login');
             }
 
-            Admin::delete('idTeam',$args["idTeam"],"int");
-            TeamHasUser::delete('idTeam',$args["idTeam"],"int");
-            Team::delete("id",$args['idTeam'],"int");
-            //Tout le monde ?
-            /*echo "toto";
+            //Admin::delete('idTeam',$args["idTeam"],"int");
+            //TeamHasUser::delete('idTeam',$args["idTeam"],"int");
+            //Team::delete("id",$args['idTeam'],"int");
+echo "toto";
             $members = TeamHasUser::findAll();
-            echo $members;
-            var_dump($members);*/
+            var_dump($members);
+
             //Notifie seulement l'admin en question
             Notification::createNotification($id_user=$args['idUser'],$message="The group ".$args['idTeam']." has been deleted !",$action=WEBROOT);
 
