@@ -96,7 +96,7 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
+	public static function findBy($column, $value, $valueType, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
 		$instance = new static;
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
