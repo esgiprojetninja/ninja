@@ -280,7 +280,7 @@ class userController
 					$user->setAvatar("");
 					$user->save();
 					Helpers::getMessageAjaxForm("Avatar deleted !");
-					
+
 				}else{
 					header("location:" . WEBROOT);
 				}
@@ -288,4 +288,5 @@ class userController
 				header("location:" . WEBROOT);
 			}
 	}
+
 }

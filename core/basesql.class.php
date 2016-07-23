@@ -59,7 +59,6 @@ class basesql extends PDO
 
 		$query->execute();
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-
 		while($item = $query->fetch()) {
 			$items[] = $item;
 		}
@@ -69,6 +68,8 @@ class basesql extends PDO
 		} else {
 			return $items;
 		}
+		$items = $query->fetchAll();
+		return $items;
 	}
 
 	public static function findById($id) {
@@ -203,7 +204,6 @@ class basesql extends PDO
 	public function delete(){
 		if (isset($this->id)) {
 			$sql = "DELETE from " . $this->table . " WHERE id = " . $this->id;
-			echo $sql;
 			$this->pdo->exec($sql);
 		}
 	}

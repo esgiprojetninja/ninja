@@ -37,7 +37,7 @@
 			<?php if ($option["type"] != "hidden"): ?>
 				<label for="<?= $name ?>"><?= $option["placeholder"] ?> : </label>
 			<?php endif; ?>
-
+			
 			<div class="input-grp">
 				<input name="<?php echo $name ?>"
 						type="<?php echo $option["type"] ;?>"
