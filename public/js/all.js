@@ -320,6 +320,7 @@ $(function ($) {
                 if (teams != null) {
                     $("#search-team-results").empty();
                     for (var team in teams) {
+                        console.log(team);
                         $.getJSON(webrootJs+"team/members/"+teams[team].id, function(nbMembers) {
                             $("#search-team-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary">' +

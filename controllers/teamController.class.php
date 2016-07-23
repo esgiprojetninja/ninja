@@ -261,7 +261,7 @@ class teamController
         $args = explode(",", $args);
         $args1 = $args[0];
         $args2 = $args[1];
-        $teams = Team::findLike($args1,$args2);
+        $teams = Team::findByLike($args1,$args2);
         echo json_encode($teams);
     }
 
