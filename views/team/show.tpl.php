@@ -64,9 +64,22 @@ $team = $this->data["team"];
                     </div>
                 </div>
                 <?php endif;?>
-                <div class="text-right">
-                    <a>&nbsp;</a>
-                </div>
+                <?php if(Team::imIn($team->getId())): ?>
+                    <div class="text-right">
+                        <a href="<?= WEBROOT; ?>team/manage/<?php echo $team->getId(); ?>" class="btn btn-primary">Manage</a>
+                    </div>
+                <?php endif; ?>
+                <?php if(!Team::imIn($idTeam)): ?>
+                    <?php if($invitation): ?>
+                        <div class="text-right">
+                           <span class="btn btn-success ajax-link" data-team="<?= $idTeam; ?>" data-url="team/cancelInvitation">Cancel asking</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="text-right">
+                            <a href="#" class="btn btn-primary ajax-link prompt" data-team="<?= $idTeam; ?>" data-url="team/askToJoin" >Ask to join</a>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
             </div>
 
         </div>
