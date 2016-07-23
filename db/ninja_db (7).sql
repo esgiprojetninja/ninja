@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 27 Juin 2016 à 20:38
+-- Généré le: Sam 23 Juillet 2016 à 16:29
 -- Version du serveur: 5.5.47-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.14
 
@@ -23,6 +23,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `admin`
+--
+
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int(11) NOT NULL,
+  `idTeam` int(11) NOT NULL,
+  `captain` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `captain`
 --
 
@@ -32,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `captain` (
   `idTeam` int(11) NOT NULL,
   `captain` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=102 ;
 
 -- --------------------------------------------------------
 
@@ -43,14 +57,7 @@ CREATE TABLE IF NOT EXISTS `captain` (
 CREATE TABLE IF NOT EXISTS `discussions` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Contenu de la table `discussions`
---
-
-INSERT INTO `discussions` (`id`) VALUES
-(1);
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -65,15 +72,7 @@ CREATE TABLE IF NOT EXISTS `discussions_users_pivot` (
   PRIMARY KEY (`id`),
   KEY `discussion_id` (`discussion_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `discussions_users_pivot`
---
-
-INSERT INTO `discussions_users_pivot` (`id`, `discussion_id`, `user_id`) VALUES
-(1, 1, 3),
-(2, 1, 2);
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -94,16 +93,12 @@ CREATE TABLE IF NOT EXISTS `events` (
   `owner_name` varchar(50) DEFAULT NULL,
   `nb_people_max` int(10) NOT NULL,
   `open` int(6) DEFAULT '0',
+  `country` varchar(100) NOT NULL,
+  `zipcode` int(10) NOT NULL,
+  `city` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `owner` (`owner`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
-
---
--- Contenu de la table `events`
---
-
-INSERT INTO `events` (`id`, `name`, `from_date`, `to_date`, `joignable_until`, `tags`, `owner`, `description`, `location`, `owner_name`, `nb_people_max`, `open`) VALUES
-(30, 'Mon event', '2016-08-14 18:00:00', '2016-08-14 22:00:00', '2016-08-14 12:00:00', '#belote,#amour,#bonheur', 2, 'Un super match de belote', 'Le bistro du coin', 'renaud', 24, 0);
 
 -- --------------------------------------------------------
 
@@ -120,13 +115,6 @@ CREATE TABLE IF NOT EXISTS `events_users_pivot` (
   KEY `fk_event` (`event_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
---
--- Contenu de la table `events_users_pivot`
---
-
-INSERT INTO `events_users_pivot` (`id`, `event_id`, `user_id`) VALUES
-(19, 30, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -141,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `invitations` (
   `idTeamInviting` int(11) NOT NULL,
   `idUserInvited` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 -- --------------------------------------------------------
 
@@ -158,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `discussion_id` (`discussion_id`),
   KEY `sender_id` (`sender_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
 
 -- --------------------------------------------------------
 
@@ -167,13 +155,15 @@ CREATE TABLE IF NOT EXISTS `messages` (
 --
 
 CREATE TABLE IF NOT EXISTS `notifications` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   `type` tinyint(1) NOT NULL,
   `opened` tinyint(1) NOT NULL,
-  `message` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `message` longtext NOT NULL,
+  `action` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -189,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `description` varchar(255) NOT NULL,
   `avatar` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=90 ;
 
 -- --------------------------------------------------------
 
@@ -202,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `team_has_user` (
   `idTeam` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=100 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=128 ;
 
 -- --------------------------------------------------------
 
@@ -215,6 +205,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
+  `zipcode` int(5) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `street` varchar(100) NOT NULL,
   `birthday` date NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
