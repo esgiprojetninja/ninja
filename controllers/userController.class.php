@@ -73,6 +73,10 @@ class userController
 					$user->setFirstName(trim(($_POST["first_name"])));
 					$user->setLastName(trim(($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
+					$user->setCity($_POST['city']);
+					$user->setCountry($_POST['country']);
+					$user->setStreet($_POST['street']);
+					$user->setZipcode($_POST['zipcode']);
 
 					$user->save();
 				}
