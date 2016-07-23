@@ -10,8 +10,8 @@
                 <h3>User not found</h3>
             </div>
             <?php else : ?>
-            
-            
+
+
             <div class="panel-heading"><h3 class="center header-li"> Informations <?php echo $user->getUsername(); ?>'s profile</h3></div>
 
             <div class="panel-media">
@@ -66,6 +66,8 @@
                     <div class="text-right">
                         <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
                     </div>
+                <?php else: ?>
+                    <a>&nbsp;</a>
                 <?php endif; ?>
             </div>
 
@@ -92,6 +94,8 @@
                         }
                         ?>
                         </li>
+                        <?php }else{ ?>
+                            <h3>tata</h3>
                     <?php } ?>
                 </ul>
             </div>
