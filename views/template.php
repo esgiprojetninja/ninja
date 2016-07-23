@@ -21,9 +21,15 @@
 <body>
     <header>
         <a href="<?= WEBROOT; ?>"><img src="<?= WEBROOT;?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px"></a>
+        <div class="item dropdown header-burger icon" id="popin-notifications">
+             <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
+       </div>
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
             <ul class="dropdown-menu right">
+                <?php if(User::isAdmin()):  ?>
+                    <li><a href="<?= WEBROOT;?>admin/global">Admin</a></li>
+                <?php endif; ?>
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">Help</a></li>
                 <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
@@ -42,9 +48,6 @@
                 <a href="<?= WEBROOT; ?>event/list" class="item">
                     <span class="fa fa-calendar-check-o"></span>
                 </a>
-                <div class="item dropdown header-burger icon" id="popinNotifications">
-                    <span class="icon-menu fa fa-bars"></span>
-                </div>
                 <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
                     <span class="fa fa-envelope-o"></span>
                 </a>

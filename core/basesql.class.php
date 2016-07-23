@@ -28,8 +28,19 @@ class basesql extends PDO
 
 	public static function findAll($limit = false, $orderBy = false, $column = "*", $orderWay="ASC") {
 		$instance = new static;
-
-		$sql = "SELECT ".$column." FROM ".$instance->table;
+		if(is_array($column)){
+			$sql = "SELECT ";
+			for($i=0;$i < count($column);$i++) {
+				if($i == 0){
+					$sql = $sql .$column[$i];
+				}else{
+					$sql = $sql .", ".$column[$i];
+				}
+			}
+			$sql = $sql ." FROM ".$instance->table;
+		}else{
+			$sql = "SELECT ".$column." FROM ".$instance->table;
+		}
 
 		if($orderBy != false){
 			$sql = $sql . " order by " . $orderBy . " ". $orderWay;
@@ -45,9 +56,19 @@ class basesql extends PDO
 		}
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
+
 		$query->execute();
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-		$items = $query->fetchAll();
+		while($item = $query->fetch()) {
+			$items[] = $item;
+		}
+
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
+		}
+
 		return $items;
 	}
 
@@ -75,7 +96,7 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
+	public static function findBy($column, $value, $valueType, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
 		$instance = new static;
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
@@ -124,56 +145,22 @@ class basesql extends PDO
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}
+
 		/*
 			S'il y a une seule occurence on renvoie l'objet, s'il y en a plus on renvoie un array d'objet.
 		*/
+
 		$items = [];
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 		while($item = $query->fetch()) {
 			$items[] = $item;
-
 		}
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
 
-		}
 		if (count($items) == 1) {
 			return $items[0];
 		} else {
 			return $items;
 		}
-	}
-
-
-	public static function findLike($column,$search,$fetch=false) {
-		$instance = new static;
-		$sql = "SELECT * FROM ".$instance->table;
-		$sql = $sql." WHERE ".$column." LIKE '%".$search."%';";
-		$query =  $instance->pdo->prepare($sql);
-		$query->execute();
-		if($fetch == true){
-			$item = $query->fetch(PDO::FETCH_ASSOC);
-			if($item) {
-				foreach ($item as $column => $value) {
-					$instance->$column = $value;
-				}
-				return $instance;
-			}
-			else {
-				return False;
-			}
-		}else{
-			$item = $query->fetchAll();
-			if($item) {
-				return $item;
-			}
-			else {
-				return False;
-			}
-		}
-		return $items;
 	}
 
 	public function save()

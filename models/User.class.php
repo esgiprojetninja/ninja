@@ -18,9 +18,10 @@ class User extends basesql
 	protected $zipcode =0;
 	protected $country = "";
 	protected $street = "";
-	protected $birthday;
+	protected $birthday= "0000-00-00";
 	protected $avatar = "";
 	protected $dateCreated;
+	protected $is_admin = 0;
 	protected $discussionPivotTable = "discussions_users_pivot";
 
 	protected $link;
@@ -117,6 +118,10 @@ class User extends basesql
 		return $this->dateCreated;
 	}
 
+	public function getIsAdmin(){
+		return $this->is_admin;
+	}
+
 	public function setIsActive($is_active) {
 		$this->is_active = $is_active;
 	}
@@ -177,6 +182,9 @@ class User extends basesql
 		$this->dateCreated = $dateCreated;
 	}
 
+	public function setIsAdmin($is_admin){
+		$this->is_admin = $is_admin;
+	}
 	/**
 	* @return string
 	*/
@@ -223,6 +231,53 @@ class User extends basesql
 			return False;
 		}
 	}
+
+	/**
+	* Check if the id given in parameters is the same than our actual id defined by the session
+	* @return boolean
+	*/
+	public static function itsMy($idUser){
+		if(self::isConnected()){
+			if($_SESSION['user_id'] == $idUser || self::isAdmin()){
+				return True;
+			}else{
+				return False;
+			}
+		}else{
+			return False;
+		}
+	}
+
+	/**
+	* Check if the user is an admin
+	* @return boolean
+	*/
+	public static function isAdmin(){
+		if(self::isConnected()){
+			if(User::findById($_SESSION['user_id'])->getIsAdmin() > 0){
+				return True;
+			}else{
+				return False;
+			}
+		}else{
+			return False;
+		}
+	}
+
+	/**
+	* Return the number of team of a user
+	* @return int
+	*/
+	public static function howMuchTeamIHave($user){
+		$nbTeam = TeamHasUser::findBy('idUser',$user, "int","false");
+		$count = count($nbTeam);
+		if($nbTeam){
+			return $count;
+		}else{
+			return 0;
+		}
+	}
+
 
 	/**
 	* Send confirmation email using users's email
@@ -368,9 +423,10 @@ class User extends basesql
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>1, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
 					],
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
-					]
+					],
 				]
 			];
+
 		} else if ($formType == "setNewPassword") {
 			$form = [
 				"title" => "Change password",

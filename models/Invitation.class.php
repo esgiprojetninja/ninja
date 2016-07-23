@@ -10,8 +10,8 @@ class Invitation extends basesql
 	protected $table = "invitations";
 	protected $dateInvited; // date de l'invitation, on pourra supprimer les invitations au bout d'un mois dans le turfu
 	protected $message = " We need you ! ";
-	protected $state; //En vrai c'est inutile, je vais surement le supprimer
-	// 0 -> pending , 1 -> accepted(surement supprimé quand accepté, et l'user rejoind la team),2 -> refusé (supprimé aussi mais ne rejoind pas l'equipe)
+	protected $type;
+	// 0 -> Team qui invite un user , 1 -> User qui demande à rejoindre
 	protected $idTeamInviting; //Team qui invite
 	protected $idUserInvited; //User invité
 
@@ -19,9 +19,9 @@ class Invitation extends basesql
 		"id",
 		"dateInvited",
 		"message",
-		"state",
+		"type",
 		"idTeamInviting",
-		"idUserInvited"
+		"idUserInvited",
 	];
 
 	public function __construct(){
@@ -40,8 +40,8 @@ class Invitation extends basesql
 		$this->message = htmlspecialchars($message);
 	}
 
-	public function setState($state){
-		$this->state = $state;
+	public function setType($type){
+		$this->type = $type;
 	}
 
 	public function setIdTeamInviting($idTeamInviting){
@@ -61,11 +61,11 @@ class Invitation extends basesql
 	}
 
 	public function getMessage(){
-		return $this->messsage;
+		return $this->message;
 	}
 
-	public function getState(){
-		return $this->state;
+	public function getType(){
+		return $this->type;
 	}
 
 	public function getIdTeamInviting(){

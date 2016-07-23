@@ -1,6 +1,10 @@
 <?php foreach($errors as $error):?>
 
-	<?php echo "<li>".$errors_msg[$error] ."</li>"; ?>
+	<?php
+		if(isset($errors_msg[$error])){
+			echo "<li>".$errors_msg[$error] ."</li>";
+		}
+ 	?>
 
 <?php endforeach;?>
 
@@ -33,6 +37,7 @@
 			<?php if ($option["type"] != "hidden"): ?>
 				<label for="<?= $name ?>"><?= $option["placeholder"] ?> : </label>
 			<?php endif; ?>
+			
 			<div class="input-grp">
 				<input name="<?php echo $name ?>"
 						type="<?php echo $option["type"] ;?>"

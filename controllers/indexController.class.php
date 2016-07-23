@@ -8,16 +8,16 @@ class indexController
 			$view = new View;
 			$view->setView("indexIndex");
 
-			$teams = Team::FindAll(10,"dateCreated","teamName");
+			$teams = Team::FindAll(10,"dateCreated",["teamName","id"]);
             $view->assign("teams", $teams);
 
 			//$notifications = Notification::findBy(["id_user","opened"],[$_SESSION['user_id'],0],['int','int'],false);
             //$view->assign("notifications", $notifications);
 
-            $users = User::findAll(10,"dateCreated","username");
+            $users = User::findAll(10,"dateCreated",["username","id"]);
             $view->assign("users",$users);
 
-            $invitations = Invitation::findBy(["idUserInvited","state"],[$_SESSION['user_id'],0],['int','int'],false);
+            $invitations = Invitation::findBy(["idUserInvited","type"],[$_SESSION['user_id'],0],['int','int']);
             $view->assign("invitations",$invitations);
 
 		} else {

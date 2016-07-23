@@ -129,7 +129,7 @@
         <h1>Ajax form</h1>
         <div class="panel">
             <div class="panel-body">
-                <form class="ajax-form" action="toto" method="POST" >
+                <form class="ajax-form" action="user" method="POST" >
                     <div class="input-grp">
                         <label for="text-ajax" class="control-label">
                             Some text

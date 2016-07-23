@@ -1,7 +1,11 @@
 <?php
-	if(!($admin[0]['captain'] > 0)){
-      header('Location:'.WEBROOT.'user/login');
-    }
+	if(count($captain) > 0){
+		if(!($captain->getCaptain() > 0)){
+			header('Location:'.WEBROOT.'user/login');
+		}
+	}else{
+		header('Location:'.WEBROOT.'user/login');
+	}
 ?>
 
 <div class="row">

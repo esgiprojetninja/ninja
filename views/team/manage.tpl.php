@@ -1,8 +1,11 @@
 <?php
     $team = $this->data["team"];
+    $captain = $this->data["captain"];
     //Se l'utilisateur y accede par URL, mais n'a pas les droit ont le redirige
-    if(!($admin[0]['captain'] > 0)){
-      header('Location:'.WEBROOT.'user/login');
+    if(!$team->getId() == ""){
+      if(!Team::imIn($team->getId())){
+        header('Location:'.WEBROOT.'user/login');
+      }
     }
 ?>
 
@@ -28,42 +31,98 @@
                 <br><br>
                 <div class="text-left">
                   <a href="<?= WEBROOT;?>team/show/<?= $team->getId();?>"class="btn btn-primary">Show</a>
-                  <?php if($admin[0]['captain'] >=1) : ?>
+                  <?php if($captain->getCaptain() >=1) : ?>
                    <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Edit</a>
                   <?php endif; ?>
-                  <?php if($admin[0]['captain'] >= 2) : ?>
-                    <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-danger pull-right deleteTeam">Supprimer mon équipe</a>
+                  <?php if($captain->getCaptain() >= 2) : ?>
+                    <a href="#" data-url="team/delete" data-team="<?= $team->getId(); ?>" class="ajax-link btn btn-danger pull-right">Supprimer mon équipe</a>
                   <?php endif; ?>
                 </div>
                 <br><br>
 
                 <p>Members : </p>
-                <?php 
-                    foreach($members as $member){ 
-                      $user = User::findById($member[2]);
-                      $actualUserAdmin = Admin::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
-                      echo "<br>".$user->getUsername()." - " . Admin::getTitre($actualUserAdmin->getCaptain());
+                <?php
+                if(!is_array($members)){
+                  $user = User::findById($members->getIdUser());
+                  $actualUserAdmin = Captain::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
+                  echo "<br>".$user->getUsername()." - " . Captain::getTitre($actualUserAdmin->getCaptain());
+                  if(!($user->getId() == $_SESSION["user_id"])){ ?>
+                    <a href="#" >Send message</a>
+                     <?php if($actualUserAdmin->getCaptain() != 2 ): ?>
+                   <a href="#" data-url="team/kick" data-team="<?= $team->getId()?>" data-user="<?= $user->getId()?>" class="ajax-link" >Kick</a>
+                   <?php endif; ?>
+                  <?php if($captain->getCaptain() >= 2 ): ?>
+                   <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() >= 0 ): ?>
+                   <a href="#" data-url="team/promote" data-team="<?= $team->getId()?>" data-user="<?= $user->getId()?>" class="ajax-link" >Promote</a>
+                   <?php endif; ?>
+                   <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() > 0): ?>
+                   <a href="#" data-url="team/demote" data-team="<?= $team->getId()?>" data-user="<?= $user->getId()?>" class="ajax-link">Demote</a>
+                   <?php endif; ?>
+                  <?php endif; ?>
+                  <?php
+                  }
+                }else{
+                    foreach($members as $member){
+                      $user = User::findById($member->getIdUser());
+                      $actualUserAdmin = Captain::findBy(["idUser","idTeam"],[$user->getId(),$team->getId()],["int","int"]);
+                      echo "<br>".$user->getUsername()." - " . Captain::getTitre($actualUserAdmin->getCaptain());
                       if(!($user->getId() == $_SESSION["user_id"])){ ?>
                         <a href="#" >Send message</a>
                          <?php if($actualUserAdmin->getCaptain() != 2 ): ?>
-                        <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="kickUser" >Kick</a>
+                        <a href="#" data-url="team/kick" data-team="<?= $team->getId()?>" data-user="<?= $user->getId()?>" class="ajax-link" >Kick</a>
                         <?php endif; ?>
-                       <?php if($admin[0]['captain'] >= 2 ): ?>
+                       <?php if($captain->getCaptain() >= 2 ): ?>
                         <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() >= 0 ): ?>
-                        <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="promoteUser" >Promote</a>
+                        <a href="#" data-url="team/promote" data-team="<?= $team->getId()?>" data-user="<?= $user->getId()?>" class="ajax-link" >Promote</a>
                         <?php endif; ?>
                         <?php if($actualUserAdmin->getCaptain() != 2 && $actualUserAdmin->getCaptain() > 0): ?>
-                        <a href="#" data-team="<?php echo $team->getId(); ?>" data-user="<?php echo $user->getId(); ?>" class="demoteUser">Demote</a>
+                        <a href="#" data-url="team/demote" data-team="<?= $team->getId()?>" data-user="<?= $user->getId()?>" class="ajax-link">Demote</a>
                         <?php endif; ?>
                       <?php endif; ?>
                       <?php
                       }
                     }
+                }
                 ?>
+                <hr>
+                <?php if(count($invitationsTo) > 0) : ?>
+                  <p>Pending invitations : </p>
+                  <?php
+                    if(!is_array($invitationsTo)){
+                      $userInvited = User::FindById($invitationsTo->getIdUserInvited());
+                      echo $invitationsTo->getDateInvited()." - " .$userInvited->getUsername() ." - ".$invitationsTo->getMessage().' - <a href="#" data-url="team/cancelInvitation" data-team='.$invitationsTo->getIdTeamInviting().' data-user='.$userInvited->getId().' class="ajax-link">Cancel</a>';
+                    }else{
+                      foreach($invitationsTo as $invitedOne){
+                        $userInvited = User::FindById($invitedOne->getIdUserInvited());
+                        echo $invitedOne->getDateInvited()." - " .$userInvited->getUsername() ." - ".$invitedOne->getMessage().' - <a href="#" data-url="team/cancelInvitation" data-team='.$invitedOne->getIdTeamInviting().' data-user='.$userInvited->getId().' class="ajax-link">Cancel</a>';
+                        echo '<BR>'; // SWAG TU AIMES BIEN RENAUD ? :(
+                      }
+                    }
+                  ?>
+                  <hr>
+                <?php endif; ?>
+
+                <?php if(count($invitationsFrom) > 0): ?>
+                  <p>Pending asking to come  : </p>
+                  <?php
+                      if(!is_array($invitationsFrom)){
+                        $userInvited = User::FindById($invitationsFrom->getIdUserInvited());
+                        echo $invitationsFrom->getDateInvited()." - " .$userInvited->getUsername() ." - ".$invitationsFrom->getMessage().' - <a href="#" data-url="team/join" data-team='.$invitationsFrom->getIdTeamInviting().' data-type='.$invitationsFrom->getType().' data-user='.$userInvited->getId().' class="ajax-link">Accept</a> - <a href="#" class="ajax-link" data-url="team/cancelInvitation" data-team='.$invitationsFrom->getIdTeamInviting().' data-user='.$userInvited->getId().' data-type='.$invitationsFrom->getType().' >Decline</a>';
+                      }else{
+                        foreach($invitationsFrom as $invitedOne){
+                          $userInvited = User::FindById($invitationsFrom->getIdUserInvited());
+                          echo $invitedOne->getDateInvited()." - " .$userInvited->getUsername() ." - ".$invitedOne->getMessage().' - <a href="#" data-url="team/join" data-team='.$invitedOne->getIdTeamInviting().' data-type='.$invitedOne->getType().' data-user='.$userInvited->getId().' class="ajax-link">Accept</a> - <a href="#" class="ajax-link" data-url="team/cancelInvitation" data-team='.$invitedOne->getIdTeamInviting().' data-user='.$userInvited->getId().' data-type='.$invitedOne->getType().'>Decline</a>';
+                          echo '<BR>'; // SWAG TU AIMES BIEN RENAUD ? :(
+                        }
+                      }
+                  ?>
+                <?php endif; ?>
                 <br><br>
                 <div class="text-left">
-                  <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
-                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right leaveTeam">Leave</a>
+                  <?php if($captain->getCaptain() > 0): ?>
+                    <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
+                  <?php endif; ?>
+                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right ajax-link" data-url="team/leave">Leave</a>
                 </div>
                 <!--
                     AFFICHER DERNIER EVENT ?

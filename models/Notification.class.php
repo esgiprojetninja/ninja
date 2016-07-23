@@ -5,12 +5,12 @@ class Notification extends basesql
 
 	public $id;
 	protected $table = "notifications";
-	protected $id_user;
-	protected $datetime;
-	protected $type;
-	protected $opened = 0;
-	protected $message = "";
-	protected $action;
+	public $id_user;
+	public $datetime;
+	public $type;
+	public $opened = 0;
+	public $message = "";
+	public $action;
 
 	protected $columns = [
 		"id",
@@ -88,5 +88,5 @@ class Notification extends basesql
 		$notification->save();
 
 	}
-	
+
 }

@@ -25,12 +25,13 @@ $errors_msg = [
 	"teamName"=>"Incorrect team name or allready exists",
 	"new_email" => "Your email isn't correct or allready exists",
 	"new_username" => "Username allready exists",
-    "username_doesnt_exists" => "This username doesn't exist",
+  "username_doesnt_exists" => "This username doesn't exist",
 	"emailOrUsername"=>"User not found, allready in team or allready invited",
 	"avatar"=>"Invalid avatar",
 	"sports"=>"ERROR 404 SPORT NOT FOUND",
 	"new_teamName"=>"Incorrect team name or allready exists",
 	"email_exist"=>"Couldn't find this email",
-    "date_format"=>"Please stick to this date format => dd/mm/yyy",
-    "time_format" => "Please stick to this time format => hh:mm"
+  "date_format"=>"Please stick to this date format => dd/mm/yyy",
+  "time_format" => "Please stick to this time format => hh:mm"
+
 ];

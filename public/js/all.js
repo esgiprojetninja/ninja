@@ -22,131 +22,9 @@ $(function ($) {
         });
     });
 
-
-
     // msg-box
     $(".js-close-msg-box").click(function (ev) {
         $(this).parent().parent().fadeOut();
-    });
-
-    $("a.kickUser").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/kick/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId, idUser: userId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
-    });
-
-    $("a.demoteUser").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/demote/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId, idUser: userId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
-    });
-
-    $("a.promoteUser").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/promote/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId, idUser: userId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
-    });
-
-    $("a.leaveTeam").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/leave/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
-    });
-
-
-    $("a.deleteTeam").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/delete/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
-    });
-
-    $("a.joinTeam").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/join/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
-    });
-
-    $("a.refuseInvit").click(function(ev){
-        ev.preventDefault();
-        var userId = $(this).data("user");
-        var teamId = $(this).data("team");
-        if (confirm('Are you sure ?')) {
-          $.ajax({
-            url: "http://localhost:8888/ninja/team/refuseInvit/",
-            type : "POST",
-            dataType: "json",
-            data: {idTeam: teamId},
-            success : function(response){
-             console.debug(response);
-            }
-          });
-      }
     });
 
 });
@@ -156,29 +34,55 @@ $(function ($) {
 **********************/
 
 $(function ($) {
-    $(".ajax-form").submit(function (ev) {
-        ev.preventDefault();
-        var action = $(this).attr("action");
-        var method = $(this).attr("method");
-        var success = $(this).data("success");
-        var data = {};
-        data.callback = $(this).data("callback");
-        if(typeof success == "undefined") {
-            success = "Data updated !";
-        }
-        $.each($(this).find("input, select, textarea"), function () {
-            if ($(this).attr("type") == "checkbox" || $(this).attr("type") == "radio") {
-                if ($(this).is(":checked")) {
-                    data[$(this).attr("name")] = $(this).val();
-                }
-            } else {
-                if ($(this).val().length > 0) {
-                    data[$(this).attr("name")] = $(this).val();
-                }
-            }
+  $(".ajax-form, .ajax-link").on("click submit", function (ev) {
+      ev.preventDefault();
+      var action = $(this).attr("action");
+      var method = $(this).attr("method");
+      var success = $(this).data("success");
+      var lock = false;
+      var data = {};
+      data.message = $(this).data("message");
+      //data.callback = $(this).data("callback");
+      if(typeof data.message == "undefined") {
+          data.message = "Data updated !";
+      }
 
-        });
-        if (!$.isEmptyObject(data)) {
+      if ($(this).is(".ajax-link")) {
+          data.idUser = $(this).data("user");
+          data.idTeam = $(this).data("team");
+          data.type = $(this).data("type");
+
+          action = $(this).data("url");
+          action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
+          if($(this).is(".prompt")){
+            var promptInput = prompt("Add a message with your ask");
+            if(promptInput){
+              data.messageInvit = promptInput;
+              lock = true;
+            }else if(promptInput == null){
+              return;
+            }else if(promptInput === ""){
+              data.messageInvit = "I want to join you !";
+              lock = true;
+            }
+          }else{
+            if(confirm("Are you sure ?")){
+              lock = true;
+            }
+          }
+      } else {
+          $.each($(this).find("input, select, textarea"), function () {
+              if ($(this).attr("type") == "checkbox" || $(this).attr("type") == "radio") {
+                  if ($(this).is(":checked")) {
+                      data[$(this).attr("name")] = $(this).val();
+                  }
+              } else if (($(this).val().length > 0)) {
+                  data[$(this).attr("name")] = $(this).val();
+              }
+          });
+      }
+
+      if (!$.isEmptyObject(data) && lock == true) {
             $.ajax({
                 method: method,
                 url: action,
@@ -186,17 +90,18 @@ $(function ($) {
             }).success(function (data) {
                 showMessage(data.message, "success");
                 triggerCallback(data);
-            }).fail(function (jqXHR, textStatus) {
-                var errors = (JSON.parse(jqXHR.responseText));
-                var errorText = "";
-                if (errors.errorText.length > 0) {
-                    errorText = errors.errorText;
-                } else {
-                    errorText = "Request failed :(";
-                }
-                showMessage(errorText, "danger");
-            });
-        }
+              // J'aimerais bien rajouter un petit refresh de window ici.
+          }).fail(function (jqXHR, textStatus) {
+              var errors = (JSON.parse(jqXHR.responseText));
+              var errorText = "";
+              if (errors.errorText.length > 0) {
+                  errorText = errors.errorText;
+              } else {
+                  errorText = "Request failed :(";
+              }
+              showMessage(errorText, "danger");
+          });
+      }
     });
 });
 
@@ -211,6 +116,7 @@ function showMessage(msg, code) {
     $box.fadeIn();
     setTimeout(function () {
         $box.fadeOut();
+        //window.location.reload(false);
     }, 5000);
 }
 
@@ -219,28 +125,36 @@ function showMessage(msg, code) {
  ****************************/
 
 $(function ($) {
-    var width = $( window ).width()/2;
-    $( window ).resize(function() {
-        var width = $( window ).width()/2;
-        $("#liste-notifications").css("width", width);
-    });
-    $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");
-    $.getJSON(webrootJs+"notification/list", function(notifications) {
+    $("#popin-notifications").append("<ul class='dropdown-menu notifications right' id='liste-notifications' style='width: "+ width +"px'>");
+  	var nbNotifications = 0;
+    $.getJSON( webrootJs+"notification/list", function(notifications) {
+      console.log(notifications);
         var nbNotifications = 0;
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
+
         for (var notification in notifications) {
             if (notifications[notification].opened == 1){
-                $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+              $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             } else {
-                $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
-                nbNotifications++;
+              $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             }
+            nbNotifications++;
         }
         if(nbNotifications != 0){
             $("#notification-icon").attr("class", "icon-menu fa fa-bell");
         }
         $("#popin-notifications").append("</ul></div>");
     })
+    var width = $( window ).width();
+    var height = $( window ).height();
+     $("#liste-notifications").css("width", width/2);
+     $("#scroll").css("max-height", height/2);
+     $( window ).resize(function() {
+        var width = $( window ).width();
+        var height = $( window ).height();
+        $("#liste-notifications").css("width", width/2);
+        $("#scroll").css("max-height", height/2);
+    });
 });
 
 /********************
@@ -456,4 +370,3 @@ $(function ($) {
         }
     });
 });
-

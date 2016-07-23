@@ -10,8 +10,8 @@
                 <h3>User not found</h3>
             </div>
             <?php else : ?>
-            
-            
+
+
             <div class="panel-heading"><h3 class="center header-li"> Informations <?php echo $user->getUsername(); ?>'s profile</h3></div>
 
             <div class="panel-media">
@@ -63,7 +63,11 @@
                 </div>
                 <?php endif;?>
                 <div class="text-right">
-                    <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary edit-button">Edit your profile</a>
+                    <?php if(User::itsMy($idUser)): ?>
+                        <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
+                    <?php else: ?>
+                      <a>&nbsp;</a>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -72,16 +76,25 @@
             <div class="panel-heading"><h3 class="center header-li">Groups</h3></div>
             <div class="panel-body">
                 <ul class="header-ul">
-                    <?php
-                    if(!empty($teams)) {
-                        foreach ($teams as $team) {
-                            $Team = Team::findById($team[1]);
-                            echo '<li class="li-list"><span class="form-info">Group : </span>';
-                            echo "<a href=' . WEBROOT . 'team/show/' . $team[1] . '>" . $Team->getTeamName() . "</a>";
-                            echo "<span class=\"form-info\"> Description : </span>" . $Team->getDescription(). "<br></li>";
+                    <?php if(!empty($teams)){ ?><li>
+                        <span class="fa fa-team"></span>
+                        <?php
+                        if(is_array($teams)){
+                            foreach($teams as $team){
+                                $Team = Team::findById($team->getIdTeam());
+                                echo '<a href='.WEBROOT.'team/show/'.$Team->getId().'>';
+                                echo $Team->getTeamName()."<br>";
+                                echo '</a>';
+                            }
+                        }else{
+                            $Team = Team::findById($teams->getIdTeam());
+                            echo '<a href='.WEBROOT.'team/show/'.$Team->getId().'>';
+                            echo $Team->getTeamName()."<br>";
+                            echo '</a>';
                         }
-                    }
-                    ?>
+                        ?>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>

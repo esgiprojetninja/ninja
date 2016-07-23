@@ -14,11 +14,12 @@ class userController
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
 			}
-            $v = new View();
-            $teams = TeamHasUser::findBy("idUser",$args[0],"int",false);
-            $v->setView("user/show.tpl");
-            $v->assign("user", $user);
-            $v->assign("teams",$teams);
+      $v = new View();
+      $teams = TeamHasUser::findBy("idUser",$args[0],"int");
+      $v->setView("user/show.tpl");
+      $v->assign("user", $user);
+      $v->assign("teams",$teams);
+      $v->assign("idUser",$args[0]);
 		}else{
 			header('Location:' . WEBROOT . 'user/login');
 		}
@@ -33,11 +34,11 @@ class userController
     	if(User::isConnected() && !empty($args[0])){
 			$user = User::findById($args[0]);
 
-            $v = new View();
-            $v->setView("user/edit.tpl");
+      $v = new View();
+      $v->setView("user/edit.tpl");
 
 			$formEdit = $user->getForm("edit");
-            $v->assign("formEdit", $formEdit);
+      $v->assign("formEdit", $formEdit);
 
 			if ($user->getId() != $args[0]) {
 				header("location:" . WEBROOT);
@@ -74,11 +75,11 @@ class userController
 					$user->setPhoneNumber($_POST["phone_number"]);
 
 					$user->save();
-
 				}
 			}
-            $v->assign("user", $user);
-            $v->assign("editErrors", $editErrors);
+      $v->assign("user", $user);
+      $v->assign("idUser",$args[0]);
+      $v->assign("editErrors", $editErrors);
 		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}
@@ -138,7 +139,6 @@ class userController
 
 		$formLogin = $user->getForm("login");
 		$view->assign("formLogin", $formLogin);
-
 		$validator = new Validator();
 
 		if(isset($_POST["form-type"])) {
@@ -158,7 +158,6 @@ class userController
 				}
 			}
 		}
-
 		$view->assign("subErrors", $subErrors);
 		$view->assign("logErrors", $logErrors);
 	}
@@ -271,6 +270,23 @@ class userController
 		} else {
 			header("location:" . WEBROOT);
 		}
+	}
+
+	public function deleteAvatarAction($args){
+			if(User::isConnected()){
+				$user = User::findById($_SESSION['user_id']);
+				if($user->getAvatar()){
+					unlink($user->getAvatar());
+					$user->setAvatar("");
+					$user->save();
+					Helpers::getMessageAjaxForm("Avatar deleted !");
+
+				}else{
+					header("location:" . WEBROOT);
+				}
+			}else {
+				header("location:" . WEBROOT);
+			}
 	}
 
 }
