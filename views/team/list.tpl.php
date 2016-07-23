@@ -15,6 +15,7 @@
     <?php
     $teams = $this->data["teams"];
     if(!empty($teams)) {
+        
         foreach ($teams as $team) {
             $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
             echo '

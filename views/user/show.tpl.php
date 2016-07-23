@@ -71,7 +71,7 @@
 
         </div>
         <div class="panel panel-primary">
-            <div class="panel-heading"><h3 class="center header-li">Groups</h3></div>
+            <div class="panel-heading"><h3 class="center header-li">Groups of <?php echo $user->getUsername(); ?></h3></div>
             <div class="panel-body">
                 <ul class="header-ul">
                     <?php if(!empty($teams)){ ?><li>

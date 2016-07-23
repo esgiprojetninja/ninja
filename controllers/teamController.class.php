@@ -110,7 +110,7 @@ class teamController
 			$team = Team::findById($args[0]);
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int");
 			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"]);
-	    $view = new view();
+	    $view = new View();
 	    $invitation = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args[0],1],['int',"int","int"]);
       $view->setView("team/show.tpl");
       $view->assign("invitation",$invitation);
