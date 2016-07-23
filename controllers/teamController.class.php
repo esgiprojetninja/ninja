@@ -177,7 +177,9 @@ class teamController
 						$invitation->setIdTeamInviting($args[0]);
 						$invitation->setIdUserInvited($id_user_invited->getId());
 						$invitation->save();
-						$view->assign("success","Utilisateur invité !");
+                        $message= $now." : the team ".$team->getTeamName()."  has invited you";
+                        Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$invitation->getIdTeamInviting());
+                        $view->assign("success","Utilisateur invité !");
 					}else{
 						$view->assign("error","Utilisateur inexistant");
 					}
@@ -199,9 +201,9 @@ class teamController
 			$teams = Team::FindAll();
 			$view = new view();
 
-			$total = count($teams);//Nombre de team
-			$messagesParPage=7; //Nombre de messages par page
-			$nombreDePages=ceil($total/$messagesParPage);
+            $total = count($teams);//Nombre de team
+            $messagesParPage=6; //Nombre de messages par page
+            $nombreDePages=ceil($total/$messagesParPage);
 
 			if(isset($_GET['page'])){
 			     $pageActuelle=intval($_GET['page']);
@@ -249,6 +251,43 @@ class teamController
 		 	header('Location:'.WEBROOT.'user/login');
 		 }
 	}
+    public function searchAction($args)
+    {
+        header('Content-Type: application/json');
+        $args = implode(",", $args);
+        $args = explode(",", $args);
+        $args1 = $args[0];
+        $args2 = $args[1];
+        $teams = Team::findLike($args1,$args2);
+        echo json_encode($teams);
+    }
+
+    public function membersAction($args){
+        $args = implode(",", $args);
+        $members = TeamHasUser::findBy("idTeam",$args,"int",false);
+        $members = count($members);
+        echo json_encode($members);
+    }
+
+
+
+    public function demoteAction($args){
+        if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
+            $admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
+            if(!($admin[0]['captain'] > 0)){
+                header('Location:'.WEBROOT.'user/login');
+            }
+            $userToDemote = Admin::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
+            // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
+            if($userToDemote->getCaptain() == 1){
+                $userToDemote->setCaptain($userToDemote->getCaptain()-1);
+                $userToDemote->save();
+            }
+        }else{
+            //A voir la redirection
+            header('Location:'.WEBROOT.'user/login');
+        }
+    }
 
 	public function promoteAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
@@ -278,7 +317,9 @@ class teamController
 		    Captain::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"])->delete();
 		    TeamHasUser::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"])->delete();
 				Helpers::getMessageAjaxForm("User has been kicked !");
-		 }else{
+             Notification::createNotification($id_user=$args['idUser'],$message="You've got rekt of the group ".$args['idTeam']." bro !",$action=WEBROOT);
+
+         }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
 		 }

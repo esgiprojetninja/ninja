@@ -18,13 +18,17 @@
             <div class="panel-heading"><h3><?php echo $team->getTeamName(); ?></h3></div>
             <div class="panel-body">
                 <ul>
+                    <li> Quick description :
                   <?php if(!$team->getDescription() == ""): ?>
                     <li>
                         <?php echo $team->getDescription(); ?>
                     </li>
+                    <li>Created the :
+                        <?php echo $team->getDateCreated(); ?>
+                    </li>
                   <?php endif; ?>
                     <li>
-                        <span class="fa fa-user"></span>
+                        <span class="fa fa-user">List of members : </span><br>
                         <?php
                         if(is_array($members)){
                           foreach($members as $member){

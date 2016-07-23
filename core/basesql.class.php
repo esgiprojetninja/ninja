@@ -26,7 +26,7 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findAll($limit = false, $orderBy = false, $column = "*") {
+	public static function findAll($limit = false, $orderBy = false, $column = "*", $orderWay="ASC") {
 		$instance = new static;
 		if(is_array($column)){
 			$sql = "SELECT ";
@@ -43,7 +43,7 @@ class basesql extends PDO
 		}
 
 		if($orderBy != false){
-			$sql = $sql . " order by " . $orderBy . " DESC";
+			$sql = $sql . " order by " . $orderBy . " ". $orderWay;
 		}
 		if(is_array($limit)){
 			if($limit != false){
@@ -96,42 +96,51 @@ class basesql extends PDO
 	* @param $value string or numeric
 	* @param $valueType string
 	*/
-	public static function findBy($column, $value, $valueType) {
+	public static function findBy($column, $value, $valueType, $fetch=true, $Orderby=false, $ParamOrder="id", $OrderWay="ASC") {
 		$instance = new static;
 		//Si il y a plusieurs columns a vérifier
 		if(is_array($column) && is_array($value) && is_array($valueType)){
 			$sql = "SELECT * FROM "
-			.$instance->table." WHERE ";
+				.$instance->table." WHERE ";
 			for($i=0;$i<count($column);$i++){
 				if($i == 0){
 					$sql = $sql . $column[$i];
 				}else{
 					$sql = $sql . " AND ".$column[$i];
 				}
-
 				if ($valueType[$i] == "string") {
 					$sql = $sql."='".$value[$i]."'";
 				}
 				else if ($valueType[$i] == "int") {
 					$sql = $sql."=".$value[$i];
 				}
-
 				if($i+1 == count($column)){
-					$sql = $sql.";";
+					if ($Orderby==true){
+						$sql = $sql." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
+					} else{
+						$sql = $sql." ;";
+					}
 				}
-
 			}
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}else{ //Sinon on fait une simple requete sur une colonne
 			$sql = "SELECT * FROM "
-			.$instance->table." WHERE "
-			.$column;
+				.$instance->table." WHERE "
+				.$column;
 			if ($valueType == "string") {
-				$sql = $sql."='".$value."';";
+				if ($Orderby==true){
+					$sql = $sql."='".$value."' ORDER BY ".$ParamOrder." ".$OrderWay." ;";
+				} else{
+					$sql = $sql."='".$value."';";
+				}
 			}
 			else if ($valueType == "int") {
-				$sql = $sql."=".$value.";";
+				if ($Orderby==true){
+					$sql = $sql."=".$value." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
+				} else{
+					$sql = $sql."=".$value.";";
+				}
 			}
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
@@ -207,5 +216,66 @@ class basesql extends PDO
 			$this->pdo->exec($sql);
 		}
 	}
+
+	public static function findByLike($column, $value){
+		$instance = new static;
+		/*
+		Requete verifiant le champs exact
+		$sql = "SELECT * FROM ".$instance->table."";
+		$query = $instance->pdo->prepare($sql);
+		$query->execute();
+
+		$result = [];
+
+		while($row = $query->fetch()){
+			$explode = explode(",",$row['tags']);
+			foreach($explode as $valueExplode){
+				if($valueExplode == $value){
+					$result[] = $row;
+				}
+			}
+		}
+
+		if(count($result) == 1){
+			return $result[0];
+		}else{
+			return $result;
+		}
+	}*/
+
+	$sql = "SELECT * FROM "
+	.$instance->table." WHERE "
+	.$column;
+
+	$sql = $sql." LIKE '%".$value."%';";
+
+	$query = $instance->pdo->prepare($sql);
+	$query->execute();
+
+	$items = [];
+	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+	while($item = $query->fetch()) {
+		$items[] = $item;
+	}
+	if (count($items) == 1) {
+		return $items[0];
+	} else {
+		return $items;
+	}
+
+	$query = $instance->pdo->prepare($sql);
+	$query->execute();
+
+	$items = [];
+	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+	while($item = $query->fetch()) {
+		$items[] = $item;
+	}
+	if (count($items) == 1) {
+		return $items[0];
+	} else {
+		return $items;
+	}
+}
 
 }

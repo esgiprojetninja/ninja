@@ -69,9 +69,9 @@ class userController
 					}
 
 					$user->setEmail(trim(strtolower($_POST["email"])));
-					$user->setUsername(trim(strtolower($_POST["username"])));
-					$user->setFirstName(trim(strtolower($_POST["first_name"])));
-					$user->setLastName(trim(strtolower($_POST["last_name"])));
+					$user->setUsername(trim(($_POST["username"])));
+					$user->setFirstName(trim(($_POST["first_name"])));
+					$user->setLastName(trim(($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
 
 					$user->save();

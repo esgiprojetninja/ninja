@@ -15,7 +15,10 @@ class User extends basesql
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
 	protected $city = "";
-	protected $birthday = "0000-00-00";
+	protected $zipcode =0;
+	protected $country = "";
+	protected $street = "";
+	protected $birthday= "0000-00-00";
 	protected $avatar = "";
 	protected $dateCreated;
 	protected $is_admin = 0;
@@ -35,6 +38,9 @@ class User extends basesql
 		"avatar",
 		"favorite_sports",
 		"city",
+		"country",
+		"zipcode",
+		"street",
 		"birthday",
 		"dateCreated"
 	];
@@ -86,6 +92,18 @@ class User extends basesql
 
 	public function getCity(){
 		return $this->city;
+	}
+
+	public function getZipcode(){
+		return $this->zipcode;
+	}
+
+	public function getCountry(){
+		return $this->country;
+	}
+
+	public function getStreet(){
+		return $this->country;
 	}
 
 	public function getBirthday(){
@@ -140,6 +158,18 @@ class User extends basesql
 		$this->city = $city;
 	}
 
+	public function setZipcode($zipcode){
+		$this->zipcode = $zipcode;
+	}
+
+	public function setCountry($country){
+		$this->country = $country;
+	}
+
+	public function setStreet($street){
+		$this->street = $street;
+	}
+
 	public function setBirthday($birthday){
 		$this->birthday = $birthday;
 	}
@@ -180,27 +210,6 @@ class User extends basesql
 
 		return $this->link;
 	}
-
-	public function __call($methodName, $params = null)
-    {
-        $methodPrefix = substr($methodName, 0, 3);
-        $key = strtolower(substr($method, 3));
-        if($methodPrefix == 'set' && count($params) == 1)
-        {
-            $value = $params[0];
-            $this->settings[$key] = $value;
-        }
-        elseif($methodPrefix == 'get')
-        {
-            if(array_key_exists($key, $this->settings)) return $this->settings[$key];
-        }
-        else
-        {
-            exit('Opps! The method is not defined!');
-        }
-    }
-
-
 
 	/**
 	* Check user token and assign user to session

@@ -93,3 +93,22 @@ div.panel panel-primary/success/warning...(optional)
     border: 1px solid #C2C2C2;
     border-raduis: 4px;
 }
+
+/*********************
+    -- LISTS --
+********************/
+
+.panel .panel-body .item-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.panel .panel-body .item-list .item {
+    display: block;
+    min-height: 3em;
+}
+
+.panel .panel-body .item-list .item .btn {
+    font-size: 0.8em;
+    border-bottom: 0px;
+}

@@ -15,6 +15,9 @@
         protected $description;
         protected $location;
         protected $nb_people_max;
+        protected $city = "";
+        protected $zipcode =0;
+        protected $country = "";
 
         protected $columns = [
             "id",
@@ -27,7 +30,10 @@
             "owner_name",
             "description",
             "location",
-            "nb_people_max"
+            "nb_people_max",
+            "city",
+            "country",
+            "zipcode",
         ];
 
 
@@ -128,6 +134,30 @@
         }
 
         /**
+         * return City attribute
+         * @return int
+         */
+      	public function getCity(){
+      		return $this->city;
+      	}
+
+        /**
+         * return Zipcode attribute
+         * @return int
+         */
+      	public function getZipcode(){
+      		return $this->zipcode;
+      	}
+
+        /**
+         * return getCountry attribute
+         * @return int
+         */
+      	public function getCountry(){
+      		return $this->country;
+      	}
+
+        /**
          * Set id attribute
          * @param int $id
          */
@@ -216,14 +246,38 @@
         }
 
         /**
+         * Set City attribute
+         * @param string $city
+         */
+        public function setCity($city){
+          $this->$city = $city;
+        }
+
+        /**
+         * Set Zipcode attribute
+         * @param int $zipcode
+         */
+        public function setZipcode($zipcode){
+          $this->zipcode = $zipcode;
+        }
+
+        /**
+         * Set Country attribute
+         * @param string $country
+         */
+        public function setCountry($country){
+          $this->country = $country;
+        }
+
+        /**
          * Return occurences of the relation
          * @return array of User
          */
         public function gatherUsers() {
             $pivot = new ManyToManyPivot(
                 $this->pivot_table,
-                "event_id",
-                "user_id",
+                "event",
+                "user",
                 $this->id
             );
             return $pivot->getData();
@@ -244,6 +298,35 @@
                 );
                 $pivot->save();
             }
+        }
+
+        /**
+         * Remove User from event
+         * @param [int] $id
+         */
+        public function removeUser($id) {
+            if (is_numeric(intval($id))) {
+                $pivot = new ManyToManyPivot(
+                    $this->pivot_table,
+                    "event",
+                    "user",
+                    $this->id,
+                    intval($id)
+                );
+                $pivot->delete();
+            }
+        }
+
+        /**
+         * return array with event's user ids
+         * @return [array]
+         */
+        public function getUsersId() {
+            $ids = [];
+            foreach ($this->gatherUsers() as $key => $user) {
+                $ids[] = $user["id"];
+            }
+            return $ids;
         }
 
         /**

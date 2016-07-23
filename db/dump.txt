@@ -43,7 +43,14 @@ CREATE TABLE IF NOT EXISTS `captain` (
 CREATE TABLE IF NOT EXISTS `discussions` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `discussions`
+--
+
+INSERT INTO `discussions` (`id`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -58,7 +65,15 @@ CREATE TABLE IF NOT EXISTS `discussions_users_pivot` (
   PRIMARY KEY (`id`),
   KEY `discussion_id` (`discussion_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `discussions_users_pivot`
+--
+
+INSERT INTO `discussions_users_pivot` (`id`, `discussion_id`, `user_id`) VALUES
+(1, 1, 3),
+(2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -67,16 +82,50 @@ CREATE TABLE IF NOT EXISTS `discussions_users_pivot` (
 --
 
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dateCreated` datetime NOT NULL,
-  `dateBeginning` datetime NOT NULL,
-  `dateEnding` datetime NOT NULL,
-  `city` varchar(80) NOT NULL,
-  `sport` varchar(60) NOT NULL,
-  `title` varchar(80) NOT NULL,
-  `players_max` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `name` char(50) DEFAULT NULL,
+  `from_date` datetime DEFAULT NULL,
+  `to_date` datetime DEFAULT NULL,
+  `joignable_until` datetime DEFAULT NULL,
+  `tags` longtext,
+  `owner` int(6) NOT NULL,
+  `description` longtext,
+  `location` longtext,
+  `owner_name` varchar(50) DEFAULT NULL,
+  `nb_people_max` int(10) NOT NULL,
+  `open` int(6) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `owner` (`owner`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Contenu de la table `events`
+--
+
+INSERT INTO `events` (`id`, `name`, `from_date`, `to_date`, `joignable_until`, `tags`, `owner`, `description`, `location`, `owner_name`, `nb_people_max`, `open`) VALUES
+(30, 'Mon event', '2016-08-14 18:00:00', '2016-08-14 22:00:00', '2016-08-14 12:00:00', '#belote,#amour,#bonheur', 2, 'Un super match de belote', 'Le bistro du coin', 'renaud', 24, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `events_users_pivot`
+--
+
+CREATE TABLE IF NOT EXISTS `events_users_pivot` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `event_id` int(6) NOT NULL,
+  `user_id` int(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `fk_event` (`event_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+
+--
+-- Contenu de la table `events_users_pivot`
+--
+
+INSERT INTO `events_users_pivot` (`id`, `event_id`, `user_id`) VALUES
+(19, 30, 2);
 
 -- --------------------------------------------------------
 
@@ -109,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `discussion_id` (`discussion_id`),
   KEY `sender_id` (`sender_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -216,6 +265,20 @@ CREATE TABLE IF NOT EXISTS `user_info_sport` (
 ALTER TABLE `discussions_users_pivot`
   ADD CONSTRAINT `discussions_users_pivot_ibfk_1` FOREIGN KEY (`discussion_id`) REFERENCES `discussions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `discussions_users_pivot_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Contraintes pour la table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`);
+
+--
+-- Contraintes pour la table `events_users_pivot`
+--
+ALTER TABLE `events_users_pivot`
+  ADD CONSTRAINT `events_users_pivot_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`),
+  ADD CONSTRAINT `events_users_pivot_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `messages`

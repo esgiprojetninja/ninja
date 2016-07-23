@@ -15,11 +15,10 @@ $(document).on("click", function (e) {
 
 $(function ($) {
     // notifications
-    $('#popinNotifications').on("click","a", function() {
+    $('#popin-notifications').on("click","a", function() {
         var $a = $(this);
         var id = $a.data("id");
         $.get('/notification/delete/' + id,function(){
-            $a.parent().remove();
         });
     });
 
@@ -125,24 +124,28 @@ function showMessage(msg, code) {
     -- Notification box --
  ****************************/
 
-/*
-Ancien code non ajax
 $(function ($) {
-    $("#popupNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
-    for (var keyNotification in notificationsJS) {
-        $("#listeNotifications").append("<li>" +notificationsJS[keyNotification].message+"<a href=\"#\" data-id=\""+notificationsJS[keyNotification].id+"\"> VU</a></li>");
-    }
-    $("#popupNotifications").append("</ul>");
-});
-*/
-
-$(function ($) {
-    $("#popinNotifications").append("<ul class='dropdown-menu notifications left' id='listeNotifications'>");
-    $.getJSON( webrootJs+"notification/list", function(notifications) {
+    var width = $( window ).width()/2;
+    $( window ).resize(function() {
+        var width = $( window ).width()/2;
+        $("#liste-notifications").css("width", width);
+    });
+    $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");
+    $.getJSON(webrootJs+"notification/list", function(notifications) {
+        var nbNotifications = 0;
+        $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
-            $("#listeNotifications").append("<li>" + notifications[notification].message + "<a href=\"#\" data-id=\"" + notifications[notification].id + "\"> VU</a></li>");
+            if (notifications[notification].opened == 1){
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+            } else {
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+                nbNotifications++;
+            }
         }
-        $("#popinNotifications").append("</ul>");
+        if(nbNotifications != 0){
+            $("#notification-icon").attr("class", "icon-menu fa fa-bell");
+        }
+        $("#popin-notifications").append("</ul></div>");
     })
 });
 
@@ -280,3 +283,83 @@ $(function ($) {
         $(ev.target).parent().find(".hintBox").remove();
     });
 });
+
+/***************************
+ -- Search box --
+ ****************************/
+
+$(function ($) {
+    $("#select-criteria").change(function(){
+        $("#search-team").val("");
+        $("#all-teams").show();
+        $("#pages").show();
+    });
+    $("#search-team").keyup(function(){
+        var search = $('#search-team').val();
+        var select = $('#select-criteria').val();
+        if (select == 1){
+            var column = "teamName";
+        } else if (select == 2){
+            var column = "sports";
+        } else {
+            var column = "description";
+        }
+        var arraySearch = [column,search];
+        if (search != "") {
+            $("#all-teams").hide();
+            $("#pages").hide();
+            $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
+                var nbTeams =0;
+                var nbMembers;
+                if (teams != null) {
+                    $("#search-team-results").empty();
+                    for (var team in teams) {
+                        $.getJSON(webrootJs+"team/members/"+teams[team].id, function(nbMembers) {
+                            $("#search-team-results").append('<div class="col-sm-6">' +
+                                '                            <div class="panel panel-primary">' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].teamName + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
+                                '                            <div class="panel-body">' +
+                                '                            <ul class="header-ul">' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Name : </span>' +
+                                '                        <span class="form-content">' + teams[team].teamName + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Date Of Creation : </span>' +
+                                '                        <span class="form-content">' + teams[team].dateCreated + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Sports : </span>' +
+                                '                        <span class="form-content">' + teams[team].sports + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Description : </span>' +
+                                '                        <span class="form-content">' + teams[team].description + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Number of numbers : </span>' +
+                                '                        <span class="form-content">' + nbMembers + '</span>' +
+                                '                            </li>' +
+                                '                            </ul>' +
+                                '                            </div>' +
+                                '                            </div>' +
+                                '                            </div>'
+                            );
+                        });
+                        nbTeams++;
+                    }
+                } else {
+                    $( "#search-team-results" ).empty();
+                    $("#search-team-results").append('<div class="col-sm-12">' +
+                        '                            <div class="panel panel-primary">' +
+                        '                            <div class="panel-heading"><h3 class="center header-li ">No Group found</a></h3></div></div>');
+                }
+            });
+        } else {
+            $( "#search-team-results" ).empty();
+            $("#all-teams").show();
+            $("#pages").show();
+        }
+    });
+});
+
