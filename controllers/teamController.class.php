@@ -177,9 +177,9 @@ class teamController
 						$invitation->setIdTeamInviting($args[0]);
 						$invitation->setIdUserInvited($id_user_invited->getId());
 						$invitation->save();
-                        $message= $now." : the team ".$team->getTeamName()."  has invited you";
-                        Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$invitation->getIdTeamInviting());
-                        $view->assign("success","Utilisateur invité !");
+            $message= $now." : the team ".$team->getTeamName()."  has invited you";
+            Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$args[0]);
+            $view->assign("success","Utilisateur invité !");
 					}else{
 						$view->assign("error","Utilisateur inexistant");
 					}
@@ -267,26 +267,6 @@ class teamController
         $members = TeamHasUser::findBy("idTeam",$args,"int",false);
         $members = count($members);
         echo json_encode($members);
-    }
-
-
-
-    public function demoteAction($args){
-        if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
-            $admin = Admin::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"],false);
-            if(!($admin[0]['captain'] > 0)){
-                header('Location:'.WEBROOT.'user/login');
-            }
-            $userToDemote = Admin::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
-            // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
-            if($userToDemote->getCaptain() == 1){
-                $userToDemote->setCaptain($userToDemote->getCaptain()-1);
-                $userToDemote->save();
-            }
-        }else{
-            //A voir la redirection
-            header('Location:'.WEBROOT.'user/login');
-        }
     }
 
 	public function promoteAction($args){

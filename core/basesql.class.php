@@ -68,7 +68,7 @@ class basesql extends PDO
 		} else {
 			return $items;
 		}
-		$items = $query->fetchAll();
+
 		return $items;
 	}
 
