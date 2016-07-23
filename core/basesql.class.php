@@ -87,12 +87,14 @@ class basesql extends PDO
 				}else{
 					$sql = $sql . " AND ".$column[$i];
 				}
+
 				if ($valueType[$i] == "string") {
 					$sql = $sql."='".$value[$i]."'";
 				}
 				else if ($valueType[$i] == "int") {
 					$sql = $sql."=".$value[$i];
 				}
+
 				if($i+1 == count($column)){
 					if ($Orderby==true){
 						$sql = $sql." ORDER BY ".$ParamOrder." ".$OrderWay." ;";
@@ -100,6 +102,7 @@ class basesql extends PDO
 						$sql = $sql." ;";
 					}
 				}
+
 			}
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
@@ -124,25 +127,31 @@ class basesql extends PDO
 			$query = $instance->pdo->prepare($sql);
 			$query->execute();
 		}
+
 		/*
-			S'il y a une seule occurence on renvoie l'objet, s'il y en a plus on renvoie un array d'objet.
+		SI JE NE MODIFIE PAS LE FETCH_ASSOC par un fetchAll(), lorsque j'essaye de récupérer les idUser d'une team même s'il
+		existe 3 users, cette fonction ne me retourne qu'un idUser. A voir pour améliorer dans le futur.
 		*/
-		$items = [];
-		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-		while($item = $query->fetch()) {
-			$items[] = $item;
 
-		}
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
-
-		}
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
+		if($fetch == true){
+			$item = $query->fetch(PDO::FETCH_ASSOC);
+			if($item) {
+				foreach ($item as $column => $value) {
+					$instance->$column = $value;
+				}
+				return $instance;
+			}
+			else {
+				return False;
+			}
+		}else{
+			$item = $query->fetchAll();
+			if($item) {
+				return $item;
+			}
+			else {
+				return False;
+			}
 		}
 	}
 

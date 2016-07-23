@@ -219,28 +219,33 @@ function showMessage(msg, code) {
  ****************************/
 
 $(function ($) {
-    var width = $( window ).width()/2;
-    $( window ).resize(function() {
-        var width = $( window ).width()/2;
-        $("#liste-notifications").css("width", width);
-    });
-    $("#popin-notifications").append("<ul class='dropdown-menu notifications left' id='liste-notifications' style='width: "+ width +"px'>");
-    $.getJSON(webrootJs+"notification/list", function(notifications) {
-        var nbNotifications = 0;
+    $("#popin-notifications").append("<ul class='dropdown-menu notifications right' id='liste-notifications' style='width: "+ width +"px'>");
+    var nbNotifications = 0;
+    $.getJSON( webrootJs+"notification/list", function(notifications) {
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
         for (var notification in notifications) {
             if (notifications[notification].opened == 1){
-                $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             } else {
-                $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened\"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
-                nbNotifications++;
+                $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
             }
+            nbNotifications++;
         }
         if(nbNotifications != 0){
             $("#notification-icon").attr("class", "icon-menu fa fa-bell");
         }
         $("#popin-notifications").append("</ul></div>");
     })
+    var width = $( window ).width();
+    var height = $( window ).height();
+    $("#liste-notifications").css("width", width/2);
+    $("#scroll").css("max-height", height/2);
+    $( window ).resize(function() {
+        var width = $( window ).width();
+        var height = $( window ).height();
+        $("#liste-notifications").css("width", width/2);
+        $("#scroll").css("max-height", height/2);
+    });
 });
 
 /********************
