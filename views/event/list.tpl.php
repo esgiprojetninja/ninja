@@ -7,14 +7,6 @@
             </div>
         </div>
 
-        <?php echo "User :"; var_dump($eventsFromUser) ; echo '<br>'; ?>
-
-        <?php echo "City :"; var_dump($eventsFromCity) ; echo '<br>'; ?>
-
-        <?php echo "Zipcode :"; var_dump($eventsFromZipcode) ; echo '<br>'; ?>
-
-        <?php echo "Sport :"; var_dump($eventsFromSport) ; echo '<br>'; ?>
-
         <?php foreach ($events as $key => $event): ?>
             <?php if (new Datetime($event->getToDate()) > new Datetime()): ?>
                 <div class="panel panel-success">
