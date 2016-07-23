@@ -316,14 +316,12 @@ $(function ($) {
             $("#pages").hide();
             $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
                 var nbTeams =0;
-                var nbMembers;
                 if (teams != null) {
                     $("#search-team-results").empty();
                     for (var team in teams) {
-                        //$.getJSON(webrootJs+"team/members/"+teams[team].id, function(nbMembers) {
                             $("#search-team-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary">' +
-                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].teamName + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].id + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
@@ -351,7 +349,6 @@ $(function ($) {
                                 '                            </div>' +
                                 '                            </div>'
                             );
-                        //});
                         nbTeams++;
                     }
                 } else {

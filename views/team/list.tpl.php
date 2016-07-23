@@ -41,7 +41,7 @@
                                     <span class="form-content">'.$team->getDescription().'</span>
                                 </li>
                                 <li class="li-list">
-                                    <span class="form-info">Number of numbers : </span>
+                                    <span class="form-info">Number of members : </span>
                                     <span class="form-content">'.count($members).'</span>
                                 </li>
                             </ul>
