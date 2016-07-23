@@ -254,16 +254,36 @@ class teamController
 		 	header('Location:'.WEBROOT.'user/login');
 		 }
 	}
-    public function searchAction($args)
-    {
-        header('Content-Type: application/json');
-        $args = implode(",", $args);
-        $args = explode(",", $args);
-        $args1 = $args[0];
-        $args2 = $args[1];
-        $teams = Team::findByLike($args1,$args2);
-        echo json_encode($teams);
-    }
+
+	public function searchAction($args)
+	{
+		header('Content-Type: application/json');
+		$args = implode(",", $args);
+		$args = explode(",", $args);
+		$args1 = $args[0];
+		$args2 = $args[1];
+		$teams = Team::findByLike($args1,$args2);
+
+		if(count($teams) >0){
+			if(count($teams) == 1){
+				$members = TeamHasUser::findBy("idTeam",$teams->getId(),"int");
+				$members = count($members);
+				$teams->{"nbMember"} = $members;
+				$pute[] = $teams;
+			}else{
+				foreach($teams as $team){
+					$members = TeamHasUser::findBy("idTeam",$team->getId(),"int");
+					$members = count($members);
+					$team->{"nbMember"} = $members;
+				}
+				$pute = $teams;
+
+			}
+		}else{
+			$pute = null;
+		}
+		echo json_encode($pute);
+	}
 
     public function membersAction($args){
         $args = implode(",", $args);
