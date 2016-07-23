@@ -247,6 +247,9 @@ class teamController
             // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
             if($userToDemote->getCaptain() == 1){
                 $userToDemote->setCaptain($userToDemote->getCaptain()-1);
+                $team =Team::findById($args["idTeam"]);
+                $nameTeam =$team->getTeamName();
+                Notification::createNotification($id_user=$args["idUser"],$message="You've got demoted from the group ".$nameTeam." !",$action=WEBROOT."team/show/".$args["idTeam"]);
                 $userToDemote->save();
             }
         }else{
@@ -265,10 +268,10 @@ class teamController
             // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
             if($userToPromote->getCaptain() < 2 ){
                 $userToPromote->setCaptain($userToPromote->getCaptain()+1);
+                $team =Team::findById($args["idTeam"]);
+                $nameTeam =$team->getTeamName();
+                Notification::createNotification($id_user=$args["idUser"],$message="You've got promoted to admin in the group ".$nameTeam." !",$action=WEBROOT."team/show/".$args["idTeam"]);
                 $userToPromote->save();
-                $peoples = TeamHasUser::findAll();
-                echo $peoples;
-                //Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$invitation->getIdTeamInviting());
             }
         }else{
             //A voir la redirection
@@ -284,6 +287,7 @@ class teamController
             }
             Admin::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
             TeamHasUser::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
+            //FALSE
             Notification::createNotification($id_user=$args['idUser'],$message="You've got kicked out of the group ".$args['idTeam']." !",$action=WEBROOT);
         }else{
             //A voir la redirection
@@ -318,13 +322,12 @@ class teamController
                 header('Location:'.WEBROOT.'user/login');
             }
 
-            //Admin::delete('idTeam',$args["idTeam"],"int");
-            //TeamHasUser::delete('idTeam',$args["idTeam"],"int");
-            //Team::delete("id",$args['idTeam'],"int");
-echo "toto";
+            Admin::delete('idTeam',$args["idTeam"],"int");
+            TeamHasUser::delete('idTeam',$args["idTeam"],"int");
+            Team::delete("id",$args['idTeam'],"int");
+            // Tous les membres ?
             $members = TeamHasUser::findAll();
             var_dump($members);
-
             //Notifie seulement l'admin en question
             Notification::createNotification($id_user=$args['idUser'],$message="The group ".$args['idTeam']." has been deleted !",$action=WEBROOT);
 
