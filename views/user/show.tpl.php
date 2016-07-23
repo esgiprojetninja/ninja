@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary2">
             <?php if(!$user->getUsername()):?>
             <div class="panel-body">
                 <h3>User not found</h3>
@@ -72,7 +72,7 @@
             </div>
 
         </div>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary2">
             <div class="panel-heading"><h3 class="center header-li">Others</h3></div>
             <div class="panel-body">
                 <ul class="header-ul">

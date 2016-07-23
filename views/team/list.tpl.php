@@ -1,17 +1,20 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
+
+    <script type="text/javascript"> var page = "team";</script>
+    
     <p align="center"><a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your own now!</a></p>
     <div align="center">
         <h3 class="center header-li ">Or find one :</h3>
-        <input type="text" id="search-team">
+        <input type="text" id="search-content">
         <select id="select-criteria">
             <option value="1" selected>By name</option>
             <option value="2">By sport</option>
             <option value="3">By description</option>
         </select>
     </div>
-    <div id="search-team-results""></div>
+    <div id="search-content-results""></div>
 
-<div class="col-sm-12" id="all-teams">
+<div class="col-sm-12" id="all-content">
     <?php
     $teams = $this->data["teams"];
     if(!empty($teams)) {

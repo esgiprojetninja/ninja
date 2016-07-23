@@ -269,20 +269,20 @@ class teamController
 				$members = TeamHasUser::findBy("idTeam",$teams->getId(),"int");
 				$members = count($members);
 				$teams->{"nbMember"} = $members;
-				$pute[] = $teams;
+				$result[] = $teams;
 			}else{
 				foreach($teams as $team){
 					$members = TeamHasUser::findBy("idTeam",$team->getId(),"int");
 					$members = count($members);
 					$team->{"nbMember"} = $members;
 				}
-				$pute = $teams;
+				$result = $teams;
 
 			}
 		}else{
-			$pute = null;
+			$result = null;
 		}
-		echo json_encode($pute);
+		echo json_encode($result);
 	}
 
     public function membersAction($args){
