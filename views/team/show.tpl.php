@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-primary">
-            <?php if($team == null):?>
+            <?php if($team->getId() == null):?>
             <div class="panel-body">
                 <h3>Team not found</h3>
             </div>

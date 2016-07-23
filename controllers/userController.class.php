@@ -272,6 +272,12 @@ class userController
 		}
 	}
 
+	public function deleteAction($args){
+		if(User::isConnected() && User::isAdmin()){
+			User::findBy('id',$args[0],'int')->delete();
+		}
+	}
+
 	public function deleteAvatarAction($args){
 			if(User::isConnected()){
 				$user = User::findById($_SESSION['user_id']);

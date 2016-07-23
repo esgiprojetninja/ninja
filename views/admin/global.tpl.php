@@ -38,26 +38,26 @@
 		}else{
 			echo '<script>$("#hiddenUsers").hide();</script>';
 		}
-		
+
 		echo '<table>';
 		echo '<tr><td>Username</td><td>Active</td><td>Action</td></tr>';
 		foreach($users as $user){
-		    $user = User::findBy("id",$user['id'],"int",false);
-		    
-		    echo '<tr><td><a href='.WEBROOT.'user/show/'.$user[0]['id'].'>'.$user[0]['username'].'</a></td><td>';
-		    if($user[0]['is_active'] == 0){
-		    	echo '<a href="#" class="activateUser" data-user="'.$user[0]['id'].'">Activate</a>';
+		    $user = User::findBy("id",$user->getId(),"int");
+
+		    echo '<tr><td><a href='.WEBROOT.'user/show/'.$user->getId().'>'.$user->getUsername().'</a></td><td>';
+		    if($user->getIsActive() == 0){
+		    	echo '<a href="#" class="activateUser" data-user="'.$user->getId().'">Activate</a>';
 		    }
 		    echo '</td><td>';
-		    echo '<a href="#" class="ajax-link editUser" data-user="'.$user[0]['id'].'"">Edit</a> - <a href="#" class="ajax-link deleteUser" data-user="'.$user[0]['id'].'""> Delete </a> - Advert - Bann </td></tr>';
-		   
+		    echo '<a href="#" class="editUser" data-user="'.$user->getId().'"">Edit</a> - <a href="#" class="deleteUser" data-user="'.$user->getId().'""> Delete </a> - Advert - Bann </td></tr>';
+
 		}
 		echo '</table>';
 
 		echo '<p align="center">Page : ';
 	    for($i=1; $i<=$nombreDePagesUser; $i++){
 	         if($i==$pageActuelleUser){
-	             echo ' [ '.$i.' ] '; 
+	             echo ' [ '.$i.' ] ';
 	         }else{
 	              echo ' <a href='.WEBROOT.'admin?page='.$i.'>'.$i.'</a> ';
 	         }
@@ -74,22 +74,22 @@
 		}else{
 			echo '<script>$("#hiddenTeams").hide();</script>';
 		}
-		
+
 		echo '<table>';
 		echo '<tr><td>Team name</td><td>Action</td></tr>';
 		foreach($teams as $team){
-		    $team = Team::findBy("id",$team['id'],"string",false);
-		    
-		    echo '<tr><td><a href='.WEBROOT.'team/show/'.$team[0]['id'].'>'.$team[0]['teamName'].'</a></td><td>';
-		    echo '<a href="#" class="ajax-link editTeam" data-team="'.$team[0]['id'].'"">Edit</a> - <a href="#" class="ajax-link deleteTeam" data-team="'.$team[0]['id'].'""> Delete </a> - Advert - Bann </td></tr>';
-		    
+		    $team = Team::findBy("id",$team->getId(),"int");
+
+		    echo '<tr><td><a href='.WEBROOT.'team/show/'.$team->getId().'>'.$team->getTeamName().'</a></td><td>';
+		    echo '<a href="#" class="editTeam" data-team="'.$team->getId().'"">Edit</a> - <a href="#" class="deleteTeam" data-team="'.$team->getId().'""> Delete </a> - Advert - Bann </td></tr>';
+
 		}
 		echo '</table>';
 
 		echo '<p align="center">Page : ';
 	    for($i=1; $i<=$nombreDePagesUser; $i++){
 	         if($i==$pageActuelleUser){
-	             echo ' [ '.$i.' ] '; 
+	             echo ' [ '.$i.' ] ';
 	         }else{
 	              echo ' <a href='.WEBROOT.'admin?page='.$i.'>'.$i.'</a> ';
 	         }
