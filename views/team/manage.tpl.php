@@ -122,7 +122,7 @@
                   <?php if($captain->getCaptain() > 0): ?>
                     <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
                   <?php endif; ?>
-                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right leaveTeam">Leave</a>
+                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right ajax-link" data-url="team/leave">Leave</a>
                 </div>
                 <!--
                     AFFICHER DERNIER EVENT ?

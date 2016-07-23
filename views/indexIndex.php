@@ -7,10 +7,15 @@
                     if(count($users) == 0){
                         echo '<h1> No User yet</h1>';
                     }else{
+                      if(count($users) == 1){
+                        $link = WEBROOT."user/show/".$users->getId();
+                        echo '<a href="'.$link.'">'.$users->getUsername().'</a><br>';
+                      }else{
                         foreach($users as $user){
-                            $link = WEBROOT."user/show/".$user->getId();
-                            echo '<a href="'.$link.'">'.$user->getUsername().'</a><br>';
+                          $link = WEBROOT."user/show/".$user->getId();
+                          echo '<a href="'.$link.'">'.$user->getUsername().'</a><br>';
                         }
+                      }
                     }
                 ?>
             </div>
@@ -24,10 +29,15 @@
                     if(count($teams) == 0){
                         echo '<h1> No team yet</h1>';
                     }else{
+                      if(count($teams) == 1){
+                        $link = WEBROOT."team/show/".$teams->getId();
+                        echo '<a href="'.$link.'">'.$teams->getTeamName().'</a><br>';
+                      }else{
                         foreach($teams as $team){
-                            $link = WEBROOT."team/show/".$team->getId();
-                            echo '<a href="'.$link.'">'.$team->getTeamName().'</a><br>';
+                          $link = WEBROOT."team/show/".$team->getId();
+                          echo '<a href="'.$link.'">'.$team->getTeamName().'</a><br>';
                         }
+                      }
                     }
                 ?>
             </div>

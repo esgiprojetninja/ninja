@@ -60,6 +60,8 @@ $(function ($) {
             if(promptInput){
               data.messageInvit = promptInput;
               lock = true;
+            }else if(promptInput == null){
+              return;
             }else if(promptInput === ""){
               data.messageInvit = "I want to join you !";
               lock = true;
@@ -115,7 +117,7 @@ function showMessage(msg, code) {
     $box.fadeIn();
     setTimeout(function () {
         $box.fadeOut();
-        window.location.reload(false);
+        //window.location.reload(false);
     }, 5000);
 }
 

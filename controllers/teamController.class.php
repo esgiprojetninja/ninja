@@ -275,8 +275,8 @@ class teamController
 		    if(!($captain->getCaptain() > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
-		    Captain::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
-		    TeamHasUser::delete(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
+		    Captain::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"])->delete();
+		    TeamHasUser::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"])->delete();
 				Helpers::getMessageAjaxForm("User has been kicked !");
 		 }else{
 		 	//A voir la redirection
@@ -286,12 +286,12 @@ class teamController
 
 	public function leaveAction($args){
 		if(User::isConnected() && isset($args["idTeam"])){
-		    Captain::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
-		    TeamHasUser::delete(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
+		    Captain::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"])->delete();
+		    TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"])->delete();
 
 			// on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
 		    if(TeamHasUser::findBy("idTeam",$args['idTeam'],"int") == false){
-		    	Team::delete("id",$args['idTeam'],"int");
+		    	Team::findBy("id",$args['idTeam'],"int")->delete();
 		    }
 
 				Helpers::getMessageAjaxForm("Invitation canceled !");
@@ -308,9 +308,9 @@ class teamController
 		      header('Location:'.WEBROOT.'user/login');
 		    }
 
-		    Captain::delete('idTeam',$args["idTeam"],"int");
-		    TeamHasUser::delete('idTeam',$args["idTeam"],"int");
-		    Team::delete("id",$args['idTeam'],"int");
+				Captain::findBy('idTeam',$args["idTeam"],"int")->delete();
+		    TeamHasUser::findBy('idTeam',$args["idTeam"],"int")->delete();
+		    Team::findBy("id",$args['idTeam'],"int")->delete();
 
 				Helpers::getMessageAjaxForm("Team deleted !");
 		 }else{
@@ -338,7 +338,9 @@ class teamController
 			$captain->setCaptain(0);
 			$captain->save();
 
-      Invitation::delete(["idUserInvited","idTeamInviting","type"],[$idUser,$args["idTeam"],$args["type"]],['int','int','int']);
+			$invitation = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$idUser,$args["idTeam"],$args["type"]],['int','int','int']);
+			$invitation->delete();
+
 			Helpers::getMessageAjaxForm("Invitation accepted !");
 		}else{
 		 	//A voir la redirection
@@ -374,7 +376,7 @@ class teamController
 			}else{
 				$idUser = $_SESSION['user_id'];
 			}
-      Invitation::delete(["idUserInvited","idTeamInviting"],[$idUser,$args["idTeam"]],['int','int']);
+      Invitation::findBy(["idUserInvited","idTeamInviting"],[$idUser,$args["idTeam"]],['int','int'])->delete();
 
 			Helpers::getMessageAjaxForm("Invitation canceled !");
 		}else{

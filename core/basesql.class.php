@@ -203,19 +203,9 @@ class basesql extends PDO
 	public function delete(){
 		if (isset($this->id)) {
 			$sql = "DELETE from " . $this->table . " WHERE id = " . $this->id;
+			echo $sql;
 			$this->pdo->exec($sql);
 		}
 	}
 
-	/**
-	*Tri une fonction appelée préalablement : Team::findBy()->orderBy('champsATrier','A');
-	*/
-	public function orderBy($what,$type="A"){
-		var_dump($this);
-		if($type == A){
-
-		}else{
-
-		}
-	}
 }
