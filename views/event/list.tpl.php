@@ -1,4 +1,6 @@
 <script type="text/javascript"> var page = "event";</script>
+<script type="text/javascript"> var sessionId = <?= $_SESSION["user_id"] ;?></script>
+
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="panel panel-primary">

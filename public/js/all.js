@@ -455,16 +455,22 @@ $(function ($) {
 
                             });
                             $(".list-people").css("class", "item-list ");
-                            /*
-                                '       <!--<?php if (in_array($_SESSION["user_id"], $events->getUsersId()) && $events->getOwner() != $_SESSION["user_id"]): ?>-->' +
-                                '        <a <!--href="<?= WEBROOT; ?>event/leave/<?= $events->getId();?-->>/<!--<?= $_SESSION[\'user_id\']?>-->" class="btn btn-danger">Leave</a>' +
-                            '       <!--<?php elseif (!in_array($_SESSION["user_id"], $events->getUsersId())): ?>-->' +
-                            '             <a <!--href="<?= WEBROOT; ?>event/join/<?= $events->getId();?>-->" class="btn btn-success">Join</a>' +
-                            '             <!--  <?php endif; ?>-->' +
-                            '     <!-- <?php if ($events->getOwner() == $_SESSION["user_id"]): ?>-->' +
-                            '     <a <!--href="<?= WEBROOT; ?>event/update/<?= $events->getId() ?>-->" class="btn btn-primary">Manage</a>' +
-
-                          ); */
+                            console.log(data.owner);
+                            console.log(sessionId);
+                            if (data.owner == sessionId){
+                                if($(".done").length == 0) {
+                                    $(".panel-footer").append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
+                                    $(".panel-footer").css("class","panel-footer-done");
+                                } else {
+                                    //Bah on fait rien
+                                }
+                            }
+                            if ($.inArray(sessionId, data.users) && data.owner == sessionId){
+                                $(".panel-footer").append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
+                            }
+                            if($.inArray(sessionId, data.users) !== -1){
+                                $(".panel-footer").append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
+                            }
                       });
                     } else {
                         $( "#search-content-results" ).empty();

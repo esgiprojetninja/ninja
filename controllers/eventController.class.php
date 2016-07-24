@@ -205,6 +205,7 @@ class eventController {
             "toDate" => $events[$i]->gettoDate(),
             "joignableUntil" => $events[$i]->getJoignableUntil(),
             "ownerName" => $events[$i]->getOwnerName(),
+            "owner" => $events[$i]->getOwner(),
             "users" => $events[$i]->gatherUsers()
           ];
         }
