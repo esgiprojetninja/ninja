@@ -193,7 +193,14 @@ class eventController {
         $args = explode(",", $args);
         $args1 = $args[0];
         $args2 = $args[1];
-        $events = Event::findByLikeArray($args1,$args2);
-        echo json_encode($events);
+        $events = Event::findByLike($args1,$args2);
+        $fullData = [];
+        for ($i = 0; $i < count($events); $i++) {
+          $fullData[] = [
+            "events" => $events[$i],
+            "users" => $events[$i]->gatherUsers()
+          ];
+        }
+        echo json_encode($fullData);
     }
 }
