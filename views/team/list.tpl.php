@@ -1,7 +1,7 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
 
     <script type="text/javascript"> var page = "team";</script>
-    
+
     <p align="center"><a href="<?= WEBROOT;?>team/create"class="btn btn-primary">Create your own now!</a></p>
     <div align="center">
         <h3 class="center header-li ">Or find one :</h3>
@@ -18,9 +18,8 @@
     <?php
     $teams = $this->data["teams"];
     if(!empty($teams)) {
-        
+
         foreach ($teams as $team) {
-            $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
             echo '
                 <div class="col-sm-6">
                     <div class="panel panel-primary">

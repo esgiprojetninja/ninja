@@ -29,6 +29,77 @@ $(function ($) {
 
 });
 
+
+    /**************************
+         -- MANAGE ADMIN --
+    **************************/
+$(function ($) {
+
+    $("#iframeAdmin").hide();
+
+    $("a.addUser").click(function(ev){
+        $("#hiddenUsers").hide();
+        $("#hiddenTeams").hide();
+        $("#iframeAdmin").show();
+        $("#frameAdminGlobal").attr("src","../user/subscribe");
+        $("#frameAdminGlobal").attr("style","height:500px;left:-65px;top:-200px;position:relative");
+    })
+
+    $("a.addTeam").click(function(ev){
+        $("#hiddenUsers").hide();
+        $("#hiddenTeams").hide();
+        $("#iframeAdmin").show();
+        $("#frameAdminGlobal").attr("src","../team/create");
+        $("#frameAdminGlobal").attr("style","height:300px;left:-65px;top:-70px;position:relative");
+    })
+
+    $("a.manageUser").click(function(ev){
+        $("#iframeAdmin").hide();
+        $("#hiddenTeams").hide();
+        $("#hiddenUsers").show();
+        $("#frameAdminGlobal").attr("style","height:300px;left:-65px;top:-70px;position:relative");
+    })
+
+    $("a.manageTeam").click(function(ev){
+        $("#iframeAdmin").hide();
+        $("#hiddenUsers").hide();
+        $("#hiddenTeams").show();
+        $("#frameAdminGlobal").attr("style","height:300px;left:-65px;top:-70px;position:relative");
+    })
+
+    $("a.editUser").click(function(ev){
+        $("#iframeAdmin").show();
+        var userId = $(this).data("user");
+        $("#frameAdminGlobal").attr("src","../user/edit/"+userId);
+        $("#frameAdminGlobal").attr("style","height:1100px;left:-65px;top:-70px;position:relative");
+    })
+
+    $("a.editTeam").click(function(ev){
+        $("#iframeAdmin").show();
+        var teamId = $(this).data("team");
+        $("#frameAdminGlobal").attr("src","../team/edit/"+teamId);
+        $("#frameAdminGlobal").attr("style","height:500px;left:-65px;top:-70px;position:relative");
+    })
+
+    $("a.deleteUser").click(function(ev){
+        var userId = $(this).data("user");
+        if (confirm('Are you sure to delete this user ?')) {
+            $("#frameAdminGlobal").attr("src","../user/delete/"+userId);
+            //window.location.reload();
+        }
+    })
+
+    $("a.deleteTeam").click(function(ev){
+        var teamId = $(this).data("team");
+        if (confirm('Are you sure to delete this team ?')) {
+            $("#frameAdminGlobal").attr("src","../team/delete/"+teamId);
+            window.location.reload();
+        }
+    })
+
+});
+
+
 /**********************
     -- AJAX FORMS --
 **********************/
