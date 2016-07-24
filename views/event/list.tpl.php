@@ -47,6 +47,7 @@
                       <?php if ($events->getOwner() == $_SESSION["user_id"]): ?>
                           <a href="<?= WEBROOT; ?>event/update/<?= $events->getId() ?>" class="btn btn-primary">Manage</a>
                       <?php endif; ?>
+                      <a href="<?= WEBROOT; ?>event/comment/<?= $events->getId()?>" class="btn btn-primary"> Comments </a>
                   </div>
               </div>
           <?php endif; ?>

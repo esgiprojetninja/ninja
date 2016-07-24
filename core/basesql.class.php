@@ -56,23 +56,18 @@ class basesql extends PDO
 		}
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
-				echo $sql;
+
 		$query->execute();
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 		while($item = $query->fetch()) {
 			$items[] = $item;
 		}
 
-		if ($query != null){
-			if (count($items) == 1) {
-				return $items[0];
-			} else {
-				return $items;
-			}
-		}else{
-			$items = null;
+		if (count($items) == 1) {
+			return $items[0];
+		} else {
+			return $items;
 		}
-
 		return $items;
 	}
 
@@ -197,12 +192,10 @@ class basesql extends PDO
 		{
 			$sql = "INSERT INTO ".$this->table." (".implode(",",$this->columns).")
 					VALUES (:".implode(",:",$this->columns).")";
-
 			$query = $this->pdo->prepare($sql);
 			foreach ($this->columns as $column) {
 				$data[$column] = $this->$column;
 			}
-
 
 			try {
 				$query->execute($data);
