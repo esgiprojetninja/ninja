@@ -8,7 +8,7 @@ class indexController
 			$view = new View;
 			$view->setView("indexIndex");
 
-			$teams = Team::FindAll(10,"dateCreated",["teamName","id"]);
+						$teams = Team::FindAll(10,"dateCreated",["teamName","id"]);
             $view->assign("teams", $teams);
 
 			//$notifications = Notification::findBy(["id_user","opened"],[$_SESSION['user_id'],0],['int','int'],false);
@@ -17,8 +17,9 @@ class indexController
             $users = User::findAll(10,"dateCreated",["username","id"]);
             $view->assign("users",$users);
 
-            $invitations = Invitation::findBy(["idUserInvited","type"],[$_SESSION['user_id'],0],['int','int']);
-            $view->assign("invitations",$invitations);
+						$events = Event::findAll(10,"id",["name","id"]);
+						$view->assign("events",$events);
+
 
 		} else {
 	   		header("location: ".WEBROOT."user/subscribe");

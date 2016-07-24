@@ -64,12 +64,6 @@ class basesql extends PDO
 			$items[] = $item;
 		}
 
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
-		}
-
 		return $items;
 	}
 
@@ -157,11 +151,8 @@ class basesql extends PDO
 			$items[] = $item;
 		}
 
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
-		}
+		return $items;
+
 	}
 
 	public function save()
@@ -194,12 +185,10 @@ class basesql extends PDO
 		{
 			$sql = "INSERT INTO ".$this->table." (".implode(",",$this->columns).")
 					VALUES (:".implode(",:",$this->columns).")";
-
 			$query = $this->pdo->prepare($sql);
 			foreach ($this->columns as $column) {
 				$data[$column] = $this->$column;
 			}
-
 
 			try {
 				$query->execute($data);
@@ -287,25 +276,9 @@ class basesql extends PDO
 	while($item = $query->fetch()) {
 		$items[] = $item;
 	}
-	if (count($items) == 1) {
-		return $items[0];
-	} else {
-		return $items;
-	}
 
-	$query = $instance->pdo->prepare($sql);
-	$query->execute();
+	return $items;
 
-	$items = [];
-	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-	while($item = $query->fetch()) {
-		$items[] = $item;
-	}
-	if (count($items) == 1) {
-		return $items[0];
-	} else {
-		return $items;
-	}
 }
 
 }

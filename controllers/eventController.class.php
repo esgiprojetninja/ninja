@@ -7,23 +7,6 @@ class eventController {
             $view = new View();
             $events = Event::findAll();
 
-            $user = 2; //Ton id d'user à rechercher
-            $eventsFromUser = Event::findBy("owner",$user,"int",false); //La requête
-            $view->assign("eventsFromUser",$eventsFromUser);
-
-            $city = "Fairfax"; //A l'image d'un petit $city = "Bordeaux" t'as vu.
-            $eventsFromCity = Event::findBy("city",$city,"string",false);
-            $view->assign("eventsFromCity",$eventsFromCity);
-
-            $zipcode = 22181;
-            $eventsFromZipcode = Event::findBy("zipcode",$zipcode,"int",false);
-            $view->assign("eventsFromZipcode",$eventsFromZipcode);
-
-            $sport = "amour"; //Renvoie les events dont le tag contient cette chaine
-            $sport = "#".$sport; //Renverra uniquement les chaines commencant par le mot recherché
-            $eventsFromSport = Event::findByLike("tags",$sport);
-            $view->assign("eventsFromSport",$eventsFromSport);
-
             $view->assign("events", $events);
             $view->setView("event/list.tpl");
 
@@ -171,6 +154,58 @@ class eventController {
         }
     }
 
+    public function commentAction($args){
+      if(User::isConnected() && !empty($args[0])){
+        $event = Event::findById($args[0]);
+        $view = new View();
+        $commentForm = $event->getForm("comment");
+        $commentErrors = [];
+        $comments = EventHasComment::FindBy("id_event",$args[0],"int");
+        $total = count($comments);//Nombre de team
+        $messagesParPage=10; //Nombre de messages par page
+        $nombreDePages=ceil($total/$messagesParPage);
+
+        if(isset($_GET['page'])){
+             $pageActuelle=intval($_GET['page']);
+             if($pageActuelle>$nombreDePages)
+             {
+                  $pageActuelle=$nombreDePages;
+             }
+        }else{
+             $pageActuelle=1;
+        }
+        $premiereEntree=($pageActuelle-1)*$messagesParPage;
+        // La requête sql pour récupérer les messages de la page actuelle.
+        $retour_messages= Comment::findAll([$premiereEntree,$messagesParPage],'id');
+        if(!empty($_POST)) {
+  				$validator = new Validator();
+  				$commentErrors = $validator->check($commentForm["struct"], $_POST);
+  				if(count($commentErrors) == 0) {
+            $comment = new Comment;
+            $now = date("Y-m-d H:i:s");
+            $comment->setDateCreated($now);
+            $comment->setComment($_POST['comment']);
+            $comment->setIdAuthor($_SESSION['user_id']);
+            $comment->save();
+
+            $eventHasComment = new EventHasComment;
+            $eventHasComment->setIdEvent($args[0]);
+            $eventHasComment->setIdComment($comment->getId());
+            $eventHasComment->save();
+          }
+        }
+
+        $view->assign("commentForm",$commentForm);
+        $view->assign("commentErrors",$commentErrors);
+        $view->setView("event/comment.tpl");
+        $view->assign("comments",$retour_messages);
+        $view->assign("event", $event);
+      }else{
+        //A voir la redirection
+        header('Location:'.WEBROOT.'user/login');
+      }
+    }
+
     public function leaveAction($args) {
         if (isset($args[0]) && isset($args[1])) {
             $event = Event::findById(intval($args[0]));
@@ -184,5 +219,15 @@ class eventController {
             http_response_code(404);
             echo "User or event not found";
         }
+    }
+
+    public function deleteCommentAction($args){
+      if(isset($args[0])){
+        $commentaire = Comment::findById($args[0]);
+        $commentaire->delete();
+
+        $eventHasComment = eventHasComment::findBy("id_comment",$args[0],"int");
+        $eventHasComment[0]->delete();
+      }
     }
 }

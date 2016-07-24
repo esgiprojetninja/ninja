@@ -91,14 +91,14 @@ class Validator extends basesql{
 			$idUser = User::findBy("email",$var,"string");
 			//premiere partie de la requete : on verifie que l'utilisateur n'est pas deja dans la team, ou si il n'est pas deja invité
 			if($idUser){
-				return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser->id],["int","int"])));
+				return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser[0]->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser[0]->id],["int","int"])));
 			}else{
 				return false;
 			}
 		}else{//Sinon pseudo
 			$idUser = User::findBy("username",$var,"string");
 			if($idUser){
-				return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser->id],["int","int"])));
+				return !(TeamHasUser::findBy(["idUser","idTeam"],[$idUser[0]->id,$_SESSION['idTeam']],["int","int"]) || (Invitation::findBy(["idTeamInviting","idUserInvited"],[$_SESSION['idTeam'],$idUser[0]->id],["int","int"])));
 			}else{
 				return false;
 			}

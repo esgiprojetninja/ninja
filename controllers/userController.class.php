@@ -53,7 +53,7 @@ class userController
 						$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
 						if($movingFile){
 							$v->assign("success","Changes has been saved");
-							$user->setAvatar($path);
+							$user[0]->setAvatar($path);
 							//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
 							if($dossier = opendir('public/img/users')){
 								while(false !== ($fichier = readdir($dossier))){
@@ -73,6 +73,10 @@ class userController
 					$user->setFirstName(trim(($_POST["first_name"])));
 					$user->setLastName(trim(($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
+					$user->setCity($_POST['city']);
+					$user->setCountry($_POST['country']);
+					$user->setStreet($_POST['street']);
+					$user->setZipcode($_POST['zipcode']);
 
 					$user->save();
 				}
@@ -97,22 +101,22 @@ class userController
 
 		$user = User::FindBy('email',$args['email'],'string');
 
-		$formActivation = $user->getForm("activation");
+		$formActivation = $user[0]->getForm("activation");
 		$view->assign("formActivation", $formActivation);
 
 		$validator = new Validator();
 		if (isset($args["token"]) && !User::findBy("token", $args["token"], "string")) {
 			header("location: ".WEBROOT.'user/login');
 		}
-		else if(isset($args["token"]) && $user->getToken() == $args["token"]) {
-			if ($user->getIsActive() != 1) {
+		else if(isset($args["token"]) && $user[0]->getToken() == $args["token"]) {
+			if ($user[0]->getIsActive() != 1) {
 				$view->assign("user",$user);
 				if(!empty($_POST)) {
 					$activateErrors = $validator->check($formActivation["struct"], $_POST);
 					if(count($activateErrors) == 0) {
-						$user->setPassword($_POST["password"]);
-						$user->setIsActive(1);
-						$user->save();
+						$user[0]->setPassword($_POST["password"]);
+						$user[0]->setIsActive(1);
+						$user[0]->save();
 						$view->assign("activate_msg", "<span class='info'> Your account is now activated </span>");
 						session_destroy();
 					}
@@ -177,13 +181,13 @@ class userController
 
 		if(isset($_POST["form-type"])) {
 			if($user = User::findBy("email", trim(strtolower($_POST["email"])), "string")) {
-				if($user->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]), SALT) == $user->getPassword())){
-					$user->setToken();
-					$user->save();
-					$token = $user->getToken();
-					$id = $user->getId();
+				if($user[0]->getEmail() == trim(strtolower($_POST["email"])) && (crypt(trim($_POST["password"]), SALT) == $user[0]->getPassword())){
+					$user[0]->setToken();
+					$user[0]->save();
+					$token = $user[0]->getToken();
+					$id = $user[0]->getId();
 					$_SESSION["user_id"] = $id;
-					$_SESSION["username"] = $user->getUsername();
+					$_SESSION["username"] = $user[0]->getUsername();
 					$_SESSION["user_token"] = $token;
 					header("location: ".WEBROOT);
 				}
@@ -220,12 +224,12 @@ class userController
 
 		if (isset($_POST["form-type"])) {
 			if ($user = User::findBy("email", trim(strtolower($_POST["reset-email"])), "string")) {
-				$user->setToken();
-				$user->save();
-				$user->sendEmail("reset");
+				$user[0]->setToken();
+				$user[0]->save();
+				$user[0]->sendEmail("reset");
 				$view->assign(
 					"mail_new_pwd",
-					"<span class='info'> An email has just been sent to " . $user->getEmail() . ", for reset password. Please check your email box. </span>"
+					"<span class='info'> An email has just been sent to " . $user[0]->getEmail() . ", for reset password. Please check your email box. </span>"
 				);
 			} else {
 				$view->assign("mail_new_pwd", "<span class='info'> Couldn't find this address </span>");
@@ -242,19 +246,19 @@ class userController
 				$user = User::findBy("email", strtolower(trim($_POST["email"])), "string");
 			}
 			// Good token ?
-			if ($user->getToken() == $args["token"] || $user->getToken() == $_POST["token"]) {
+			if ($user[0]->getToken() == $args["token"] || $user[0]->getToken() == $_POST["token"]) {
 				$view = new View();
 				$form = User::getForm("setNewPassword");
-				$form["struct"]["email"]["value"] = $user->getEmail();
-				$form["struct"]["token"]["value"] = $user->getToken();
+				$form["struct"]["email"]["value"] = $user[0]->getEmail();
+				$form["struct"]["token"]["value"] = $user[0]->getToken();
 				$formErrors = [];
 				if (isset($_POST["form-type"]) && $_POST["form-type"] == "setNewPassword") {
 					$validator = new Validator();
 					$formErrors = $validator->check($form["struct"], $_POST);
 					if (count($formErrors) == 0) {
-						$user->setPassword($_POST["password"]);
-						$user->setToken();
-						$user->save();
+						$user[0]->setPassword($_POST["password"]);
+						$user[0]->setToken();
+						$user[0]->save();
 						$view->assign(
 							"success",
 							"<span class='info'> Your Password has been updated ! You can now log in with you new password :) </span>"
@@ -270,6 +274,41 @@ class userController
 			}
 		} else {
 			header("location:" . WEBROOT);
+		}
+	}
+
+	public function deleteAction($args){
+		if(User::isConnected() && User::isAdmin()){
+			$user = User::findBy('id',$args[0],'int');
+			$user[0]->delete();
+
+			if($teamHasUser = TeamHasUser::findBy('idUser',$args[0],"int")){
+				foreach($teamHasUser as $teamUser){
+					$teamUser->delete();
+					if(TeamHasUser::findBy("idTeam",$teamUser->getIdTeam(),"int") == false){
+						$team = Team::findBy("id",$teamUser->getIdTeam(),"int");
+						$team[0]->delete();
+					}
+				}
+			}
+			if($captain = Captain::findBy('idUser',$args[0],"int")){
+				foreach($captain as $cap){
+					$cap->delete();
+				}
+			}
+
+			if($comment = Comment::findBy('id_author',$args[0],"int")){
+				foreach($comment as $com){
+					$com->delete();
+				}
+			}
+
+			if($eventsHasComment = EventHasComment::findBy('id_author',$args[0],'int')){
+				foreach($EventHasComment as $eventComment){
+					$eventComment->delete();
+				}
+			}
+
 		}
 	}
 
