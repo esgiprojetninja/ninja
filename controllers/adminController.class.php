@@ -22,7 +22,7 @@ class adminController
 
     public function globalAction($args)
     {
-        $view = new view;
+        $view = new View();
         if(User::isConnected()){
             if(User::isAdmin()){
                 $view->setView('admin/global.tpl');

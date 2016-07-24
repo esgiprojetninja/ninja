@@ -139,7 +139,7 @@ $(function ($) {
             nbNotifications++;
         }
         if(nbNotifications != 0){
-            $("#notification-icon").attr("class", "icon-menu fa fa-bell");
+            $("#notification-icon").css("class", "icon-menu fa fa-bell");
         }
         $("#popin-notifications").append("</ul></div>");
     })
