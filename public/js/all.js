@@ -55,7 +55,7 @@ $(function ($) {
           action = $(this).data("url");
           action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
           if($(this).is(".prompt")){
-            var promptInput = prompt("Add a message with your ask");
+            var promptInput = prompt("Add a message with your invitation");
             if(promptInput){
               data.messageInvit = promptInput;
               lock = true;
@@ -71,6 +71,7 @@ $(function ($) {
             }
           }
       } else {
+          lock = true;
           $.each($(this).find("input, select, textarea"), function () {
               if ($(this).attr("type") == "checkbox" || $(this).attr("type") == "radio") {
                   if ($(this).is(":checked")) {
@@ -177,6 +178,7 @@ function getDiscussions() {
             url: location.origin + "/inbox/getDiscussions",
         }).success(function (data) {
             //showMessage(data.message, "success");
+            console.debug(data);
         }).fail(function (jqXHR, textStatus) {
         }).then(function (data) {
             var currentUserId = Number(data.current_user_id);

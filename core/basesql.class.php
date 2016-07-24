@@ -59,6 +59,7 @@ class basesql extends PDO
 
 		$query->execute();
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+		$items = [];
 		while($item = $query->fetch()) {
 			$items[] = $item;
 		}

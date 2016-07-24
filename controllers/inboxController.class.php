@@ -30,10 +30,12 @@ class inboxController
      * @echo json
      */
     public function createDiscussionAction($args) {
+        var_dump("CHATTE");
         $response = [];
         if (User::isConnected()) {
             $errors = [];
             if(isset($_POST["form-type"]) && $_POST["form-type"] == "createDiscussion") {
+                print_r("TOTO");
                 $form = Discussion::getForm("createDiscussion");
                 $validator = new Validator();
                 $errors = $validator->check($form["struct"], $_POST);
