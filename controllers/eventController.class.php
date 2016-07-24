@@ -199,6 +199,7 @@ class eventController {
           $fullData[$i] = [
             "eventName" => $events[$i]->getName(),
             "eventFromDate" => $events[$i]->getFromDate(),
+            "owner_name" => $events[$i]->getOwnerName(),
             "users" => $events[$i]->gatherUsers()
           ];
         }
