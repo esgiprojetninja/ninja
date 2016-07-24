@@ -122,7 +122,7 @@
 
     <footer class="footer">
       <ul>
-        <li><a href="#">Mentions légales</a></li>
+        <li><a href="<?= WEBROOT ?>landing/legals">Mentions légales</a></li>
       </ul>
       <div class="copyright">
         <p>
