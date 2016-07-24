@@ -336,11 +336,11 @@ $(function ($) {
             if (page == "team"){
                 //Recherche Team
                 $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
-                    var nbMembers;
+                    var members ="2";
+                    var done = [];
                     if (teams != null) {
                         $("#search-content-results").empty();
                         for (var team in teams) {
-                            $.getJSON(webrootJs+"team/members/"+teams[team].id, function(nbMembers) {
                             $("#search-content-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary">' +
                                 '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].id + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
@@ -364,14 +364,21 @@ $(function ($) {
                                 '                            </li>' +
                                 '                            <li class="li-list">' +
                                 '                            <span class="form-info">Number of members : </span>' +
-                                '                        <span class="form-content">' + nbMembers + '</span>' +
+                                '                        <span class="form-content nbMembers '+teams[team].id+'" ></span>' +
                                 '                            </li>' +
                                 '                            </ul>' +
                                 '                            </div>' +
                                 '                            </div>' +
-                                '                            </div>'
-                            );
-                            });
+                                '                            </div>');
+                            console.log(done);
+                            if($.inArray(teams[team].id, done) == -1){
+                                $.getJSON(webrootJs+"team/members/"+teams[team].id, function(nbMembers) {
+                                    $(".nbMembers").append(nbMembers);
+                                });
+                            }
+                            done.push(teams[team].id);
+
+                           // });
                         }
                     } else {
                         $( "#search-content-results" ).empty();

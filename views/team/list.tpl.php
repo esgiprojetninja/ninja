@@ -62,9 +62,10 @@ for($i=1; $i<=$nombreDePages; $i++){
     if($i==$pageActuelle){
         echo ' [ '.$i.' ] ';
     }else{
-        echo ' <a href='.WEBROOT.'team/list?page='.$i.'>'.$i.'</a></p>';
+        echo ' <a href='.WEBROOT.'team/list?page='.$i.'>'.$i.'</a>';
     }
 }
+echo '</p>';
 ?>
 </div>
 
