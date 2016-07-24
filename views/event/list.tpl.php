@@ -1,3 +1,4 @@
+<script type="text/javascript"> var page = "event";</script>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="panel panel-primary">
@@ -7,9 +8,21 @@
             </div>
         </div>
 
+        <div align="center">
+            <h3 class="center header-li ">Or find one :</h3>
+            <input type="text" id="search-content">
+            <select id="select-criteria">
+                <option value="1" selected>By name</option>
+                <option value="2">By owner</option>
+                <option value="3">By tag</option>
+            </select>
+        </div>
+        <div id="search-content-results""></div>
 
+    <div class="col-sm-12" id="all-content">
         <?php if(count($events) == 1): ?>
           <?php if (new Datetime($events->getToDate()) > new Datetime()): ?>
+
               <div class="panel panel-success">
                   <div class="panel-heading"><?= $events->getName(); ?></div>
                   <div class="panel-body">
@@ -95,5 +108,6 @@
               <?php endif; ?>
             <?php endforeach; ?>
           <?php endif; ?>
+    </div>
     </div>
 </div>

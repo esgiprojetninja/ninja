@@ -73,7 +73,7 @@ class ManyToManyPivot {
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         for ($i = 0; $i < count($result); $i++) {
-            $subItemsIds = split(",", $result[$i][$this->entityOne . "_id"]);
+            $subItemsIds = explode(",", $result[$i][$this->entityOne . "_id"]);
             foreach ($subItemsIds as $subItemId) {
                 $sql = "SELECT * FROM " . $this->tableOne . " WHERE id = " .
                 $subItemId;

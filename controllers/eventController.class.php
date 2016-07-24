@@ -185,4 +185,15 @@ class eventController {
             echo "User or event not found";
         }
     }
+
+    public function searchAction($args)
+    {
+        header('Content-Type: application/json');
+        $args = implode(",", $args);
+        $args = explode(",", $args);
+        $args1 = $args[0];
+        $args2 = $args[1];
+        $events = Event::findByLikeArray($args1,$args2);
+        echo json_encode($events);
+    }
 }

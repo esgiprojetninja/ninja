@@ -324,9 +324,11 @@ $(function ($) {
             }
         } if (page == "event") {
             if (select == 1){
-                var column = "";
+                var column = "name";
             } else if (select == 2){
-                var column = "";
+                var column = "owner_name";
+            } else if (select == 3){
+                var column = "tags";
             }
         }
         var arraySearch = [column,search];
@@ -380,7 +382,7 @@ $(function ($) {
                         for (var user in users) {
                             $("#search-content-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary2">' +
-                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'user/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
@@ -412,6 +414,59 @@ $(function ($) {
                             '                            <div class="panel-heading"><h3 class="center header-li ">No User found</a></h3></div></div>');
                     }
                 });
+            } if(page == "event") {
+                $.getJSON(webrootJs+"event/search/"+arraySearch, function(events) {
+                    if (events != null) {
+                        $("#search-content-results").empty();
+                        for (var event in events) {
+                            $("#search-content-results").append(' <div class="panel panel-success">' +
+                                '                                <div class="panel-heading">'+events[event].name+'</div>' +
+                                '                            <div class="panel-body">' +
+                                '                                <p class="underlined">Owner : '+events[event].owner_name+'</p>' +
+                                '                            <div class="row">' +
+                                '                                <div class="col-sm-6">' +
+                            '                                <div class="tag-box">' +
+                                '                            '+events[event].tags+'' +
+                            '                        <a href="#"><?= $tag ?></a>' +
+                                '                            <?php endforeach; ?>' +
+                                '                        </div>' +
+                                '                            </div>' +
+                            '                            <div class="col-sm-6">' +
+                                '                            '+events[event].description+'' +
+                                '                        </div>' +
+                                '                            </div>' +
+                                '                            <ul class="item-list">' +
+                                '                                <li>From : '+events[event].from_date+'</li>' +
+                                '                            <li>To : '+events[event].to_date+'</li>' +
+                                '                            <li>Joignable until '+events[event].joignable_until+'</li>' +
+                                '</ul>' +
+                                '                                <p>People : </p>' +
+                            '                            <ul class="item-list">' +
+                            '                            <!--<?php foreach ($events->gatherUsers() as $key => $user): ?>-->' +
+                            '                        <!--<li><?= $user["username"] ?></li>-->' +
+                                '                            <?php endforeach; ?>' +
+                                '                        </ul>' +
+                                '                            </div>' +
+                            '                            <div class="panel-footer">' +
+                                '                            <!--<?php if (in_array($_SESSION["user_id"], $events->getUsersId()) && $events->getOwner() != $_SESSION["user_id"]): ?>-->' +
+                                '                        <a <!--href="<?= WEBROOT; ?>event/leave/<?= $events->getId();?-->>/<!--<?= $_SESSION[\'user_id\']?>-->" class="btn btn-danger">Leave</a>' +
+                            '                            <!--<?php elseif (!in_array($_SESSION["user_id"], $events->getUsersId())): ?>-->' +
+                            '                        <a <!--href="<?= WEBROOT; ?>event/join/<?= $events->getId();?>-->" class="btn btn-success">Join</a>' +
+                            '                          <!--  <?php endif; ?>-->' +
+                            '                       <!-- <?php if ($events->getOwner() == $_SESSION["user_id"]): ?>-->' +
+                            '                        <a <!--href="<?= WEBROOT; ?>event/update/<?= $events->getId() ?>-->" class="btn btn-primary">Manage</a>' +
+                            '                            <!--<?php endif; ?>-->' +
+                            '                        </div>'
+                  );
+                        }
+                    } else {
+                        $( "#search-content-results" ).empty();
+                        $("#search-content-results").append('<div class="col-sm-12">' +
+                            '                            <div class="panel panel-primary">' +
+                            '                            <div class="panel-heading"><h3 class="center header-li ">No Group found</a></h3></div></div>');
+                    }
+                });
+
             }
         } else {
             $( "#search-content-results" ).empty();
