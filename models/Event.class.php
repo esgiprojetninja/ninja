@@ -412,6 +412,23 @@
     			];
             }
 
+              else if ($formType == "comment") {
+              			$form = [
+              				"title" => "Let a comment !",
+              				"buttonTxt" => "Comment",
+              				"options" => ["method" => "POST", "action" => WEBROOT . "event/comment/". $this->id],
+              				"struct" => [
+              					"comment"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Your comment", "required"=>1, "msgerror"=>"comment"
+              					],
+              					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
+              					]
+              				]
+              			];
+              		}
+
+
+
+
             return $form;
         }
 

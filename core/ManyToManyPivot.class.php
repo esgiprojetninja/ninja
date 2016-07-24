@@ -64,7 +64,7 @@ class ManyToManyPivot {
      */
     public function getData() {
         $sql = "SELECT "  . $this->tableTwo . ".*, group_concat(" .
-        $this->tableOne . ".id) as " . $this->entityOne . "_id FROM " .
+        $this->tableOne . ".id) as " . $this->columnOne . " FROM " .
         $this->tableTwo . "  JOIN " . $this->table . " on " . $this->table .
         "." .$this->columnTwo . " = " . $this->tableTwo . ".id LEFT JOIN " .
         $this->tableOne . " on " .$this->table . "." .$this->columnOne . " = " .

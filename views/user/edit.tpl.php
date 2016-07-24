@@ -12,10 +12,11 @@
 
             <?php if($user->getAvatar() != ""): ?>
                <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
+               <a href="#" class="ajax-link" data-url="user/deleteAvatar">Delete my avatar</a>
             <?php endif;?>
 
                 <?php
-                      echo '<a href="#" class="ajax-link" data-url="user/deleteAvatar">Delete my avatar</a>';
+
                       //VERIFIER SI LE PROFIL EST COMPLET, SI OUI ON PEUX RAJOUTER UN AVATAR,
                       // SINON ON MET UN TEXte : 3VEUILLEZ REMPLIR VOTRE PROFIL
 

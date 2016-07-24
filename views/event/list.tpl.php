@@ -105,11 +105,11 @@
                           <?php if ($event->getOwner() == $_SESSION["user_id"]): ?>
                               <a href="<?= WEBROOT; ?>event/update/<?= $event->getId() ?>" class="btn btn-primary">Manage</a>
                           <?php endif; ?>
+                          <a href="<?= WEBROOT;?>event/comment/<?= $event->getId() ?>" class="btn btn-warning pull-right">Comments</a>
                       </div>
                   </div>
               <?php endif; ?>
             <?php endforeach; ?>
           <?php endif; ?>
-    </div>
     </div>
 </div>

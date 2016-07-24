@@ -44,7 +44,7 @@ class adminController
                 $premiereEntreeUser=($pageActuelleUser-1)*$userParPage;
                 // La requête sql pour récupérer les messages de la page actuelle.
                 //$retour_messagesUser= User::findAll([$premiereEntreeUser,$userParPage],'username','ASC');
-                $retour_messagesUser = User::findAll([$premiereEntreeUser,$userParPage],true,'username');
+                $retour_messagesUser = User::findAll([$premiereEntreeUser,$userParPage],"username");
                 $teams = Team::FindAll();
                 $totalTeam = count($users);
                 $teamParPage=10;
@@ -62,7 +62,7 @@ class adminController
                 $premiereEntreeTeam=($pageActuelleTeam-1)*$teamParPage;
                 // La requête sql pour récupérer les messages de la page actuelle.
                 //$retour_messagesTeam= Team::findAll([$premiereEntreeTeam,$teamParPage],'teamName','ASC');
-                $retour_messagesTeam = Team::findAll([$premiereEntreeUser,$userParPage],true,'teamName');
+                $retour_messagesTeam = Team::findAll([$premiereEntreeUser,$userParPage],'teamName');
 
                 $view->assign('pageActuelleTeam', $pageActuelleTeam);
                 $view->assign('nombreDePagesTeam',$nombreDePagesTeam);
