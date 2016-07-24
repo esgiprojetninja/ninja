@@ -214,11 +214,11 @@ $(function ($) {
               $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].datetime+ ": "+notifications[notification].message+"</a></li>");
             } else {
               $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].datetime+ ": "+notifications[notification].message+"</a></li>");
+                nbNotifications++;
             }
-            nbNotifications++;
         }
         if(nbNotifications != 0){
-            $("#notification-icon").css("class", "icon-menu fa fa-bell");
+            $("#notification-icon").attr("class", "icon-menu fa fa-bell");
         }
         $("#popin-notifications").append("</ul></div>");
     })
