@@ -35,6 +35,12 @@ $(function ($) {
 
 $(function ($) {
   $(".ajax-form, .ajax-link").on("click submit", function (ev) {
+
+      // Handle click on empty input
+      if ($(ev.target).attr("href") == undefined && ev.type == "click") {
+          return;
+      }
+
       ev.preventDefault();
       var action = $(this).attr("action");
       var method = $(this).attr("method");
@@ -42,6 +48,7 @@ $(function ($) {
       var lock = false;
       var data = {};
       data.message = $(this).data("message");
+      data.callback = $(this).data("callback");
       //data.callback = $(this).data("callback");
       if(typeof data.message == "undefined") {
           data.message = "Data updated !";
@@ -129,7 +136,6 @@ $(function ($) {
     $("#popin-notifications").append("<ul class='dropdown-menu notifications right' id='liste-notifications' style='width: "+ width +"px'>");
   	var nbNotifications = 0;
     $.getJSON( webrootJs+"notification/list", function(notifications) {
-      console.log(notifications);
         var nbNotifications = 0;
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
 
@@ -178,7 +184,6 @@ function getDiscussions() {
             url: location.origin + "/inbox/getDiscussions",
         }).success(function (data) {
             //showMessage(data.message, "success");
-            console.debug(data);
         }).fail(function (jqXHR, textStatus) {
         }).then(function (data) {
             var currentUserId = Number(data.current_user_id);
