@@ -455,15 +455,13 @@ $(function ($) {
                                 $("#list-people"+data.id).append('<li class="li-people">'+user.username+'</li>');
                             });
                             $(".list-people").css("class", "item-list ");
-                            console.log("owner "+data.owner);
-                            console.log("session id "+sessionId);
                             if (data.owner == sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
                             }
-                            if ($.inArray(sessionId, data.users) && data.owner != sessionId){
+                            if (!$.inArray(sessionId, data.users) && data.owner != sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
                             }
-                            if($.inArray(sessionId, data.users) != -1){
+                            if($.inArray(sessionId, data.users) == -1){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
                             }
                       });
