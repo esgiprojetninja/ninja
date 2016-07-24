@@ -12,7 +12,7 @@
             <?php else : ?>
 
 
-            <div class="panel-heading"><h3 class="center header-li"> <?php echo $event->getName(); ?></h3></div>
+            <div class="panel-heading"><h3 class="center header-li"> <?php echo $event->getName(); ?> event</h3></div>
 
             <div class="panel-body">
                 <div class="col-sm-12">
@@ -26,7 +26,9 @@
                     foreach($comments as $comment){
                         $user = User::findBy("id",$comment->getIdAuthor(),"int");
                       ?>
-                      <h2><?= $user->getUsername(); ?></h2> said <?= $comment->getIdComment(); ?> at <?= $comment->getDateCreated();?>
+                      <h3> <a href="<?= WEBROOT ?>/user/show/<?= $user->getId(); ?>"><?= $user->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> : </>
+                        <h2><?= $comment->getIdComment(); ?></h2>
+
                       <?php
                     }
                     ?>
