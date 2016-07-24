@@ -423,8 +423,6 @@ $(function ($) {
                     if (events != null) {
                         $("#search-content-results").empty();
                         $.each(events, function (key, data) {
-                            console.log(data);
-                            console.debug(data.users);
                             $("#search-content-results").append(' <div class="panel panel-success">' +
                                 '                                <div class="panel-heading">'+ data.eventName +'</div>' +
                                 '                            <div class="panel-body">' +
