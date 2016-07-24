@@ -35,6 +35,11 @@
                 <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
             </ul>
         </div>
+        <div class="item dropdown header-burger icon">
+            <?php if (User::isConnected()): ?>
+                <span>Bonjour <?= $_SESSION["username"] ?></span>
+            <?php endif; ?>
+        </div>
     </header>
     <div class="app-content">
         <div class="sidebar">

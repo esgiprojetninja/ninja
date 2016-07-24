@@ -183,6 +183,7 @@ class userController
 					$token = $user->getToken();
 					$id = $user->getId();
 					$_SESSION["user_id"] = $id;
+					$_SESSION["username"] = $user->getUsername();
 					$_SESSION["user_token"] = $token;
 					header("location: ".WEBROOT);
 				}
