@@ -530,7 +530,7 @@ $(function ($) {
                             if (!$.inArray(sessionId, data.users) && data.owner != sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
                             }
-                            if($.inArray(sessionId, data.users) == -1){
+                            if($.inArray(sessionId, data.users) == -1 && data.owner != sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
                             }
                       });
