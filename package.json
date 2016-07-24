@@ -1,0 +1,12 @@
+{
+  "name": "Sport-Nation",
+  "version": "0.0.9",
+  "description": "To create db :",
+  "devDependencies": {
+    "eslint": "^2.10.2",
+    "eslint-plugin-html": "^1.4.0"
+    },
+    "scripts": {
+        "lint": "eslint"
+    }
+}

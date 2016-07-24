@@ -13,10 +13,7 @@ $team = $this->data["team"];
 
             <div class="panel-heading"><h3 class="center header-li"> Informations of <?php echo $team->getTeamName(); ?> group</h3></div>
 
-            <div class="panel-media">
-                <?php if($team->getAvatar() != ""): ?>
-                    <img class="avatar" src="<?= "../../".$team->getAvatar(); ?>" style="width:100px;height:100px">
-                <?php endif;?>
+            <div class="panel-media" style="background-image: url('<?= WEBROOT ?><?= $team->getAvatar() ?>')">
             </div>
 
             <div class="panel-body">

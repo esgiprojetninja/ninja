@@ -68,12 +68,12 @@ class ManyToManyPivot {
         $this->tableTwo . "  JOIN " . $this->table . " on " . $this->table .
         "." .$this->columnTwo . " = " . $this->tableTwo . ".id LEFT JOIN " .
         $this->tableOne . " on " .$this->table . "." .$this->columnOne . " = " .
-        $this->tableOne . ".id GROUP BY " . $this->tableTwo . ".id";
+        $this->tableOne . ".id WHERE " . $this->columnOne . " = " . $this->idOne . " GROUP BY " . $this->tableTwo . ".id";
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         for ($i = 0; $i < count($result); $i++) {
-            $subItemsIds = explode(",", $result[$i][$this->entityOne . "_id"]);
+            $subItemsIds = split(",", $result[$i][$this->columnOne]);
             foreach ($subItemsIds as $subItemId) {
                 $sql = "SELECT * FROM " . $this->tableOne . " WHERE id = " .
                 $subItemId;
