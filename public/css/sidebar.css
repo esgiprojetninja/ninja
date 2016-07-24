@@ -1,5 +1,5 @@
 .app-content .sidebar {
-    background-color: #433A4B;
+    background-color: #6C6599;
     box-shadow: 2px 2px 2px #8E8D8F;
     height: calc(100vh - 50px);
     width: 50px;
@@ -25,6 +25,6 @@
 }
 
 .app-content .sidebar .items .item:hover {
-    color: #433A4B;
+    color: #6C6599;
     background-color: #FFFFFF;
 }

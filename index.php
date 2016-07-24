@@ -8,6 +8,7 @@ require_once "core/basesql.class.php";
 require_once "conf.inc.php";
 require_once "models/User.class.php";
 
+
 function autoloader($class) {
     // verifier s'il existe dans le dossier core s'il existe un fichier
     // du nom de $class.class.php
@@ -23,6 +24,7 @@ function autoloader($class) {
 }
 
 spl_autoload_register('autoloader');
+
 
 
 $route = routing::setRouting();
