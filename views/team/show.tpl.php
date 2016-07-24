@@ -52,15 +52,22 @@
                     </div>
                 <?php endif; ?>
                 <?php if(!Team::imIn($idTeam)): ?>
+                  <?php if($invitationsFromTeam): ?>
+                    <div class="text-right">
+                        <a class="btn btn-success ajax-link" data-team="<?= $idTeam; ?>" data-url="team/join">Accept invitation</a>
+                          <a class="btn btn-danger ajax-link" data-team="<?= $idTeam; ?>" data-url="team/cancelInvitation">Reject invitation</a>
+                    </div>
+                  <?php else: ?>
                    <?php if($invitation): ?>
                        <div class="text-right">
-                           <span class="btn btn-success ajax-link" data-team="<?= $idTeam; ?>" data-url="team/cancelInvitation">Cancel asking</a>
+                           <a class="btn btn-success ajax-link" data-team="<?= $idTeam; ?>" data-url="team/cancelInvitation">Cancel asking</a>
                        </div>
                    <?php else: ?>
                        <div class="text-right">
                            <a href="#" class="btn btn-primary ajax-link prompt" data-team="<?= $idTeam; ?>" data-url="team/askToJoin" >Ask to join</a>
                        </div>
                    <?php endif; ?>
+                 <?php endif; ?>
                <?php endif; ?>
             </div>
             <?php endif;?>

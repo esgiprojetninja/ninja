@@ -56,17 +56,21 @@ class basesql extends PDO
 		}
 		$sql = $sql.";";
 		$query =  $instance->pdo->prepare($sql);
-
+				echo $sql;
 		$query->execute();
 		$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 		while($item = $query->fetch()) {
 			$items[] = $item;
 		}
 
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
+		if ($query != null){
+			if (count($items) == 1) {
+				return $items[0];
+			} else {
+				return $items;
+			}
+		}else{
+			$items = null;
 		}
 
 		return $items;

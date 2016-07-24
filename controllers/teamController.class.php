@@ -112,11 +112,16 @@ class teamController
 			$members = TeamHasUser::findBy("idTeam",$args[0],"int");
 			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"]);
 	    $view = new view();
+
 	    $invitation = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args[0],1],['int',"int","int"]);
       $view->setView("team/show.tpl");
+
+			$invitationFromTeam = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args[0],0],['int',"int","int"]);
+
       $view->assign("invitation",$invitation);
       $view->assign("members",$members);
       $view->assign("team", $team);
+			$view->assign("invitationsFromTeam",$invitationFromTeam);
       $view->assign("captain",$captain);
       $view->assign("idTeam",$args[0]);
 		}else{
@@ -394,7 +399,7 @@ class teamController
 
 
 	public function joinAction($args){
-		if(User::isConnected() && isset($args["idTeam"]) && isset($args["type"])){
+		if(User::isConnected() && isset($args["idTeam"])){
 			if(isset($args["idUser"])){
 				$idUser = $args["idUser"];
 			}else{
@@ -411,7 +416,7 @@ class teamController
 			$captain->setCaptain(0);
 			$captain->save();
 
-			$invitations = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$idUser,$args["idTeam"],$args["type"]],['int','int','int']);
+			$invitations = Invitation::findBy(["idUserInvited","idTeamInviting"],[$idUser,$args["idTeam"]],['int','int','int']);
 			if(count($invitations) == 1 ){
 				$invitations->delete();
 			}else{
