@@ -43,7 +43,7 @@ class inboxController
                     $discussions = $currentUser->getDiscussions();
                     $discussion_exists = false;
                     foreach ($discussions as $discussion) {
-                        $user_ids = split(",", $discussion["user_id"]);
+                        $user_ids = split(",", $discussion["people"]);
                         if(in_array($userTarget->getId(), $user_ids)) {
                             $discussion_exists = true;
                             break;

@@ -171,6 +171,7 @@ $(function ($) {
 $(function ($) {
     getDiscussions();
     $(".js-create-discussion").submit(function (ev) {
+        console.debug("chatte");
         getDiscussions();
     });
     var refreshMessagesInterval;
@@ -196,19 +197,21 @@ function getDiscussions() {
                 }
                 $list.find("ul").html(items);
             }
-            listenForChooseDiscussion(currentUserId);
+            $(".js-discussion-list-item").click(function (ev) {
+                var discussionId = $(ev.target).data("discussion");
+                refreshMessages(gblCurrentUserId, discussionId);
+                if (typeof refreshMessagesInterval != "undefined") {
+                    clearInterval(refreshMessagesInterval);
+                }
+                refreshMessagesInterval = setInterval(function () {
+                    refreshMessages(gblCurrentUserId, discussionId);
+                }, 5000);
+            });
+            //listenForChooseDiscussion(currentUserId);
         });
     }
 }
 
-function listenForChooseDiscussion(currentUserId) {
-    $.each($(".js-discussion-list-item"), function (index, elem) {
-        refreshMessages(currentUserId, $(elem).data("discussion"));
-        refreshMessagesInterval = setInterval(function () {
-            refreshMessages(currentUserId, $(elem).data("discussion"));
-        }, 5000);
-    });
-}
 
 function refreshMessages(currentUserId, discussionId) {
     var $chatBody = $(".chat-body");

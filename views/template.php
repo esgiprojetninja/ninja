@@ -13,7 +13,7 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
     <!-- scripts -->
-    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>";</script>
+    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>"; var gblCurrentUserId = "<?= $_SESSION['user_id']; ?>";</script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/js/all.js"></script>
 </head>
