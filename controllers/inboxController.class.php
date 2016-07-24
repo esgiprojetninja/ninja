@@ -43,7 +43,7 @@ class inboxController
                     $discussions = $currentUser->getDiscussions();
                     $discussion_exists = false;
                     foreach ($discussions as $discussion) {
-                        $user_ids = split(",", $discussion["user_id"]);
+                        $user_ids = split(",", $discussion["people"]);
                         if(in_array($userTarget->getId(), $user_ids)) {
                             $discussion_exists = true;
                             break;
@@ -59,6 +59,7 @@ class inboxController
                         $discussion->save();
                         $discussion->addUser(intval($userTarget->getId()));
                         $discussion->addUser(intval($_SESSION["user_id"]));
+                        $discussion->savePeople();
                         $discussion->save();
                         http_response_code(200);
                         $response["status"] = "success";
@@ -95,6 +96,14 @@ class inboxController
         if (User::isConnected()) {
             $user = User::findById($_SESSION["user_id"]);
             $response["message"] = $user->getDiscussions();
+            for ($i = 0; $i < count($response["message"]); $i++) {
+                foreach ((explode(",", $response["message"][$i]["people"])) as $user_id) {
+                    if ($user_id != $_SESSION["user_id"] && !empty($user_id)) {
+                        $penPal = User::findById($user_id);
+                        $response["message"][$i]["pen_pal"] = $penPal->getUsername();
+                    }
+                }
+            }
             $response["status"] = "success";
         } else {
             http_response_code(403);
@@ -117,7 +126,13 @@ class inboxController
                 "int",
                 false
             );
-            $response = $messages;
+            $response = [];
+            foreach ($messages as $message) {
+                $response[] = [
+                    "content" => $message->getContent(),
+                    "sender_id" =>$message->getSenderId()
+                ];
+            }
         } else {
             http_response_code(403);
             $response["status"] = "error";
@@ -140,6 +155,7 @@ class inboxController
                 $response["callback"] = $_POST["callback"];
                 $response["current_user_id"] = $_SESSION["user_id"];
                 $response["discussion_id"] = $message->getDiscussionId();
+                $response["status"] = "success";
                 $response["message"] = "Message sent !";
                 header('Content-type: application/json');
                 echo json_encode($response);

@@ -35,6 +35,12 @@ $(function ($) {
 
 $(function ($) {
   $(".ajax-form, .ajax-link").on("click submit", function (ev) {
+
+      // Handle click on empty input
+      if ($(ev.target).attr("href") == undefined && ev.type == "click") {
+          return;
+      }
+
       ev.preventDefault();
       var action = $(this).attr("action");
       var method = $(this).attr("method");
@@ -42,6 +48,7 @@ $(function ($) {
       var lock = false;
       var data = {};
       data.message = $(this).data("message");
+      data.callback = $(this).data("callback");
       //data.callback = $(this).data("callback");
       if(typeof data.message == "undefined") {
           data.message = "Data updated !";
@@ -55,7 +62,7 @@ $(function ($) {
           action = $(this).data("url");
           action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
           if($(this).is(".prompt")){
-            var promptInput = prompt("Add a message with your ask");
+            var promptInput = prompt("Add a message with your invitation");
             if(promptInput){
               data.messageInvit = promptInput;
               lock = true;
@@ -71,6 +78,7 @@ $(function ($) {
             }
           }
       } else {
+          lock = true;
           $.each($(this).find("input, select, textarea"), function () {
               if ($(this).attr("type") == "checkbox" || $(this).attr("type") == "radio") {
                   if ($(this).is(":checked")) {
@@ -162,6 +170,7 @@ $(function ($) {
 $(function ($) {
     getDiscussions();
     $(".js-create-discussion").submit(function (ev) {
+        console.debug("chatte");
         getDiscussions();
     });
     var refreshMessagesInterval;
@@ -181,32 +190,27 @@ function getDiscussions() {
             var items = "";
             if (data.message.length) {
                 for (i = 0; i < data.message.length; i ++) {
-                    var penPals = [];
-                    for(j = 0; j < data.message[i].users.length; j++) {
-                        var user = data.message[i].users[j];
-                        if(Number(user.id) !== currentUserId) {
-                            penPals.push(user.username);
-                        }
-                    }
                     items += "<li data-discussion='" + data.message[i].id +
                     "' class='js-discussion-list-item'> To: " +
-                    penPals.join(", ") + "</li>"
+                    data.message[i].pen_pal + "</li>"
                 }
                 $list.find("ul").html(items);
             }
-            listenForChooseDiscussion(currentUserId);
+            $(".js-discussion-list-item").click(function (ev) {
+                var discussionId = $(ev.target).data("discussion");
+                refreshMessages(gblCurrentUserId, discussionId);
+                if (typeof refreshMessagesInterval != "undefined") {
+                    clearInterval(refreshMessagesInterval);
+                }
+                refreshMessagesInterval = setInterval(function () {
+                    refreshMessages(gblCurrentUserId, discussionId);
+                }, 5000);
+            });
+            //listenForChooseDiscussion(currentUserId);
         });
     }
 }
 
-function listenForChooseDiscussion(currentUserId) {
-    $.each($(".js-discussion-list-item"), function (index, elem) {
-        refreshMessages(currentUserId, $(elem).data("discussion"));
-        refreshMessagesInterval = setInterval(function () {
-            refreshMessages(currentUserId, $(elem).data("discussion"));
-        }, 5000);
-    });
-}
 
 function refreshMessages(currentUserId, discussionId) {
     var $chatBody = $(".chat-body");

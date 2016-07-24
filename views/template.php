@@ -13,7 +13,7 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
     <!-- scripts -->
-    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>";</script>
+    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>"; var gblCurrentUserId = "<?= $_SESSION['user_id']; ?>";</script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/js/all.js"></script>
 </head>
@@ -39,6 +39,11 @@
                 <li><a href="#">Help</a></li>
                 <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
             </ul>
+        </div>
+        <div class="item dropdown header-burger icon">
+            <?php if (User::isConnected()): ?>
+                <span>Bonjour <?= $_SESSION["username"] ?></span>
+            <?php endif; ?>
         </div>
     </header>
     <div class="app-content">
