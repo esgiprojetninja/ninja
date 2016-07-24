@@ -1,0 +1,212 @@
+{
+  "rules": {
+
+    /* Possible errors */
+    "comma-dangle" : "error", // disallow or enforce trailing commas
+    "no-cond-assign" : "off", // disallow assignment in conditional expressions
+    "no-console": "off", // disallow use of console (off by default in the node environment)
+    "no-constant-condition": "off", // disallow use of constant expressions in conditions
+    "no-control-regex": "warn", // disallow control characters in regular expressions
+    "no-debugger": "warn", // disallow use of debugger
+    "no-dupe-args": "error", // disallow duplicate arguments in functions
+    "no-dupe-keys": "error", // disallow duplicate keys when creating object literals
+    "no-duplicate-case": "error", // disallow a duplicate case label.
+    "no-empty": "warn", // disallow empty statements
+    "no-empty-character-class": "error", // disallow the use of empty character classes in regular expressions
+    "no-ex-assign": "error", // disallow assigning to the exception in a catch block
+    "no-extra-boolean-cast": "warn", // disallow double-negation boolean casts in a boolean context
+    "no-extra-parens": "off", // disallow unnecessary parentheses (off by default)
+    "no-extra-semi": "off", // disallow unnecessary semicolons
+    "no-func-assign": "warn", // disallow overwriting functions written as function declarations
+    "no-inner-declarations": "warn", // disallow function or variable declarations in nested blocks
+    "no-invalid-regexp": "error", // disallow invalid regular expression strings in the RegExp constructor
+    "no-irregular-whitespace": "warn", // disallow irregular whitespace outside of strings and comments
+    "no-negated-in-lhs": "error", // disallow negation of the left operand of an in expression
+    "no-obj-calls": "error", // disallow the use of object properties of the global object (Math and JSON) as functions
+    "no-regex-spaces": "warn", // disallow multiple spaces in a regular expression literal
+    "no-sparse-arrays": "warn", // disallow sparse arrays
+    "no-unreachable": "warn", // disallow unreachable statements after a return, throw, continue, or break statement
+    "quote-props": ["error", "as-needed", {keywords: true, unnecessary: false}], // quotes will be enforced when they are strictly required, and unnecessary quotes will cause warnings
+    "use-isnan": "error", // disallow comparisons with the value NaN
+    "valid-jsdoc": "warn", // Ensure JSDoc comments are valid (off by default)
+    "valid-typeof": "error", // Ensure that the results of typeof are compared against a valid string
+
+
+    /* Best practices */
+    "block-scoped-var": "off", // treat var statements as if they were block scoped (off by default)
+    "complexity": "off", // specify the maximum cyclomatic complexity allowed in a program (off by default)
+    "consistent-return": "off", // require return statements to either always or never specify values
+    "curly": "error", //specify curly brace conventions for all control statements
+    "default-case": "warn", // require default case in switch statements (off by default)
+    "dot-notation": ["error", {"allowKeywords": false}], // encourages use of dot notation whenever possible
+    "eqeqeq": ["error", "allow-null"], // require the use of === and !==
+    "guard-for-in": "off", // make sure for-in loops have an if statement (off by default)
+    "no-alert": "warn", // disallow the use of alert, confirm, and prompt
+    "no-caller": "warn", // disallow use of arguments.caller or arguments.callee
+    "no-div-regex": "warn", // disallow division operators explicitly at beginning of regular expression (off by default)
+    "no-else-return": "warn", // disallow else after a return in an if (off by default)
+    "no-eq-null": "off", // disallow comparisons to null without a type-checking operator (off by default)
+    "no-eval": "off", // disallow use of eval()
+    "no-extend-native": "error", // disallow adding to native types
+    "no-extra-bind": "warn", // disallow unnecessary function binding
+    "no-fallthrough": "warn", // disallow fallthrough of case statements
+    "no-floating-decimal": "warn", // disallow the use of leading or trailing decimal points in numeric literals (off by default)
+    "no-implied-eval": "off", // disallow use of eval()-like methods
+    "no-iterator": "off", // disallow usage of __iterator__ property
+    "no-labels": "warn", // disallow use of labeled statements
+    "no-lone-blocks": "warn", // disallow unnecessary nested blocks
+    "no-loop-func": "warn", // disallow creation of functions within loops
+    "no-multi-spaces": "off", // disallow use of multiple spaces
+    "no-multi-str": "warn", // disallow use of multiline strings
+    "no-native-reassign": "error", // disallow reassignments of native objects
+    "no-new": "warn", // disallow use of new operator when not part of the assignment or comparison
+    "no-new-func": "off", // disallow use of new operator for Function object
+    "no-new-wrappers": "error", // disallows creating new instances of String,Number, and Boolean
+    "no-octal": "error", // disallow use of octal literals
+    "no-octal-escape": "error", // disallow use of octal escape sequences in string literals, such as var foo = "Copyright \251";
+    "no-param-reassign": "off", // disallow reassignment of function parameters (off by default)
+    "no-process-env": "off", // disallow use of process.env (off by default)
+    "no-proto": "warn", // disallow usage of __proto__ property
+    "no-redeclare": "error", // disallow declaring the same variable more then once
+    "no-return-assign": "error", // disallow use of assignment in return statement
+    "no-script-url": "error", // disallow use of javascript: urls.
+    "no-self-compare": "off", // disallow comparisons where both sides are exactly the same (off by default)
+    "no-sequences": "warn", // disallow use of comma operator
+    "no-throw-literal": "error", // restrict what can be thrown as an exception (off by default)
+    "no-unused-expressions": "warn", // disallow usage of expressions in statement position
+    "no-void": "off", // disallow use of void operator (off by default)
+    "no-warning-comments": "off", // disallow usage of configurable warning terms in comments - e.g. TODO or FIXME (off by default)
+    "no-with": "error", // disallow use of the with statement
+    "radix": "error", // require use of the second argument for parseInt() (off by default)
+    "vars-on-top": "off", // requires to declare all vars on top of their containing scope (off by default)
+    "wrap-iife": "error", // require immediate function invocation to be wrapped in parentheses (off by default)
+    "yoda": "warn", //  require or disallow Yoda conditions
+
+    /* Strict mode */
+    "strict": "off", //controls location of Use Strict Directives
+    "no-extra-strict": "off", // (deprecated) disallow unnecessary use of "use strict"; when already in strict mode
+
+    /* Variables */
+    "no-catch-shadow": "error", // disallow the catch clause parameter name being the same as a variable in the outer scope (off by default in the node environment)
+    "no-delete-var": "error", // disallow deletion of variables
+    "no-label-var": "error", // disallow labels that share a name with a variable
+    "no-shadow": "warn", // disallow declaration of variables already declared in the outer scope
+    "no-shadow-restricted-names": "error", // disallow shadowing of names such as arguments
+    "no-undef": "error", // disallow use of undeclared variables
+    "no-undef-init": "error", // disallow use of undefined when initializing variables
+    "no-undefined": "warn", // disallow use of undefined variable (off by default)
+    "no-unused-vars":  ["error", {"vars": "all", "args": "none"}], // disallow declaration of variables that are not used in the code
+    "no-use-before-define": "warn", // disallow use of variables before they are defined
+
+    /* Node.js */
+    "handle-callback-err": "off", // enforces error handling in callbacks (off by default) (on by default in the node environment)
+    "no-mixed-requires": "off", // disallow mixing regular variable and require declarations (off by default) (on by default in the node environment)
+    "no-new-require": "off", // disallow use of new operator with the require function (off by default) (on by default in the node environment)
+    "no-path-concat": "off", // disallow string concatenation with __dirname and __filename (off by default) (on by default in the node environment)
+    "no-process-exit": "off", // disallow process.exit() (on by default in the node environment)
+    "no-restricted-modules": "off", // restrict usage of specified node modules (off by default)
+    "no-sync": "off", // disallow use of synchronous methods (off by default)
+
+    /* Style */
+    "indent": ["warn", 4, {"SwitchCase": 1}], // this option sets a specific tab width for your code (off by default)
+    "brace-style": ["warn", "stroustrup"], // enforce one true brace style (off by default)
+    "camelcase": "off", // require camel case names
+    "comma-spacing": ["error", {"before": false, "after": true}], // enforce spacing before and after comma
+    "comma-style": ["error", "last"], // enforce one true comma style (off by default)
+    "consistent-this": ["warn", "self"], // enforces consistent naming when capturing the current execution context (off by default)
+    "eol-last": "warn", // enforce newline at the end of file, with no multiple empty lines
+    "func-names": "off", // require function expressions to have a name (off by default)
+    "func-style": "off", // enforces use of function declarations or expressions (off by default)
+    "key-spacing": "warn", // enforces spacing between keys and values in object literal properties
+    "keyword-spacing": "error", // enforce consistent spacing before and after keywords
+    "max-nested-callbacks": "off", // specify the maximum depth callbacks can be nested (off by default)
+    "new-cap": ["warn", { "capIsNew": false }], // require a capital letter for constructors
+    "new-parens": "error", // disallow the omission of parentheses when invoking a constructor with no arguments
+    "newline-after-var": "off", // allow/disallow an empty newline after var statement (off by default)
+    "no-array-constructor": "warn", // disallow use of the Array constructor
+    "no-inline-comments": "off", // disallow comments inline after code (off by default)
+    "no-lonely-if": "warn", // disallow if as the only statement in an else block (off by default)
+    "no-mixed-spaces-and-tabs": "error", // disallow mixed spaces and tabs for indentation
+    "no-multiple-empty-lines": "off", // disallow multiple empty lines (off by default)
+    "no-nested-ternary": "warn", // disallow nested ternary expressions (off by default)
+    "no-new-object": "error", // disallow use of the Object constructor
+    "no-spaced-func": "warn", // disallow space between function identifier and application
+    "no-ternary": "off", // disallow the use of ternary operators (off by default)
+    "no-trailing-spaces": "warn", // disallow trailing whitespace at the end of lines
+    "no-underscore-dangle": "off", // disallow dangling underscores in identifiers
+    "no-wrap-func": "off", // disallow wrapping of non-IIFE statements in parens
+    "one-var": "off", // allow just one var statement per function (off by default)
+    "operator-assignment": "off", // require assignment operator shorthand where possible or prohibit it entirely (off by default)
+    "padded-blocks": "off", // enforce padding within blocks (off by default)
+    "quotes": ["warn", "double", "avoid-escape"], // specify whether double or single quotes should be used
+    "semi": ["error", "always"], // require or disallow use of semicolons instead of ASI
+    "semi-spacing": ["error", {"before": false, "after": true}], // enforce spacing before and after semicolons
+    "sort-vars": "off", // sort variables within the same declaration block (off by default)
+    "space-before-blocks": ["warn", "always"], // require or disallow space before blocks (off by default)
+    "space-before-function-paren": ["warn", {"anonymous": "always", "named": "never"}], // require or disallow space before function opening parenthesis (off by default)
+    "object-curly-spacing": ["warn", "never"],
+    "computed-property-spacing": ["warn", "never"],
+    "array-bracket-spacing": ["warn", "never"],
+    "space-in-parens": ["warn", "never"], // require or disallow spaces inside parentheses (off by default)
+    "space-infix-ops": "warn", // require spaces around operators
+    "space-unary-ops": "warn", // Require or disallow spaces before/after unary operators (words on by default, nonwords off by default)
+    "spaced-comment": ["warn", "always", {"exceptions": ["*"]}], // require or disallow a space immediately following the // or /* in a comment
+    "wrap-regex": "off", // require regex literals to be wrapped in parentheses (off by default)
+
+    /* Legacy */
+    "no-bitwise": "warn",
+
+    /* RequireJS Possible Errors */
+
+    "requirejs/no-invalid-define": "error", // Disallow invalid module definitions
+    "requirejs/no-invalid-require": "error", // Disallow invalid require or requirejs calls
+    "requirejs/no-multiple-define": "error", // Disallow multiple module definitions in one file
+    "requirejs/no-assign-exports": "error", // Disallow assignment to exports when using Simplified CommonJS Wrapper
+    "requirejs/no-js-extension": "error", // Disallow .js extension in dependency paths
+
+    /* Stylistic Choices */
+
+    "requirejs/no-object-define": "warn", // Disallow Simple Name/Value Pairs form of define (off by default)
+    "requirejs/no-function-define": "warn", // Disallow Simple Function form of define (off by default)
+    "requirejs/no-amd-define": "off", // Disallow AMD (dependency array) form of define (off by default)
+    "requirejs/no-named-define": "warn", // Disallow named module form of define (off by default)
+    "requirejs/no-commonjs-wrapper": "warn", // Disallow use of Simplified CommonJS Wrapper (off by default)
+    "requirejs/no-commonjs-return": "warn", // Disallow use of return statement in a module definition when using Simplified CommonJS Wrapper (off by default)
+    "requirejs/no-commonjs-exports": "warn", // Disallow use of exports in a module definition when using Simplified CommonJS Wrapper (off by default)
+    "requirejs/no-commonjs-module-exports": "warn", // Disallow use of module.exports in a module definition when using Simplified CommonJS Wrapper (off by default)
+    "requirejs/no-dynamic-require": "warn", // Disallow use of dynamically generated paths in a require call (off by default)
+    "requirejs/no-conditional-require": "warn", // Disallow use of conditional require calls (off by default)
+    "requirejs/no-assign-require": "warn", // Disallow assignment to require or window.require (off by default)
+    "requirejs/no-require-tourl": "warn", // Disallow use of require.toUrl and require.nameToUrl (off by default)
+    "requirejs/enforce-define": "warn", // Require that all files be wrapped in a define call (off by default)
+    "requirejs/one-dependency-per-line": "warn", // Enforce line-break rules for AMD dependencies (off by default)
+    "requirejs/amd-function-arity": "error", // Ensure AMD callbacks have correct number of parameters (off by default)
+    "requirejs/sort-amd-paths": "off", // Ensure that required paths are in alphabetical order (off by default)
+
+    /* JSDoc */
+    "jsdoc/check-param-names": "warn",
+    "jsdoc/check-tag-names": "off",
+    "jsdoc/check-types": "warn",
+    "jsdoc/newline-after-description": "warn",
+    "jsdoc/require-description-complete-sentence": "warn",
+    "jsdoc/require-hyphen-before-param-description": "warn",
+    "jsdoc/require-param": "warn",
+    "jsdoc/require-param-description": "warn",
+    "jsdoc/require-param-type": "warn",
+    "jsdoc/require-returns-description": "warn",
+    "jsdoc/require-returns-type": "warn"
+  },
+  "env": {
+    "browser": true,
+    "jquery": true,
+    "amd": true,
+    "es6": false
+  },
+  "globals": {
+  },
+  "plugins": [
+    "html",
+    "requirejs",
+    "jsdoc"
+  ]
+}

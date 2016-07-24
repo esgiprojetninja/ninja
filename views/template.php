@@ -13,7 +13,7 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
     <!-- scripts -->
-    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>";</script>
+    <script type="text/javascript"> var webrootJs = "<?= WEBROOT; ?>"; var gblCurrentUserId = "<?= $_SESSION['user_id']; ?>";</script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="<?= WEBROOT;?>public/js/all.js"></script>
 </head>
@@ -23,6 +23,11 @@
         <a href="<?= WEBROOT; ?>"><img src="<?= WEBROOT;?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px"></a>
         <div class="item dropdown header-burger icon" id="popin-notifications">
              <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
+       </div>
+        <div class="item dropdown header-burger icon">
+            <a href="<?= WEBROOT; ?>user/show/<?php if(isset($_SESSION["user_id"])){ echo $_SESSION["user_id"]; } ?>" class="item">
+                <span class="fa fa-user"></span>
+            </a>
        </div>
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
@@ -35,12 +40,17 @@
                 <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
             </ul>
         </div>
+        <div class="item dropdown header-burger icon">
+            <?php if (User::isConnected()): ?>
+                <span>Bonjour <?= $_SESSION["username"] ?></span>
+            <?php endif; ?>
+        </div>
     </header>
     <div class="app-content">
         <div class="sidebar">
             <div class="items-up items">
-                <a href="<?= WEBROOT; ?>user/show/<?php if(isset($_SESSION["user_id"])){ echo $_SESSION["user_id"]; } ?>" class="item">
-                    <span class="fa fa-user"></span>
+                <a href="<?= WEBROOT; ?>user/list/" class="item">
+                    <span class="fa fa-book"></span>
                 </a>
                 <a href="<?= WEBROOT; ?>team/list" class="item">
                     <span class="fa fa-users"></span>

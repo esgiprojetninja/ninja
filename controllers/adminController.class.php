@@ -135,7 +135,7 @@ class adminController
 
 
     public function showUiKitAction() {
-        $view = new view;
+        $view = new View();
         $view->setView("admin/ui-collection.tpl");
     }
 }
