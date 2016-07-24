@@ -533,6 +533,8 @@ $(function ($) {
                             if($.inArray(sessionId, data.users) == -1 && data.owner != sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
                             }
+                            $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/comment/'+data.id+'" class="btn btn-warning pull-right">Comments</a>');
+
                       });
                     } else {
                         $( "#search-content-results" ).empty();
