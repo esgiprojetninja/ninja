@@ -2,13 +2,13 @@
 
 class Team extends basesql
 {
-	protected $id;
+	public $id;
 	protected $table = "teams";
 	public $teamName;
-	protected $dateCreated;
-	protected $sports = "";
-	protected $description = "";
-	protected $avatar = "";
+	public $dateCreated;
+	public $sports = "";
+	public $description = "";
+	public $avatar = "";
 
 	protected $columns = [
 		"id",

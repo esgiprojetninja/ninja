@@ -24,6 +24,11 @@
         <div class="item dropdown header-burger icon" id="popin-notifications">
              <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
        </div>
+        <div class="item dropdown header-burger icon">
+            <a href="<?= WEBROOT; ?>user/show/<?php if(isset($_SESSION["user_id"])){ echo $_SESSION["user_id"]; } ?>" class="item">
+                <span class="fa fa-user"></span>
+            </a>
+       </div>
         <div class="dropdown header-burger icon">
             <span class="icon-menu fa fa-bars"></span>
             <ul class="dropdown-menu right">
@@ -44,8 +49,8 @@
     <div class="app-content">
         <div class="sidebar">
             <div class="items-up items">
-                <a href="<?= WEBROOT; ?>user/show/<?php if(isset($_SESSION["user_id"])){ echo $_SESSION["user_id"]; } ?>" class="item">
-                    <span class="fa fa-user"></span>
+                <a href="<?= WEBROOT; ?>user/list/" class="item">
+                    <span class="fa fa-book"></span>
                 </a>
                 <a href="<?= WEBROOT; ?>team/list" class="item">
                     <span class="fa fa-users"></span>

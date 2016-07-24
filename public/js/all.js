@@ -138,12 +138,11 @@ $(function ($) {
     $.getJSON( webrootJs+"notification/list", function(notifications) {
         var nbNotifications = 0;
         $("#liste-notifications").append("<li class=\"notifications-heading global\">Notifications</li></ul><div ><ul id='scroll'>");
-
         for (var notification in notifications) {
             if (notifications[notification].opened == 1){
-              $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+              $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].datetime+ ": "+notifications[notification].message+"</a></li>");
             } else {
-              $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].message+"</a></li>");
+              $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].datetime+ ": "+notifications[notification].message+"</a></li>");
             }
             nbNotifications++;
         }
@@ -300,35 +299,53 @@ $(function ($) {
  ****************************/
 
 $(function ($) {
+
     $("#select-criteria").change(function(){
-        $("#search-team").val("");
-        $("#all-teams").show();
+        $("#search-content").val("");
+        $("#all-content").show();
         $("#pages").show();
     });
-    $("#search-team").keyup(function(){
-        var search = $('#search-team').val();
+    $("#search-content").keyup(function(){
+        var search = $('#search-content').val();
         var select = $('#select-criteria').val();
-        if (select == 1){
-            var column = "teamName";
-        } else if (select == 2){
-            var column = "sports";
-        } else {
-            var column = "description";
+
+        //Valeurs des options du select
+        if (page == "team"){
+            if (select == 1){
+                var column = "teamName";
+            } else if (select == 2){
+                var column = "sports";
+            } else {
+                var column = "description";
+            }
+        } if (page == "user") {
+            if (select == 1){
+                var column = "username";
+            } else if (select == 2){
+                var column = "country";
+            } else {
+                var column = "city";
+            }
+        } if (page == "event") {
+            if (select == 1){
+                var column = "";
+            } else if (select == 2){
+                var column = "";
+            }
         }
         var arraySearch = [column,search];
         if (search != "") {
-            $("#all-teams").hide();
+            $("#all-content").hide();
             $("#pages").hide();
-            $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
-                var nbTeams =0;
-                var nbMembers;
-                if (teams != null) {
-                    $("#search-team-results").empty();
-                    for (var team in teams) {
-                        $.getJSON(webrootJs+"team/members/"+teams[team].id, function(nbMembers) {
-                            $("#search-team-results").append('<div class="col-sm-6">' +
+            if (page == "team"){
+                //Recherche Team
+                $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
+                    if (teams != null) {
+                        $("#search-content-results").empty();
+                        for (var team in teams) {
+                            $("#search-content-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary">' +
-                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].teamName + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].id + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
@@ -347,28 +364,62 @@ $(function ($) {
                                 '                            <span class="form-info">Description : </span>' +
                                 '                        <span class="form-content">' + teams[team].description + '</span>' +
                                 '                            </li>' +
+                                '                            </ul>' +
+                                '                            </div>' +
+                                '                            </div>' +
+                                '                            </div>');
+                        }
+                    } else {
+                        $( "#search-content-results" ).empty();
+                        $("#search-content-results").append('<div class="col-sm-12">' +
+                            '                            <div class="panel panel-primary">' +
+                            '                            <div class="panel-heading"><h3 class="center header-li ">No Group found</a></h3></div></div>');
+                    }
+                });
+            } if (page == "user") {
+                //Recherche User
+                $.getJSON(webrootJs+"user/search/"+arraySearch, function(users) {
+                    if (users != null) {
+                        $("#search-content-results").empty();
+                        for (var user in users) {
+                            $("#search-content-results").append('<div class="col-sm-6">' +
+                                '                            <div class="panel panel-primary2">' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
+                                '                            <div class="panel-body">' +
+                                '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
-                                '                            <span class="form-info">Number of numbers : </span>' +
-                                '                        <span class="form-content">' + nbMembers + '</span>' +
+                                '                            <span class="form-info">Email : </span>' +
+                                '                        <span class="form-content">' + users[user].email + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Country : </span>' +
+                                '                        <span class="form-content">' + users[user].country + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">City : </span>' +
+                                '                        <span class="form-content">' + users[user].city  + '</span>' +
+                                '                            </li>' +
+                                '                            <li class="li-list">' +
+                                '                            <span class="form-info">Birthday : </span>' +
+                                '                        <span class="form-content">' + users[user].birthday  + '</span>' +
                                 '                            </li>' +
                                 '                            </ul>' +
                                 '                            </div>' +
                                 '                            </div>' +
                                 '                            </div>'
                             );
-                        });
-                        nbTeams++;
+                        }
+                    } else {
+                        $( "#search-content-results" ).empty();
+                        $("#search-content-results").append('<div class="col-sm-12">' +
+                            '                            <div class="panel panel-primary2">' +
+                            '                            <div class="panel-heading"><h3 class="center header-li ">No User found</a></h3></div></div>');
                     }
-                } else {
-                    $( "#search-team-results" ).empty();
-                    $("#search-team-results").append('<div class="col-sm-12">' +
-                        '                            <div class="panel panel-primary">' +
-                        '                            <div class="panel-heading"><h3 class="center header-li ">No Group found</a></h3></div></div>');
-                }
-            });
+                });
+            }
         } else {
-            $( "#search-team-results" ).empty();
-            $("#all-teams").show();
+            $( "#search-content-results" ).empty();
+            $("#all-content").show();
             $("#pages").show();
         }
     });
