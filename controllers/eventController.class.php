@@ -238,4 +238,11 @@ class eventController {
             echo "User or event not found";
         }
     }
+
+    public function deleteCommentAction($args){
+      if(isset($args[0])){
+        $commentaire = Comment::findById($args[0]);
+        $commentaire->delete();
+      }
+    }
 }
