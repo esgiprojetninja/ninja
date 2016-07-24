@@ -500,10 +500,7 @@ $(function ($) {
                                 '                                <p class="underlined">Owner : '+data.ownerName+'</p>' +
                                 '                            <div class="row">' +
                                 '                                <div class="col-sm-6">' +
-                            '                                <div class="tag-box">' +
-                                '                            <a href="#">'+data.tags+'</a>' +
-                            '                        <a href="#"><?= $tag ?></a>' +
-                                '                            <?php endforeach; ?>' +
+                            '                                <div class="tag-box" id="tag-box'+data.id+'">' +
                                 '                        </div>' +
                                 '                            </div>' +
                             '                            <div class="col-sm-6">' +
@@ -522,6 +519,10 @@ $(function ($) {
                                 '');
                             $.each(data.users, function (key, user) {
                                 $("#list-people"+data.id).append('<li class="li-people">'+user.username+'</li>');
+                            });
+                            var tagsSplited = data.tags.split(",");
+                            $.each(tagsSplited, function (key, split) {
+                                $("#tag-box"+data.id).append('<a href="#">'+split+' </a>');
                             });
                             if (data.owner == sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
