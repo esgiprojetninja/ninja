@@ -422,9 +422,11 @@ $(function ($) {
                 $.getJSON(webrootJs+"event/search/"+arraySearch, function(events) {
                     if (events != null) {
                         $("#search-content-results").empty();
-                        for (var event in events) {
+                        $.each(events, function (key, data) {
+                            console.debug(key); // On s'en fout
+                            console.debug(data);
                             $("#search-content-results").append(' <div class="panel panel-success">' +
-                                '                                <div class="panel-heading">'+events[event].name+'</div>' +
+                                '                                <div class="panel-heading">'+ data.eventName +'</div>' +
                                 '                            <div class="panel-body">' +
                                 '                                <p class="underlined">Owner : '+events[event].owner_name+'</p>' +
                                 '                            <div class="row">' +
@@ -461,8 +463,8 @@ $(function ($) {
                             '                        <a <!--href="<?= WEBROOT; ?>event/update/<?= $events->getId() ?>-->" class="btn btn-primary">Manage</a>' +
                             '                            <!--<?php endif; ?>-->' +
                             '                        </div>'
-                  );
-                        }
+                          );
+                      });
                     } else {
                         $( "#search-content-results" ).empty();
                         $("#search-content-results").append('<div class="col-sm-12">' +

@@ -196,8 +196,9 @@ class eventController {
         $events = Event::findByLike($args1,$args2);
         $fullData = [];
         for ($i = 0; $i < count($events); $i++) {
-          $fullData[] = [
-            "events" => $events[$i],
+          $fullData[$i] = [
+            "eventName" => $events[$i]->getName(),
+            "eventFromDate" => $events[$i]->getFromDate(),
             "users" => $events[$i]->gatherUsers()
           ];
         }
