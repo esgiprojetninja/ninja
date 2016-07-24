@@ -501,7 +501,7 @@ $(function ($) {
                                 '                            <div class="row">' +
                                 '                                <div class="col-sm-6">' +
                             '                                <div class="tag-box">' +
-                                '                            '+data.tags+'' +
+                                '                            <a href="#">'+data.tags+'</a>' +
                             '                        <a href="#"><?= $tag ?></a>' +
                                 '                            <?php endforeach; ?>' +
                                 '                        </div>' +
@@ -523,18 +523,23 @@ $(function ($) {
                             $.each(data.users, function (key, user) {
                                 $("#list-people"+data.id).append('<li class="li-people">'+user.username+'</li>');
                             });
-                            $(".list-people").css("class", "item-list ");
                             if (data.owner == sessionId){
                                 $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
-                            }
-                            if (!$.inArray(sessionId, data.users) && data.owner != sessionId){
-                                $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
-                            }
-                            if($.inArray(sessionId, data.users) == -1 && data.owner != sessionId){
-                                $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
+                            }else{
+                                for(var user in data.users){
+                                    var jORl = "j";
+                                    if(sessionId == data.users[user].id && data.owner != sessionId){
+                                        jORl = "l";
+                                        break;
+                                    }
+                                }
+                                if(jORl == "l"){
+                                    $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
+                                }else{
+                                    $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
+                                }
                             }
                             $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/comment/'+data.id+'" class="btn btn-warning pull-right">Comments</a>');
-
                       });
                     } else {
                         $( "#search-content-results" ).empty();
