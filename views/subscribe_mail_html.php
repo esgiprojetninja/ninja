@@ -12,7 +12,7 @@
 <body style="margin: 0; padding: 0;">
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
 		<tr>
-			<td align="center" bgcolor="#6C6599" style="padding: 40px 0 30px 0;">
+			<td align="center" bgcolor="#8BC34A" style="padding: 40px 0 30px 0;">
 				<a href="<?= User::getEmailLink("subscribe"); ?>">
 					<img src="<?= WEBROOT; ?>public/img/email/logo.gif" alt="Email Activation World Nation" width="300" height="230" style="display: block;" />
 				</a>
