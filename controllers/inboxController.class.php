@@ -155,6 +155,7 @@ class inboxController
                 $response["callback"] = $_POST["callback"];
                 $response["current_user_id"] = $_SESSION["user_id"];
                 $response["discussion_id"] = $message->getDiscussionId();
+                $response["status"] = "success";
                 $response["message"] = "Message sent !";
                 header('Content-type: application/json');
                 echo json_encode($response);
