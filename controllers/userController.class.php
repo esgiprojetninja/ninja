@@ -333,19 +333,9 @@ class userController
 		$args = explode(",", $args);
 		$args1 = $args[0];
 		$args2 = $args[1];
-		$users = User::findByLike($args1,$args2);
-		//var_dump($users);
+		$users = User::findByLikeArray($args1,$args2);
 
-		if(count($users) >0){
-			if(count($users) == 1){
-				$result[] = $users;
-			}else{
-				$result = $users;
-			}
-		}else{
-			$result = null;
-		}
-		echo json_encode($result);
+		echo json_encode($users);
 	}
 
 }

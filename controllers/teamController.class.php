@@ -262,27 +262,8 @@ class teamController
 		$args = explode(",", $args);
 		$args1 = $args[0];
 		$args2 = $args[1];
-		$teams = Team::findByLike($args1,$args2);
-
-		if(count($teams) >0){
-			if(count($teams) == 1){
-				$members = TeamHasUser::findBy("idTeam",$teams->getId(),"int");
-				$members = count($members);
-				$teams->{"nbMember"} = $members;
-				$result[] = $teams;
-			}else{
-				foreach($teams as $team){
-					$members = TeamHasUser::findBy("idTeam",$team->getId(),"int");
-					$members = count($members);
-					$team->{"nbMember"} = $members;
-				}
-				$result = $teams;
-
-			}
-		}else{
-			$result = null;
-		}
-		echo json_encode($result);
+		$teams = Team::findByLikeArray($args1,$args2);
+		echo json_encode($teams);
 	}
 
     public function membersAction($args){

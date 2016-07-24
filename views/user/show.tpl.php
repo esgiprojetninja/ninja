@@ -26,10 +26,6 @@
                         <ul class="header-ul">
                             <li class="li-list fa fa-user"> Personnal</li>
                             <li class="li-list">
-                                <span class="form-info">Username : </span>
-                                <span class="form-content"><?php echo $user->getUsername(); ?></span>
-                            </li>
-                            <li class="li-list">
                                 <span class="form-info">Firstname : </span>
                                 <span class="form-content"><?php echo $user->getFirstName(); ?></span>
                             </li>
@@ -40,6 +36,10 @@
                             <li class="li-list">
                                 <span class="form-info">Favorites sports : </span>
                                 <span class="form-content"><?php echo $user->getFavoriteSports(); ?></span>
+                            </li>
+                            <li class="li-list">
+                                <span class="form-info">Birthday : </span>
+                                <span class="form-content"><?php echo $user->getBirthday(); ?></span>
                             </li>
                         </ul>
                     </div>
@@ -55,7 +55,11 @@
                                 <span class="form-content"><?php echo $user->getPhoneNumber(); ?></span>
                             </li>
                             <li class="li-list">
-                                <span class="form-info">Location : </span>
+                                <span class="form-info">Country : </span>
+                                <span class="form-content"><?php echo $user->getCountry(); ?></span>
+                            </li>
+                            <li class="li-list">
+                                <span class="form-info">City : </span>
                                 <span class="form-content"><?php echo $user->getCity(); ?></span>
                             </li>
                         </ul>

@@ -217,7 +217,7 @@ class basesql extends PDO
 		}
 	}
 
-	public static function findLike($column,$search,$fetch=false) {
+	public static function findByLikeArray($column,$search,$fetch=false) {
 		$instance = new static;
 		$sql = "SELECT * FROM ".$instance->table;
 		$sql = $sql." WHERE ".$column." LIKE '%".$search."%';";

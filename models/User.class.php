@@ -5,20 +5,20 @@ class User extends basesql
 
 	public $id; //passage en public, afin de pouvoir dans le validator vérifier que l'utilisateur ne fasse pas partie de la team
 	protected $table = "users";
-	public $email = "";
+	protected $email = "";
 	protected $token = "";
 	protected $is_active = 0;
 	protected $password = "";
-	public $username = "";
+	protected $username = "";
 	protected $first_name = "";
 	protected $last_name = "";
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
-	public $city = "";
+	protected $city = "";
 	protected $zipcode =0;
-	public $country = "";
+	protected $country = "";
 	protected $street = "";
-	public $birthday= "0000-00-00";
+	protected $birthday= "0000-00-00";
 	protected $avatar = "";
 	protected $dateCreated;
 	protected $is_admin = 0;
