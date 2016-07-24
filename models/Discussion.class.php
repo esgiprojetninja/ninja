@@ -4,9 +4,10 @@ class Discussion extends basesql {
     protected $id;
     protected $table = "discussions";
     protected $pivotTable = "discussions_users_pivot";
-    protected $people = [];
+    protected $people = "";
     protected $columns = [
-        "id"
+        "id",
+        "people"
     ];
 
 
@@ -45,8 +46,8 @@ class Discussion extends basesql {
      */
     public function addUser($id) {
         if (User::isConnected()) {
-            if (is_numeric($id) && !in_array($id, $this->people)) {
-                $this->people[] = $id;
+            if (!in_array($id, explode(",", $this->people))) {
+                $this->people = $this->people . "," . $id;
             } else {
                 throw new Exception("Bad data type or user already in conversation", 1);
             }
@@ -71,27 +72,18 @@ class Discussion extends basesql {
      * For each people, save a pivot table.
      */
     public function savePeople() {
-        foreach ($this->people as $userId) {
+        foreach (explode(",", $this->people) as $userId) {
             $pivot = new ManyToManyPivot(
                 $this->pivotTable,
                 "discussion",
                 "user",
                 $this->id,
-                $userId
+                intval($userId)
             );
             $pivot->save();
         }
     }
 
-    /**
-     * Save people then save.
-     */
-    public function save() {
-        if (count($this->people) > 0) {
-            $this->savePeople();
-        }
-        $this->id = parent::save();
-    }
 
     /**
      * Return form structure.

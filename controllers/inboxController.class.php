@@ -59,6 +59,7 @@ class inboxController
                         $discussion->save();
                         $discussion->addUser(intval($userTarget->getId()));
                         $discussion->addUser(intval($_SESSION["user_id"]));
+                        $discussion->savePeople();
                         $discussion->save();
                         http_response_code(200);
                         $response["status"] = "success";
@@ -95,6 +96,14 @@ class inboxController
         if (User::isConnected()) {
             $user = User::findById($_SESSION["user_id"]);
             $response["message"] = $user->getDiscussions();
+            for ($i = 0; $i < count($response["message"]); $i++) {
+                foreach ((explode(",", $response["message"][$i]["people"])) as $user_id) {
+                    if ($user_id != $_SESSION["user_id"] && !empty($user_id)) {
+                        $penPal = User::findById($user_id);
+                        $response["message"][$i]["pen_pal"] = $penPal->getUsername();
+                    }
+                }
+            }
             $response["status"] = "success";
         } else {
             http_response_code(403);
