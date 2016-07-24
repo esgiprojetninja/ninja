@@ -297,6 +297,12 @@ class userController
 				}
 			}
 
+			if($comment = Comment::findBy('id_author',$args[0],"int")){
+				foreach($comment as $com){
+					$com->delete();
+				}
+			}
+
 		}
 	}
 
