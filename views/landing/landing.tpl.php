@@ -72,7 +72,7 @@
         <div class="content">
           <h2>Ouvert à toutes et tous</h2>
           <p>
-            Sport Nation ne fait pas différences entre les sportifs. Organisez des match, des tournois, des ligues, créez et animez des communautés... Un monde de sport vous attend !
+            Sport Nation ne fait pas de différences entre les sportifs. Organisez des match, des tournois, des ligues, créez et animez des communautés... Un monde de sport vous attend !
           </p>
         </div>
       </div>
@@ -90,7 +90,7 @@
     </div>
 
     <div class="block-grey">
-      <h2>Frabriqué en France, sans ogm.</h2>
+      <h2>Fabriqué en France, sans ogm.</h2>
       <p>
         Autoproclamée Team Ninja, voici l'équipe qui a réalisé ce projet :
       </p>
@@ -102,7 +102,7 @@
           </div>
         </div>
         <div class="teammate-box">
-          <p>Nicolas Seridis</p>
+          <p>Nicolas Cherridi</p>
           <div class="profile-pic-box">
             <img alt="Gauthier" src="<?= WEBROOT ?>public/img/nicolas.jpg">
           </div>
