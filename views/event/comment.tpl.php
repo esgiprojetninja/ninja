@@ -18,21 +18,25 @@
                   <?php else: ?>
                     <?php
                     foreach($comments as $comment){
-                      $id = $comment->getIdAuthor();
-                        $user = User::findById($id);
-                    ?>
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <a href="<?= WEBROOT; ?>user/show/<?= $user->getId(); ?>"> <?= $user->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> :
-                            </div>
-                            <div class="panel-body">
-                                <p><?= $comment->getIdComment(); ?></p>
-                                <?php if(($comment->getIdAuthor() == $_SESSION['user_id']) || User::isAdmin()): ?>
-                                  <div class="pull-right"><a href="#" class="ajax-link" data-url="event/deleteComment/<?= $comment->getId(); ?>" >Delete</a></div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                      $event2 = EventHasComment::findBy("id_comment",$comment->getId(),"int");
+                      if($event2[0]->getIdEvent() == $event->getId()){
+                        $comment = Comment::findById($comment->getId());
+                        $id = $comment->getIdAuthor();
+                          $user = User::findById($id);
+                      ?>
+                          <div class="panel panel-success">
+                              <div class="panel-heading">
+                                  <a href="<?= WEBROOT; ?>user/show/<?= $user->getId(); ?>"> <?= $user->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> :
+                              </div>
+                              <div class="panel-body">
+                                  <p><?= $comment->getIdComment(); ?></p>
+                                  <?php if(($comment->getIdAuthor() == $_SESSION['user_id']) || User::isAdmin()): ?>
+                                    <div class="pull-right"><a href="#" class="ajax-link" data-url="event/deleteComment/<?= $comment->getId(); ?>" >Delete</a></div>
+                                  <?php endif; ?>
+                              </div>
+                          </div>
                     <?php
+                    }
                   }
                     ?>
                   <?php endif; ?>

@@ -7,23 +7,6 @@ class eventController {
             $view = new View();
             $events = Event::findAll();
 
-            $user = 2; //Ton id d'user à rechercher
-            $eventsFromUser = Event::findBy("owner",$user,"int",false); //La requête
-            $view->assign("eventsFromUser",$eventsFromUser);
-
-            $city = "Fairfax"; //A l'image d'un petit $city = "Bordeaux" t'as vu.
-            $eventsFromCity = Event::findBy("city",$city,"string",false);
-            $view->assign("eventsFromCity",$eventsFromCity);
-
-            $zipcode = 22181;
-            $eventsFromZipcode = Event::findBy("zipcode",$zipcode,"int",false);
-            $view->assign("eventsFromZipcode",$eventsFromZipcode);
-
-            $sport = "amour"; //Renvoie les events dont le tag contient cette chaine
-            $sport = "#".$sport; //Renverra uniquement les chaines commencant par le mot recherché
-            $eventsFromSport = Event::findByLike("tags",$sport);
-            $view->assign("eventsFromSport",$eventsFromSport);
-
             $view->assign("events", $events);
             $view->setView("event/list.tpl");
 
@@ -194,7 +177,6 @@ class eventController {
         $premiereEntree=($pageActuelle-1)*$messagesParPage;
         // La requête sql pour récupérer les messages de la page actuelle.
         $retour_messages= Comment::findAll([$premiereEntree,$messagesParPage],'id');
-
         if(!empty($_POST)) {
   				$validator = new Validator();
   				$commentErrors = $validator->check($commentForm["struct"], $_POST);
@@ -243,6 +225,9 @@ class eventController {
       if(isset($args[0])){
         $commentaire = Comment::findById($args[0]);
         $commentaire->delete();
+
+        $eventHasComment = eventHasComment::findBy("id_comment",$args[0],"int");
+        $eventHasComment[0]->delete();
       }
     }
 }
