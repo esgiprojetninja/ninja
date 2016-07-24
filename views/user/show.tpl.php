@@ -71,7 +71,8 @@
                         <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
                     </div>
                 <?php else: ?>
-                    <a>&nbsp;</a>
+                    <a href="<?= WEBROOT ?>rate/setRate/ <?= User::getId(); ?> /1">+</a>
+                    <a href="<?= WEBROOT ?>rate/setRate/ <?= User::getId(); ?> /0">-</a>
                 <?php endif; ?>
             </div>
 
