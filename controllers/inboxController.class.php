@@ -117,8 +117,13 @@ class inboxController
                 "int",
                 false
             );
-            $response = $messages;
-            var_dump($messages);
+            $response = [];
+            foreach ($messages as $message) {
+                $response[] = [
+                    "content" => $message->getContent(),
+                    "sender_id" =>$message->getSenderId()
+                ];
+            }
         } else {
             http_response_code(403);
             $response["status"] = "error";
