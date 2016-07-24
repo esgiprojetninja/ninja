@@ -423,47 +423,48 @@ $(function ($) {
                     if (events != null) {
                         $("#search-content-results").empty();
                         $.each(events, function (key, data) {
-                            console.debug(key); // On s'en fout
-                            console.debug(data);
+                            console.debug(data.users);
                             $("#search-content-results").append(' <div class="panel panel-success">' +
                                 '                                <div class="panel-heading">'+ data.eventName +'</div>' +
                                 '                            <div class="panel-body">' +
-                                '                                <p class="underlined">Owner : '+events[event].owner_name+'</p>' +
+                                '                                <p class="underlined">Owner : '+data.ownerName+'</p>' +
                                 '                            <div class="row">' +
                                 '                                <div class="col-sm-6">' +
                             '                                <div class="tag-box">' +
-                                '                            '+events[event].tags+'' +
+                                '                            '+data.tags+'' +
                             '                        <a href="#"><?= $tag ?></a>' +
                                 '                            <?php endforeach; ?>' +
                                 '                        </div>' +
                                 '                            </div>' +
                             '                            <div class="col-sm-6">' +
-                                '                            '+events[event].description+'' +
+                                '                            '+data.description+'' +
                                 '                        </div>' +
                                 '                            </div>' +
                                 '                            <ul class="item-list">' +
-                                '                                <li>From : '+events[event].from_date+'</li>' +
-                                '                            <li>To : '+events[event].to_date+'</li>' +
-                                '                            <li>Joignable until '+events[event].joignable_until+'</li>' +
+                                '                                <li>From : '+data.fromDate+'</li>' +
+                                '                            <li>To : '+data.toDate+'</li>' +
+                                '                            <li>Joignable until '+data.joignableUntil+'</li>' +
                                 '</ul>' +
                                 '                                <p>People : </p>' +
-                            '                            <ul class="item-list">' +
-                            '                            <!--<?php foreach ($events->gatherUsers() as $key => $user): ?>-->' +
-                            '                        <!--<li><?= $user["username"] ?></li>-->' +
-                                '                            <?php endforeach; ?>' +
-                                '                        </ul>' +
-                                '                            </div>' +
-                            '                            <div class="panel-footer">' +
-                                '                            <!--<?php if (in_array($_SESSION["user_id"], $events->getUsersId()) && $events->getOwner() != $_SESSION["user_id"]): ?>-->' +
-                                '                        <a <!--href="<?= WEBROOT; ?>event/leave/<?= $events->getId();?-->>/<!--<?= $_SESSION[\'user_id\']?>-->" class="btn btn-danger">Leave</a>' +
-                            '                            <!--<?php elseif (!in_array($_SESSION["user_id"], $events->getUsersId())): ?>-->' +
-                            '                        <a <!--href="<?= WEBROOT; ?>event/join/<?= $events->getId();?>-->" class="btn btn-success">Join</a>' +
-                            '                          <!--  <?php endif; ?>-->' +
-                            '                       <!-- <?php if ($events->getOwner() == $_SESSION["user_id"]): ?>-->' +
-                            '                        <a <!--href="<?= WEBROOT; ?>event/update/<?= $events->getId() ?>-->" class="btn btn-primary">Manage</a>' +
-                            '                            <!--<?php endif; ?>-->' +
-                            '                        </div>'
-                          );
+                                '<ul class="item-list list-people" id="list-people"></ul>' +
+                                '</div>' +
+                                '<div class="panel-footer"></div>' +
+                                '');
+                            $.each(data.users, function (key, user) {
+                                $(".list-people").append('<li>'+user.username+'</li>');
+
+                            });
+                            $(".list-people").css("class", "item-list ");
+                            /*
+                                '       <!--<?php if (in_array($_SESSION["user_id"], $events->getUsersId()) && $events->getOwner() != $_SESSION["user_id"]): ?>-->' +
+                                '        <a <!--href="<?= WEBROOT; ?>event/leave/<?= $events->getId();?-->>/<!--<?= $_SESSION[\'user_id\']?>-->" class="btn btn-danger">Leave</a>' +
+                            '       <!--<?php elseif (!in_array($_SESSION["user_id"], $events->getUsersId())): ?>-->' +
+                            '             <a <!--href="<?= WEBROOT; ?>event/join/<?= $events->getId();?>-->" class="btn btn-success">Join</a>' +
+                            '             <!--  <?php endif; ?>-->' +
+                            '     <!-- <?php if ($events->getOwner() == $_SESSION["user_id"]): ?>-->' +
+                            '     <a <!--href="<?= WEBROOT; ?>event/update/<?= $events->getId() ?>-->" class="btn btn-primary">Manage</a>' +
+
+                          ); */
                       });
                     } else {
                         $( "#search-content-results" ).empty();
