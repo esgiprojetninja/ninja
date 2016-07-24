@@ -22,7 +22,7 @@ class indexController
 
 
 		} else {
-	   		header("location: ".WEBROOT."user/subscribe");
+	   		header("location: ".WEBROOT."landing/welcome");
 		}
 	}
 }

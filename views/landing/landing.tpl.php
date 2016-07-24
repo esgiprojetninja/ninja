@@ -16,10 +16,12 @@
         <img alt="Sport Nation Logo" src="<?= WEBROOT ?>public/img/logo_SNWW_light.png">
       </div>
       <div class="actions">
-        <p>
-          <a href="<?= WEBROOT ?>user/login" type="button" class="btn btn-success">Se connecter</a>
-          <a href="<?= WEBROOT ?>user/subscribe" type="button" class="btn btn-success">S'inscrire</a>
-        </p>
+        <?php if (!User::isConnected()): ?>
+          <p>
+            <a href="<?= WEBROOT ?>user/login" type="button" class="btn btn-success">Se connecter</a>
+            <a href="<?= WEBROOT ?>user/subscribe" type="button" class="btn btn-success">S'inscrire</a>
+          </p>
+        <?php endif; ?>
       </div>
     </header>
 

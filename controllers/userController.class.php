@@ -130,6 +130,9 @@ class userController
 	}
 
 	public function subscribeAction($args) {
+		if(User::isConnected()) {
+			header("location:" . WEBROOT . "index/index");
+		}
 		$view = new View();
 		$view->setView("user/subscribe.tpl");
 
@@ -167,6 +170,9 @@ class userController
 	}
 
 	public function loginAction () {
+		if(User::isConnected()) {
+			header("location:" . WEBROOT . "index/index");
+		}
 		$view = new View();
 		$view->setView("user/login.tpl");
 
