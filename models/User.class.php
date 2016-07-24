@@ -18,10 +18,10 @@ class User extends basesql
 	protected $zipcode =0;
 	protected $country = "";
 	protected $street = "";
-	protected $birthday= "0000-00-00";
+	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
-	protected $is_admin = 0;
+	protected $is_admin;
 	protected $discussionPivotTable = "discussions_users_pivot";
 
 	protected $link;
