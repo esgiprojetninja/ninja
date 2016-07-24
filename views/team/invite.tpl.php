@@ -1,7 +1,7 @@
  <?php
  //Se l'utilisateur y accede par URL, mais n'a pas les droit on le redirige
      if(count($captain) > 0){
-       if(!($captain->getCaptain() > 0)){
+       if(!($captain[0]->getCaptain() > 0)){
          header('Location:'.WEBROOT.'user/login');
        }
      }else{

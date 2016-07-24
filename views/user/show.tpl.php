@@ -10,8 +10,8 @@
                 <h3>User not found</h3>
             </div>
             <?php else : ?>
-            
-            
+
+
             <div class="panel-heading"><h3 class="center header-li"> Informations <?php echo $user->getUsername(); ?>'s profile</h3></div>
 
             <div class="panel-media">
@@ -84,7 +84,6 @@
                         <li>
                         <span class="fa fa-users"> Groups</span>
                         <?php
-                        if(is_array($teams)){
                             foreach($teams as $team){
                                 $Team = Team::findById($team->getIdTeam());
                                 echo '
@@ -93,14 +92,6 @@
                                         </li>
                                     ';
                             }
-                        }else{
-                            $Team = Team::findById($team->getIdTeam());
-                            echo '
-                                        <li class="li-list">
-                                            <span class="form-content"><a href="'.WEBROOT.'user/show/'.$Team->getId().'">'.$Team->getTeamName().'</span>
-                                        </li>
-                                    ';
-                        }
                         ?>
                         </li>
                     <?php } ?>

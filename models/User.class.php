@@ -422,6 +422,15 @@ class User extends basesql
 					],
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>0, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
 					],
+					"country"=>[ "type"=>"string", "class"=>"form-control", "placeholder"=>"Your country", "required"=>1, "msgerror"=>"country", "value" => $this->getCountry()
+					],
+					"city"=>[ "type"=>"string", "class"=>"form-control", "placeholder"=>"Your city", "required"=>1, "msgerror"=>"city", "value" => $this->getCity()
+					],
+					"street"=>[ "type"=>"int", "class"=>"form-control", "placeholder"=>"Street number", "required"=>1, "msgerror"=>"street", "value" => $this->getStreet()
+					],
+					"zipcode"=>[ "type"=>"int", "class"=>"form-control", "placeholder"=>"Your zipcode", "required"=>1, "msgerror"=>"zipcode", "value" => $this->getZipcode()
+					],
+
 					"form-type" => ["type" => "hidden", "value" => "edit", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					],
 				]

@@ -1,10 +1,12 @@
 <?php
-	if(count($captain) > 0){
-		if(!($captain->getCaptain() > 0)){
+	if(!User::isAdmin()){
+		if(count($captain) > 0){
+				if(!($captain->getCaptain() > 0)){
+					header('Location:'.WEBROOT.'user/login');
+				}
+		}else{
 			header('Location:'.WEBROOT.'user/login');
 		}
-	}else{
-		header('Location:'.WEBROOT.'user/login');
 	}
 ?>
 
