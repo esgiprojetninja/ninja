@@ -30,15 +30,10 @@
                     <li>
                         <span class="fa fa-user">List of members : </span><br>
                         <?php
-                        if(is_array($members)){
                           foreach($members as $member){
                               $user = User::findById($member->getIdUser());
                               echo $user->getUsername()."<br>";
                           }
-                        }else{
-                          $user = User::findById($members->getIdUser());
-                          echo $user->getUsername()."<br>";
-                        }
                         ?>
                     </li>
                     <!--

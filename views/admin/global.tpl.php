@@ -44,12 +44,12 @@
 		foreach($users as $user){
 		    $user = User::findBy("id",$user->getId(),"int");
 
-		    echo '<tr><td><a href='.WEBROOT.'user/show/'.$user->getId().'>'.$user->getUsername().'</a></td><td>';
-		    if($user->getIsActive() == 0){
-		    	echo '<a href="#" class="activateUser" data-user="'.$user->getId().'">Activate</a>';
+		    echo '<tr><td><a href='.WEBROOT.'user/show/'.$user[0]->getId().'>'.$user[0]->getUsername().'</a></td><td>';
+		    if($user[0]->getIsActive() == 0){
+		    	echo '<a href="#" class="activateUser" data-user="'.$user[0]->getId().'">Activate</a>';
 		    }
 		    echo '</td><td>';
-		    echo '<a href="#" class="editUser" data-user="'.$user->getId().'"">Edit</a> - <a href="#" class="deleteUser" data-user="'.$user->getId().'""> Delete </a> - Advert - Bann </td></tr>';
+		    echo '<a href="#" class="editUser" data-user="'.$user[0]->getId().'"">Edit</a> - <a href="#" class="deleteUser" data-user="'.$user[0]->getId().'""> Delete </a> - Advert - Bann </td></tr>';
 
 		}
 		echo '</table>';
@@ -80,8 +80,8 @@
 		foreach($teams as $team){
 		    $team = Team::findBy("id",$team->getId(),"int");
 
-		    echo '<tr><td><a href='.WEBROOT.'team/show/'.$team->getId().'>'.$team->getTeamName().'</a></td><td>';
-		    echo '<a href="#" class="editTeam" data-team="'.$team->getId().'"">Edit</a> - <a href="#" class="deleteTeam" data-team="'.$team->getId().'""> Delete </a> - Advert - Bann </td></tr>';
+		    echo '<tr><td><a href='.WEBROOT.'team/show/'.$team[0]->getId().'>'.$team[0]->getTeamName().'</a></td><td>';
+		    echo '<a href="#" class="editTeam" data-team="'.$team[0]->getId().'"">Edit</a> - <a href="#" class="deleteTeam" data-team="'.$team[0]->getId().'""> Delete </a> - Advert - Bann </td></tr>';
 
 		}
 		echo '</table>';

@@ -12,38 +12,27 @@
             <?php else : ?>
             <div class="panel-heading"><h3 class="center header-li"> <?php echo $event->getName(); ?> event comments</h3></div>
         </div>
-        
+
                   <?php if(count($comments) == 0): ?>
                     <h2> There's no comments yet! </h2>
-                  <?php elseif(count($comments) == 1):?>
-                      <?php $user = User::findBy("id",$comments->getIdAuthor(),"int");?>
-                      <div class="panel panel-success">
-                          <div class="panel-heading">
-                              <a href="<?= WEBROOT ?>/user/show/<?= $user->getId(); ?>"><?= $user->getUsername(); ?></a>  said at <?= $comments->getDateCreated();?> :
-                          </div>
-                          <div class="panel-body">
-                              <p><?= $comments->getIdComment(); ?></p>
-                          </div>
-                      </div>
                   <?php else: ?>
-                      
                     <?php
                     foreach($comments as $comment){
                         $user = User::findBy("id",$comment->getIdAuthor(),"int");
                     ?>
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <a href="<?= WEBROOT ?>/user/show/<?= $user->getId(); ?>"><?= $user->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> :
+                                <a href="<?= WEBROOT ?>user/show/<?= $user[0]->getId(); ?>"><?= $user[0]->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> :
                             </div>
                             <div class="panel-body">
                                 <p><?= $comment->getIdComment(); ?></p>
+                                <?php if(($comment->getIdAuthor() == $_SESSION['user_id']) || User::isAdmin()): ?>
+                                  <div class="pull-right"><a href="#" class="ajax-link" >Delete</a></div>
+                                <?php endif; ?>
                             </div>
                         </div>
-
-
-
                     <?php
-                    }
+                  }
                     ?>
                   <?php endif; ?>
 

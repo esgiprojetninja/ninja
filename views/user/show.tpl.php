@@ -79,19 +79,12 @@
                     <?php if(!empty($teams)){ ?><li>
                         <span class="fa fa-team"></span>
                         <?php
-                        if(is_array($teams)){
                             foreach($teams as $team){
                                 $Team = Team::findById($team->getIdTeam());
                                 echo '<a href='.WEBROOT.'team/show/'.$Team->getId().'>';
                                 echo $Team->getTeamName()."<br>";
                                 echo '</a>';
                             }
-                        }else{
-                            $Team = Team::findById($teams->getIdTeam());
-                            echo '<a href='.WEBROOT.'team/show/'.$Team->getId().'>';
-                            echo $Team->getTeamName()."<br>";
-                            echo '</a>';
-                        }
                         ?>
                         </li>
                     <?php } ?>

@@ -63,11 +63,6 @@ class basesql extends PDO
 			$items[] = $item;
 		}
 
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
-		}
 		return $items;
 	}
 
@@ -155,11 +150,8 @@ class basesql extends PDO
 			$items[] = $item;
 		}
 
-		if (count($items) == 1) {
-			return $items[0];
-		} else {
-			return $items;
-		}
+		return $items;
+
 	}
 
 	public function save()
@@ -254,25 +246,9 @@ class basesql extends PDO
 	while($item = $query->fetch()) {
 		$items[] = $item;
 	}
-	if (count($items) == 1) {
-		return $items[0];
-	} else {
-		return $items;
-	}
 
-	$query = $instance->pdo->prepare($sql);
-	$query->execute();
+	return $items;
 
-	$items = [];
-	$query->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-	while($item = $query->fetch()) {
-		$items[] = $item;
-	}
-	if (count($items) == 1) {
-		return $items[0];
-	} else {
-		return $items;
-	}
 }
 
 }

@@ -212,6 +212,7 @@ class eventController {
             $eventHasComment->save();
           }
         }
+
         $view->assign("commentForm",$commentForm);
         $view->assign("commentErrors",$commentErrors);
         $view->setView("event/comment.tpl");

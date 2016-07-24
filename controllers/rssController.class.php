@@ -31,16 +31,7 @@ class rssController
                 if($args[0] == "event" )
                 {
                     $events = Event::findAll(10);
-										if(count($events) == 1){
-											$feed .= '<item>';
-											$feed .= '<title> Event :' . $events->getName() . '</title>';
-											$feed .= '<description>' . $events->getDescription() . '</description>';
-											$feed .= '<tags>' . $events->getTags() . '</tags>';
-											$feed .= '<link> '. WEBROOT. 'event/list </link>';
-											$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($events->getFromDate() )) . '</pubDate>';
-											$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($events->getToDate() )) . '</pubDate>';
-											$feed .= '</item>';
-										}else{
+
 											foreach($events as $key => $event)
 											{
 													$feed .= '<item>';
@@ -52,7 +43,7 @@ class rssController
 													$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getToDate() )) . '</pubDate>';
 													$feed .= '</item>';
 											}
-										}
+
                 }
                 else if($args[0] == "team" )
                 {
@@ -73,15 +64,6 @@ class rssController
                     $teams = Team::findAll(10);
                     $events = Event::findAll(10);
 
-										if(count($teams) == 1){
-											$feed .= '<item>';
-											$feed .= '<title> Team :' . $teams->getTeamName() . '</title>';
-											$feed .= '<description>' . $teams->getDescription() . '</description>';
-											$feed .= '<sports>' . $teams->getSports() .'</sports>';
-											$feed .= '<link> '. WEBROOT. 'team/list </link>';
-											$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($teams->getDateCreated() )) . '</pubDate>';
-											$feed .= '</item>';
-										}else{
 											foreach($teams as $key => $team)
 											{
 													$feed .= '<item>';
@@ -92,18 +74,8 @@ class rssController
 													$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($team->getDateCreated() )) . '</pubDate>';
 													$feed .= '</item>';
 											}
-										}
 
-										if(count($events) == 1){
-											$feed .= '<item>';
-											$feed .= '<title> ' . $events->getName() . '</title>';
-											$feed .= '<description>' . $events->getDescription() . '</description>';
-											$feed .= '<tags>' . $events->getTags() . '</tags>';
-											$feed .= '<link> '. WEBROOT. 'event/list </link>';
-											$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($events->getFromDate() )) . '</pubDate>';
-											$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($events->getToDate() )) . '</pubDate>';
-											$feed .= '</item>';
-										}else{
+
 											foreach($events as $key => $event)
 										{
 												$feed .= '<item>';
@@ -115,7 +87,7 @@ class rssController
 												$feed .= '<pubDate>' . date("D, d M Y H:i:s O", strtotime($event->getToDate() )) . '</pubDate>';
 												$feed .= '</item>';
 										}
-										}
+										
 
                 }
 

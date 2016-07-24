@@ -21,20 +21,7 @@
                             <td>Nombre de membres</td>
                         </tr>
                         <?php
-                        if(count($teams) == 1){
-                          $members = TeamHasUser::findBy("idTeam",$teams->getId(),"int",false);
-                          echo '<tr><td>';
-                          echo '<a href='.WEBROOT.'team/show/'.$teams->getId().'>'.$teams->getTeamName();
-                          echo '</td><td>';
-                          echo $teams->getDateCreated();
-                          echo '</td><td>';
-                          echo $teams->getSports();
-                          echo '</td><td>';
-                          echo $teams->getDescription();
-                          echo '</td><td>';
-                          echo count($members);
-                          echo '</td></tr>';
-                        }else{
+
                           foreach($teams as $team){
                               $members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
                               echo '<tr><td>';
@@ -49,7 +36,6 @@
                               echo count($members);
                               echo '</td></tr>';
                           }
-                        }
 
                         echo '<p align="center">Page : ';
                         for($i=1; $i<=$nombreDePages; $i++){

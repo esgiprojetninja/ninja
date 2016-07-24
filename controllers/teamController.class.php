@@ -27,7 +27,7 @@ class teamController
 
 					//On rajoute l'utilisateur qui crée la team dans sa team
 					$id_team = Team::findBy("teamName", $_POST["teamName"], "string");
-					$id_team = $id_team->getId();
+					$id_team = $id_team[0]->getId();
 					$teamHasUser->setIdTeam($id_team);
 					$teamHasUser->setIdUser($id_user_creator);
 					$teamHasUser->save();
@@ -181,10 +181,10 @@ class teamController
 						}
 						$invitation->setType(0);
 						$invitation->setIdTeamInviting($args[0]);
-						$invitation->setIdUserInvited($id_user_invited->getId());
+						$invitation->setIdUserInvited($id_user_invited[0]->getId());
 						$invitation->save();
             $message= $now." : the team ".$team->getTeamName()."  has invited you";
-            Notification::createNotification($id_user=$id_user_invited->getId(),$message,$action=WEBROOT."team/show/".$args[0]);
+            Notification::createNotification($id_user=$id_user_invited[0]->getId(),$message,$action=WEBROOT."team/show/".$args[0]);
             $view->assign("success","Utilisateur invité !");
 					}else{
 						$view->assign("error","Utilisateur inexistant");
@@ -247,9 +247,9 @@ class teamController
 		    }
 		    $userToDemote = Captain::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
 		    // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
-		    if($userToDemote->getCaptain() == 1 ){
-		    	$userToDemote->setCaptain($userToDemote->getCaptain()-1);
-		    	$userToDemote->save();
+		    if($userToDemote[0]->getCaptain() == 1 ){
+		    	$userToDemote[0]->setCaptain($userToDemote[0]->getCaptain()-1);
+		    	$userToDemote[0]->save();
 		    }
 				Helpers::getMessageAjaxForm("User has been demoted !");
 		 }else{
@@ -301,21 +301,16 @@ class teamController
 		      header('Location:'.WEBROOT.'user/login');
 		    }
 		    $captains = Captain::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
-				if(count($captains) == 1 ){
-					$captains->delete();
-				}else{
-					foreach($captains as $captain){
-						$captain->delete();
-					}
+				foreach($captains as $captain){
+					$captain->delete();
 				}
+
 		    $users = TeamHasUser::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
-				if(count($users) == 1 ){
-					$users->delete();
-				}else{
-					foreach($users as $user){
-						$user->delete();
-					}
+
+				foreach($users as $user){
+					$user->delete();
 				}
+
 				Helpers::getMessageAjaxForm("User has been kicked !");
              Notification::createNotification($id_user=$args['idUser'],$message="You've got rekt of the group ".$args['idTeam']." bro !",$action=WEBROOT);
 
@@ -328,25 +323,20 @@ class teamController
 	public function leaveAction($args){
 		if(User::isConnected() && isset($args["idTeam"])){
 		    $captains = Captain::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
-				if(count($captains) == 1 ){
-					$captains->delete();
-				}else{
-					foreach($captains as $captain){
-						$captain->delete();
-					}
+				foreach($captains as $captain){
+					$captain->delete();
 				}
+
 		   $users =  TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
-				if(count($users) == 1 ){
-					$users->delete();
-				}else{
-					foreach($users as $user){
-						$user->delete();
-					}
+				foreach($users as $user){
+					$user->delete();
 				}
+
 
 			// on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
 		    if(TeamHasUser::findBy("idTeam",$args['idTeam'],"int") == false){
-		    	Team::findBy("id",$args['idTeam'],"int")->delete();
+		    	$team = Team::findBy("id",$args['idTeam'],"int");
+					$team[0]->delete();
 		    }
 
 				Helpers::getMessageAjaxForm("Invitation canceled !");
@@ -366,29 +356,20 @@ class teamController
 				}
 
 				$captains = Captain::findBy('idTeam',$args[0],"int");
-				if(count($captains) == 1 ){
-					$captains->delete();
-				}else{
-					foreach($captains as $captain){
-						$captain->delete();
-					}
+				foreach($captains as $captain){
+					$captain->delete();
 				}
+
 		    $users = TeamHasUser::findBy('idTeam',$args[0],"int");
-				if(count($users) == 1 ){
-					$users->delete();
-				}else{
-					foreach($users as $user){
-						$user->delete();
-					}
+				foreach($users as $user){
+					$user->delete();
 				}
+
 		    $teams = Team::findBy("id",$args[0],"int");
-				if(count($teams) == 1 ){
-					$teams->delete();
-				}else{
-					foreach($teams as $team){
-						$team->delete();
-					}
+				foreach($teams as $team){
+					$team->delete();
 				}
+
 
 				Helpers::getMessageAjaxForm("Team deleted !");
 		 }else{
@@ -417,13 +398,11 @@ class teamController
 			$captain->save();
 
 			$invitations = Invitation::findBy(["idUserInvited","idTeamInviting"],[$idUser,$args["idTeam"]],['int','int','int']);
-			if(count($invitations) == 1 ){
-				$invitations->delete();
-			}else{
-				foreach($invitations as $invitation){
-					$invitation->delete();
-				}
+
+			foreach($invitations as $invitation){
+				$invitation->delete();
 			}
+
 
 			Helpers::getMessageAjaxForm("Invitation accepted !");
 		}else{
@@ -461,13 +440,11 @@ class teamController
 				$idUser = $_SESSION['user_id'];
 			}
       $invitations = Invitation::findBy(["idUserInvited","idTeamInviting"],[$idUser,$args["idTeam"]],['int','int']);
-			if(count($invitations) == 1 ){
-				$invitations->delete();
-			}else{
-				foreach($invitations as $invitation){
-					$invitation->delete();
-				}
+
+			foreach($invitations as $invitation){
+				$invitation->delete();
 			}
+
 
 			Helpers::getMessageAjaxForm("Invitation canceled !");
 		}else{

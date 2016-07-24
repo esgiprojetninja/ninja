@@ -71,7 +71,7 @@ $(function ($) {
         $("#iframeAdmin").show();
         var userId = $(this).data("user");
         $("#frameAdminGlobal").attr("src","../user/edit/"+userId);
-        $("#frameAdminGlobal").attr("style","height:900px;left:-65px;top:-70px;position:relative");
+        $("#frameAdminGlobal").attr("style","height:1100px;left:-65px;top:-70px;position:relative");
     })
 
     $("a.editTeam").click(function(ev){
@@ -85,7 +85,7 @@ $(function ($) {
         var userId = $(this).data("user");
         if (confirm('Are you sure to delete this user ?')) {
             $("#frameAdminGlobal").attr("src","../user/delete/"+userId);
-            window.location.reload();
+            //window.location.reload();
         }
     })
 

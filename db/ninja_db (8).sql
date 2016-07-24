@@ -65,7 +65,7 @@ INSERT INTO `captain` (`id`, `idUser`, `idTeam`, `captain`) VALUES
 CREATE TABLE IF NOT EXISTS `comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `comment` text NOT NULL,
-  `date_created` date NOT NULL,
+  `date_created` datetime NOT NULL,
   `id_author` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;

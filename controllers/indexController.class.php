@@ -17,6 +17,9 @@ class indexController
             $users = User::findAll(10,"dateCreated",["username","id"]);
             $view->assign("users",$users);
 
+						$events = Event::findAll(10,"id",["name","id"]);
+						$view->assign("events",$events);
+
 
 		} else {
 	   		header("location: ".WEBROOT."user/subscribe");
