@@ -18,11 +18,14 @@
                   <?php else: ?>
                     <?php
                     foreach($comments as $comment){
-                        $user = User::findBy("id",$comment->getIdAuthor(),"int");
+                      $id = $comment->getIdAuthor();
+                        $user = User::findById($id);
+                        var_dump($user);
+                        die();
                     ?>
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <a href="<?= WEBROOT ?>user/show/<?= $user[0]->getId(); ?>"><?= $user[0]->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> :
+                                <a href="<?= WEBROOT; ?>user/show/<?= $user->getId(); ?>"> <?= $user->getUsername(); ?></a>  said at <?= $comment->getDateCreated();?> :
                             </div>
                             <div class="panel-body">
                                 <p><?= $comment->getIdComment(); ?></p>

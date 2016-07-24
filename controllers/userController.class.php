@@ -187,6 +187,7 @@ class userController
 					$token = $user[0]->getToken();
 					$id = $user[0]->getId();
 					$_SESSION["user_id"] = $id;
+					$_SESSION["username"] = $user[0]->getUsername();
 					$_SESSION["user_token"] = $token;
 					header("location: ".WEBROOT);
 				}
@@ -314,6 +315,55 @@ class userController
 			}else {
 				header("location:" . WEBROOT);
 			}
+	}
+
+	public function listAction($args){
+		if(User::isConnected()){
+			$users = User::FindAll();
+			$view = new View();
+
+			$total = count($users);//Nombre de team
+			$messagesParPage=6; //Nombre de messages par page
+			$nombreDePages=ceil($total/$messagesParPage);
+
+			if(isset($_GET['page'])){
+				$pageActuelle=intval($_GET['page']);
+				if($pageActuelle>$nombreDePages)
+				{
+					$pageActuelle=$nombreDePages;
+				}
+			}else{
+				$pageActuelle=1;
+			}
+			$premiereEntree=($pageActuelle-1)*$messagesParPage;
+			// La requête sql pour récupérer les messages de la page actuelle.
+			$retour_messages= User::findAll([$premiereEntree,$messagesParPage],'id');
+			//$myUsers = TeamHasUser::findBy("idUser",$_SESSION['user_id'],"int");
+			/*if($myUsers != false){
+				$myUsers = User::findById($myUsers);
+				$view->assign("myTeams",$myUsers);
+			}*/
+
+			$view->assign('pageActuelle', $pageActuelle);
+			$view->assign('nombreDePages',$nombreDePages);
+			$view->setView("user/list.tpl");
+			$view->assign("users", $retour_messages);
+		}else{
+			//A voir la redirection
+			header('Location:'.WEBROOT.'user/login');
+		}
+	}
+
+	public function searchAction($args)
+	{
+		header('Content-Type: application/json');
+		$args = implode(",", $args);
+		$args = explode(",", $args);
+		$args1 = $args[0];
+		$args2 = $args[1];
+		$users = User::findByLikeArray($args1,$args2);
+
+		echo json_encode($users);
 	}
 
 }

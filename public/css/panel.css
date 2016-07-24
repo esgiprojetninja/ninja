@@ -18,6 +18,11 @@ div.panel panel-primary/success/warning...(optional)
     box-shadow: 2px 2px 2px #D2D2D2;
     margin-bottom: 15px;
 }
+.panel .panel-media {
+    min-height: 80px;
+    background-position: center;
+    background-size: cover;
+}
 .panel .panel-heading {
     padding: 5px;
     border-bottom: 1px solid #182115;

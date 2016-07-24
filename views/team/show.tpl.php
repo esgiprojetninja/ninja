@@ -1,46 +1,57 @@
 <?php
-    $team = $this->data["team"];
+$team = $this->data["team"];
 ?>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="panel panel-primary">
             <?php if($team->getId() == null):?>
             <div class="panel-body">
                 <h3>Team not found</h3>
             </div>
             <?php else : ?>
-            <div class="panel-media">
-                <?php if($team->getAvatar() != ""): ?>
-                    <img src="<?= "../../".$team->getAvatar(); ?>" style="width:80px;height:80px">
-                <?php endif;?>
+
+            <div class="panel-heading"><h3 class="center header-li"> Informations of <?php echo $team->getTeamName(); ?> group</h3></div>
+
+            <div class="panel-media" style="background-image: url('<?= WEBROOT ?><?= $team->getAvatar() ?>')">
             </div>
-            <div class="panel-heading"><h3><?php echo $team->getTeamName(); ?></h3></div>
+
             <div class="panel-body">
-                <ul>
-                    <li> Quick description :
-                  <?php if(!$team->getDescription() == ""): ?>
-                    <li>
-                        <?php echo $team->getDescription(); ?>
-                    </li>
-                    <li>Created the :
-                        <?php echo $team->getDateCreated(); ?>
-                    </li>
-                  <?php endif; ?>
-                    <li>
-                        <span class="fa fa-user">List of members : </span><br>
-                        <?php
-                          foreach($members as $member){
-                              $user = User::findById($member->getIdUser());
-                              echo $user->getUsername()."<br>";
-                          }
-                        ?>
-                    </li>
-                    <!--
-                        AFFICHER DERNIER EVENT ?
-                        EVENT RECURRENT ?
-                    -->
-                </ul>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <ul class="header-ul">
+                            <li class="li-list fa fa-info"> Informations </li>
+                            <li class="li-list">
+                                <span class="form-info">Quick Description : </span>
+                                <span class="form-content"><?php echo $team->getDescription(); ?></span>
+                            </li>
+                            <li class="li-list">
+                                <span class="form-info">Date of Creation : </span>
+                                <span class="form-content"><?php echo $team->getDateCreated(); ?></span>
+                            </li>
+                            <li class="li-list">
+                                <span class="form-info">Sports : </span>
+                                <span class="form-content"><?php echo $team->getSports(); ?></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="header-ul">
+                            <li class="li-list"><li class="li-list fa fa-user"> </span> Members</li>
+                            <?php
+                            foreach($members as $member){
+                                    $user = User::findById($member->getIdUser());
+                                    echo '
+                                        <li class="li-list">
+                                            <span class="form-content"><a href="'.WEBROOT.'user/show/'.$user->getId().'">'.$user->getUsername().'</span>
+                                        </li>
+                                    ';
+                                }
+
+                            ?>
+                        </ul>
+                    </div>
+                </div>
                 <?php if(Team::imIn($team->getId())): ?>
                     <div class="text-right">
                         <a href="<?= WEBROOT; ?>team/manage/<?php echo $team->getId(); ?>" class="btn btn-primary">Manage</a>
@@ -65,7 +76,7 @@
                  <?php endif; ?>
                <?php endif; ?>
             </div>
-            <?php endif;?>
+                <?php endif;?>
         </div>
     </div>
 </div>
