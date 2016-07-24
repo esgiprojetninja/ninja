@@ -7,7 +7,8 @@
         <input type="text" id="search-content">
         <select id="select-criteria">
             <option value="1" selected>By name</option>
-            <option value="2">By group</option>
+            <option value="2">By Country</option>
+            <option value="3">By City</option>
         </select>
     </div>
     <div id="search-content-results""></div>
@@ -55,9 +56,10 @@ for($i=1; $i<=$nombreDePages; $i++){
     if($i==$pageActuelle){
         echo ' [ '.$i.' ] ';
     }else{
-        echo ' <a href='.WEBROOT.'user/list?page='.$i.'>'.$i.'</a></p>';
+        echo ' <a href='.WEBROOT.'user/list?page='.$i.'>'.$i.'</a>';
     }
 }
+echo '</p>';
 ?>
 </div>
 

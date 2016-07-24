@@ -319,6 +319,8 @@ $(function ($) {
                 var column = "username";
             } else if (select == 2){
                 var column = "country";
+            } else {
+                var column = "city";
             }
         } if (page == "event") {
             if (select == 1){
@@ -378,13 +380,11 @@ $(function ($) {
             } if (page == "user") {
                 //Recherche User
                 $.getJSON(webrootJs+"user/search/"+arraySearch, function(users) {
-                    console.log(users);
                     if (users != null) {
                         $("#search-content-results").empty();
                         for (var user in users) {
-                            console.log(user);
                             $("#search-content-results").append('<div class="col-sm-6">' +
-                                '                            <div class="panel panel-primary">' +
+                                '                            <div class="panel panel-primary2">' +
                                 '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
@@ -413,13 +413,11 @@ $(function ($) {
                     } else {
                         $( "#search-content-results" ).empty();
                         $("#search-content-results").append('<div class="col-sm-12">' +
-                            '                            <div class="panel panel-primary">' +
+                            '                            <div class="panel panel-primary2">' +
                             '                            <div class="panel-heading"><h3 class="center header-li ">No User found</a></h3></div></div>');
                     }
                 });
             }
-
-
         } else {
             $( "#search-content-results" ).empty();
             $("#all-content").show();
