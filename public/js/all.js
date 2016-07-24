@@ -455,14 +455,14 @@ $(function ($) {
 
                             });
                             $(".list-people").css("class", "item-list ");
-                            console.log(data.owner);
-                            console.log(sessionId);
+                            console.log("owner "+data.owner);
+                            console.log("session id "+sessionId);
                             if (data.owner == sessionId){
                                 if($(".done").length == 0) {
                                     $(".panel-footer").append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
                                     $(".panel-footer").css("class","panel-footer-done");
                                 } else {
-                                    //Bah on fait rien
+                                    //Bah on fait rien mais en fait ça le fait quand même !
                                 }
                             }
                             if ($.inArray(sessionId, data.users) && data.owner == sessionId){
