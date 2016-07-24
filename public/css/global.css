@@ -2,7 +2,7 @@
  -- Colors --
 
 primary: #6C6599
-primary2: #433A4B
+primary2: #6C6599
 success: #328396
 warning: #EBAB51
 danger: #B84D61
@@ -333,7 +333,7 @@ ul {
     cursor: pointer;
     min-height: 30px;
     margin: 2px;
-    border-left: 2px solid #433A4B;
+    border-left: 2px solid #6C6599;
     text-align: center;
     transition-property: all;
     transition-duration: 0.1s;
@@ -350,7 +350,7 @@ ul {
 }
 
 .my-inbox .chat-body .message-list {
-    border: 1px solid #433A4B;
+    border: 1px solid #6C6599;
     width: 100%;
     border-radius: 2px;
     margin-bottom: 10px;
@@ -454,7 +454,7 @@ a{
 }
 
 .form-content {
-    color: #433A4B ;
+    color: #6C6599 ;
     font-weight: bold;
 }
 

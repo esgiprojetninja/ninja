@@ -1,0 +1,193 @@
+.header {
+    height: 80px;
+    display: flex;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.header .img-header {
+    width: 30%;
+}
+
+.header .img-header img {
+    max-height: 70px;
+    margin: 5px;
+}
+
+.header .actions {
+    line-height: 80px;
+    padding-right: 15px;
+    width: 70%;
+}
+
+.header .actions p {
+    margin: 0;
+    text-align: right;
+}
+
+.block-img {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    height: 553px;
+}
+
+.block-img .slogan-box {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.block-img .slogan-box h1 {
+    margin-top: 0;
+    margin-bottom: 50px;
+    font-size: 4em;
+    color: #FFFFFF;
+}
+
+.block-img .slogan-box h2 {
+    font-size: 3em;
+    margin-bottom: 30px;
+}
+
+.block-img .slogan-box a {
+    margin-top: 20px;
+    font-size: 1.5em;
+    padding: 13px;
+}
+
+.block-primary {
+    text-align: center;
+    background-color: #6C6599;
+    color: #FFFFFF;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.block-primary h2 {
+    margin-top: 0px;
+    margin-bottom: 50px;
+    font-size: 3em;
+}
+
+.block-primary p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.block {
+    text-align: center;
+    background-color: #FFFFFF;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.block h2 {
+    margin-top: 0px;
+    margin-bottom: 50px;
+    font-size: 3em;
+}
+
+.block p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.block-grey .teammates {
+    display: flex;
+}
+
+.block-grey .teammates .teammate-box {
+    width: 25%;
+}
+
+.block-grey .teammates .teammate-box .profile-pic-box {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid grey;
+    box-shadow: 2px 2px 2px grey;
+    margin: 15px;
+    overflow: hidden;
+}
+
+.block-grey .teammate-box .profile-pic-box img {
+    width: 200px;
+    height: 200px;
+}
+
+.block-grey {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.block-grey h2 {
+    margin-top: 0px;
+    margin-bottom: 50px;
+    font-size: 3em;
+}
+
+.block-grey p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.article {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.article .article-img {
+    width: 30%;
+}
+
+.article .article-img img {
+    width: 100%;
+}
+
+.article .content {
+    text-align: right;
+    padding: 15px;
+    width: 70%;
+}
+
+.article .content h2 {
+    font-weight: 900;
+}
+
+.article-reverse {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.article-reverse .article-img {
+    width: 30%;
+}
+
+.article-reverse .article-img img {
+    width: 100%;
+}
+
+.article-reverse .content {
+    text-align: left;
+    padding: 30px;
+    width: 70%;
+}
+
+.article-reverse .content h2 {
+    font-weight: 900;
+}
+
+.footer {
+    background-color: #6C6599;
+    padding-top: 20px;
+}
+
+.footer .copyright {
+    text-align: center;
+    padding: 5px;
+    color: #FFFFFF;
+}
