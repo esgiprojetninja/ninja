@@ -423,6 +423,7 @@ $(function ($) {
                     if (events != null) {
                         $("#search-content-results").empty();
                         $.each(events, function (key, data) {
+                            console.log(data);
                             console.debug(data.users);
                             $("#search-content-results").append(' <div class="panel panel-success">' +
                                 '                                <div class="panel-heading">'+ data.eventName +'</div>' +
@@ -446,30 +447,24 @@ $(function ($) {
                                 '                            <li>Joignable until '+data.joignableUntil+'</li>' +
                                 '</ul>' +
                                 '                                <p>People : </p>' +
-                                '<ul class="item-list list-people" id="list-people"></ul>' +
+                                '<ul class="item-list list-people" id="list-people'+data.id+'"></ul>' +
                                 '</div>' +
-                                '<div class="panel-footer"></div>' +
+                                '<div class="panel-footer" id="panel-footer'+data.id+'"></div>' +
                                 '');
                             $.each(data.users, function (key, user) {
-                                $(".list-people").append('<li>'+user.username+'</li>');
-
+                                $("#list-people"+data.id).append('<li class="li-people">'+user.username+'</li>');
                             });
                             $(".list-people").css("class", "item-list ");
                             console.log("owner "+data.owner);
                             console.log("session id "+sessionId);
                             if (data.owner == sessionId){
-                                if($(".done").length == 0) {
-                                    $(".panel-footer").append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
-                                    $(".panel-footer").css("class","panel-footer-done");
-                                } else {
-                                    //Bah on fait rien mais en fait ça le fait quand même !
-                                }
+                                $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
                             }
-                            if ($.inArray(sessionId, data.users) && data.owner == sessionId){
-                                $(".panel-footer").append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
+                            if ($.inArray(sessionId, data.users) && data.owner != sessionId){
+                                $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
                             }
-                            if($.inArray(sessionId, data.users) !== -1){
-                                $(".panel-footer").append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
+                            if($.inArray(sessionId, data.users) != -1){
+                                $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
                             }
                       });
                     } else {

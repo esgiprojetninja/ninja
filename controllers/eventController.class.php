@@ -198,6 +198,7 @@ class eventController {
         for ($i = 0; $i < count($events); $i++) {
           $fullData[$i] = [
             "eventName" => $events[$i]->getName(),
+            "id" => $events[$i]->getId(),
             "eventFromDate" => $events[$i]->getFromDate(),
             "tags" => $events[$i]->getTags(),
             "description" => $events[$i]->getDescription(),
