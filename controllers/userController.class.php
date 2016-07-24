@@ -303,6 +303,12 @@ class userController
 				}
 			}
 
+			if($eventsHasComment = EventHasComment::findBy('id_author',$args[0],'int')){
+				foreach($EventHasComment as $eventComment){
+					$eventComment->delete();
+				}
+			}
+
 		}
 	}
 
