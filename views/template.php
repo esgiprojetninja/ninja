@@ -49,28 +49,30 @@
         </div>
     </header>
     <div class="app-content">
-        <div class="sidebar">
+        <?php if (User::isConnected()): ?>
+          <div class="sidebar">
             <div class="items-up items">
-                <a href="<?= WEBROOT; ?>user/list/" class="item">
-                    <span class="fa fa-book"></span>
-                </a>
-                <a href="<?= WEBROOT; ?>team/list" class="item">
-                    <span class="fa fa-users"></span>
-                </a>
-                <a href="<?= WEBROOT; ?>event/list" class="item">
-                    <span class="fa fa-calendar-check-o"></span>
-                </a>
-                <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
-                    <span class="fa fa-envelope-o"></span>
-                </a>
-                <a href="<?= WEBROOT; ?>rss/list" class="item">
-                    <span class="fa fa-rss-square"></span>
-                </a>
+              <a href="<?= WEBROOT; ?>user/list/" class="item">
+                <span class="fa fa-book"></span>
+              </a>
+              <a href="<?= WEBROOT; ?>team/list" class="item">
+                <span class="fa fa-users"></span>
+              </a>
+              <a href="<?= WEBROOT; ?>event/list" class="item">
+                <span class="fa fa-calendar-check-o"></span>
+              </a>
+              <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
+                <span class="fa fa-envelope-o"></span>
+              </a>
+              <a href="<?= WEBROOT; ?>rss/list" class="item">
+                <span class="fa fa-rss-square"></span>
+              </a>
             </div>
             <div class="items-down items">
 
             </div>
-        </div>
+          </div>
+        <?php endif; ?>
         <div class="grid-container">
             <div class="msg-box">
                 <p class="text">

@@ -230,4 +230,31 @@ class eventController {
         $eventHasComment[0]->delete();
       }
     }
+
+    public function searchAction($args)
+    {
+        header('Content-Type: application/json');
+        $args = implode(",", $args);
+        $args = explode(",", $args);
+        $args1 = $args[0];
+        $args2 = $args[1];
+        $events = Event::findByLike($args1,$args2);
+        $fullData = [];
+        for ($i = 0; $i < count($events); $i++) {
+          $fullData[$i] = [
+            "eventName" => $events[$i]->getName(),
+            "id" => $events[$i]->getId(),
+            "eventFromDate" => $events[$i]->getFromDate(),
+            "tags" => $events[$i]->getTags(),
+            "description" => $events[$i]->getDescription(),
+            "fromDate" => $events[$i]->getFromDate(),
+            "toDate" => $events[$i]->gettoDate(),
+            "joignableUntil" => $events[$i]->getJoignableUntil(),
+            "ownerName" => $events[$i]->getOwnerName(),
+            "owner" => $events[$i]->getOwner(),
+            "users" => $events[$i]->gatherUsers()
+          ];
+        }
+        echo json_encode($fullData);
+    }
 }
