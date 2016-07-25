@@ -125,6 +125,7 @@
     <footer class="footer">
       <ul>
         <li><a href="<?= WEBROOT ?>landing/legals">Mentions légales</a></li>
+        <li><a href="<?= WEBROOT ?>landing/plan">Plan du site</a></li>
       </ul>
       <div class="copyright">
         <p>
