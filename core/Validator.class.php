@@ -114,7 +114,8 @@ class Validator extends basesql{
 	}
 
 	public static function isEmpty($var){
-		return empty(trim($var));
+		$var = trim($var);
+		return empty($var);
 	}
 
 	public static function passwordIdentical($var){

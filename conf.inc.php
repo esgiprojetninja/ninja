@@ -4,14 +4,14 @@ $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
 $lienbase = $protocol . $_SERVER['HTTP_HOST'] . str_replace(end($explode), '', $_SERVER['SCRIPT_NAME']);
 define('WEBROOT', $lienbase);
 define("DBHOST","localhost");
-define("DBUSER","root");
+define("DBUSER","ninja_db");
 date_default_timezone_set('Europe/Paris');
 
 
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
     define("DBPWD","");
 } else {
-     define("DBPWD","root");
+     define("DBPWD","mdpNINJ4db");
 }
 
 define("DBNAME","ninja_db");
