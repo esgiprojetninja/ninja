@@ -418,6 +418,8 @@ class User extends basesql
 					],
 					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>0, "msgerror"=>"last_name", "value" => $this->getLastName()
 					],
+					"birthday"=>[ "type"=>"date", "class"=>"form-control js-time-input js-date", "placeholder"=>"Birthday", "required"=>0, "msgerror"=>"date_format", "value" => $this->getBirthday()
+					],
 					"favorite_sports"=>[ "type"=>"select", "class"=>"form-control", "placeholder"=>"Favorite sports", "required"=>0, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
 					],
 					"phone_number"=>[ "type"=>"number", "class"=>"form-control", "placeholder"=>"Phone number", "required"=>0, "msgerror"=>"phone_number", "value" => $this->getPhoneNumber()
