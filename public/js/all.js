@@ -214,8 +214,8 @@ $(function ($) {
               $("#scroll").append("<li id=\"notif\" class=\"notifications-li opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].datetime+ ": "+notifications[notification].message+"</a></li>");
             } else {
               $("#scroll").append("<li id=\"notif\" class=\"notifications-li not-opened scroll \"><a href="+notifications[notification].action+" data-id=\"" + notifications[notification].id + "\">"+notifications[notification].datetime+ ": "+notifications[notification].message+"</a></li>");
+                nbNotifications++;
             }
-            nbNotifications++;
         }
         if(nbNotifications != 0){
             $("#notification-icon").attr("class", "icon-menu fa fa-bell");
@@ -399,9 +399,11 @@ $(function ($) {
             }
         } if (page == "event") {
             if (select == 1){
-                var column = "";
+                var column = "name";
             } else if (select == 2){
-                var column = "";
+                var column = "owner_name";
+            } else if (select == 3){
+                var column = "tags";
             }
         }
         var arraySearch = [column,search];
@@ -455,7 +457,7 @@ $(function ($) {
                         for (var user in users) {
                             $("#search-content-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary2">' +
-                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'user/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
@@ -487,6 +489,67 @@ $(function ($) {
                             '                            <div class="panel-heading"><h3 class="center header-li ">No User found</a></h3></div></div>');
                     }
                 });
+            } if(page == "event") {
+                $.getJSON(webrootJs+"event/search/"+arraySearch, function(events) {
+                    if (events != null) {
+                        $("#search-content-results").empty();
+                        $.each(events, function (key, data) {
+                            $("#search-content-results").append(' <div class="panel panel-success">' +
+                                '                                <div class="panel-heading">'+ data.eventName +'</div>' +
+                                '                            <div class="panel-body">' +
+                                '                                <p class="underlined">Owner : '+data.ownerName+'</p>' +
+                                '                            <div class="row">' +
+                                '                                <div class="col-sm-6">' +
+                            '                                <div class="tag-box" id="tag-box'+data.id+'">' +
+                                '                        </div>' +
+                                '                            </div>' +
+                            '                            <div class="col-sm-6">' +
+                                '                            '+data.description+'' +
+                                '                        </div>' +
+                                '                            </div>' +
+                                '                            <ul class="item-list">' +
+                                '                                <li>From : '+data.fromDate+'</li>' +
+                                '                            <li>To : '+data.toDate+'</li>' +
+                                '                            <li>Joignable until '+data.joignableUntil+'</li>' +
+                                '</ul>' +
+                                '                                <p>People : </p>' +
+                                '<ul class="item-list list-people" id="list-people'+data.id+'"></ul>' +
+                                '</div>' +
+                                '<div class="panel-footer" id="panel-footer'+data.id+'"></div>' +
+                                '');
+                            $.each(data.users, function (key, user) {
+                                $("#list-people"+data.id).append('<li class="li-people">'+user.username+'</li>');
+                            });
+                            var tagsSplited = data.tags.split(",");
+                            $.each(tagsSplited, function (key, split) {
+                                $("#tag-box"+data.id).append('<a href="#">'+split+' </a>');
+                            });
+                            if (data.owner == sessionId){
+                                $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/update/'+data.id+'" class="btn btn-primary">Manage</a>');
+                            }else{
+                                for(var user in data.users){
+                                    var jORl = "j";
+                                    if(sessionId == data.users[user].id && data.owner != sessionId){
+                                        jORl = "l";
+                                        break;
+                                    }
+                                }
+                                if(jORl == "l"){
+                                    $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/leave/'+data.id+'/'+sessionId+'" class="btn btn-danger">Leave</a>');
+                                }else{
+                                    $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/join/'+data.id+'" class="btn btn-success">Join</a>');
+                                }
+                            }
+                            $("#panel-footer"+data.id).append('<a href="'+webrootJs+'event/comment/'+data.id+'" class="btn btn-warning pull-right">Comments</a>');
+                      });
+                    } else {
+                        $( "#search-content-results" ).empty();
+                        $("#search-content-results").append('<div class="col-sm-12">' +
+                            '                            <div class="panel panel-primary">' +
+                            '                            <div class="panel-heading"><h3 class="center header-li ">No Group found</a></h3></div></div>');
+                    }
+                });
+
             }
         } else {
             $( "#search-content-results" ).empty();
