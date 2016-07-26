@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-sm-6">
         <h1>Site plan</h1>
-        <a href="<?= WEBROOT ?>landing/welcome">Retour</a>
+        <a href="<?= WEBROOT ?>landing/welcome">Back</a>
 
         <h2>Landing Page</h2>
         <ul>
