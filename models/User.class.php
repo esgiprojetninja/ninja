@@ -292,10 +292,10 @@ class User extends basesql
 		$mail = new PHPMailer();
 
 		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->Host = 'ns0.ovh.com'; 						  // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true;                               // Enable SMTP authentication
-		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
-		$mail->Password = 'test3ADW';                           // SMTP password
+		$mail->Username = 'postmaster@xlwlx.fr';                 // SMTP username
+		$mail->Password = 'p0stm4st3r';                           // SMTP password
 		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;                                    // TCP port to connect to
 
@@ -418,7 +418,7 @@ class User extends basesql
 					],
 					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>0, "msgerror"=>"last_name", "value" => $this->getLastName()
 					],
-					"birthday"=>[ "type"=>"date", "class"=>"form-control js-time-input js-date", "placeholder"=>"Birthday", "required"=>0, "msgerror"=>"date_format", "value" => $this->getBirthday()
+					"birthday"=>[ "type"=>"date", "class"=>"form-control js-date", "placeholder"=>"Birthday", "required"=>0, "msgerror"=>"date_format", "value" => $this->getBirthday()
 					],
 					"favorite_sports"=>[ "type"=>"select", "class"=>"form-control", "placeholder"=>"Favorite sports", "required"=>0, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
 					],
