@@ -113,6 +113,15 @@ class eventController {
                             $event->setDescription(htmlspecialchars($_POST["description"]));
                             $event->setTags(htmlspecialchars($_POST["tags"]));
                             $event->setNbPeopleMax($_POST["nb_people_max"]);
+                            $nameEvent = $event->getName();
+                            $owner = $event->getOwner();
+                            $users = $event->gatherUsers();
+                            foreach ($users as $user){
+                                $idUser = $user['id'];
+                                if ($owner != $idUser){
+                                    Notification::createNotification($idUser,$message="The event ".$nameEvent." has been edited !",$action=WEBROOT."event/list");
+                                }
+                            }
                             $event->save();
                             $event->addUser($currentUser->getId());
                         }
@@ -135,6 +144,15 @@ class eventController {
 
     public function deleteAction($args) {
         if ($event = Event::findById(intval($args[0]))) {
+            $nameEvent = $event->getName();
+            $users = $event->gatherUsers();
+            foreach ($users as $user){
+                $idUser = $user['id'];
+                $owner = $event->getOwner();
+                if ($owner != $idUser){
+                    Notification::createNotification($idUser,$message="The event ".$nameEvent." has been deleted !",$action=WEBROOT);
+                }
+            }
             $event->delete();
             header("location:" . WEBROOT . "event/list");
         } else {
@@ -147,6 +165,8 @@ class eventController {
         if (isset($args[0])) {
             $event = Event::findById(intval($args[0]));
             $event->addUser(intval($_SESSION["user_id"]));
+            $idOwner = $event->getOwner();
+            Notification::createNotification($idOwner,$message="Someone just joined your event, check it out !",$action=WEBROOT."event/update/".$args[0]);
             header("location:" . WEBROOT . "event/list");
         } else {
             http_response_code(404);
@@ -210,6 +230,8 @@ class eventController {
         if (isset($args[0]) && isset($args[1])) {
             $event = Event::findById(intval($args[0]));
             $event->removeUser(intval($args[1]));
+            $idOwner = $event->getOwner();
+            Notification::createNotification($idOwner,$message="Someone just left your event, check it out !",$action=WEBROOT."event/update/".$args[0]);
             if ($event->getOwner() == $_SESSION["user_id"]) {
                 header("location:" . WEBROOT . "event/update/" . $event->getId());
             } else {
@@ -278,5 +300,22 @@ class eventController {
           ];
         }
         echo json_encode($fullData);
+    }
+
+    public function showAction($args) {
+        if (User::isConnected()) {
+            if (!empty(htmlspecialchars(intval($args[0])))) {
+                $event = Event::findById(htmlspecialchars(intval($args[0])));
+                $users = $event->gatherUsers();
+                $view = new View();
+                $view->setView("event/show.tpl");
+                $view->assign("event", $event);
+                $view->assign("users", $users);
+            } else {
+                header("location:" . WEBROOT);
+            }
+        } else {
+            header("location:" . WEBROOT);
+        }
     }
 }

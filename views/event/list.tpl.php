@@ -19,7 +19,7 @@
                 <option value="3">By tag</option>
             </select>
         </div>
-        <div id="search-content-results""></div>
+        <div id="search-content-results"></div>
 
     <div class="col-sm-12" id="all-content">
         <?php if(count($events) == 1): ?>
@@ -106,6 +106,7 @@
                               <a href="<?= WEBROOT; ?>event/update/<?= $event->getId() ?>" class="btn btn-primary">Manage</a>
                           <?php endif; ?>
                           <a href="<?= WEBROOT;?>event/comment/<?= $event->getId() ?>" class="btn btn-warning pull-right">Comments</a>
+                          <a href="<?= WEBROOT;?>event/show/<?= $event->getId() ?>" class="btn btn-success pull-right">Details</a>
                       </div>
                   </div>
               <?php endif; ?>

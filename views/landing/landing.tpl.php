@@ -28,7 +28,7 @@
     <div class="block-img" style="background-image: url('<?= WEBROOT?>public/img/sports/soccer_alone.jpg')">
       <div class="slogan-box">
         <h1>Vous ne manquerez plus jamais de JOUEUR.</h1>
-        <h2>Rejoignez la NATION et trouvez des matchs et des joueur autour de vous.</h2>
+        <h2>Rejoignez la NATION et trouvez des matchs et des joueurs autour de vous.</h2>
         <p>
           <a href="<?= WEBROOT ?>user/subscribe" type="button" class="btn btn-success">JOUEZ MAINTENANT</a>
         </p>
@@ -125,6 +125,7 @@
     <footer class="footer">
       <ul>
         <li><a href="<?= WEBROOT ?>landing/legals">Mentions légales</a></li>
+        <li><a href="<?= WEBROOT ?>landing/plan">Plan du site</a></li>
       </ul>
       <div class="copyright">
         <p>

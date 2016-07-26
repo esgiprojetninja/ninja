@@ -37,9 +37,8 @@
                 <?php if(User::isAdmin()):  ?>
                     <li><a href="<?= WEBROOT;?>admin/global">Admin</a></li>
                 <?php endif; ?>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
+                <li><a href="#<?= WEBROOT;?>landing/legals">Legals</a></li>
+                <li><a href="<?= WEBROOT; ?>landing/plan">Site plan</a></li>
             </ul>
         </div>
         <div class="item dropdown header-burger icon">
