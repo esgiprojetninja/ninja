@@ -129,6 +129,7 @@ $(function ($) {
           data.idUser = $(this).data("user");
           data.idTeam = $(this).data("team");
           data.type = $(this).data("type");
+          data.comment = $(this).data("comment");
 
           action = $(this).data("url");
           action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
