@@ -301,4 +301,21 @@ class eventController {
         }
         echo json_encode($fullData);
     }
+
+    public function showAction($args) {
+        if (User::isConnected()) {
+            if (!empty(htmlspecialchars(intval($args[0])))) {
+                $event = Event::findById(htmlspecialchars(intval($args[0])));
+                $users = $event->gatherUsers();
+                $view = new View();
+                $view->setView("event/show.tpl");
+                $view->assign("event", $event);
+                $view->assign("users", $users);
+            } else {
+                header("location:" . WEBROOT);
+            }
+        } else {
+            header("location:" . WEBROOT);
+        }
+    }
 }
