@@ -98,7 +98,7 @@
             <div class="col-sm-6 panel-body">
                 <ul class="header-ul">
                     <?php if(!empty($events)){ ?>
-                        <li><span class="fa fa-spoon"> Events</span></li>
+                        <li><span class="fa fa-calendar-check-o"> Events</span></li>
                             <?php
                             foreach($events as $event){
                                 $users = $event->gatherUsers();
@@ -106,7 +106,7 @@
                                     if ($user['id'] == $_SESSION['user_id']){
                                         echo '
                                         <li class="li-list">
-                                            <span class="form-content"><a href="'.WEBROOT.'event/search/name,'.$event->getName().'">'.$event->getName().'</span>
+                                            <span class="form-content">'.$event->getName().'</span>
                                         </li>
                                     ';
                                     }
