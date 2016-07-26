@@ -62,6 +62,7 @@
                                 <span class="form-info">City : </span>
                                 <span class="form-content"><?php echo $user->getCity(); ?></span>
                             </li>
+                            <?php if ($user->getId() != $_SESSION["user_id"]): ?>
                             <li class="li-list">
                                 <div class="">
                                     <span class="form-info">Rate : </span>
@@ -72,6 +73,7 @@
                                     <button type="button" class="btn btn-primary js-user-vote" data-vote="down">-</button>
                                 </div>
                             </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
