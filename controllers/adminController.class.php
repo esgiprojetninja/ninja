@@ -22,7 +22,7 @@ class adminController
 
     public function globalAction($args)
     {
-        $view = new View();
+        $view = new view;
         if(User::isConnected()){
             if(User::isAdmin()){
                 $view->setView('admin/global.tpl');
@@ -44,7 +44,7 @@ class adminController
                 $premiereEntreeUser=($pageActuelleUser-1)*$userParPage;
                 // La requête sql pour récupérer les messages de la page actuelle.
                 //$retour_messagesUser= User::findAll([$premiereEntreeUser,$userParPage],'username','ASC');
-                $retour_messagesUser = User::findAll([$premiereEntreeUser,$userParPage],"username");
+                $retour_messagesUser = User::findAll([$premiereEntreeUser,$userParPage],true,'username');
                 $teams = Team::FindAll();
                 $totalTeam = count($users);
                 $teamParPage=10;
@@ -62,7 +62,7 @@ class adminController
                 $premiereEntreeTeam=($pageActuelleTeam-1)*$teamParPage;
                 // La requête sql pour récupérer les messages de la page actuelle.
                 //$retour_messagesTeam= Team::findAll([$premiereEntreeTeam,$teamParPage],'teamName','ASC');
-                $retour_messagesTeam = Team::findAll([$premiereEntreeUser,$userParPage],'teamName');
+                $retour_messagesTeam = Team::findAll([$premiereEntreeUser,$userParPage],true,'teamName');
 
                 $view->assign('pageActuelleTeam', $pageActuelleTeam);
                 $view->assign('nombreDePagesTeam',$nombreDePagesTeam);
@@ -71,6 +71,9 @@ class adminController
                 $view->assign('pageActuelleUser', $pageActuelleUser);
                 $view->assign('nombreDePagesUser',$nombreDePagesUser);
                 $view->assign("users", $retour_messagesUser);
+
+                $signaledComment = Comment::findBy("signalment",1,"int");
+                $view->assign('signaledComment',$signaledComment);
 
             }else{
                 header("Location:".WEBROOT);

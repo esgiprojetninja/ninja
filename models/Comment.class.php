@@ -11,11 +11,13 @@ class Comment extends basesql
 	protected $comment;
 	protected $date_created;
   protected $id_author;
+	protected $signalment = 0;
 	protected $columns = [
 		"id",
 		"comment",
 		"date_created",
-    "id_author"
+    "id_author",
+		"signalment"
 	];
 
 	public function __construct(){
@@ -38,6 +40,11 @@ class Comment extends basesql
     return $this->id_author;
   }
 
+	public function getSignalment(){
+		return $this->signalment;
+	}
+
+
 
 	public function setId($id) {
 		$this->id = $id;
@@ -49,6 +56,10 @@ class Comment extends basesql
 
 	public function setDateCreated($date_created){
 		$this->date_created = $date_created;
+	}
+
+	public function setSignalment($signalment){
+		$this->signalment = $signalment;
 	}
 
   public function setIdAuthor($id_author){
