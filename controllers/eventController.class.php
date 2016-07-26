@@ -250,6 +250,28 @@ class eventController {
 
         $eventHasComment = eventHasComment::findBy("id_comment",$args[0],"int");
         $eventHasComment[0]->delete();
+        Helpers::getMessageAjaxForm("Comment Deleted !");
+      }
+    }
+
+    public function cancelSignalmentAction($args){
+      if(isset($args[0])){
+        $comment = Comment::findById($args[0]);
+        $comment->setSignalment(0);
+        $comment->save();
+
+        Helpers::getMessageAjaxForm("Comment's signalment canceled !");
+      }
+    }
+
+
+    public function signalCommentAction($args){
+      if(isset($args[0]) && User::isConnected()){
+          $comment = Comment::findById($args[0]);
+          $comment->setSignalment(1);
+          $comment->save();
+
+          Helpers::getMessageAjaxForm("Comment signaled !");
       }
     }
 

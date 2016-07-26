@@ -97,10 +97,19 @@
 
 .block-grey .teammates {
     display: flex;
+    flex-wrap: wrap;
 }
 
-.block-grey .teammates .teammate-box {
-    width: 25%;
+@media screen and (max-width: 800px) {
+    .block-grey .teammates .teammate-box {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .block-grey .teammates .teammate-box {
+        width: 100%;
+    }
 }
 
 .block-grey .teammates .teammate-box .profile-pic-box {

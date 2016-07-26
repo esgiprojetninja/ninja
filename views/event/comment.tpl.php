@@ -31,6 +31,7 @@
                               <div class="panel-body">
                                   <p><?= $comment->getIdComment(); ?></p>
                                   <?php if(($comment->getIdAuthor() == $_SESSION['user_id']) || User::isAdmin()): ?>
+                                    <div class="pull-right"><a href="#" class="ajax-link" data-url="event/signalComment/<?= $comment->getId(); ?>" data-comment="<?= $comment->getIdComment(); ?>" >Signal</a></div>
                                     <div class="pull-right"><a href="#" class="ajax-link" data-url="event/deleteComment/<?= $comment->getId(); ?>" >Delete</a></div>
                                   <?php endif; ?>
                               </div>
