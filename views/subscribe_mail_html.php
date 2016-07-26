@@ -37,12 +37,12 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
 									<td>
-										<img src="<?= WEBROOT; ?>public/img/email/volleyball.gif" alt="" width="90%" height="140" style="display: block; border-radius: 0px; border: 3px solid #555;" />
+										<img src="<?= WEBROOT; ?>public/img/email/footing.gif" alt="" width="90%" height="140" style="display: block; border-radius: 0px; border: 3px solid #555;" />
 									</td>
 								</tr>
 								<tr>
 									<td style="padding: 25px 0 0 50px;"> 
-										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600" href="<?= WEBROOT; ?>/feed/team"> Flux Team </a>
+										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600;" href="<?= WEBROOT; ?>/feed/team"> Flux Team </a>
 									</td>
 								</tr>
 							</table>
@@ -50,13 +50,14 @@
 					<td style="font-size: 0; line-height: 0;" width="20"> &nbsp; </td>
 						<td width="260" valign="top">
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td>
-									<img src="<?= WEBROOT; ?>public/img/email/volleyball.gif" alt="" width="90%" height="140" style="display: block; border-radius: 15px; border: 3px solid #555;" />
-								</td>
-							</tr>
 								<tr>
-									<td style="padding: 25px 0 0 50px;"> <a style="padding: 0px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600" href="<?= WEBROOT; ?>/feed/event"> Flux Event </a> 
+									<td>
+										<img src="<?= WEBROOT; ?>public/img/email/volleyball.gif" alt="" width="90%" height="140" style="display: block; border-radius: 0px; border: 3px solid #555;" />
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 25px 0 0 50px;"> 
+										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600;" href="<?= WEBROOT; ?>/feed/event"> Flux Event </a>
 									</td>
 								</tr>
 							</table>
