@@ -42,7 +42,7 @@
 								</tr>
 								<tr>
 									<td style="padding: 25px 0 0 50px;"> 
-										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600;" href="<?= WEBROOT; ?>/feed/team"> Flux Team </a>
+										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600;" href="<?= WEBROOT; ?>feed/team"> Flux Team </a>
 									</td>
 								</tr>
 							</table>
@@ -57,7 +57,7 @@
 								</tr>
 								<tr>
 									<td style="padding: 25px 0 0 50px;"> 
-										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600;" href="<?= WEBROOT; ?>/feed/event"> Flux Event </a>
+										<a style="padding: 15px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600;" href="<?= WEBROOT; ?>feed/event"> Flux Event </a>
 									</td>
 								</tr>
 							</table>
