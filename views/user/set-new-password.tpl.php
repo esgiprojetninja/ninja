@@ -5,6 +5,7 @@
         Pick a new password
       </div>
       <div class="panel-body">
+        <p>It has to contains between 8 and 12 characters, be alpha-numeric and contains upper and lowercase</p>
         <?php  
           $this->createForm($form, $formErrors);
         ?>
