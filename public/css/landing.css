@@ -77,20 +77,18 @@
     margin-bottom: 20px;
 }
 
-.block {
-    text-align: center;
-    background-color: #FFFFFF;
+.block-description {
+    background-color: rgba(50, 130, 140, 0.5);
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
-.block h2 {
-    margin-top: 0px;
+.block-description h2 {;
     margin-bottom: 50px;
     font-size: 3em;
 }
 
-.block p {
+.block-description p {
     font-size: 1.5em;
     margin-bottom: 20px;
 }
@@ -104,8 +102,8 @@
 }
 
 .block-grey .teammates .teammate-box .profile-pic-box {
-    width: 200px;
-    height: 200px;
+    width: 10vh;
+    height: 10vh;
     border-radius: 50%;
     border: 4px solid grey;
     box-shadow: 2px 2px 2px grey;
@@ -114,8 +112,8 @@
 }
 
 .block-grey .teammate-box .profile-pic-box img {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
 }
 
 .block-grey {
@@ -135,49 +133,24 @@
     margin-bottom: 20px;
 }
 
-.article {
-    display: flex;
-    margin-bottom: 50px;
+.article{
+    margin: 50px 0 50px 0;
 }
 
-.article .article-img {
-    width: 30%;
-}
-
-.article .article-img img {
+.article img {
     width: 100%;
+    border-radius: 10px;
+    border: 10px solid #fff;
+    box-sizing: border-box;
 }
 
-.article .content {
-    text-align: right;
-    padding: 15px;
-    width: 70%;
+.content {
+    padding-top: 80px;
+    width: 100%;
+    color: white;
 }
 
 .article .content h2 {
-    font-weight: 900;
-}
-
-.article-reverse {
-    display: flex;
-    margin-bottom: 50px;
-}
-
-.article-reverse .article-img {
-    width: 30%;
-}
-
-.article-reverse .article-img img {
-    width: 100%;
-}
-
-.article-reverse .content {
-    text-align: left;
-    padding: 30px;
-    width: 70%;
-}
-
-.article-reverse .content h2 {
     font-weight: 900;
 }
 

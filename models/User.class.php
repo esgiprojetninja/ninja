@@ -18,10 +18,10 @@ class User extends basesql
 	protected $zipcode =0;
 	protected $country = "";
 	protected $street = "";
-	protected $birthday= "0000-00-00";
+	protected $birthday;
 	protected $avatar = "";
 	protected $dateCreated;
-	protected $is_admin = 0;
+	protected $is_admin;
 	protected $discussionPivotTable = "discussions_users_pivot";
 
 	protected $link;
@@ -299,7 +299,7 @@ class User extends basesql
 		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;                                    // TCP port to connect to
 
-		$mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
+		$mail->setFrom('SportNation@WorldWide', 'Sport Nation - WorldWie');
 		$mail->addAddress($this->email);     // Add a recipient
 		//$mail->addReplyTo('info@example.com', 'Information');
 		//$mail->addCC('cc@example.com');
@@ -417,6 +417,8 @@ class User extends basesql
 					"first_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"First name", "required"=>0, "msgerror"=>"first_name", "value" => $this->getFirstName()
 					],
 					"last_name"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Last name", "required"=>0, "msgerror"=>"last_name", "value" => $this->getLastName()
+					],
+					"birthday"=>[ "type"=>"date", "class"=>"form-control js-date", "placeholder"=>"Birthday", "required"=>0, "msgerror"=>"date_format", "value" => $this->getBirthday()
 					],
 					"favorite_sports"=>[ "type"=>"select", "class"=>"form-control", "placeholder"=>"Favorite sports", "required"=>0, "msgerror"=>"favorite_sports", "value" => $this->getFavoriteSports()
 					],

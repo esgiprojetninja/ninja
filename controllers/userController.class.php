@@ -69,9 +69,16 @@ class userController
 					}
 
 					$user->setEmail(trim(strtolower($_POST["email"])));
-					$user->setUsername(trim(($_POST["username"])));
-					$user->setFirstName(trim(($_POST["first_name"])));
-					$user->setLastName(trim(($_POST["last_name"])));
+					$user->setUsername(trim($_POST["username"]));
+					$user->setFirstName(trim($_POST["first_name"]));
+					$user->setLastName(trim($_POST["last_name"]));
+                    $unformatedDate = date_parse_from_format("d/m/Y", $_POST["birthday"]);
+                    $birthday = new Datetime(
+                        $unformatedDate["year"] . "-" .
+                        $unformatedDate["month"] . "-" .
+                        $unformatedDate["day"]
+                    );
+                    $user->setBirthday($birthday->format("Y-m-d"));
 					$user->setPhoneNumber($_POST["phone_number"]);
 					$user->setCity($_POST['city']);
 					$user->setCountry($_POST['country']);

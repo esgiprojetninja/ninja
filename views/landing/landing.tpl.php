@@ -64,26 +64,31 @@
       </div>
     </div>
 
-    <div class="block">
-      <div class="article">
-        <div class="article-img">
+    <div class="block-description">
+      <div class="row article">
+        <div class="col-sm-offset-2 col-sm-4">
           <img src="<?= WEBROOT ?>public/img/sports/basket.jpg" alt="Basket" />
         </div>
-        <div class="content">
-          <h2>Ouvert à toutes et tous</h2>
-          <p>
-            Sport Nation ne fait pas de différences entre les sportifs. Organisez des match, des tournois, des ligues, créez et animez des communautés... Un monde de sport vous attend !
-          </p>
+        <div class="col-sm-4">
+            <div class="content">
+              <h2>Ouvert à toutes et tous</h2>
+              <p>
+                Sport Nation ne fait pas de différences entre les sportifs. Organisez des match, des tournois, des ligues, créez et animez des communautés... Un monde de sport vous attend !
+              </p>
+            </div>
         </div>
       </div>
-      <div class="article-reverse">
-        <div class="content">
-          <h2>Entièrement gratuit !</h2>
-          <p>
-            L'application et son versant mobile (à venir) sont et seront toujours entièrement gratuites.
-          </p>
+      <hr style="height: 2px; background-color: #fff; width: 40%; border: 0;">
+      <div class="row article">
+        <div class="col-sm-offset-2 col-sm-4">
+          <div class="content">
+            <h2>Entièrement gratuit !</h2>
+            <p>
+              L'application et son versant mobile (à venir) sont et seront toujours entièrement gratuites.
+            </p>
+          </div>
         </div>
-        <div class="article-img">
+        <div class="col-sm-4">
           <img src="<?= WEBROOT ?>public/img/sports/soccer_outdoor.jpg" alt="Soccer Outdoor" />
         </div>
       </div>
@@ -98,25 +103,25 @@
         <div class="teammate-box">
           <p>Gauthier Cornette</p>
           <div class="profile-pic-box">
-            <img alt="Gauthier" src="<?= WEBROOT ?>public/img/gauthier.jpg">
+            <img alt="Gauthier" class="img-responsive" src="<?= WEBROOT ?>public/img/creators/gauthier.jpg">
           </div>
         </div>
         <div class="teammate-box">
           <p>Nicolas Cherridi</p>
           <div class="profile-pic-box">
-            <img alt="Gauthier" src="<?= WEBROOT ?>public/img/nicolas.jpg">
+            <img alt="Nicolas" class="img-responsive" src="<?= WEBROOT ?>public/img/creators/nicolas.jpg">
           </div>
         </div>
         <div class="teammate-box">
           <p>Renaud Bellec</p>
           <div class="profile-pic-box">
-            <img alt="Gauthier" src="<?= WEBROOT ?>public/img/renaud.jpg">
+            <img alt="Renaud" class="img" src="<?= WEBROOT ?>public/img/creators/renaud.jpg">
           </div>
         </div>
         <div class="teammate-box">
           <p>Romain Lambot</p>
           <div class="profile-pic-box">
-            <img alt="Gauthier" src="<?= WEBROOT ?>public/img/romain.jpg">
+            <img alt="Romain" class="img-responsive" src="<?= WEBROOT ?>public/img/creators/romain.jpg">
           </div>
         </div>
       </div>
