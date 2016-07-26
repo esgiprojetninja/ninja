@@ -44,7 +44,7 @@ class inboxController
                     $discussion_exists = false;
                     foreach ($discussions as $discussion) {
                         $user_ids = split(",", $discussion["people"]);
-                        if(in_array($userTarget->getId(), $user_ids)) {
+                        if(in_array($userTarget[0]->getId(), $user_ids)) {
                             $discussion_exists = true;
                             break;
                         }
@@ -57,7 +57,7 @@ class inboxController
                     } else {
                         $discussion = new Discussion();
                         $discussion->save();
-                        $discussion->addUser(intval($userTarget->getId()));
+                        $discussion->addUser(intval($userTarget[0]->getId()));
                         $discussion->addUser(intval($_SESSION["user_id"]));
                         $discussion->savePeople();
                         $discussion->save();

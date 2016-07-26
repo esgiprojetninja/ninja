@@ -242,7 +242,6 @@ $(function ($) {
 $(function ($) {
     getDiscussions();
     $(".js-create-discussion").submit(function (ev) {
-        console.debug("chatte");
         getDiscussions();
     });
     var refreshMessagesInterval;
