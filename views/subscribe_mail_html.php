@@ -13,7 +13,7 @@
 <body style="margin: 0; padding: 0; font-family: sans-serif, Tahoma;">
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
 		<tr>
-			<td align="center" bgcolor="#6C6599" style="padding: 40px 40 30px 0; border-bottom: 2px solid #888;"> 
+			<td align="center" bgcolor="#6C6599" style="padding: 50px 0 30px 0; border-bottom: 2px solid #888;"> 
 				<h3 style="color: #fff;"> Welcome </h2> 
 			</td>
 		</tr>
@@ -22,7 +22,7 @@
 				
 					<img src="<?= WEBROOT; ?>public/img/email/logo.gif" alt="Profil activation" width="300" height="230" style="display: block; margin-bottom: 40px;" >
 					<p style="font-weight: 700; margin-bottom: 40px;"> To confirm your account, click the button, please</p>
-				<a style="padding: 15px; border: 1px solid #555; background-color: #328396; border-radius: 10px; color: #fff; text-decoration: none; font-weight: 600" href="<?= User::getEmailLink("subscribe"); ?>""> Confirm your profil </a>
+				<a style="padding: 15px; border: 1px solid #555; background-color: #328396; border-radius: 10px; color: #fff; text-decoration: none; font-weight: 600" href="<?= User::getEmailLink("subscribe"); ?>"> Confirm your profil </a>
 			</td>
 		</tr>
 		<tr>

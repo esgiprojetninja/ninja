@@ -53,7 +53,7 @@ class userController
 						$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
 						if($movingFile){
 							$v->assign("success","Changes has been saved");
-							$user[0]->setAvatar($path);
+							$user->setAvatar($path);
 							//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
 							if($dossier = opendir('public/img/users')){
 								while(false !== ($fichier = readdir($dossier))){
