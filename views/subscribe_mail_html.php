@@ -5,23 +5,33 @@
  
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8; image/gif" />
-	<title> SPORT NATION | WORLD WIDE </title>
+	<title> WELCOME | SPORT NATION | WORLD WIDE </title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
-<body style="margin: 0; padding: 0;">
+<body style="margin: 0; padding: 0; font-family: sans-serif, Tahoma;">
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
 		<tr>
-			<td align="center" bgcolor="#8BC34A" style="padding: 40px 0 30px 0;">
-				<a href="<?= User::getEmailLink("subscribe"); ?>">
-					<img src="<?= WEBROOT; ?>public/img/email/logo.gif" alt="Email Activation World Nation" width="300" height="230" style="display: block;" />
-				</a>
-				<p style="padding: 40px 0 0 40px"> FOR ACTIVATE YOUR ACCOUNT CLIC ON LOGO </p>
+			<td align="center" bgcolor="#6C6599" style="padding: 40px 40 30px 0; border-bottom: 2px solid #888;"> 
+				<h3 style="color: #fff;"> Welcome </h2> 
 			</td>
 		</tr>
 		<tr>
-			<td bgcolor="#eee" style="padding: 40px 30px 40px 30px;">
+			<td align="center" bgcolor="#eee" style="padding: 40px 0 40px 0;">
+				
+					<img src="<?= WEBROOT; ?>public/img/email/logo.gif" alt="Profil activation" width="300" height="230" style="display: block; border-top: 1px solid black;" >
+				
+				<a style="padding: 15px; border: 1px solid #555; background-color: #328396; border-radius: 10px; color: #fff; text-decoration: none;" href="<?= User::getEmailLink("subscribe"); ?>"> Confirm your profil </a>;
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#eee" style="padding: 20px 30px 40px 20px; border-top: 2px solid #888;">
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<img src="<?= WEBROOT; ?>public/img/email/flux.gif" alt="flux rss" width="300" height="230" style="display: block; border-top: 1px solid black;" />
+						<h5 style="color: #aaa;"> Our Flux Rss </h5>
+
+					</tr>
 					<tr>
 						<td width="260" valign="top">
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -31,7 +41,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td style="padding: 25px 0 0 50px;"> TEAM LISTE </td>
+									<td style="padding: 25px 0 0 50px;"> Flux Team </td>
 								</tr>
 							</table>
 						</td>
@@ -44,7 +54,7 @@
 								</td>
 							</tr>
 								<tr>
-									<td style="padding: 25px 0 0 50px;"> EVENT LISTE </td>
+									<td style="padding: 25px 0 0 50px;"> Flux Event </td>
 								</tr>
 							</table>
 						</td>

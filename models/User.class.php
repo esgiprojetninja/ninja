@@ -292,14 +292,14 @@ class User extends basesql
 		$mail = new PHPMailer();
 
 		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->Host = 'ns0.ovh.com'; 						  // Specify main and backup SMTP servers
+		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true;                               // Enable SMTP authentication
-		$mail->Username = 'postmaster@xlwlx.fr';                 // SMTP username
-		$mail->Password = 'p0stm4st3r';                           // SMTP password
+		$mail->Username = 'testmail3adw@gmail.com';                 // SMTP username
+		$mail->Password = 'test3ADW';                           // SMTP password
 		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;                                    // TCP port to connect to
 
-		$mail->setFrom('SportNation@WorldWide', 'Sport Nation Babe');
+		$mail->setFrom('SportNation@WorldWide', 'Sport Nation - WorldWie');
 		$mail->addAddress($this->email);     // Add a recipient
 		//$mail->addReplyTo('info@example.com', 'Information');
 		//$mail->addCC('cc@example.com');
