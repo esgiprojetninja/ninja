@@ -16,9 +16,11 @@ class userController
 			}
       $v = new View();
       $teams = TeamHasUser::findBy("idUser",$args[0],"int");
+			$events = Event::findAll();
       $v->setView("user/show.tpl");
       $v->assign("user", $user);
       $v->assign("teams",$teams);
+      $v->assign("events",$events);
       $v->assign("idUser",$args[0]);
 		}else{
 			header('Location:' . WEBROOT . 'user/login');
