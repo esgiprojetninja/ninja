@@ -56,7 +56,8 @@
 								</td>
 							</tr>
 								<tr>
-									<td style="padding: 25px 0 0 50px;"> <a style="padding: 0px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600" href=href="<?= WEBROOT; ?>/feed/event"> Flux Event </a> </td>
+									<td style="padding: 25px 0 0 50px;"> <a style="padding: 0px; border-bottom: 2px solid #555; background-color: #C4770A; border-radius: 2px; color: #fff; text-decoration: none; font-weight: 600" href=href="<?= WEBROOT; ?>/feed/event"> Flux Event </a> 
+									</td>
 								</tr>
 							</table>
 						</td>
@@ -69,7 +70,7 @@
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>
 						<td align="left">
-    					    <p style="color: #fff;">
+    					    <p style="color: #fff; padding-right: 20px;">
           						Copyrigth Sports Nation© | All rights reserved
         					</p>
 						</td>
