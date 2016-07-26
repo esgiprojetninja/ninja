@@ -129,6 +129,7 @@ $(function ($) {
           data.idUser = $(this).data("user");
           data.idTeam = $(this).data("team");
           data.type = $(this).data("type");
+          data.comment = $(this).data("comment");
 
           action = $(this).data("url");
           action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
@@ -558,3 +559,46 @@ $(function ($) {
         }
     });
 });
+
+
+
+/******************
+    USER RATE
+******************/
+
+
+$(function ($) {
+    getUserRate();
+    $(".js-user-vote").click(function (ev) {
+        rateUser(
+            $(ev.target).data("vote"),
+            $(ev.target).parent().data("userid")
+        );
+    });
+});
+
+function getUserRate() {
+    var userId = $(".js-rate-user").data("userid");
+    $.ajax({
+        method: "GET",
+        url: webrootJs + "rate/getRate/" + userId
+    }).then(function (data) {
+        $(".js-rate-user").html(data.rate);
+    });
+}
+
+function rateUser (vote, userId) {
+    var rate;
+    if (vote == "up") {
+        rate = 1;
+    } else if (vote == "down") {
+        rate = 0;
+    }
+
+    $.ajax({
+        method: "GET",
+        url: webrootJs + "rate/rateUser/" + userId + "/" + rate
+    }).then(function (data) {
+        getUserRate();
+    });
+}
