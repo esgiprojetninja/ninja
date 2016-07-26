@@ -39,6 +39,7 @@
                 <?php endif; ?>
                 <li><a href="#<?= WEBROOT;?>landing/legals">Legals</a></li>
                 <li><a href="<?= WEBROOT; ?>landing/plan">Site plan</a></li>
+                <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
             </ul>
         </div>
         <div class="item dropdown header-burger icon">

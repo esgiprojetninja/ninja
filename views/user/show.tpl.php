@@ -90,21 +90,41 @@
         </div>
         <div class="panel panel-primary2">
             <div class="panel-heading"><h3 class="center header-li">Others</h3></div>
-            <div class="panel-body">
+            <div class="col-sm-6 panel-body">
                 <ul class="header-ul">
                     <?php if(!empty($teams)){ ?>
-                        <li>
-                        <span class="fa fa-users"> Groups</span>
+                        <li><span class="fa fa-users"> Groups</span></li>
                         <?php
                             foreach($teams as $team){
                                 $Team = Team::findById($team->getIdTeam());
                                 echo '
                                         <li class="li-list">
-                                            <span class="form-content"><a href="'.WEBROOT.'team/show/'.$Team->getId().'">'.$Team->getTeamName().'</span>
+                                            <span class="form-content"><a href="'.WEBROOT.'team/show/'.$Team->getId().'">'.$Team->getTeamName().'</a></span>
                                         </li>
                                     ';
                             }
                         ?>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div class="col-sm-6 panel-body">
+                <ul class="header-ul">
+                    <?php if(!empty($events)){ ?>
+                        <li><span class="fa fa-calendar-check-o"> Events</span></li>
+                            <?php
+                            foreach($events as $event){
+                                $users = $event->gatherUsers();
+                                foreach ($users as $user){
+                                    if ($user['id'] == $_SESSION['user_id']){
+                                        echo '
+                                        <li class="li-list">
+                                            <span class="form-content">'.$event->getName().'</span>
+                                        </li>
+                                    ';
+                                    }
+                                }
+                            }
+                            ?>
                         </li>
                     <?php } ?>
                 </ul>
