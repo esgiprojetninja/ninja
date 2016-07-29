@@ -120,6 +120,7 @@ class userController
 						$user[0]->setIsActive(1);
 						$user[0]->save();
 						$view->assign("activate_msg", "<span class='info'> Your account is now activated </span>");
+						header('Location:'.WEBROOT.'user/login');
 						session_destroy();
 					}
 				}
@@ -139,15 +140,12 @@ class userController
 		$view->setView("user/subscribe.tpl");
 
 		$subErrors = [];
-		$logErrors = [];
 
 		$user = new User();
 
 		$formSubscribe = $user->getForm("subscription");
 		$view->assign("formSubscribe", $formSubscribe);
 
-		$formLogin = $user->getForm("login");
-		$view->assign("formLogin", $formLogin);
 		$validator = new Validator();
 
 		if(isset($_POST["form-type"])) {
@@ -168,7 +166,6 @@ class userController
 			}
 		}
 		$view->assign("subErrors", $subErrors);
-		$view->assign("logErrors", $logErrors);
 	}
 
 	public function loginAction () {
@@ -178,11 +175,7 @@ class userController
 		$view = new View();
 		$view->setView("user/login.tpl");
 
-		$subErrors = [];
 		$logErrors = [];
-
-		$formSubscribe = User::getForm("subscription");
-		$view->assign("formSubscribe", $formSubscribe);
 
 		$formLogin = User::getForm("login");
 		$view->assign("formLogin", $formLogin);
@@ -207,8 +200,6 @@ class userController
 				$view->assign("error_message", "<span class='info'> Couldn't find you :( </span>");
 			}
 		}
-
-		$view->assign("subErrors", $subErrors);
 		$view->assign("logErrors", $logErrors);
 	}
 

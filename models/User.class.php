@@ -390,8 +390,8 @@ class User extends basesql
 		}
 		else if ($formType == "login") {
 			$form = [
-				"title" => "Already a sport citizen ?",
-				"buttonTxt" => "Sign In",
+				"title" => "Connexion",
+				"buttonTxt" => "Connexion",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/login"],
 				"struct"=>[
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email"

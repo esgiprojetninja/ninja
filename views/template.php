@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/global.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/panel.css">
     <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/button.css">
+    <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/landing.css">
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'> -->
 
     <!-- scripts -->
@@ -19,6 +20,7 @@
 </head>
 
 <body>
+  <?php if(User::isConnected()): ?>
     <header>
         <a href="<?= WEBROOT; ?>"><img src="<?= WEBROOT;?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px"></a>
         <?php if(User::isConnected()):?>
@@ -37,9 +39,8 @@
                 <?php if(User::isAdmin()):  ?>
                     <li><a href="<?= WEBROOT;?>admin/global">Admin</a></li>
                 <?php endif; ?>
-                <li><a href="#<?= WEBROOT;?>landing/legals">Legals</a></li>
+                <li><a href="<?= WEBROOT;?>landing/legals">Legals</a></li>
                 <li><a href="<?= WEBROOT; ?>landing/plan">Site plan</a></li>
-                <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
             </ul>
         </div>
         <div class="item dropdown header-burger icon">
@@ -48,6 +49,21 @@
             <?php endif; ?>
         </div>
     </header>
+  <?php else: ?>
+    <header class="header">
+      <div class="img-header">
+        <a href="<?= WEBROOT; ?>" ><img alt="Sport Nation Logo" src="<?= WEBROOT ?>public/img/logo_SNWW_light.png">
+      </div>
+      <div class="actions">
+        <?php if (!User::isConnected()): ?>
+          <p>
+            <a href="<?= WEBROOT ?>user/login" type="button" class="btn btn-success">Se connecter</a>
+            <a href="<?= WEBROOT ?>user/subscribe" type="button" class="btn btn-success">S'inscrire</a>
+          </p>
+        <?php endif; ?>
+      </div>
+    </header>
+  <?php endif; ?>
     <div class="app-content">
         <?php if (User::isConnected()): ?>
           <div class="sidebar">

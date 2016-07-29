@@ -1,0 +1,10 @@
+{
+    "name": "gorfy/public",
+    "authors": [
+        {
+            "name": "GoRFy",
+            "email": "lambot.rom@gmail.com"
+        }
+    ],
+    "require": {}
+}
