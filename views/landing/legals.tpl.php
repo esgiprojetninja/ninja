@@ -1,33 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>SPORT NATION</title>
-  <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/grid.css">
-  <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/global.css">
-  <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/panel.css">
-  <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/button.css">
-  <link rel="stylesheet" type="text/css" href="<?= WEBROOT;?>public/css/landing.css">
-</head>
-<body>
 
-      <header class="header">
-        <div class="img-header">
-          <img alt="Sport Nation Logo" src="<?= WEBROOT ?>public/img/logo_SNWW_light.png">
-        </div>
-        <div class="actions">
-          <?php if (!User::isConnected()): ?>
-            <p>
-              <a href="<?= WEBROOT ?>user/login" type="button" class="btn btn-success">Se connecter</a>
-              <a href="<?= WEBROOT ?>user/subscribe" type="button" class="btn btn-success">S'inscrire</a>
-            </p>
-          <?php endif; ?>
-        </div>
-      </header>
 <div class="slogan-box">
     <h1>Mentions Légales</h1>
-    <a href="<?= WEBROOT ?>landing/welcome">Retour</a>
-
                     <h2>1. Présentation de notre site web</h2>
 
                     <p>Conformément à la loi n° 2004-2005 du 21 juin 2004 pour la confiance dans l'économie numérique, notre site web créé par <a href="http://www.ninja.xlwlx.fr" title="ESGI - 3DW - Groupe 9">ESGI - 3DW - Groupe 9</a>, propriétaire du site <a href="http://www.ninja.xlwlx.fr" title="ESGI - 3DW - Groupe 9">www.ninja.xlwlx.fr</a>, met à disposition du public les informations concernant notre entreprise.<br />
@@ -79,5 +52,3 @@
 
                     <p>Soumis au droit français, le site web <a href="http://www.ninja.xlwlx.fr" title="ESGI  - 3DW - Groupe 9">www.ninja.xlwlx.fr</a> est encadré par la loi n° 2004-2005 du 21 juin 2004 pour la confiance dans l'économie numérique, l’article L.335-2 du Code de la Propriété Intellectuelle et la loi « informatique et libertés » du 6 janvier 1978 modifiée en 2004.</p>
 </div>
-  </body>
-</html>

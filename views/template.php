@@ -71,6 +71,9 @@
         <?php if (User::isConnected()): ?>
           <div class="sidebar">
             <div class="items-up items">
+              <a href="<?= WEBROOT; ?>landing/welcome" class="item">
+                <span class="fa fa-question-circle-o"></span>
+              </a>
               <a href="<?= WEBROOT; ?>user/list/" class="item">
                 <span class="fa fa-book"></span>
               </a>
@@ -81,7 +84,7 @@
                 <span class="fa fa-calendar-check-o"></span>
               </a>
               <a href="<?= WEBROOT; ?>contact/create" class="item">
-                <span class="fa fa-question-circle-o"></span>
+                <span class="fa fa-at"></span>
               </a>
             </div>
             <div class="items-down items">
