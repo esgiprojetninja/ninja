@@ -429,7 +429,7 @@ $(function ($) {
                         for (var user in users) {
                             $("#search-content-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary2">' +
-                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'user/show/' + users[user].id + '"> User ' + users[user].username + '</a></h3></div>' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'user/show/' + users[user].id + '"> ' + users[user].username + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
@@ -437,16 +437,12 @@ $(function ($) {
                                 '                        <span class="form-content">' + users[user].email + '</span>' +
                                 '                            </li>' +
                                 '                            <li class="li-list">' +
-                                '                            <span class="form-info">Country : </span>' +
-                                '                        <span class="form-content">' + users[user].country + '</span>' +
-                                '                            </li>' +
-                                '                            <li class="li-list">' +
-                                '                            <span class="form-info">City : </span>' +
+                                '                            <span class="form-info">Ville : </span>' +
                                 '                        <span class="form-content">' + users[user].city  + '</span>' +
                                 '                            </li>' +
                                 '                            <li class="li-list">' +
-                                '                            <span class="form-info">Birthday : </span>' +
-                                '                        <span class="form-content">' + users[user].birthday  + '</span>' +
+                                '                            <span class="form-info">Age : </span>' +
+                                '                        <span class="form-content">' + getAge(users[user].birthday)  + '</span>' +
                                 '                            </li>' +
                                 '                            </ul>' +
                                 '                            </div>' +
@@ -532,44 +528,17 @@ $(function ($) {
 });
 
 
-
-/******************
-    USER RATE
-******************/
-
-
-$(function ($) {
-    getUserRate();
-    $(".js-user-vote").click(function (ev) {
-        rateUser(
-            $(ev.target).data("vote"),
-            $(ev.target).parent().data("userid")
-        );
-    });
-});
-
-function getUserRate() {
-    var userId = $(".js-rate-user").data("userid");
-    $.ajax({
-        method: "GET",
-        url: webrootJs + "rate/getRate/" + userId
-    }).then(function (data) {
-        $(".js-rate-user").html(data.rate);
-    });
-}
-
-function rateUser (vote, userId) {
-    var rate;
-    if (vote == "up") {
-        rate = 1;
-    } else if (vote == "down") {
-        rate = 0;
+function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
     }
-
-    $.ajax({
-        method: "GET",
-        url: webrootJs + "rate/rateUser/" + userId + "/" + rate
-    }).then(function (data) {
-        getUserRate();
-    });
+    if(!isNaN(age)){
+      return age+" ans";
+    }else{
+      return "";
+    }
 }

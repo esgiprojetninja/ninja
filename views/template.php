@@ -80,11 +80,8 @@
               <a href="<?= WEBROOT; ?>event/list" class="item">
                 <span class="fa fa-calendar-check-o"></span>
               </a>
-              <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
-                <span class="fa fa-envelope-o"></span>
-              </a>
-              <a href="<?= WEBROOT; ?>rss/list" class="item">
-                <span class="fa fa-rss-square"></span>
+              <a href="<?= WEBROOT; ?>contact/create" class="item">
+                <span class="fa fa-question-circle-o"></span>
               </a>
             </div>
             <div class="items-down items">

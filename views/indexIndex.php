@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-primary2">
-            <div class="panel-heading">10 last subscribers</div>
+            <div class="panel-heading">10 derniers inscris</div>
             <div class="panel-body">
                 <?php
                     if($users == null){
@@ -18,7 +18,7 @@
     </div>
     <div class="col-sm-6">
         <div class="panel panel-success">
-            <div class="panel-heading">10 last teams</div>
+            <div class="panel-heading">10 dernières équipes</div>
             <div class="panel-body">
                 <?php
                     if($teams == null){
@@ -35,7 +35,7 @@
     </div>
     <div class="col-sm-6">
         <div class="panel panel-warning">
-            <div class="panel-heading">10 last events</div>
+            <div class="panel-heading">10 derniers évènements</div>
             <div class="panel-body">
               <?php
                   if($events == null){

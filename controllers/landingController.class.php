@@ -15,4 +15,5 @@ class landingController {
     $view = new View();
     $view->setView("landing/plan.tpl", "empty");
   }
+
 }

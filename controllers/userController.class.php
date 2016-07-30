@@ -365,9 +365,15 @@ class userController
 	{
 		header('Content-Type: application/json');
 		$args1 = $args[0];
-		$users = User::findByLikeArray($args1);
+		$columns = ["username","first_name","last_name","city","email","phone_number"];
+		$users = User::findByLikeArray($columns,$args1);
 
 		echo json_encode($users);
+	}
+
+	public function contactAction ($args) {
+		$view = new View();
+		$view->setView("landing/contact.tpl", "empty");
 	}
 
 }

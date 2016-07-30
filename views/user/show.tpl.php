@@ -58,18 +58,6 @@ $user = $this->data["user"];
                   <span class="form-info">Ville : </span>
                   <span class="form-content"><?php echo $user->getCity(); ?></span>
                 </li>
-                <?php if ($user->getId() != $_SESSION["user_id"]): ?>
-                  <li class="li-list">
-                    <div class="">
-                      <span class="form-info">Rate : </span>
-                      <span class="form-content js-rate-user" data-userid="<?= $user->getId(); ?>"></span>
-                    </div>
-                    <div class="" data-userid="<?= $user->getId(); ?>">
-                      <button type="button" class="btn btn-primary js-user-vote" data-vote="up">+</button>
-                      <button type="button" class="btn btn-primary js-user-vote" data-vote="down">-</button>
-                    </div>
-                  </li>
-                <?php endif; ?>
               </ul>
             </div>
           </div>

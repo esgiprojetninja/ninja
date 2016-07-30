@@ -38,8 +38,6 @@ class User extends basesql
 		"birthday",
 		"dateCreated"
 	];
-
-
 	/**
 	* @param array
 	* Init new user
