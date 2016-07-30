@@ -11,7 +11,7 @@
           "struct" => [
             "Sujet"=>[ "type"=>"text", "class"=>"form-control", "required"=>1,"placeholder"=>"Sujet", "msgerror"=>"useless"],
             "Email"=>["type"=>"email","class"=>"form-control", "required"=>1,"placeholder"=>"Email",  "msgerror"=>"email"],
-            "message"=>[ "type"=>"text", "class"=>"form-control", "required"=>1,"placeholder"=>"Message",  "msgerror"=>"useless"],
+            "message"=>[ "type"=>"textarea", "class"=>"form-control ", "required"=>1,"placeholder"=>"Message",  "msgerror"=>"useless"],
             "form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
             ]
           ]

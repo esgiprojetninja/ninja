@@ -40,6 +40,17 @@
 				<label for="<?= $name ?>"><?= $option["placeholder"] ?> : </label>
 			<?php endif; ?>
 
+			<?php if($option["type"] == "textarea"): ?>
+				<div class="input-grp">
+					<textarea name="<?php echo $name ?>"
+						 type="<?php echo $option["type"] ;?>"
+					class="<?php echo $option["class"] ;?>"
+					placeholder="<?php echo $option["placeholder"] ;?>"
+						<?php echo ($option["required"])?"required='required'":""?>
+						rows="10" cols="70"></textarea>
+				</div>
+			<?php else: ?>
+
 			<div class="input-grp">
 				<input name="<?php echo $name ?>"
 						type="<?php echo $option["type"] ;?>"
@@ -52,6 +63,7 @@
 
 			</div>
 
+			<?php endif; ?>
 
 	<?php endforeach;?>
 

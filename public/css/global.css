@@ -423,11 +423,12 @@ a{
 
 .vertical-center{
   min-height: 100%;
-  min-height: 80vh;
+  min-height: 70vh;
 
   display: flex;
   align-items: center;
 }
+
 
 /**********************
     -- PHP var dump --

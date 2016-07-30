@@ -1,9 +1,8 @@
 <div class="row">
-  <div class="col-sm-4 col-sm-offset-2">
+  <div class="col-sm-4 col-sm-offset-2 vertical-center">
     <div class="panel panel-primary">
       <div class="panel-body">
         <div class="row">
-
           <div class="col-sm-12">
             <?php
               $this->createForm($formLogin, $logErrors);
@@ -18,10 +17,16 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-4 col-sm-offet-2 ">
+  <div class="col-sm-4 col-sm-offet-2 vertical-center">
     <div class="panel panel-primary">
+      <div clas="panel-body">
+        <div class="row">
+          <div class="col-sm-12">
           <h1>Toujours pas inscris ?</h1>
           <h3>Si vous ne possédez toujours pas de compte, <a href="<?= WEBROOT; ?>user/subscribe">inscrivez vous ici</a>.</h3>
+</div>
+</div>
+        </div>
     </div>
 
   </div>
