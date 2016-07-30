@@ -263,11 +263,8 @@ class teamController
 	public function searchAction($args)
 	{
 		header('Content-Type: application/json');
-		$args = implode(",", $args);
-		$args = explode(",", $args);
 		$args1 = $args[0];
-		$args2 = $args[1];
-		$teams = Team::findByLikeArray($args1,$args2);
+		$teams = Team::findByLikeArray($args1);
 		echo json_encode($teams);
 	}
 

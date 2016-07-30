@@ -30,7 +30,9 @@
 	?>
 >
 
-	<h1 style="color: black"><?= $form["title"]; ?></h1>
+	<?php if(isset($form['title'])): ?>
+		<h1 style="color: black"><?= $form["title"]; ?></h1>
+	<?php endif; ?>
 
 	<?php foreach ($form["struct"] as $name => $option ) :?>
 

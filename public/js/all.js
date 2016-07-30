@@ -378,41 +378,13 @@ $(function ($) {
     });
     $("#search-content").keyup(function(){
         var search = $('#search-content').val();
-        var select = $('#select-criteria').val();
-
-        //Valeurs des options du select
-        if (page == "team"){
-            if (select == 1){
-                var column = "teamName";
-            } else if (select == 2){
-                var column = "sports";
-            } else {
-                var column = "description";
-            }
-        } if (page == "user") {
-            if (select == 1){
-                var column = "username";
-            } else if (select == 2){
-                var column = "country";
-            } else {
-                var column = "city";
-            }
-        } if (page == "event") {
-            if (select == 1){
-                var column = "name";
-            } else if (select == 2){
-                var column = "owner_name";
-            } else if (select == 3){
-                var column = "tags";
-            }
-        }
-        var arraySearch = [column,search];
+        console.log("t");
         if (search != "") {
             $("#all-content").hide();
             $("#pages").hide();
             if (page == "team"){
                 //Recherche Team
-                $.getJSON(webrootJs+"team/search/"+arraySearch, function(teams) {
+                $.getJSON(webrootJs+"team/search/"+search, function(teams) {
                     if (teams != null) {
                         $("#search-content-results").empty();
                         for (var team in teams) {
@@ -451,7 +423,7 @@ $(function ($) {
                 });
             } if (page == "user") {
                 //Recherche User
-                $.getJSON(webrootJs+"user/search/"+arraySearch, function(users) {
+                $.getJSON(webrootJs+"user/search/"+search, function(users) {
                     if (users != null) {
                         $("#search-content-results").empty();
                         for (var user in users) {
@@ -490,7 +462,7 @@ $(function ($) {
                     }
                 });
             } if(page == "event") {
-                $.getJSON(webrootJs+"event/search/"+arraySearch, function(events) {
+                $.getJSON(webrootJs+"event/search/"+search, function(events) {
                     if (events != null) {
                         $("#search-content-results").empty();
                         $.each(events, function (key, data) {

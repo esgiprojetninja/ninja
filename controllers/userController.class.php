@@ -76,10 +76,6 @@ class userController
 					$user->setLastName(trim(($_POST["last_name"])));
 					$user->setPhoneNumber($_POST["phone_number"]);
 					$user->setCity($_POST['city']);
-					$user->setCountry($_POST['country']);
-					$user->setStreet($_POST['street']);
-					$user->setZipcode($_POST['zipcode']);
-
 					$user->save();
 				}
 			}
@@ -368,11 +364,8 @@ class userController
 	public function searchAction($args)
 	{
 		header('Content-Type: application/json');
-		$args = implode(",", $args);
-		$args = explode(",", $args);
 		$args1 = $args[0];
-		$args2 = $args[1];
-		$users = User::findByLikeArray($args1,$args2);
+		$users = User::findByLikeArray($args1);
 
 		echo json_encode($users);
 	}

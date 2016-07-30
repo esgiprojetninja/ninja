@@ -22,6 +22,19 @@
 <body>
   <?php if(User::isConnected()): ?>
     <header>
+      <div class="dropdown header-burger icon">
+          <span class="icon-menu fa fa-bars"></span>
+          <ul class="dropdown-menu right">
+              <?php if(User::isAdmin()):  ?>
+                  <li><a href="<?= WEBROOT;?>admin/global">Admin</a></li>
+              <?php endif; ?>
+              <li><a href="<?= WEBROOT;?>landing/legals">Legals</a></li>
+              <li><a href="<?= WEBROOT; ?>landing/plan">Site plan</a></li>
+              <?php if(User::isConnected()):  ?>
+                  <li><a href="<?= WEBROOT;?>user/logout">Se déconnecter</a></li>
+              <?php endif; ?>
+          </ul>
+      </div>
         <a href="<?= WEBROOT; ?>"><img src="<?= WEBROOT;?>public/img/logo_SNWW_light.png" alt="Play Now" class="app-logo" height="80px"></a>
         <?php if(User::isConnected()):?>
         <div class="item dropdown header-burger icon" id="popin-notifications">
@@ -33,16 +46,6 @@
             </a>
        </div>
      <?php endif; ?>
-        <div class="dropdown header-burger icon">
-            <span class="icon-menu fa fa-bars"></span>
-            <ul class="dropdown-menu right">
-                <?php if(User::isAdmin()):  ?>
-                    <li><a href="<?= WEBROOT;?>admin/global">Admin</a></li>
-                <?php endif; ?>
-                <li><a href="<?= WEBROOT;?>landing/legals">Legals</a></li>
-                <li><a href="<?= WEBROOT; ?>landing/plan">Site plan</a></li>
-            </ul>
-        </div>
         <div class="item dropdown header-burger icon">
             <?php if (User::isConnected()): ?>
                 <span>Bonjour <?= $_SESSION["username"] ?></span>
