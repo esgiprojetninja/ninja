@@ -15,7 +15,7 @@ class User extends basesql
 	protected $phone_number = 0;
 	protected $favorite_sports = "";
 	protected $city = "";
-	protected $birthday;
+	protected $birthday= "0000-00-00";
 	protected $avatar = "";
 	protected $dateCreated;
 	protected $is_admin;
@@ -332,13 +332,13 @@ class User extends basesql
 		$form = [];
 		if ($formType == "subscription") {
 			$form = [
-				"title" => "Want to join the Nation ?",
-				"buttonTxt" => "Sign Up",
+				"title" => "Envie de rejoindre la Nation ?",
+				"buttonTxt" => "S'incrire",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/subscribe"],
 				"struct" => [
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"new_email"
 					],
-					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Username", "required"=>1, "msgerror"=>"new_username"
+					"username"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Pseudo", "required"=>1, "msgerror"=>"new_username"
 					],
 					"form-type" => ["type" => "hidden", "value" => "subscription", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]
@@ -347,13 +347,13 @@ class User extends basesql
 		}
 		else if ($formType == "activation") {
 			$form = [
-				"title" => "Welcome back ! Please choose a password to activate your account.",
+				"title" => "Choisissez un mot de passe pour valider votre compte !",
 				"buttonTxt" => "Activate",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/activate?email=".$this->getEmail()."&token=".$this->getToken()],
 				"struct" => [
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password"
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Mot de passe", "required"=>1, "msgerror"=>"password"
 					],
-					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirm your password", "required"=>1, "msgerror"=>"confirm_password"
+					"confpassword"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Confirmez mot de passe", "required"=>1, "msgerror"=>"confirm_password"
 					],
 					"form-type" => ["type" => "hidden", "value" => "activation", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]
@@ -368,7 +368,7 @@ class User extends basesql
 				"struct"=>[
 					"email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email", "required"=>1, "msgerror"=>"email"
 					],
-					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Password", "required"=>1, "msgerror"=>"password"
+					"password"=>[ "type"=>"password", "class"=>"form-control", "placeholder"=>"Mot de passe", "required"=>1, "msgerror"=>"password"
 					],
 					"form-type" => ["type" => "hidden", "value" => "login", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]
@@ -420,11 +420,11 @@ class User extends basesql
 			];
 		} else if ($formType == "resetPassword") {
 			$form = [
-				"title" => "Reset password",
-				"buttonTxt" => "Confirm",
+				"title" => "Mot de passe perdu ?",
+				"buttonTxt" => "Récupérez mon mot de passe",
 				"options" => ["method" => "POST", "action" => WEBROOT . "user/resetPassword/", "enctype"=>"multipart/form-data"],
 				"struct"=>[
-					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Email address", "required"=>1, "msgerror"=>"email_exist"
+					"reset-email"=>[ "type"=>"email", "class"=>"form-control", "placeholder"=>"Adresse email", "required"=>1, "msgerror"=>"email_exist"
 					],
 					"form-type" => ["type" => "hidden", "value" => "reset-passord", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""
 					]

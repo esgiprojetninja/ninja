@@ -115,14 +115,14 @@ class userController
 						$user[0]->setPassword($_POST["password"]);
 						$user[0]->setIsActive(1);
 						$user[0]->save();
-						$view->assign("activate_msg", "<span class='info'> Your account is now activated </span>");
-						header('Location:'.WEBROOT.'user/login');
+						$view->assign("activate_msg", "<span class='info'> Compte activé ! Vous allez être redirigés ! </span>");
+						header('Refresh:3; url='.WEBROOT.'user/login');
 						session_destroy();
 					}
 				}
 			}
 			else {
-				$view->assign("activate_msg", "<span class='info'> Looks like your account had already been activated </span>");
+				header("location: ".WEBROOT.'user/login');
 			}
 		}
 		$view->assign("activateErrors",$activateErrors);
@@ -369,11 +369,6 @@ class userController
 		$users = User::findByLikeArray($columns,$args1);
 
 		echo json_encode($users);
-	}
-
-	public function contactAction ($args) {
-		$view = new View();
-		$view->setView("landing/contact.tpl", "empty");
 	}
 
 }
