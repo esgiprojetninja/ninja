@@ -7,7 +7,6 @@ define("DBHOST","localhost");
 define("DBUSER","root");
 date_default_timezone_set('Europe/Paris');
 
-
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
     define("DBPWD","");
 } else {

@@ -22,7 +22,7 @@
           <div class="row">
             <div class="col-sm-12">
               <h1>Comment ça se passe ?</h1>
-              <h3>Rentrez l'email lié au compte dont vous avez oublié le mot de passe, nous vous enverrons un mail pour en générer un nouveau.</a>.</h3>
+              <h3>Rentrez l'email lié au compte dont vous avez oublié le mot de passe, nous vous enverrons un mail pour en générer un nouveau.</a></h3>
             </div>
           </div>
         </div>

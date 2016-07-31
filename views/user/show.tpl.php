@@ -100,16 +100,9 @@ $user = $this->data["user"];
                     <li><span class="fa fa-calendar-check-o"> Évènements</span></li>
                     <?php
                     foreach($events as $event){
-                      $users = $event->gatherUsers();
-                      foreach ($users as $user){
-                        if ($user['id'] == $_SESSION['user_id']){
-                          echo '
-                          <li class="li-list">
-                          <span class="form-content">'.$event->getName().'</span>
-                          </li>
-                          ';
-                        }
-                      }
+
+                      echo $event->getName();
+
                     }
                     ?>
                   </li>

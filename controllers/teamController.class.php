@@ -37,7 +37,7 @@ class teamController
 					$captain->setCaptain(2);
 					$captain->save();
 
-					$view->assign("success","Your team has been created");
+					$view->assign("success","Votre équipe a bien été crée");
 				}
 			}
 			$view->setView("team/create.tpl");
@@ -71,7 +71,7 @@ class teamController
 						$path = "public/img/teams/".trim(strtolower($_POST["teamName"])).".".strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
 						$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
 						if($movingFile){
-							$view->assign("success","Changes has been saved");
+							$view->assign("success","Changment pris en compte !");
 							$team->setAvatar($path);
 							//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
 							if($dossier = opendir('public/img/teams')){
@@ -83,14 +83,14 @@ class teamController
 								}
 							}
 						}else{
-							$view->assign("movingFile", "An error while seting your team avatar");
+							$view->assign("movingFile", "Une erreur est survenue durant la mise en place de votre avatar !");
 						}
 					}
 					unlink($_SESSION['temp_idTeam']);
 					$team->setTeamName($_POST["teamName"]);
 					$team->setDescription($_POST["description"]);
 					$team->save();
-					$view->assign("success","Changes has been saved");
+					$view->assign("success","Changement pris en compte !");
 				}
 			}
 			$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"]);
@@ -116,6 +116,9 @@ class teamController
       $view->setView("team/show.tpl");
 
 			$invitationFromTeam = Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args[0],0],['int',"int","int"]);
+
+			$formAskToJoin = $team->getForm("askToJoin");
+			$view->assign("formAskToJoin",$formAskToJoin);
 
       $view->assign("invitation",$invitation);
       $view->assign("members",$members);
@@ -253,7 +256,7 @@ class teamController
                 $nameTeam =$team->getTeamName();
                 Notification::createNotification($id_user=$args["idUser"],$message="You've got demoted of your captain function in the group ".$nameTeam." !",$action=WEBROOT."team/show/".$args["idTeam"]);
 		    }
-				Helpers::getMessageAjaxForm("User has been demoted !");
+				Helpers::getMessageAjaxForm("Joueur rétrogradé !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -290,7 +293,7 @@ class teamController
 				Notification::createNotification($id_user=$args["idUser"],$message="You've got promoted to captain of the group ".$nameTeam." !",$action=WEBROOT."team/show/".$args["idTeam"]);
 		    	$userToPromote->save();
 		    }
-				Helpers::getMessageAjaxForm("User has been promoted !");
+				Helpers::getMessageAjaxForm("Joueur promu !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -314,7 +317,7 @@ class teamController
 					$user->delete();
 				}
 
-				Helpers::getMessageAjaxForm("User has been kicked !");
+				Helpers::getMessageAjaxForm("Le joueur a bien été exclu !");
              $team = Team::findById($args["idTeam"]);
              $nameTeam = $team->getTeamName();
              Notification::createNotification($id_user=$args['idUser'],$message="You've got kicked out of the group ".$nameTeam." !",$action=WEBROOT."team/show/".$args["idTeam"]);
@@ -349,7 +352,7 @@ class teamController
 					$team[0]->delete();
 		    }
 
-				Helpers::getMessageAjaxForm("Invitation canceled !");
+				Helpers::getMessageAjaxForm("Invitation annulée !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -381,7 +384,7 @@ class teamController
 				}
 
 
-			Helpers::getMessageAjaxForm("Team deleted !");
+			Helpers::getMessageAjaxForm("Équipe supprimée !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -420,7 +423,7 @@ class teamController
 			$userName = $user->getUsername();
 			Notification::createNotification($id_user=$captain,$message="The member ".$userName." has just join the group ".$nameTeam." !",$action=$action=WEBROOT."team/show/".$args["idTeam"]);
 
-			Helpers::getMessageAjaxForm("Invitation accepted !");
+			Helpers::getMessageAjaxForm("Invitation acceptée !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -429,19 +432,19 @@ class teamController
 
 	public function askToJoinAction($args){
 		if(User::isConnected()){
+			var_dump($args);
 			$invitation = new Invitation();
 			if(!Invitation::findBy(["idUserInvited","idTeamInviting","type"],[$_SESSION['user_id'],$args['idTeam'],1],['int',"int","int"])){
 				$now = date("Y-m-d H:i:s");
 				$invitation->setDateInvited($now);
-				if(!empty($args['messageInvit'])){
-					$invitation->setMessage($args['messageInvit']);
+				if(!empty($args['message'])){
+					$invitation->setMessage($args['message']);
 				}
 				$invitation->setType(1);
 				$invitation->setIdTeamInviting($args["idTeam"]);
 				$invitation->setIdUserInvited($_SESSION['user_id']);
 				$invitation->save();
 			}
-			Helpers::getMessageAjaxForm("Invitation sent !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');
@@ -462,7 +465,7 @@ class teamController
 			}
 
 
-			Helpers::getMessageAjaxForm("Invitation canceled !");
+			Helpers::getMessageAjaxForm("Invitation annulée !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');

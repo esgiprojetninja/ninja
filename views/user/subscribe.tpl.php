@@ -21,7 +21,7 @@
         <div clas="panel-body">
           <div class="row">
             <div class="col-sm-12">
-              <h1>Déjà inscris ?</h1>
+              <h1>Déjà inscrit ?</h1>
               <h3>Si vous possédez déjà un compte, <a href="<?= WEBROOT; ?>user/login">connectez vous ici</a>.</h3>
             </div>
           </div>

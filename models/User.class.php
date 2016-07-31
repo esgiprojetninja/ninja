@@ -444,4 +444,15 @@ class User extends basesql
 		);
 		return $pivot->getData();
 	}
+
+	public function getEvents($idUser){
+		$events = Event::findAll();
+		$return = [];
+		foreach($events as $event){
+			if(in_array($idUser,$event->getUsersId())){
+				$return[]  = $event;
+			}
+		}
+		return $return;
+	}
 }

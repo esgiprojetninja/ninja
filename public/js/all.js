@@ -104,19 +104,69 @@ $(function ($) {
     -- AJAX FORMS --
 **********************/
 
-$(function ($) {
-  $(".ajax-form, .ajax-link").on("click submit", function (ev) {
 
+$(function ($) {
+
+  $(".askToJoinForm").submit(function(e){
+    e.preventDefault();
+
+    var message = $('#message').val();
+    var idTeam = $(this).attr('action').split("/");
+    idTeam = idTeam[idTeam.length-1];
+    if(message === ''){
+      message = "J'aimerais vous rejoindre !";
+    }
+      $.ajax({
+        url:$(this).attr('action'),
+        type:$(this).attr('method'),
+        data:{"message" : message,"idTeam":idTeam},
+        success: function(){
+          var container = $("#askToJoinHidden");
+          container.fadeOut();
+        	$('#fade').remove();
+          showMessage("Invitation envoyée", "success");
+        }
+      })
+
+  })
+
+  $("#askToJoin").click(function(e){
+    $('#askToJoinHidden').fadeIn();
+    //Lorsque vous cliquez sur un lien de la classe poplight et que le href commence par #
+  	var popID = $(this).attr('rel'); //Trouver la pop-up correspondante
+
+  	//Récupération du margin, qui permettra de centrer la fenêtre - on ajuste de 80px en conformité avec le CSS
+  	var popMargTop = ($('#' + popID).height() + 80) / 2;
+  	var popMargLeft = ($('#' + popID).width() + 80) / 2;
+
+
+  	//Effet fade-in du fond opaque
+  	$('body').append('<div id="fade"></div>'); //Ajout du fond opaque noir
+  	//Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues de IE
+  	$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+
+  	return false;
+  });
+
+
+  $(document).mouseup(function(e){
+      var container = $("#askToJoinHidden");
+      if(!container.is(e.target) && container.has(e.target).length === 0){
+        container.fadeOut();
+      	$('#fade').remove();  //...ils disparaissent ensemble
+        //$("html").append($('<style>html:after{ content:""; position:"";left:"";right:"";top:"";bottom:"";background:"";}</style>'));
+      }
+  });
+
+  $(".ajax-form, .ajax-link").on("click submit", function (ev) {
       // Handle click on empty input
       if ($(ev.target).attr("href") == undefined && ev.type == "click") {
           return;
       }
-
       ev.preventDefault();
       var action = $(this).attr("action");
       var method = $(this).attr("method");
       var success = $(this).data("success");
-      var lock = false;
       var data = {};
       data.message = $(this).data("message");
       data.callback = $(this).data("callback");
@@ -133,24 +183,8 @@ $(function ($) {
 
           action = $(this).data("url");
           action = window.location.origin+"/"+window.location.pathname.split("/",2)[1]+"/"+action;
-          if($(this).is(".prompt")){
-            var promptInput = prompt("Add a message with your invitation");
-            if(promptInput){
-              data.messageInvit = promptInput;
-              lock = true;
-            }else if(promptInput == null){
-              return;
-            }else if(promptInput === ""){
-              data.messageInvit = "I want to join you !";
-              lock = true;
-            }
-          }else{
-            if(confirm("Are you sure ?")){
-              lock = true;
-            }
-          }
+
       } else {
-          lock = true;
           $.each($(this).find("input, select, textarea"), function () {
               if ($(this).attr("type") == "checkbox" || $(this).attr("type") == "radio") {
                   if ($(this).is(":checked")) {
@@ -162,7 +196,7 @@ $(function ($) {
           });
       }
 
-      if (!$.isEmptyObject(data) && lock == true) {
+      if (!$.isEmptyObject(data)) {
             $.ajax({
                 method: method,
                 url: action,
@@ -196,8 +230,8 @@ function showMessage(msg, code) {
     $box.fadeIn();
     setTimeout(function () {
         $box.fadeOut();
-        //window.location.reload(false);
-    }, 5000);
+        window.location.reload(false);
+    }, 2000);
 }
 
 /***************************

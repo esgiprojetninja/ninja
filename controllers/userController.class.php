@@ -16,7 +16,7 @@ class userController
 			}
       $v = new View();
       $teams = TeamHasUser::findBy("idUser",$args[0],"int");
-			$events = Event::findAll();
+			$events = User::getEvents($args[0]);
       $v->setView("user/show.tpl");
       $v->assign("user", $user);
       $v->assign("teams",$teams);
@@ -54,7 +54,7 @@ class userController
 						$path = "public/img/users/".trim(strtolower($_POST["username"])).".".strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
 						$movingFile = move_uploaded_file($_FILES['avatar']['tmp_name'], $path);
 						if($movingFile){
-							$v->assign("success","Changes has been saved");
+							$v->assign("success","Changement pris en compte !");
 							$user->setAvatar($path);
 							//Suppression des anciennes images, si l'extension changeait ça en enregistrait deux, cordialement
 							if($dossier = opendir('public/img/users')){
@@ -66,7 +66,7 @@ class userController
 								}
 							}
 						}else{
-							$v->assign("movingFile", "<span class='info'> An error while seting your avatar </span>");
+							$v->assign("movingFile", "<span class='info'>Une erreur est survenue durant la mise en place de votre avatar ! </span>");
 						}
 					}
 

@@ -30,9 +30,9 @@
                 <p>Description : <?= $team->getDescription(); ?></p>
                 <br><br>
                 <div class="text-left">
-                  <a href="<?= WEBROOT;?>team/show/<?= $team->getId();?>"class="btn btn-primary">Show</a>
+                  <a href="<?= WEBROOT;?>team/show/<?= $team->getId();?>"class="btn btn-primary">Voir</a>
                   <?php if($captain[0]->getCaptain() >=1) : ?>
-                   <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Edit</a>
+                   <a href="<?= WEBROOT;?>team/edit/<?= $team->getId();?>"class="btn btn-primary">Modifier</a>
                   <?php endif; ?>
                   <?php if($captain[0]->getCaptain() >= 2) : ?>
                     <a href="#" data-url="team/delete" data-team="<?= $team->getId(); ?>" class="ajax-link btn btn-danger pull-right">Supprimer mon équipe</a>
@@ -40,7 +40,7 @@
                 </div>
                 <br><br>
 
-                <p>Members : </p>
+                <p>Membres : </p>
                 <?php
                     foreach($members as $member){
                       $user = User::findById($member->getIdUser());
@@ -66,7 +66,7 @@
                 ?>
                 <hr>
                 <?php if(count($invitationsTo) > 0) : ?>
-                  <p>Pending invitations : </p>
+                  <p>Invitations en attente: </p>
                   <?php
                       foreach($invitationsTo as $invitedOne){
                         $userInvited = User::FindById($invitedOne->getIdUserInvited());
@@ -79,10 +79,10 @@
                 <?php endif; ?>
 
                 <?php if(count($invitationsFrom) > 0): ?>
-                  <p>Pending asking to come  : </p>
+                  <p>Demande d'adhésion  : </p>
                   <?php
                         foreach($invitationsFrom as $invitedOne){
-                          $userInvited = User::FindById($invitationsFrom->getIdUserInvited());
+                          $userInvited = User::FindById($invitedOne->getIdUserInvited());
                           echo $invitedOne->getDateInvited()." - " .$userInvited->getUsername() ." - ".$invitedOne->getMessage().' - <a href="#" data-url="team/join" data-team='.$invitedOne->getIdTeamInviting().' data-type='.$invitedOne->getType().' data-user='.$userInvited->getId().' class="ajax-link">Accept</a> - <a href="#" class="ajax-link" data-url="team/cancelInvitation" data-team='.$invitedOne->getIdTeamInviting().' data-user='.$userInvited->getId().' data-type='.$invitedOne->getType().'>Decline</a>';
                           echo '<BR>'; // SWAG TU AIMES BIEN RENAUD ? :(
                         }
@@ -92,9 +92,9 @@
                 <br><br>
                 <div class="text-left">
                   <?php if($captain[0]->getCaptain() > 0): ?>
-                    <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Invite</a>
+                    <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Inviter</a>
                   <?php endif; ?>
-                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right ajax-link" data-url="team/leave">Leave</a>
+                  <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-primary pull-right ajax-link" data-url="team/leave">Quitter</a>
                 </div>
                 <!--
                     AFFICHER DERNIER EVENT ?

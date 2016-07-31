@@ -21,7 +21,7 @@
         <div clas="panel-body">
           <div class="row">
             <div class="col-sm-12">
-              <h1>Toujours pas inscris ?</h1>
+              <h1>Toujours pas inscrit ?</h1>
               <h3>Si vous ne possédez toujours pas de compte, <a href="<?= WEBROOT; ?>user/subscribe">inscrivez vous ici</a>.</h3>
               <hr>
               <h1>Mot de passe oublié ?</h1>
