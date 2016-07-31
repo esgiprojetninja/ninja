@@ -16,7 +16,7 @@ class Team extends basesql
 		"dateCreated",
 		"sports",
 		"description",
-		"avatar"
+		"avatar",
 	];
 
 	public function __construct(){
@@ -115,7 +115,7 @@ class Team extends basesql
 				"options" => ["method" => "POST", "action" => WEBROOT . "team/invite/".$this->id],
 				"struct"=>[
 					"emailOrUsername"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Email ou pseudo à inviter", "required"=>1, "msgerror"=>"emailOrUsername"],
-					"message"=>["type"=>"text","class"=>"form-control","placeholder"=>"A message","required"=>0,"msgerror"=>"messageInvite"],]
+					"message"=>["type"=>"text","class"=>"form-control","placeholder"=>"Un message","required"=>0,"msgerror"=>"messageInvite"],]
 					];
 		}else if($formType = "askToJoin"){
 			$form = [

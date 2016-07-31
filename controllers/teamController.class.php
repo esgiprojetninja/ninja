@@ -34,7 +34,7 @@ class teamController
 
 					$captain->setIdTeam($id_team);
 					$captain->setIdUser($id_user_creator);
-					$captain->setCaptain(2);
+					$captain->setCaptain(3);
 					$captain->save();
 
 					$view->assign("success","Votre équipe a bien été crée");
@@ -244,7 +244,7 @@ class teamController
 	public function demoteAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
 		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
-		    if(!($captain->getCaptain() > 0)){
+		    if(!($captain[0]->getCaptain() > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
 		    $userToDemote = Captain::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
@@ -267,7 +267,8 @@ class teamController
 	{
 		header('Content-Type: application/json');
 		$args1 = $args[0];
-		$teams = Team::findByLikeArray($args1);
+		$columns = ["teamName","description","sports"];
+		$teams = Team::findByLikeArray($columns,$args1);
 		echo json_encode($teams);
 	}
 
@@ -281,17 +282,17 @@ class teamController
 	public function promoteAction($args){
 		if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
 		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
-		    if(!($captain->getCaptain() > 0)){
+		    if(!($captain[0]->getCaptain() > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
 		    $userToPromote = Captain::findBy(["idUser","idTeam"],[$args["idUser"],$args["idTeam"]],["int","int"]);
 		    // Si l'utilisateur a un role de captain 0 ou 1, donc pas admin
-		    if($userToPromote->getCaptain() < 2 ){
-		    	$userToPromote->setCaptain($userToPromote->getCaptain()+1);
+		    if($userToPromote[0]->getCaptain() < 2 ){
+		    	$userToPromote[0]->setCaptain($userToPromote[0]->getCaptain()+1);
 				$team =Team::findById($args["idTeam"]);
 				$nameTeam =$team->getTeamName();
 				Notification::createNotification($id_user=$args["idUser"],$message="You've got promoted to captain of the group ".$nameTeam." !",$action=WEBROOT."team/show/".$args["idTeam"]);
-		    	$userToPromote->save();
+		    	$userToPromote[0]->save();
 		    }
 				Helpers::getMessageAjaxForm("Joueur promu !");
 		 }else{
@@ -303,7 +304,7 @@ class teamController
 	public function kickAction($args){
 		 if(User::isConnected() && isset($args["idTeam"]) && isset($args["idUser"])){
 		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
-		    if(!($captain->getCaptain() > 0)){
+		    if(!($captain[0]->getCaptain() > 0)){
 		      header('Location:'.WEBROOT.'user/login');
 		    }
 		    $captains = Captain::findBy(['idUser','idTeam'],[$args['idUser'],$args["idTeam"]],["int","int"]);
@@ -329,13 +330,16 @@ class teamController
 	}
 
 	public function leaveAction($args){
+		echo "t";
 		if(User::isConnected() && isset($args[0])){
+			echo "T";
 		    $captains = Captain::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args[0]],["int","int"]);
+				var_dump($captains);
 				foreach($captains as $captain){
 					$captain->delete();
 				}
 
-		   $users =  TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args[0]],["int","int"]);
+		   	$users =  TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args[0]],["int","int"]);
 				foreach($users as $user){
 					$user->delete();
 				}
@@ -352,7 +356,7 @@ class teamController
 					$team[0]->delete();
 		    }
 
-				Helpers::getMessageAjaxForm("Invitation annulée !");
+				Helpers::getMessageAjaxForm("Équipe quittée !");
 		 }else{
 		 	//A voir la redirection
 		 	header('Location:'.WEBROOT.'user/login');
@@ -363,7 +367,7 @@ class teamController
 		if((User::isConnected() && isset($args[0]) && isset($_SESSION['user_id']) ) || User::isAdmin()){
 		 	$captain = Captain::findBy(["idUser","idTeam"],[$_SESSION['user_id'],$args[0]],["int","int"]);
 				if(!User::isAdmin()){
-					if(!($captain->getCaptain() > 0) ){
+					if(!($captain[0]->getCaptain() > 0) ){
 						header('Location:'.WEBROOT.'user/login');
 					}
 				}
@@ -465,7 +469,7 @@ class teamController
 			}
 
 
-			Helpers::getMessageAjaxForm("Invitation annulée !");
+			Helpers::getMessageAjaxForm("Invitation refusée !");
 		}else{
 		 	//A voir la redirection
 			header('Location:'.WEBROOT.'user/login');

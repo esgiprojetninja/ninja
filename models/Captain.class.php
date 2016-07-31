@@ -61,7 +61,9 @@ class Captain extends basesql
 		}else if($captain == 1 ){
 			return "Casual";
 		}else if($captain == 2){
-			return "Big boss";
+			return "Boss";
+		}else if($captain == 3){
+			return "Owner";
 		}
 	}
 }

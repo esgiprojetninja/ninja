@@ -65,8 +65,8 @@ $team = $this->data["team"];
                 <?php if(!Team::imIn($idTeam)): ?>
                   <?php if($invitationsFromTeam): ?>
                     <div class="text-right">
-                        <a class="btn btn-success ajax-link" data-team="<?= $idTeam; ?>" data-url="team/join">Accepter invitation</a>
-                          <a class="btn btn-danger ajax-link" data-team="<?= $idTeam; ?>" data-url="team/cancelInvitation">Rejeter invitation</a>
+                        <a href="#" class="btn btn-success ajax-link" data-team="<?= $idTeam; ?>" data-url="team/join">Accepter invitation</a>
+                          <a href="#" class="btn btn-danger ajax-link" data-team="<?= $idTeam; ?>" data-url="team/cancelInvitation">Rejeter invitation</a>
                     </div>
                   <?php else: ?>
                    <?php if($invitation): ?>

@@ -231,7 +231,7 @@ function showMessage(msg, code) {
     setTimeout(function () {
         $box.fadeOut();
         window.location.reload(false);
-    }, 2000);
+    }, 10000000);
 }
 
 /***************************
@@ -428,11 +428,11 @@ $(function ($) {
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +
-                                '                            <span class="form-info">Name : </span>' +
+                                '                            <span class="form-info">Nom : </span>' +
                                 '                        <span class="form-content">' + teams[team].teamName + '</span>' +
                                 '                            </li>' +
                                 '                            <li class="li-list">' +
-                                '                            <span class="form-info">Date Of Creation : </span>' +
+                                '                            <span class="form-info">Date de création : </span>' +
                                 '                        <span class="form-content">' + teams[team].dateCreated + '</span>' +
                                 '                            </li>' +
                                 '                            <li class="li-list">' +
