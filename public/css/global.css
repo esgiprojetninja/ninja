@@ -451,6 +451,15 @@ a{
    background:rgba(0,0,0,0.8);
 }
 
+.avatar-profil{
+  width:100px;
+  height:100px;
+  -webkit-border-radius: 50%; /* Saf3+, Chrome */
+	border-radius: 50%; /* Opera 10.5, IE 9 */
+	/*-moz-border-radius: 30px;  Disabled for FF1+ */
+  border: 2px solid #6C6599;
+}
+
 #fade { /*--Masque opaque noir de fond--*/
 	display: none; /*--masqué par défaut--*/
 	background: #000;

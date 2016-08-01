@@ -50,7 +50,7 @@
       <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
           <p>
-            Vous êtes sur le point de jouer mais il vous manque un joueur ? Sport Nation vous permet de faire savoir aux joueurs autour de vous qu'il vous reste une ou plusieurs place.
+            Vous êtes sur le point de jouer mais il vous manque un joueur ? Sport Nation vous permet de faire savoir aux joueurs autour de vous qu'il vous reste une ou plusieurs places.
           </p>
           <p>
             Deux clics et c'est parti !

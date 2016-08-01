@@ -2,6 +2,11 @@
 
     class Contact extends basesql {
 
+      protected $columns = [
+
+      ];
+
+
       public function getForm(){
 
         $form = [

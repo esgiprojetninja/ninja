@@ -16,7 +16,7 @@ class userController
 			}
       $v = new View();
       $teams = TeamHasUser::findBy("idUser",$args[0],"int");
-			$events = User::getEvents($args[0]);
+			$events = $user->getEvents($args[0]);
       $v->setView("user/show.tpl");
       $v->assign("user", $user);
       $v->assign("teams",$teams);
@@ -172,8 +172,8 @@ class userController
 		$view->setView("user/login.tpl");
 
 		$logErrors = [];
-
-		$formLogin = User::getForm("login");
+		$user = new User();
+		$formLogin = $user->getForm("login");
 		$view->assign("formLogin", $formLogin);
 
 		if(isset($_POST["form-type"])) {
@@ -210,7 +210,8 @@ class userController
 
 	public function resetPasswordAction($args) {
 		$view = new View();
-		$form = User::getForm("resetPassword");
+		$user = new User();
+		$form = $user->getForm("resetPassword");
 		$formErrors = [];
 
 		$view->assign("form", $form);

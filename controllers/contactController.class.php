@@ -6,7 +6,8 @@ class contactController {
     $view = new View();
     $view->setView("user/contact.tpl");
 
-    $formContact = Contact::getForm();
+    $contact = new Contact();
+    $formContact = $contact->getForm();
     $contactError = [];
 
     $view->assign("formContact",$formContact);
