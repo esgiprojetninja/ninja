@@ -41,11 +41,9 @@ if(!$team->getId() == ""){
         <?php if($captain[0]->getCaptain() > 0): ?>
           <a href="<?= WEBROOT;?>team/invite/<?= $team->getId();?>"class="btn btn-primary">Inviter</a>
         <?php endif; ?>
-        <?php if($captain[0]->getCaptain() >= 2) : ?>
           <div class="pull-right">
-            <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-danger ajax-link " data-url="team/leave">Quitter</a>&nbsp;<a href="#" data-url="team/delete" data-team="<?= $team->getId(); ?>" class="ajax-link btn btn-danger">Supprimer mon équipe</a>
+            <a href="#" data-team="<?php echo $team->getId(); ?>" class="btn btn-danger ajax-link " data-url="team/leave">Quitter</a><?php if($captain[0]->getCaptain() >= 2) : ?>&nbsp;<a href="#" data-url="team/delete" data-team="<?= $team->getId(); ?>" class="ajax-link btn btn-danger">Supprimer mon équipe</a><?php endif; ?>
           </div>
-        <?php endif; ?>
         <br><br>
       </div>
     </div>
@@ -101,7 +99,7 @@ if(!$team->getId() == ""){
 
                 $userInvited = User::FindById($invitedOne->getIdUserInvited());
                 ?>
-                Vous avez invité <b><a href="<?= WEBROOT?>user/show/<?= $userInvited->getId()?>"><?= $userInvited->getUsername(); ?></a></b>le <?=$date;?> - <a href="#" data-url="team/cancelInvitation" data-team=<?= $invitedOne->getIdTeamInviting()?> data-user=<?= $userInvited->getId()?> class="ajax-link"><span class="fa fa-remove"></span></a>
+                Vous avez invité <b><a href="<?= WEBROOT?>user/show/<?= $userInvited->getId()?>"><?= $userInvited->getUsername(); ?></a></b>le <?=$date;?> - <a href="#" data-url="team/cancelInvitation" data-team=<?= $invitedOne->getIdTeamInviting()?> data-user=<?= $userInvited->getId()?> class="ajax-link btn btn-danger"><span class="fa fa-remove"></span></a>
                 <?php
                 echo '<BR>'; // SWAG TU AIMES BIEN RENAUD ? :(
               }
@@ -124,7 +122,8 @@ if(!$team->getId() == ""){
                 $date = date("d/m/y H:i",strtotime($dateCreation));
 
                 $userInvited = User::FindById($invitedOne->getIdUserInvited());
-                echo "<div style='text-align:center'>".$date." - " .$userInvited->getUsername().'&nbsp;<a href="#" data-url="team/join" data-team='.$invitedOne->getIdTeamInviting().' data-type='.$invitedOne->getType().' data-user='.$userInvited->getId().' class="ajax-link btn btn-xs btn-success" style="padding:1px"><span class="fa fa-check"></span></a>&nbsp;<a href="#" class="ajax-link btn btn-xs btn-danger" data-url="team/cancelInvitation" style="padding:1px" data-team='.$invitedOne->getIdTeamInviting().' data-user='.$userInvited->getId().' data-type='.$invitedOne->getType().'><span class="fa fa-remove"></span></a><br>'.$invitedOne->getMessage().'</div>';
+                echo "<div style='text-align:center'>".$date." - " .$userInvited->getUsername().'&nbsp;<a href="#" data-url="team/join" data-team='.$invitedOne->getIdTeamInviting().' data-type='.$invitedOne->getType().' data-user='.$userInvited->getId().' class="ajax-link btn btn-success"><span class="fa fa-check">&nbsp;</span></a>&nbsp;
+                <a href="#" class="ajax-link btn btn-danger" data-url="team/cancelInvitation" data-team='.$invitedOne->getIdTeamInviting().' data-user='.$userInvited->getId().' data-type='.$invitedOne->getType().'><span class="fa fa-remove" >&nbsp;</span></a><br>'.$invitedOne->getMessage().'</div>';
                 echo '<BR>'; // SWAG TU AIMES BIEN RENAUD ? :(
               }
 

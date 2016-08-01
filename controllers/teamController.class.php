@@ -330,29 +330,26 @@ class teamController
 	}
 
 	public function leaveAction($args){
-		echo "t";
-		if(User::isConnected() && isset($args[0])){
-			echo "T";
-		    $captains = Captain::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args[0]],["int","int"]);
-				var_dump($captains);
+		if(User::isConnected() && isset($args["idTeam"])){
+		    $captains = Captain::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
 				foreach($captains as $captain){
 					$captain->delete();
 				}
 
-		   	$users =  TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args[0]],["int","int"]);
+		   	$users =  TeamHasUser::findBy(['idUser','idTeam'],[$_SESSION['user_id'],$args["idTeam"]],["int","int"]);
 				foreach($users as $user){
 					$user->delete();
 				}
 
-        $team = Team::findById($args[0]);
+        $team = Team::findById($args["idTeam"]);
         $nameTeam = $team->getTeamName();
         $user = User::findById($_SESSION['user_id']);
         $userName = $user->getUsername();
         Notification::createNotification($id_user=$_SESSION['user_id'],$message="The member ".$userName." has just left the group ".$nameTeam." !",$action=$action=WEBROOT."team/show/".$args[0]);
 
         // on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
-		    if(TeamHasUser::findBy("idTeam",$args[0],"int") == false){
-		    	$team = Team::findBy("id",$args[0],"int");
+		    if(TeamHasUser::findBy("idTeam",$args["idTeam"],"int") == false){
+		    	$team = Team::findBy("id",$args["idTeam"],"int");
 					$team[0]->delete();
 		    }
 

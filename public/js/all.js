@@ -231,7 +231,7 @@ function showMessage(msg, code) {
     setTimeout(function () {
         $box.fadeOut();
         window.location.reload(false);
-    }, 10000000);
+    }, 2000);
 }
 
 /***************************
