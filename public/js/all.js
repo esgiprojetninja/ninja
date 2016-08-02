@@ -107,6 +107,18 @@ $(function ($) {
 
 $(function ($) {
 
+  $("#showUsers").click(function(e){
+    $('#showUsers').css('display','none');
+    $('.fourUsers').css('display','none');
+    $('.allUsers').css('display','inline-block');
+  })
+
+  $("#hideAllUsers").click(function(e){
+    $('#showUsers').css('display','inline-block');
+    $('.fourUsers').css('display','inline-block');
+    $('.allUsers').css('display','none');
+  })
+
   $(".askToJoinForm").submit(function(e){
     e.preventDefault();
 
@@ -424,7 +436,7 @@ $(function ($) {
                         for (var team in teams) {
                             $("#search-content-results").append('<div class="col-sm-6">' +
                                 '                            <div class="panel panel-primary">' +
-                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].id + '"> Group ' + teams[team].teamName + '</a></h3></div>' +
+                                '                            <div class="panel-heading"><h3 class="center header-li "><a href="' + webrootJs + 'team/show/' + teams[team].id + '"> ' + teams[team].teamName + '</a></h3></div>' +
                                 '                            <div class="panel-body">' +
                                 '                            <ul class="header-ul">' +
                                 '                            <li class="li-list">' +

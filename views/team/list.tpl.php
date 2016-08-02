@@ -18,7 +18,7 @@
             echo '
                 <div class="col-sm-6">
                     <div class="panel panel-primary">
-                        <div class="panel-heading"><h3 class="center header-li "><a href="'.WEBROOT.'team/show/'.$team->getId().'"> Group '.$team->getTeamName().'</a></h3></div>
+                        <div class="panel-heading"><h3 class="center header-li "><a href="'.WEBROOT.'team/show/'.$team->getId().'"> '.$team->getTeamName().'</a></h3></div>
                         <div class="panel-body">
                             <ul class="header-ul">
                                 <li class="li-list">

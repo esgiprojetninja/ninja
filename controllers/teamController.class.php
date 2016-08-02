@@ -345,7 +345,7 @@ class teamController
         $nameTeam = $team->getTeamName();
         $user = User::findById($_SESSION['user_id']);
         $userName = $user->getUsername();
-        Notification::createNotification($id_user=$_SESSION['user_id'],$message="The member ".$userName." has just left the group ".$nameTeam." !",$action=$action=WEBROOT."team/show/".$args[0]);
+        Notification::createNotification($id_user=$_SESSION['user_id'],$message="The member ".$userName." has just left the group ".$nameTeam." !",$action=$action=WEBROOT."team/show/".$args["idTeam"]);
 
         // on véifie qu'apres avoir quitté l'equipe il y a encore des membres, sinon on supprime l'equipe
 		    if(TeamHasUser::findBy("idTeam",$args["idTeam"],"int") == false){

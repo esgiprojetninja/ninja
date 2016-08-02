@@ -3,7 +3,7 @@ $team = $this->data["team"];
 ?>
 
 <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-8">
         <div class="panel panel-primary">
             <?php if($team->getId() == null):?>
             <div class="panel-body">
@@ -62,23 +62,71 @@ $team = $this->data["team"];
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-8 col-sm-offset-2">
+                <div class="col-sm-4">
+                  <div class="panel panel-primary">
+                      <div class="panel-heading"><p class="center li-header" style="font-size:22px">Derniers events</p></div>
+                      <div class="panel-body">
+                        oucou
+                      </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="panel panel-primary">
+                      <div class="panel-heading"><p class="center li-header" style="font-size:22px">Prochains events</p></div>
+                      <div class="panel-body">
+                        oucou
+                      </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading"><p class="center li-header" style="font-size:22px"> <span class="li-list fa fa-user"> </span> Membres</p></div>
                         <div class="panel-body">
-                          <div style="text-align:center">
+                          <div style="display:flex;flex-flow:row wrap; justify-content:space-around;">
                             <?php
-                            foreach($members as $member){
+                            if(count($members)<=4){
+                              for($i = 0; $i < count($members);$i++){
+                                $user = User::findById($members[$i]->getIdUser());
+
+                                if($user->getAvatar() == ""){
+                                  echo '<span style="display:inline-block;font-size:18px;margin-right:30px;text-align:center"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.'public/img/unknowUser.png></img>';
+                                }else{
+                                  echo '<span style="display:inline-block;font-size:18px;margin-right:30px;text-align:center"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.$user->getAvatar().'></img>';
+                                }
+                                echo '<br><b>'.$user->getUsername().'</b></a></span>';
+                              }
+                            }else{
+                              echo '<div class="fourUsers">';
+                                for($i = 0; $i < 4;$i++){
+                                  $user = User::findById($members[$i]->getIdUser());
+                                    if($user->getAvatar() == ""){
+                                      echo '<span style="display:inline-block;font-size:18px;margin-right:30px;text-align:center"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.'public/img/unknowUser.png></img>';
+                                    }else{
+                                      echo '<span style="display:inline-block;font-size:18px;margin-right:30px;text-align:center"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.$user->getAvatar().'></img>';
+                                    }
+                                echo '<br><b>'.$user->getUsername().'</b></a></span>';
+                              }
+                              echo "<a href='#' id='showUsers'><span style='font-size:18px;border:2px solid #6c6599;border-radius:50%;padding:4px;color:#6c6599'>+".(count($members)-4)."</span></a>";
+                              echo '</div>';
+                              echo '<div class="allUsers" style="display:none">';
+                              $i=0;
+                              foreach($members as $member){
+                                if($i%4 == 0){
+                                  echo '<br>';
+                                }
                                     $user = User::findById($member->getIdUser());
 
                                     if($user->getAvatar() == ""){
-                                      echo '<span style="display:inline-block;font-size:18px;margin-right:30px"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.'public/img/unknowUser.png></img>';
+                                      echo '<span style="display:inline-block;font-size:18px;margin-right:30px;padding-bottom:15px;text-align:center"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.'public/img/unknowUser.png></img>';
                                     }else{
-                                      echo '<span style="display:inline-block;font-size:18px;margin-right:30px"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.$user->getAvatar().'></img>';
+                                      echo '<span style="display:inline-block;font-size:18px;margin-right:30px;padding-bottom:15px;text-align:center"><a href="'.WEBROOT.'user/show/'.$user->getId().'"><img class="avatar-profil" src='.WEBROOT.$user->getAvatar().'></img>';
                                     }
                                     echo '<br><b>'.$user->getUsername().'</b></a></span>';
+                                $i++;
                                 }
-
+                                echo "<a href='#' id='hideAllUsers'><span class='btn btn-primary' style='position:relative,bottom:0'>Masquer</span></a>";
+                                echo '</div>';
+                            }
                             ?>
                           </div>
                     </div>

@@ -92,7 +92,7 @@ class Team extends basesql
 				"options" => ["method" => "POST", "action" => WEBROOT . "team/create"],
 				"struct" => [
 					"teamName"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Nom d'équipe", "required"=>1, "msgerror"=>"teamName" ],
-					"description"=>[ "type"=>"text", "class"=>"form-control", "placeholder"=>"Description", "required"=>0, "msgerror"=>"description" ],
+					"description"=>[ "type"=>"textarea", "class"=>"form-control", "placeholder"=>"Description", "required"=>0, "msgerror"=>"description" ],
 					"form-type" => ["type" => "hidden", "value" => "createTeam", "placeholder" => "", "required" => 0, "msgerror" => "hidden input", "class" => ""]
 				]
 			];
