@@ -17,8 +17,9 @@
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>
                     <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
-                <?php endif;?>
             </div>
+                <?php endif;?>
+
 
             <div class="panel-body">
                 <div class="col-sm-12">

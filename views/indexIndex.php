@@ -1,4 +1,14 @@
 <div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-primary2">
+            <div class="panel-heading"><h3 class="center header-li ">Présentation du site</h3></div>
+            <div class="panel-body">
+                Bonjour, le site la guitare a gauche à pour but d'être le plus grand site consacré aux guitares pour gaucher
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-sm-6">
         <div class="panel panel-primary2">
             <div class="panel-heading">10 last subscribers</div>

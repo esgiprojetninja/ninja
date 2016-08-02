@@ -236,7 +236,7 @@ ul {
 }
 
 .dropdown .dropdown-menu li:hover {
-    background-color: #6C6599;
+    background-color: #B84D61;
 }
 
 .dropdown .dropdown-menu li:hover a {
@@ -279,7 +279,7 @@ ul {
     padding: 5px;
     border-radius: 2px;
     box-shadow: 2px 2px 2px #D2D2D2;
-    color: #6C6599;
+    color: #B84D61;
     z-index: 1;
     display: none;
 }
@@ -344,7 +344,7 @@ ul {
     cursor: pointer;
     min-height: 30px;
     margin: 2px;
-    border-left: 2px solid #6C6599;
+    border-left: 2px solid #B84D61;
     text-align: center;
     transition-property: all;
     transition-duration: 0.1s;
@@ -361,7 +361,7 @@ ul {
 }
 
 .my-inbox .chat-body .message-list {
-    border: 1px solid #6C6599;
+    border: 1px solid #B84D61;
     width: 100%;
     border-radius: 2px;
     margin-bottom: 10px;
@@ -411,7 +411,7 @@ ul {
 
 .info{
     font-weight: 800;
-    color: #6C6599;
+    color: #B84D61;
 }
 a{
     text-decoration: none;
@@ -443,7 +443,7 @@ a{
 
 
 .header-ul {
-    padding-top: 15px;
+    //padding-top: 15px;
     list-style-type:none;
 }
 
@@ -465,7 +465,7 @@ a{
 }
 
 .form-content {
-    color: #6C6599 ;
+    color: #B84D61 ;
     font-weight: bold;
 }
 

@@ -3,7 +3,7 @@
     <script type="text/javascript"> var page = "user";</script>
 
     <div align="center">
-        <h3 class="center header-li ">Find a player :</h3>
+        <h3 class="center header-li ">Trouver un utilisateur :</h3>
         <input type="text" id="search-content">
         <select id="select-criteria">
             <option value="1" selected>By name</option>
@@ -14,6 +14,9 @@
     <div id="search-content-results""></div>
 
 <div class="col-sm-12" id="all-content">
+
+        
+
     <?php
     $users = $this->data["users"];
     if(!empty($users)) {

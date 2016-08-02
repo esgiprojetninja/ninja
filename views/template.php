@@ -35,6 +35,12 @@
                 <li><a href="<?= WEBROOT; ?>user/logout">Logout</a></li>
             </ul>
         </div>
+        <div class="item dropdown header-burger icon" id="popin-notifications">
+            <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
+        </div>
+        <div class="item dropdown header-burger icon" id="popin-messages">
+            <span class="fa fa-envelope-o" id="notification-icon"></span>
+        </div>
         <?php if(User::isConnected()):?>
             <div class="item dropdown header-burger icon">
                 <a href="<?= WEBROOT; ?>user/show/<?php if(isset($_SESSION["user_id"])){ echo $_SESSION["user_id"]; } ?>" class="item">
@@ -42,9 +48,6 @@
                 </a>
             </div>
         <?php endif; ?>
-        <div class="item dropdown header-burger icon" id="popin-notifications">
-            <span class="icon-menu fa fa-bell-o" id="notification-icon"></span>
-        </div>
         <div class="item dropdown header-burger icon">
             <?php if (User::isConnected()): ?>
                 <span>Bonjour <?= $_SESSION["username"] ?></span>
@@ -53,24 +56,30 @@
     </header>
     <div class="app-content">
         <?php if (User::isConnected()): ?>
-          <div class="sidebar">
-            <div class="items-up items">
-              <a href="<?= WEBROOT; ?>user/list/" class="item">
-                <span class="fa fa-book"></span>
-              </a>
-              <a href="<?= WEBROOT; ?>team/list" class="item">
-                <span class="fa fa-users"></span>
-              </a>
-              <a href="<?= WEBROOT; ?>event/list" class="item">
-                <span class="fa fa-calendar-check-o"></span>
-              </a>
-              <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
-                <span class="fa fa-envelope-o"></span>
-              </a>
-              <a href="<?= WEBROOT; ?>rss/list" class="item">
-                <span class="fa fa-rss-square"></span>
-              </a>
-            </div>
+            <div class="sidebar">
+                <div class="items-up items">
+                    <a href="<?= WEBROOT; ?>article/list" class="item">
+                        <span class="fa fa-file-text-o"></span>
+                    </a>
+                    <a href="<?= WEBROOT; ?>user/list/" class="item">
+                        <span class="fa fa-book"></span>
+                    </a>
+                    <a href="<?= WEBROOT; ?>team/list" class="item">
+                        <span class="fa fa-users"></span>
+                    </a>
+                    <a href="<?= WEBROOT; ?>team/list" class="item">
+                        <span class="fa fa-map-marker"></span>
+                    </a>
+                    <a href="<?= WEBROOT; ?>event/list" class="item">
+                        <span class="fa fa-calendar-check-o"></span>
+                    </a>
+                    <a href="<?= WEBROOT; ?>inbox/myInbox" class="item">
+                        <span class="fa fa-envelope-o"></span>
+                    </a>
+                    <a href="<?= WEBROOT; ?>rss/list" class="item">
+                        <span class="fa fa-rss-square"></span>
+                    </a>
+                </div>
             <div class="items-down items">
 
             </div>
