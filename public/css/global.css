@@ -123,6 +123,10 @@ header .icon {
     transition: all .15s ease-in-out;
 }
 
+header .title-name{
+    margin-left: 0px;
+}
+
 header .icon:hover {
     color: #13191C;
     border-bottom: 4px solid #13191C;
@@ -141,6 +145,13 @@ header .icon .text {
     font-size: 14px;
     font-weight: 600;
     margin-top: 19px;
+}
+
+.name-site {
+    float: left!important;
+    margin-left: 75px!important;
+    margin-top: -50px!important;
+    position: absolute;
 }
 
 /* DROPDOWNS */

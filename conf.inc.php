@@ -14,24 +14,23 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
      define("DBPWD","root");
 }
 
-define("DBNAME","ninja_db");
+define("DBNAME","gauch");
 define("SALT", "ABFffds32EOPDx32snklf443dsFDS464");
 
 $errors_msg = [
-	"email"=>"Your email isn't correct or allready exists",
-	"username"=>"Username allready exists",
-	"password"=>"Incorrect password",
-	"confirm_password"=>"Different password",
-	"teamName"=>"Incorrect team name or allready exists",
-	"new_email" => "Your email isn't correct or allready exists",
-	"new_username" => "Username allready exists",
-  "username_doesnt_exists" => "This username doesn't exist",
+	"email"=>"Votre email n'est pas correct ou existe déjà",
+	"username"=>"Ce pseudo existe déjà",
+	"password"=>"Mot de passe erroné",
+	"confirm_password"=>"Vos mots de passe ne correspondent pas",
+	"teamName"=>"Ce nom de team est invalide ou existe déjà",
+	"new_email" => "Votre email n'est pas correct ou existe déjà",
+	"new_username" => "Ce pseudo existe déjà",
+    "username_doesnt_exists" => "Ce pseudo n'existe pas",
 	"emailOrUsername"=>"User not found, allready in team or allready invited",
-	"avatar"=>"Invalid avatar",
+	"avatar"=>"Votre avatar n'est pas valide",
 	"sports"=>"ERROR 404 SPORT NOT FOUND",
 	"new_teamName"=>"Incorrect team name or allready exists",
-	"email_exist"=>"Couldn't find this email",
-  "date_format"=>"Please stick to this date format => dd/mm/yyy",
-  "time_format" => "Please stick to this time format => hh:mm"
-
+	"email_exist"=>"Email introuvable",
+  	"date_format"=>"Veuillez respecter ce format de date => jour/mois/année",
+  	"time_format" => "Veuillez respecter ce format d'heure => heure:minute"
 ];
