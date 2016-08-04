@@ -25,7 +25,7 @@
             echo '
                 <div class="col-sm-6">
                     <div class="panel panel-primary2">
-                        <div class="panel-heading"><h3 class="center header-li "><a href="'.WEBROOT.'user/show/'.$user->getId().'"> User '.$user->getUserName().'</a></h3></div>
+                        <div class="panel-heading"><h3 class="center header-li "><a href="'.WEBROOT.'user/show/'.$user->getId().'">'.$user->getUserName().'</a></h3></div>
                         <div class="panel-body">
                             <ul class="header-ul">
                                 <li class="li-list">

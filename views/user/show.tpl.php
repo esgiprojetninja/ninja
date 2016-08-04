@@ -12,7 +12,7 @@
             <?php else : ?>
 
 
-            <div class="panel-heading"><h3 class="center header-li"> Informations <?php echo $user->getUsername(); ?>'s profile</h3></div>
+            <div class="panel-heading"><h3 class="center header-li">Profil de <?php echo $user->getUsername(); ?></h3></div>
 
             <div class="panel-media">
                 <?php if($user->getAvatar() != ""): ?>
@@ -81,7 +81,7 @@
                 <?php endif;?>
                 <?php if(User::itsMy($idUser)): ?>
                     <div class="text-right">
-                        <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Edit</a>
+                        <a href="<?= WEBROOT; ?>user/edit/<?php echo $user->getId(); ?>" class="btn btn-primary">Editer mon profil</a>
                     </div>
                 <?php else: ?>
                     <a>&nbsp;</a>
