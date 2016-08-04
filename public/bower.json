@@ -1,8 +1,8 @@
 {
-  "name": "ninja_libs",
-  "homepage": "https://github.com/esgiprojetninja/ninja",
+  "name": "gauch_libs",
+  "homepage": "https://github.com/JacquesCeChirac/gauch",
   "authors": [
-    "Roland Kullet <renaud.bellec.3@gmail.com>"
+    "Jaques Ce Chirac <nicolas.cherridi@gmail.com>"
   ],
   "description": "",
   "main": "",

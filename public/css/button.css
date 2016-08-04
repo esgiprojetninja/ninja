@@ -46,23 +46,25 @@
 
 .btn-primary {
     color: #FFFFFF;
-    background-color: #B84D61;
-    border-color: #B84D61;
+    background-color: #249cf3;
+    border: solid #249cf3;
 }
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary:active:hover,
 .btn-primary:active:focus {
-    background-color: rgba(108, 101, 153, 0.9);
+    background-color: #249cf3;
 }
 .btn-primary:hover {
-    background-color: rgba(108, 101, 153, 0.8);
+    background-color: white;
+    color: #249cf3;
+    border: solid #249cf3;
 }
 
 .btn-primary2 {
     color: #FFFFFF;
-    background-color: #B84D61;
-    border-color: #B84D61;
+    background-color: #249cf3;
+    border-color: #249cf3;
 }
 .btn-primary2:focus,
 .btn-primary2:active,
