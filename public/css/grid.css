@@ -9,8 +9,8 @@ body{
 }
 
 .grid-container{
-    width: calc(100% - 65px);
-    margin-left: 90px;
+    width: calc(100% - 165px);
+    margin-left: 165px;
 }
 
 .grid-container *{

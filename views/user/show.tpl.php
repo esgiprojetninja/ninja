@@ -89,6 +89,7 @@
             </div>
 
         </div>
+       <!--
         <div class="panel panel-primary2">
             <div class="panel-heading"><h3 class="center header-li">Others</h3></div>
             <div class="col-sm-6 panel-body">
@@ -131,5 +132,6 @@
                 </ul>
             </div>
         </div>
+        -->
     </div>
 </div>

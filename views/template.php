@@ -62,9 +62,6 @@
                         <span class="fa fa-file-text-o"></span>
                     </a>
                     <a href="<?= WEBROOT; ?>user/list/" class="item">
-                        <span class="fa fa-book"></span>
-                    </a>
-                    <a href="<?= WEBROOT; ?>team/list" class="item">
                         <span class="fa fa-users"></span>
                     </a>
                     <a href="<?= WEBROOT; ?>team/list" class="item">
@@ -77,7 +74,7 @@
                         <span class="fa fa-envelope-o"></span>
                     </a>
                     <a href="<?= WEBROOT; ?>rss/list" class="item">
-                        <span class="fa fa-rss-square"></span>
+                        <span class="fa fa-rss-square name-icons"></span>
                     </a>
                 </div>
             <div class="items-down items">
