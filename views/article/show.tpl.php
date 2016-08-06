@@ -15,7 +15,7 @@ $article = $this->data["article"];
 
             <div class="panel-media">
                 <?php if($article != ""): ?>
-                <img class="avatar" src="<?= "../../".$article->getTitle(); ?>" style="width:100px;height:100px">
+                <img class="avatar" src="<?= "../../public/img/avatar-medium.jpg"; ?>" style="width:100px;height:100px">
             </div>
         <?php endif;?>
 

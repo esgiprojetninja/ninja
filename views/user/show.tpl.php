@@ -14,16 +14,14 @@
 
             <div class="panel-heading"><h3 class="center header-li">Profil de <?php echo $user->getUsername(); ?></h3></div>
 
-            <div class="panel-media">
-                <?php if($user->getAvatar() != ""): ?>
-                    <img class="avatar" src="<?= "../../".$user->getAvatar(); ?>" style="width:100px;height:100px">
-            </div>
-                <?php endif;?>
-
-
             <div class="panel-body">
                 <div class="col-sm-12">
-                    <div class="col-sm-6">
+                    <?php if($user != ""): ?>
+                        <div class="col-sm-4">
+                            <img class="avatar" src="<?= "../../public/img/avatar-medium.jpg"; ?>" style="width:150px;height:150px">
+                        </div>
+                    <?php endif;?>
+                    <div class="col-sm-4">
                         <ul class="header-ul">
                             <li class="li-list fa fa-user"> Personnal</li>
                             <li class="li-list">
@@ -44,7 +42,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <ul class="header-ul">
                             <li class="li-list"><span class=" fa fa-phone"></span> <span class=" fa fa-at"></span> Contact</li>
                             <li class="li-list">
