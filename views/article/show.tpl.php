@@ -63,7 +63,7 @@ $article = $this->data["article"];
                                 <span class="form-content"><?php echo $article->getTitle(); ?></span>
                             </li>
 
-                            <?php if ($article->getIdCreator() != $_SESSION["user_id"]): ?>
+                            <?php if ($article->getIdAuthor() != $_SESSION["user_id"]): ?>
                                 <li class="li-list">
                                     <div class="">
                                         <span class="form-info">Rate : </span>
@@ -80,7 +80,7 @@ $article = $this->data["article"];
                     </div>
                 </div>
                 <?php endif;?>
-                <?php if($article->getIdCreator() == $_SESSION["user_id"]): ?>
+                <?php if($article->getIdAuthor() == $_SESSION["user_id"]): ?>
                     <div class="text-right">
                         <a href="<?= WEBROOT; ?>user/edit/<?php echo $article->getTitle(); ?>" class="btn btn-primary">Edit</a>
                     </div>

@@ -8,11 +8,11 @@ class articleController
 
         $article = new Article();
 
-        $article->setIdCreator("33");
+        $article->setIdAuthor("33");
         $article->setDateCreation(date("Y-m-d H:i:s"));
-        $article->setType("Guitare");
-        $article->setTitle("Ma première SG");
-        $article->setMessage("Ceci est un article");
+        $article->setType("Ampli");
+        $article->setTitle("Le Marshall Code 25");
+        $article->setMessage("WAOUW");
         $article->setIsVisible(1);
 
         $article->save();
@@ -57,7 +57,7 @@ class articleController
 
     public function listAction($args){
         if(User::isConnected()){
-            $articles = Article::FindAll(10,true,"*","DESC");
+            $articles = Article::FindAll(10000,true,"*","DESC");
             $view = new View();
             $view->setView("article/list.tpl");
             $view->assign("articles", $articles);

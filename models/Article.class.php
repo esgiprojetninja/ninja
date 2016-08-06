@@ -5,7 +5,7 @@ class Article extends basesql
 
     public $id;
     protected $table = "articles";
-    public $id_creator;
+    public $id_author;
     public $date_creation;
     public $date_edited;
     public $type;
@@ -15,7 +15,7 @@ class Article extends basesql
 
     protected $columns = [
         "id",
-        "id_creator",
+        "id_author",
         "date_creation",
         "date_edited",
         "type",
@@ -64,17 +64,17 @@ class Article extends basesql
     /**
      * @return mixed
      */
-    public function getIdCreator()
+    public function getIdAuthor()
     {
-        return $this->id_creator;
+        return $this->id_author;
     }
 
     /**
-     * @param mixed $id_creator
+     * @param mixed $id_author
      */
-    public function setIdCreator($id_creator)
+    public function setIdAuthor($id_author)
     {
-        $this->id_creator = $id_creator;
+        $this->id_author = $id_author;
     }
 
     /**

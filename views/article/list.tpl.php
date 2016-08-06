@@ -19,7 +19,7 @@
     $articles = $this->data["articles"];
     if(!empty($articles)) {
         foreach ($articles as $article) {
-            $authorId = $article->getIdCreator();
+            $authorId = $article->getIdAuthor();
             $author = User::findById($authorId);
             $authorName = $author->getUsername();
             echo '
