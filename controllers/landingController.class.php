@@ -1,7 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nicoto
- * Date: 10/08/16
- * Time: 23:22
- */
+class landingController {
+    public function welcomeAction ($args) {
+        $view = new View();
+        $view->setView("landing/landing.tpl", "empty");
+    }
+    public function legalsAction ($args) {
+        $view = new View();
+        $view->setView("landing/legals.tpl", "empty");
+    }
+    public function planAction ($args) {
+        $view = new View();
+        $view->setView("landing/plan.tpl", "empty");
+    }
+}
