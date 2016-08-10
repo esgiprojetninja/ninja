@@ -92,9 +92,10 @@ header {
     background-color: #FFFFFF;
     color: #2A2A2A;
     margin-bottom: 20px;
+    margin-left: 175px;
     height: 50px;
     box-shadow: 2px 2px 2px #8E8D8F;
-    width: 100%;
+    width: calc(100% - 185px);
     position: fixed;
     top: 0px;
 }
