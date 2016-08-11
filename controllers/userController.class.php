@@ -217,8 +217,19 @@ class userController
 	* @return void
 	*/
 	public function logoutAction () {
-		session_destroy();
-		header("location: ".WEBROOT."user/login");
+	    $notifications = Notification::findAll();
+        foreach ($notifications as $notification){
+            if ($notification->getId_user() == $_SESSION["user_id"] && $notification->getOpened() == 1){
+                //foreach ($notification as $notif){
+                    //if ($notif->getOpened() == 1){
+                echo "toto ". $notification->getMessage() ." <br>";
+                        $notification->setVisible(0);
+                    //}
+                //}
+            }
+        }
+		//session_destroy();
+		//header("location: ".WEBROOT."user/login");
 	}
 
 	public function resetPasswordAction($args) {

@@ -11,6 +11,7 @@ class Notification extends basesql
 	public $opened = 0;
 	public $message = "";
 	public $action;
+    public $visible;
 
 	protected $columns = [
 		"id",
@@ -19,7 +20,8 @@ class Notification extends basesql
 		"type",
 		"opened",
 		"message",
-		"action"
+		"action",
+        "visible"
 	];
 
 	//Oui
@@ -49,6 +51,9 @@ class Notification extends basesql
 	public function getAction() {
 		return $this->action;
 	}
+    public function getVisible() {
+        return $this->visible;
+    }
 
 	//Setteurs
 	public function setId($id) {
@@ -72,6 +77,9 @@ class Notification extends basesql
 	public function setAction($action) {
 		$this->action = $action;
 	}
+    public function setVisible($visible) {
+        $this->visible = $visible;
+    }
 
 	public static function createNotification($id_user,$message,$action)
 	{
@@ -84,6 +92,7 @@ class Notification extends basesql
 		$notification->setOpened(0);
 		$notification->setMessage($message);
 		$notification->setAction($action);
+		$notification->setVisible(1);
 
 		$notification->save();
 

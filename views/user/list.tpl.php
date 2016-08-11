@@ -3,7 +3,7 @@
     <script type="text/javascript"> var page = "user";</script>
 
     <div align="center">
-        <h3 class="center header-li ">Find a player :</h3>
+        <h3 class="center header-li ">Trouver un utilisateur :</h3>
         <input type="text" id="search-content">
         <select id="select-criteria">
             <option value="1" selected>By name</option>
@@ -14,6 +14,9 @@
     <div id="search-content-results""></div>
 
 <div class="col-sm-12" id="all-content">
+
+        
+
     <?php
     $users = $this->data["users"];
     if(!empty($users)) {
@@ -21,9 +24,13 @@
             //$members = TeamHasUser::findBy("idTeam",$team->getId(),"int",false);
             echo '
                 <div class="col-sm-6">
-                    <div class="panel panel-primary2">
-                        <div class="panel-heading"><h3 class="center header-li "><a href="'.WEBROOT.'user/show/'.$user->getId().'"> User '.$user->getUserName().'</a></h3></div>
+                    <div class="panel panel-primary2 col-sm-12">
+                        <div class="panel-heading"><h3 class="center header-li "><a href="'.WEBROOT.'user/show/'.$user->getId().'">'.$user->getUserName().'</a></h3></div>
                         <div class="panel-body">
+                        <div class="col-sm-4">
+                        <img class="avatar" src="../../public/img/avatar-medium.jpg" style="width:100px;height:100px">
+                        </div>
+                        <div class="col-sm-8">
                             <ul class="header-ul">
                                 <li class="li-list">
                                     <span class="form-info">Email : </span>
@@ -42,6 +49,7 @@
                                     <span class="form-content">'.$user->getBirthday().'</span>
                                 </li>
                             </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

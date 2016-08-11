@@ -202,6 +202,7 @@
   content: "\f006";
 }
 .fa-user:before {
+  color: black;
   content: "\f007";
 }
 .fa-film:before {
@@ -867,6 +868,8 @@
   content: "\f0f5";
 }
 .fa-file-text-o:before {
+  content: "\f0f6";
+}.fa-file-text-o:hover {
   content: "\f0f6";
 }
 .fa-building-o:before {

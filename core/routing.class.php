@@ -7,7 +7,7 @@ class routing{
 		$explode_uri = explode("?", $uri);
 		$uri = $explode_uri[0];
 
-		$uri = trim(str_replace("ninja","",$uri),"/");
+		$uri = trim(str_replace("gauch","",$uri),"/");
 
 		$explode_uri = explode("/", $uri);
 

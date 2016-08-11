@@ -5,7 +5,11 @@ primary: #6C6599
 primary2: #6C6599
 success: #328396
 warning: #EBAB51
-danger: #B84D61
+danger: #249cf3
+yellow: #EDD07E
+almost-balck: #249cf3
+red is dead : #249cf3
+blue woodbrass: #249cf3
 
 **************/
 
@@ -88,16 +92,17 @@ header {
     background-color: #FFFFFF;
     color: #2A2A2A;
     margin-bottom: 20px;
+    margin-left: 175px;
     height: 50px;
     box-shadow: 2px 2px 2px #8E8D8F;
-    width: 100%;
+    width: calc(100% - 185px);
     position: fixed;
     top: 0px;
 }
 
 header .app-logo {
     margin-top: 5px;
-    margin-left: 15px;
+    margin-left: 55px;
     height: 40px;
 }
 
@@ -123,6 +128,10 @@ header .icon {
     transition: all .15s ease-in-out;
 }
 
+header .title-name{
+    margin-left: 0px;
+}
+
 header .icon:hover {
     color: #13191C;
     border-bottom: 4px solid #13191C;
@@ -133,14 +142,20 @@ header .icon span {
     float: left;
     font-size: 20px;
     margin-top: 15px;
-    margin-left: 5px;
+    //margin-left: 15px;
 }
-
 
 header .icon .text {
     font-size: 14px;
     font-weight: 600;
     margin-top: 19px;
+}
+
+.name-site {
+    float: left!important;
+    margin-left: 105px!important;
+    margin-top: -50px!important;
+    position: absolute;
 }
 
 /* DROPDOWNS */
@@ -225,7 +240,7 @@ ul {
 }
 
 .dropdown .dropdown-menu li:hover {
-    background-color: #6C6599;
+    background-color: #249cf3;
 }
 
 .dropdown .dropdown-menu li:hover a {
@@ -268,7 +283,7 @@ ul {
     padding: 5px;
     border-radius: 2px;
     box-shadow: 2px 2px 2px #D2D2D2;
-    color: #6C6599;
+    color: #249cf3;
     z-index: 1;
     display: none;
 }
@@ -306,7 +321,7 @@ ul {
 }
 
 .msg-box.danger::after {
-    background-color: #B84D61;
+    background-color: #249cf3;
 }
 
 /********************
@@ -333,7 +348,7 @@ ul {
     cursor: pointer;
     min-height: 30px;
     margin: 2px;
-    border-left: 2px solid #6C6599;
+    border-left: 2px solid #249cf3;
     text-align: center;
     transition-property: all;
     transition-duration: 0.1s;
@@ -350,7 +365,7 @@ ul {
 }
 
 .my-inbox .chat-body .message-list {
-    border: 1px solid #6C6599;
+    border: 1px solid #249cf3;
     width: 100%;
     border-radius: 2px;
     margin-bottom: 10px;
@@ -400,17 +415,19 @@ ul {
 
 .info{
     font-weight: 800;
-    color: #6C6599;
+    color: #249cf3;
 }
 a{
     text-decoration: none;
 }
 .avatar{
-    width: 100%;
-    height: auto;
-    margin: 30px 0 0 70px;
+    //margin: 30px 0 0 70px;
+    margin: auto;
     border-radius: 5%;
     box-shadow: -1px 1px 10px 0px #555;
+    width: 150px;
+    height: 150px;
+    display: block;
 }
 
 .upper{
@@ -432,7 +449,7 @@ a{
 
 
 .header-ul {
-    padding-top: 15px;
+    //padding-top: 15px;
     list-style-type:none;
 }
 
@@ -454,7 +471,7 @@ a{
 }
 
 .form-content {
-    color: #6C6599 ;
+    color: #249cf3 ;
     font-weight: bold;
 }
 
