@@ -11,8 +11,16 @@
             </div>
             <?php else : ?>
 
+            <div class="panel-heading">
+                <h3 class="center header-li">
+                        <?php if($user->getId() == $_SESSION['user_id']):?>
+                            Votre profil
+                        <?php else : ?>
+                            Profil de <?php echo $user->getUsername(); ?>
+                        <?php endif;?>
+                </h3>
+            </div>
 
-            <div class="panel-heading"><h3 class="center header-li">Profil de <?php echo $user->getUsername(); ?></h3></div>
             <div class="panel-body">
                 <div class="col-sm-12">
                     <?php if($user != ""): ?>
